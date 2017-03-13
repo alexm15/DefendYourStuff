@@ -10,12 +10,19 @@ package sdu.group8.common.events;
  * @author Martin
  */
 public class Event {
-    private String creatorId;
+    private String creatorID;
     private EventType eventType;
 
-    public Event(String id, EventType eventType) {
-        this.creatorId = id;
+    public Event(String ID, EventType eventType) {
+        this.creatorID = ID;
         this.eventType = eventType;
     }
-    
+
+    public String getCreatorID() {
+        return creatorID;
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
 }

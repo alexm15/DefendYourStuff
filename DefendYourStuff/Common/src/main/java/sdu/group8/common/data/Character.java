@@ -5,6 +5,9 @@
  */
 package sdu.group8.common.data;
 
+import java.util.ArrayList;
+import sdu.group8.common.enums.CollisionType;
+
 /**
  *
  * @author Martin
@@ -12,4 +15,26 @@ package sdu.group8.common.data;
 public class Character extends MovingEntity{
     private AbilityContainer abilites;
     private HealthSystem health;
+
+    public Character(float health, CollisionType collisionType, float width, float height, float x, float y, Ability... ab) {
+        super(collisionType, width, height, x, y);
+        this.abilites = new AbilityContainer(ab);
+        this.health = new HealthSystem(health);
+    }
+    
+    public ArrayList<Ability> getAbilities() {
+        return abilites.getAbilites();
+    }
+    
+    public float getHealth() {
+        return health.getHealth();
+    }
+    
+    public void reduceHealth(float health) {
+        this.health.reduceHealth(health);
+    }
+    
+    public void increaseHealth(float health) {
+        this.health.increaseHealth(health);
+    }
 }

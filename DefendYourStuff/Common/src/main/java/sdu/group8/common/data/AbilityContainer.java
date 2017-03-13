@@ -5,16 +5,24 @@
  */
 package sdu.group8.common.data;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Martin
  */
 public class AbilityContainer {
-    private Ability[] abilites;
+    private ArrayList<Ability> abilites;
     
-    public AbilityContainer(int numAbilities) {
-        abilites = new Ability[numAbilities];
+    public AbilityContainer(Ability... ab) {
+        abilites = new ArrayList<Ability>();
+        for(Ability ability : ab) {
+            abilites.add(ability);
+        }
     }
-    
+
+    public ArrayList<Ability> getAbilites() {
+        return abilites;
+    }
     
 }

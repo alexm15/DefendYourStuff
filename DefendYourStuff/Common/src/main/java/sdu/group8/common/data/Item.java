@@ -5,6 +5,8 @@
  */
 package sdu.group8.common.data;
 
+import java.util.ArrayList;
+import sdu.group8.common.enums.CollisionType;
 import sdu.group8.common.enums.QualityType;
 
 /**
@@ -15,4 +17,39 @@ public class Item extends Entity{
     private float expirationTime;
     private AbilityContainer abilities;
     private QualityType qualityType;
+
+    public Item(float expirationTime, QualityType qualityType, CollisionType collisionType, float width, float height, float x, float y, Ability... ab) {
+        super(collisionType, width, height, x, y);
+        this.expirationTime = expirationTime;
+        this.abilities = new AbilityContainer(ab);
+        this.qualityType = qualityType;
+    }
+
+    public float getExpirationTime() {
+        return expirationTime;
+    }
+
+    public void setExpirationTime(float expirationTime) {
+        this.expirationTime = expirationTime;
+    }
+    
+    public void reduceExpirationTime(float dt) {
+        this.expirationTime -= dt;
+        if(this.expirationTime < 0) {
+            this.expirationTime = 0;
+        }
+    }
+
+    public ArrayList<Ability> getAbilities() {
+        return abilities.getAbilites();
+    }
+
+    public QualityType getQualityType() {
+        return qualityType;
+    }
+
+    public void setQualityType(QualityType qualityType) {
+        this.qualityType = qualityType;
+    }
+    
 }

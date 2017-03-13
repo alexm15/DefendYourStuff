@@ -5,11 +5,38 @@
  */
 package sdu.group8.common.data;
 
+import sdu.group8.common.enums.CollisionType;
+
 /**
  *
  * @author Martin
  */
-public class MovingEntity extends Entity{
+public abstract class MovingEntity extends Entity{
     private float dx;
     private float dy;
+
+    public MovingEntity(CollisionType collisionType, float width, float height, float x, float y) {
+        super(collisionType, width, height, x, y);
+    }
+
+    public float getDx() {
+        return dx;
+    }
+
+    public void setDx(float dx) {
+        this.dx = dx;
+    }
+
+    public float getDy() {
+        return dy;
+    }
+
+    public void setDy(float dy) {
+        this.dy = dy;
+    }
+    
+    public void setDirection(float dx, float dy) {
+        this.dx = dx;
+        this.dy = dy;
+    }
 }

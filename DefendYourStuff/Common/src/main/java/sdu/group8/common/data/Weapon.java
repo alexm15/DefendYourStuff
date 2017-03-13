@@ -5,6 +5,7 @@
  */
 package sdu.group8.common.data;
 
+import java.util.ArrayList;
 import java.util.UUID;
 import sdu.group8.common.enums.WeaponType;
 
@@ -13,9 +14,51 @@ import sdu.group8.common.enums.WeaponType;
  * @author Martin
  */
 public class Weapon {
-    private UUID id;
+    private UUID ID;
     private AbilityContainer abilities;
     private WeaponType weaponType;
     private float damageMultiplier;
     private float rangeMultiplier;
+
+    public Weapon(UUID ID, WeaponType weaponType, float damageMultiplier, float rangeMultiplier, Ability... ab) {
+        this.ID = ID;
+        this.abilities = new AbilityContainer(ab);
+        this.weaponType = weaponType;
+        this.damageMultiplier = damageMultiplier;
+        this.rangeMultiplier = rangeMultiplier;
+    }
+    
+    public UUID getID() {
+        return ID;
+    }
+
+    public ArrayList<Ability> getAbilities() {
+        return abilities.getAbilites();
+    }
+
+    public WeaponType getWeaponType() {
+        return weaponType;
+    }
+
+    public void setWeaponType(WeaponType weaponType) {
+        this.weaponType = weaponType;
+    }
+
+    public float getDamageMultiplier() {
+        return damageMultiplier;
+    }
+
+    public void setDamageMultiplier(float damageMultiplier) {
+        this.damageMultiplier = damageMultiplier;
+    }
+
+    public float getRangeMultiplier() {
+        return rangeMultiplier;
+    }
+
+    public void setRangeMultiplier(float rangeMultiplier) {
+        this.rangeMultiplier = rangeMultiplier;
+    }
+    
+    
 }

@@ -12,7 +12,11 @@ package sdu.group8.common.data;
 public class DamageRange {
     private float minDamage;
     private float maxDamage;
-    
+
+    public DamageRange(float minDamage, float maxDamage) {
+        this.minDamage = minDamage;
+        this.maxDamage = maxDamage;
+    }
     
     public float getDamage() {
         //TODO: implement random damage range

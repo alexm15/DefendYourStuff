@@ -5,6 +5,8 @@
  */
 package sdu.group8.common.data;
 
+import sdu.group8.common.enums.CollisionType;
+
 /**
  *
  * @author Martin
@@ -12,4 +14,28 @@ package sdu.group8.common.data;
 public class Projectile extends MovingEntity{
     private float weight;
     private float angle;
+
+    public Projectile(float weight, float angle, CollisionType collisionType, float width, float height, float x, float y) {
+        super(collisionType, width, height, x, y);
+        this.weight = weight;
+        this.angle = angle;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public float getAngle() {
+        return angle;
+    }
+
+    public void setAngle(float angle) {
+        this.angle = angle;
+    }
+    
+    
 }
