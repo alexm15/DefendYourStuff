@@ -1,18 +1,45 @@
 package sdu.group8.gameengine.managers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Vector3;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.GameKeys;
+import sdu.group8.gameengine.main.Game;
 
 public class GameInputProcessor extends InputAdapter {
 
     private final GameData gameData;
+    
+    private Vector3 tp = new Vector3();
 
     public GameInputProcessor(GameData gameData) {
         this.gameData = gameData;
     }
-
+    
+        public boolean mouseMoved(int screenX, int screenY) {
+            
+            return true;
+        }
+        
+        public boolean touchDown(int screenX,int screenY, int pointer, int button) {
+            if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+                //Game.CAM.unproject(tp.set(screenX, screenY, 0));
+                //gameData.getMouse().setMouse(GameMouse.LEFT, true);
+            }
+            if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
+                //gameData.getMouse().setMouse(GameMouse.RIGHT, true);
+            }
+            return true;
+        }
+        
+        public boolean touchUp(int screenX,int screenY, int pointer, int button) {
+            
+            return false;
+        }
+        
 	public boolean keyDown(int k) {
 		if(k == Keys.UP) {
                     gameData.getKeys().setKey(GameKeys.UP, true);
@@ -62,9 +89,6 @@ public class GameInputProcessor extends InputAdapter {
                 if(k == Keys.NUM_4) {
                     gameData.getKeys().setKey(GameKeys.NUM_4, true);
 		}
-                
-                                
-		
 		return true;
 	}
 	

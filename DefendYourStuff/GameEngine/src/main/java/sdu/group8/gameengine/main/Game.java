@@ -9,23 +9,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
+import sdu.group8.gameengine.managers.GameInputProcessor;
 
 /**
- * 
+ *
  * @author Group8
  */
 public class Game
         implements ApplicationListener {
 
-    private static OrthographicCamera cam;
+    private static OrthographicCamera CAM;
     private ShapeRenderer sr;
 
     private final GameData gameData = new GameData();
     private World world = new World();
     private Lookup lookup = Lookup.getDefault();
-    private List<IGameProcess> gameProcesses = new ArrayList<>();
-    private List<IGamePlugin> gamePlugins = new ArrayList<>();
-    
+    private List<IGameProcessingService> gameProcesses = new ArrayList<>();
+    private List<IGamePluginService> gamePlugins = new ArrayList<>();
+    private List<IPostProcessingService> postProcesses = new ArrayList<>();
+    private static Game instance = null;
 
     @Override
     public void create() {
@@ -33,27 +35,42 @@ public class Game
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
-        cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
-        cam.update();
+        CAM = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+        CAM.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
+        CAM.update();
 
         sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(
                 new GameInputProcessor(gameData)
         );
-        
+
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
         }
     }
 
-    public Collection<? extends IGameProcess> getGameProcesses() {
-        return lookup.lookupAll(IGameProcess.class);
+    private Game() {
+
     }
 
-    public Collection<? extends IGamePlugin> getGamePlugins() {
-        return lookup.lookupAll(IGamePlugin.class);
+    public static Game getInstance() {
+        if (instance == null) {
+            return new Game();
+        }
+        return instance;
+    }
+
+    public Collection<? extends IGameProcessingService> getGameProcesses() {
+        return lookup.lookupAll(IGameProcessingService.class);
+    }
+
+    public Collection<? extends IGamePluginService> getGamePlugins() {
+        return lookup.lookupAll(IGamePluginService.class);
+    }
+
+    public Collection<? extends IPostProcessingService> getPostProcesses() {
+        return lookup.lookupAll(IPostProcessingService.class);
     }
 
     @Override
@@ -73,15 +90,17 @@ public class Game
     }
 
     private void update() {
-        // Update
 
-        for (IGameProcess gameProcess : getGameProcesses()) {
+        for (IGameProcessingService gameProcess : getGameProcesses()) {
             gameProcess.process(gameData, world);
         }
-//        playerProcessor.process(gameData, world);
+        for (IPostProcessingService postProcess : getPostProcesses()) {
+            postProcess.process(gameData, world);
+        }
 
     }
 
+    //TODO: Change draw method later for sprites.
     private void draw() {
         for (Entity entity : world.getEntities()) {
             float[] shapex = entity.getShapeX();
@@ -103,10 +122,6 @@ public class Game
         }
     }
 
-//    public void addSystem(IEntityProcessingService entityProcess, IGamePluginService gamePlugin) {
-//        gamePlugin.start(gameData, world);
-//        entityProcessors.add(entityProcess);
-//    }
     @Override
     public void resize(int width, int height) {
     }
