@@ -61,6 +61,7 @@
         <module>application</module>
         <module>Common</module>
         <module>GameEngine</module>
+        <module>Map</module>
     </modules>
 
     <properties>
