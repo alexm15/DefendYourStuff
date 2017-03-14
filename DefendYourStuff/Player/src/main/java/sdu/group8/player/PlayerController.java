@@ -8,7 +8,6 @@ import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.entity.MovingEntity;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import static sdu.group8.common.data.CollisionType.BOX;
