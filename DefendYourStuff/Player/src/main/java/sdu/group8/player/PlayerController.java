@@ -28,12 +28,6 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
     
     @Override
     public void process(GameData gameData, World world) {
-        Player somePlayer;
-        for (MovingEntity movingEntity : world.getMovingEntities()) {
-            if (movingEntity instanceof Player) {
-                somePlayer = (Player) movingEntity;
-            }
-        }
         if (player.getHealth() == 0) {
             //TODO Make event take UUID in instead of string
             Event event = new Event(player.getID().toString(), PLAYER_DIES); 
