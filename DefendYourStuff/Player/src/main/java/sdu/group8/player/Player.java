@@ -9,6 +9,7 @@ import sdu.group8.common.data.Ability;
 import sdu.group8.common.data.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
+import sdu.group8.common.data.Weapon;
 
 /**
  *
@@ -16,8 +17,18 @@ import sdu.group8.common.data.Position;
  */
 public class Player extends Character {
     
+    private Weapon weapon;
+
     public Player(float health, Dimension dimension, Position pos, Ability... ab) {
         super(health, dimension, pos, ab);
+    }
+    
+    public Weapon getWeapon() {
+        return weapon;
+    }
+        
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;        
     }
     
 }

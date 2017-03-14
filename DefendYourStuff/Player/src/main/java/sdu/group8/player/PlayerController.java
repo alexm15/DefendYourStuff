@@ -13,6 +13,8 @@ import sdu.group8.common.data.MovingEntity;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import static sdu.group8.common.enums.CollisionType.BOX;
+import sdu.group8.common.events.Event;
+import static sdu.group8.common.events.EventType.CREATE_ABILITY;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 
@@ -33,7 +35,12 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
                 somePlayer = (Player) movingEntity;
             }
         }
-        
+        if (player.getHealth() == 0) {
+            //TODO Make event take UUID in instead of string
+            //TODO Create eventType playerDies
+            Event event = new Event(player.getID().toString(), CREATE_ABILITY); 
+            gameData.addEvent(event);            
+        }
         
     }
 
