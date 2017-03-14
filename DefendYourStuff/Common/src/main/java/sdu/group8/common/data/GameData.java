@@ -35,6 +35,14 @@ public class GameData {
     public void setPlayerGold(int playerGold) {
         this.playerGold = playerGold;
     }
+    
+    public void addPlayerGold (int gold) {
+        this.playerGold += gold;
+    }
+    
+    public void removePlayerGold (int gold) {
+        this.playerGold -= gold;
+    }
 
     public void addEvent(Event e) {
         events.add(e);

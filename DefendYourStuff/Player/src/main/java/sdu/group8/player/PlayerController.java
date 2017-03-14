@@ -5,7 +5,6 @@
  */
 package sdu.group8.player;
 import sdu.group8.common.ability.Ability;
-import sdu.group8.common.entity.Character;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
@@ -14,7 +13,7 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import static sdu.group8.common.data.CollisionType.BOX;
 import sdu.group8.common.events.Event;
-import static sdu.group8.common.events.EventType.CREATE_ABILITY;
+import static sdu.group8.common.events.EventType.PLAYER_DIES;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 
@@ -37,8 +36,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         }
         if (player.getHealth() == 0) {
             //TODO Make event take UUID in instead of string
-            //TODO Create eventType playerDies
-            Event event = new Event(player.getID().toString(), CREATE_ABILITY); 
+            Event event = new Event(player.getID().toString(), PLAYER_DIES); 
             gameData.addEvent(event);            
         }
         
@@ -59,12 +57,13 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
         Ability ability = new Ability(position, AOE, damageRange); //Should be a predifined ability
         player = new Player(health, dimension , position , ability);
+        gameData.setPlayerGold(0); //TODO Move gold to playerGold
         world.addMovingEntity(player);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        world.removeMovingEntity(player);
     }
     
     
