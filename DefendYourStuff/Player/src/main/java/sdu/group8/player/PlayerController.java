@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 package sdu.group8.player;
-import sdu.group8.common.data.Ability;
-import sdu.group8.common.data.Character;
+import sdu.group8.common.ability.Ability;
+import sdu.group8.common.entity.Character;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.data.MovingEntity;
+import sdu.group8.common.entity.MovingEntity;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import static sdu.group8.common.enums.CollisionType.BOX;
+import static sdu.group8.common.data.CollisionType.BOX;
 import sdu.group8.common.events.Event;
 import static sdu.group8.common.events.EventType.CREATE_ABILITY;
 import sdu.group8.common.services.IGamePluginService;

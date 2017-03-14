@@ -5,11 +5,11 @@
  */
 package sdu.group8.player;
 
-import sdu.group8.common.data.Ability;
-import sdu.group8.common.data.Character;
+import sdu.group8.common.ability.Ability;
+import sdu.group8.common.entity.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.data.Weapon;
+import sdu.group8.common.weapon.Weapon;
 
 /**
  *

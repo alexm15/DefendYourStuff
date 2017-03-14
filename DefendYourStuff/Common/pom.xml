@@ -17,10 +17,13 @@
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
+                        <publicPackage>sdu.group8.common.ability</publicPackage>
                         <publicPackage>sdu.group8.common.data</publicPackage>
+                        <publicPackage>sdu.group8.common.entity</publicPackage>
                         <publicPackage>sdu.group8.common.enums</publicPackage>
                         <publicPackage>sdu.group8.common.events</publicPackage>
                         <publicPackage>sdu.group8.common.services</publicPackage>
+                        <publicPackage>sdu.group8.common.weapon</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>

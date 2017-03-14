@@ -5,9 +5,12 @@
  */
 package sdu.group8.common.data;
 
+import sdu.group8.common.entity.Building;
 import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
+import sdu.group8.common.entity.Item;
+import sdu.group8.common.entity.MovingEntity;
 
 /**
  *

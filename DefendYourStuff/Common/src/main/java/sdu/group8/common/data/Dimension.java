@@ -5,8 +5,6 @@
  */
 package sdu.group8.common.data;
 
-import sdu.group8.common.enums.CollisionType;
-
 /**
  *
  * @author Martin
