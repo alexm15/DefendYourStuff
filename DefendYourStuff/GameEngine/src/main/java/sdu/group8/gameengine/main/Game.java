@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
+import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.World;
+import sdu.group8.common.services.IGamePluginService;
+import sdu.group8.common.services.IGamePostProcessingService;
+import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
 
 /**
@@ -26,7 +31,7 @@ public class Game
     private Lookup lookup = Lookup.getDefault();
     private List<IGameProcessingService> gameProcesses = new ArrayList<>();
     private List<IGamePluginService> gamePlugins = new ArrayList<>();
-    private List<IPostProcessingService> postProcesses = new ArrayList<>();
+    private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
 
     @Override
@@ -69,8 +74,8 @@ public class Game
         return lookup.lookupAll(IGamePluginService.class);
     }
 
-    public Collection<? extends IPostProcessingService> getPostProcesses() {
-        return lookup.lookupAll(IPostProcessingService.class);
+    public Collection<? extends IGamePostProcessingService> getPostProcesses() {
+        return lookup.lookupAll(IGamePostProcessingService.class);
     }
 
     @Override
@@ -94,7 +99,7 @@ public class Game
         for (IGameProcessingService gameProcess : getGameProcesses()) {
             gameProcess.process(gameData, world);
         }
-        for (IPostProcessingService postProcess : getPostProcesses()) {
+        for (IGamePostProcessingService postProcess : getPostProcesses()) {
             postProcess.process(gameData, world);
         }
 
@@ -102,24 +107,7 @@ public class Game
 
     //TODO: Change draw method later for sprites.
     private void draw() {
-        for (Entity entity : world.getEntities()) {
-            float[] shapex = entity.getShapeX();
-            float[] shapey = entity.getShapeY();
-            if (shapex != null && shapey != null) {
 
-                sr.setColor(1, 1, 1, 1);
-
-                sr.begin(ShapeRenderer.ShapeType.Line);
-
-                for (int i = 0, j = shapex.length - 1;
-                        i < shapex.length;
-                        j = i++) {
-
-                    sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-                }
-                sr.end();
-            }
-        }
     }
 
     @Override
