@@ -13,15 +13,15 @@ import java.util.UUID;
  */
 public class Ability {
     private UUID ID;
-    private Position pos;
+    private Position position;
     private float AOE;
-    private DamageRange damageR;
+    private DamageRange damageRange;
 
-    public Ability(float x, float y, float AOE, float minDamage, float maxDamage) {
+    public Ability(Position position, float AOE, DamageRange damageRange) {
         this.ID = UUID.randomUUID();
-        this.pos = new Position(x, y);
+        this.position = position;
         this.AOE = AOE;
-        this.damageR = new DamageRange(minDamage, maxDamage);
+        this.damageRange = damageRange;
     }
 
     public UUID getID() {
@@ -29,15 +29,15 @@ public class Ability {
     }
 
     public float getX() {
-        return pos.getX();
+        return position.getX();
     }
 
     public float getY() {
-        return pos.getY();
+        return position.getY();
     }
 
     public void setPosition(float x, float y) {
-        this.pos.setPosition(x, y);
+        this.position.setPosition(x, y);
     }
 
     public float getAOE() {
@@ -49,7 +49,7 @@ public class Ability {
     }
 
     public float getDamage() {
-        return damageR.getDamage();
+        return damageRange.getDamage();
     }
     
 }
