@@ -12,10 +12,25 @@ package sdu.group8.common.events;
 public class Event {
     private String creatorID;
     private EventType eventType;
+    private float expirationTime;
+    private boolean isExpired;
 
     public Event(String ID, EventType eventType) {
         this.creatorID = ID;
         this.eventType = eventType;
+        this.expirationTime = 30;
+        this.isExpired = false;
+    }
+    
+    public void reduceExpiration(float dt) {
+        this.expirationTime -= dt;
+        if(expirationTime < 0) {
+            this.isExpired = true;
+        }
+    }
+
+    public boolean isIsExpired() {
+        return isExpired;
     }
 
     public String getCreatorID() {
