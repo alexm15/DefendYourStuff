@@ -16,6 +16,12 @@
                 <extensions>true</extensions>
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
+                    <publicPackages>
+                        <publicPackage>sdu.group8.common.data</publicPackage>
+                        <publicPackage>sdu.group8.common.enums</publicPackage>
+                        <publicPackage>sdu.group8.common.events</publicPackage>
+                        <publicPackage>sdu.group8.common.services</publicPackage>
+                    </publicPackages>
                 </configuration>
             </plugin>
             <plugin>
