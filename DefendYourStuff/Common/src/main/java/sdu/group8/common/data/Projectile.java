@@ -15,8 +15,8 @@ public class Projectile extends MovingEntity{
     private float weight;
     private float angle;
 
-    public Projectile(float weight, float angle, CollisionType collisionType, float width, float height, float x, float y) {
-        super(collisionType, width, height, x, y);
+    public Projectile(float weight, float angle, Dimension dimension, Position pos) {
+        super(dimension, pos);
         this.weight = weight;
         this.angle = angle;
     }

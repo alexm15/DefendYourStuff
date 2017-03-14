@@ -14,17 +14,13 @@ import sdu.group8.common.enums.CollisionType;
  */
 public abstract class Entity {
     private UUID ID;
-    private CollisionType collisionType;
-    private float width;
-    private float height;
+    private Dimension dimension;
     private Position pos;
 
-    public Entity(CollisionType collisionType, float width, float height, float x, float y) {
+    public Entity(Dimension dimension, Position pos) {
         this.ID = UUID.randomUUID();
-        this.collisionType = collisionType;
-        this.width = width;
-        this.height = height;
-        this.pos = new Position(x, y);
+        this.dimension = dimension;
+        this.pos = pos;
     }
 
     public UUID getID() {
@@ -32,27 +28,27 @@ public abstract class Entity {
     }
     
     public CollisionType getCollisionType() {
-        return collisionType;
+        return this.dimension.getCollisionType();
     }
 
     public void setCollisionType(CollisionType collisionType) {
-        this.collisionType = collisionType;
+        this.dimension.setCollisionType(collisionType);
     }
 
     public float getWidth() {
-        return width;
+        return this.dimension.getWidth();
     }
 
     public void setWidth(float width) {
-        this.width = width;
+        this.dimension.setWidth(width);
     }
 
     public float getHeight() {
-        return height;
+        return this.dimension.getHeight();
     }
 
     public void setHeight(float height) {
-        this.height = height;
+        this.dimension.setHeight(height);
     }
 
     public float getX() {
