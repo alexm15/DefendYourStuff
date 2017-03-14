@@ -6,6 +6,7 @@
 package sdu.group8.map.chunks;
 
 import java.util.Arrays;
+import static sdu.group8.map.chunks.BlockTypes.*;
 
 /**
  *
@@ -16,6 +17,21 @@ public class Chunk {
     int row = 7;
     int column = 7;
     BlockTypes[][] grid = new BlockTypes[row][column];
+    BlockTypes[][] castleChunck = new BlockTypes[][] {
+        {AIR,   AIR,    AIR,    AIR,    AIR,    AIR,    AIR},
+        {AIR,   AIR,    AIR,    AIR,    AIR,    AIR,    AIR},
+        {AIR,   AIR,    AIR,    AIR,    AIR,    AIR,    AIR},
+        {AIR,   AIR,    AIR,    AIR,    AIR,    AIR,    AIR},
+        {AIR,   AIR,    CASTLE, AIR,    AIR,    AIR,    AIR},
+        {AIR,   AIR,    AIR,    AIR,    AIR,    AIR,    AIR},
+        {EARTH, EARTH,  EARTH,  EARTH,  EARTH,  EARTH,  EARTH},
+        
+    };
+    BlockTypes[][] castleBlock = new BlockTypes[][] {
+        {CASTLE, AIR, AIR},
+        {AIR,    AIR, AIR},      
+    };
+    
 
     public void createCastleChunk() {
 
