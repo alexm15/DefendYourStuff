@@ -28,7 +28,6 @@ public class GameData {
         this.events = new ArrayList<Event>();
     }
 
-    // TODO: Copy paste methods from asteroids
     public int getPlayerGold() {
         return playerGold;
     }
@@ -66,6 +65,7 @@ public class GameData {
 
     public void setDelta(float delta) {
         this.delta = delta;
+        expireEvents();
     }
 
     public int getDisplayWidth() {
@@ -86,5 +86,14 @@ public class GameData {
 
     public GameKeys getKeys() {
         return keys;
+    }
+
+    private void expireEvents() {
+        for (Event event : events) {
+            event.reduceExpiration(delta);
+            if(event.isIsExpired()) {
+                removeEvent(event);
+            }
+        }
     }
 }
