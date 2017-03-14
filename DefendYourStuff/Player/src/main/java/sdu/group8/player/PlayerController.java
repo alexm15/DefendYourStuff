@@ -33,11 +33,30 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             gameData.addEvent(event);            
         }
         
+        //Handle input
+        //TODO add gravity and then implement jump
+        boolean moveRight = true;
+        boolean moveLeft = true;
+        boolean jump = true;
+        boolean playerOnTheGround = true;
+        
+        if(moveRight) {
+            player.setPosition(player.getX()+(player.getMoveSpeed()*gameData.getDelta()), player.getY());
+        } else if(moveLeft) {
+            player.setPosition(player.getX()-(player.getMoveSpeed()*gameData.getDelta()), player.getY());
+        }
+        if(jump) {
+            if(playerOnTheGround) {
+                throw new UnsupportedOperationException();
+            }
+        }
     }
 
     @Override
     public void start(GameData gameData, World world) {
         float health = 100;
+        float moveSpeed = 100;
+        float weight = 10;
         float width = 0;
         float height = 0;
         Dimension dimension = new Dimension(BOX, width, height); //Should match the sprites size
@@ -49,7 +68,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
         Ability ability = new Ability(position, AOE, damageRange); //Should be a predifined ability
-        player = new Player(health, dimension , position , ability);
+        player = new Player(moveSpeed, weight, health, dimension , position , ability);
         gameData.setPlayerGold(0); //TODO Move gold to playerGold
         world.addMovingEntity(player);
     }

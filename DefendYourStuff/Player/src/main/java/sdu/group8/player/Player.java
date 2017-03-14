@@ -18,9 +18,13 @@ import sdu.group8.common.weapon.Weapon;
 public class Player extends Character {
     
     private Weapon weapon;
+    private float moveSpeed;
+    private float weight;
 
-    public Player(float health, Dimension dimension, Position pos, Ability... ab) {
+    public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, Ability... ab) {
         super(health, dimension, pos, ab);
+        this.moveSpeed = moveSpeed;
+        this.weight = weight;
     }
     
     public Weapon getWeapon() {
@@ -30,6 +34,15 @@ public class Player extends Character {
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;        
     }
+
+    public float getMoveSpeed() {
+        return moveSpeed;
+    }
+
+    public void setMoveSpeed(float moveSpeed) {
+        this.moveSpeed = moveSpeed;
+    }
+    
     
     
     
