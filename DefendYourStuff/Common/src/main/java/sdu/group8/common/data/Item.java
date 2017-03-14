@@ -18,8 +18,8 @@ public class Item extends Entity{
     private AbilityContainer abilities;
     private QualityType qualityType;
 
-    public Item(float expirationTime, QualityType qualityType, CollisionType collisionType, float width, float height, float x, float y, Ability... ab) {
-        super(collisionType, width, height, x, y);
+    public Item(float expirationTime, QualityType qualityType, Dimension dimension, Position position, Ability... ab) {
+        super(dimension, position);
         this.expirationTime = expirationTime;
         this.abilities = new AbilityContainer(ab);
         this.qualityType = qualityType;
