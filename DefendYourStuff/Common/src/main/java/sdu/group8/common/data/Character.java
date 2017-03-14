@@ -16,8 +16,8 @@ public class Character extends MovingEntity{
     private AbilityContainer abilites;
     private HealthSystem health;
 
-    public Character(float health, Dimension dimension, Position pos, Ability... ab) {
-        super(dimension, pos);
+    public Character(float health, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
+        super(dimension, pos, collision);
         this.abilites = new AbilityContainer(ab);
         this.health = new HealthSystem(health);
     }

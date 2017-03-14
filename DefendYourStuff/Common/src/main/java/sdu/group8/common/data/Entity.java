@@ -5,34 +5,56 @@
  */
 package sdu.group8.common.data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import sdu.group8.common.enums.CollisionType;
+import sdu.group8.common.enums.EntityType;
 
 /**
  *
  * @author Martin
  */
 public abstract class Entity {
+
     private UUID ID;
     private Dimension dimension;
     private Position pos;
+    private CollisionContainer collisionContainer;
 
-    public Entity(Dimension dimension, Position pos) {
+    public Entity(Dimension dimension, Position pos, CollisionContainer collisionContainer) {
         this.ID = UUID.randomUUID();
         this.dimension = dimension;
         this.pos = pos;
+        this.collisionContainer = collisionContainer;
     }
 
     public UUID getID() {
         return ID;
     }
-    
+
+    public List<EntityType> getTypesToIgnore() {
+        return collisionContainer.getTypesToIgnore();
+    }
+
+    public void addTypeToIgnore(EntityType et) {
+        collisionContainer.addTypeToIgnore(et);
+    }
+
+    public EntityType getEntityType() {
+        return collisionContainer.getEntityType();
+    }
+
+    public void setEntityType(EntityType entityType) {
+        this.collisionContainer.setEntityType(entityType);
+    }
+
     public CollisionType getCollisionType() {
-        return this.dimension.getCollisionType();
+        return this.collisionContainer.getCollisionType();
     }
 
     public void setCollisionType(CollisionType collisionType) {
-        this.dimension.setCollisionType(collisionType);
+        this.collisionContainer.setCollisionType(collisionType);
     }
 
     public float getWidth() {
@@ -62,6 +84,9 @@ public abstract class Entity {
     public void setPosition(float x, float y) {
         this.pos.setPosition(x, y);
     }
-    
-    
+
+        
+    public ArrayList<EntityType> getCollidableTypes() {
+        return this.collisionContainer.getCollidableTypes();
+    }
 }
