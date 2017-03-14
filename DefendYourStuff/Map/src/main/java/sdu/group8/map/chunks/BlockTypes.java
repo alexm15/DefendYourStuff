@@ -11,7 +11,10 @@ package sdu.group8.map.chunks;
  */
 public enum BlockTypes {
     AIR, EARTH, BLACKSMITH, CASTLE, WELL, TOWER, WALL, FARM, PORTAL, RUBBLE,
-    PROPABILITY, WALLTOWER
+    PROPABILITY, WALLTOWER;
     //TODO: Add more propability blocks. 
     
+    
+    
+ 
 }
