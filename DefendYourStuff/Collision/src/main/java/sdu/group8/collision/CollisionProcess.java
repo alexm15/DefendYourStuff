@@ -11,6 +11,7 @@ import sdu.group8.common.data.Building;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.MovingEntity;
 import sdu.group8.common.data.Character;
+import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.enums.CollisionType;
@@ -27,7 +28,23 @@ public class CollisionProcess implements IGamePostProcessingService {
 
     }
 
-    
+    private boolean circleBoxCollision(Position posE1, float radiusE1, Position posE2, Dimension dimensionE2) {
+
+        float combinedX = Math.abs(posE1.getX() - posE2.getX());
+        float combinedY = Math.abs(posE1.getY() - posE2.getY());
+        float yLength = radiusE1 + (dimensionE2.getHeight() / 2);
+        float xLength = radiusE1 + (dimensionE2.getWidth() / 2);
+
+        // If circle is inside or intersecting with the box dimensions, then there is a collision.
+        if (combinedX < xLength) {
+            if (combinedY < yLength) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
     private boolean circleCollision(Position e1, Position e2, float radiusE1, float radiusE2) {
         boolean b = false;
 
