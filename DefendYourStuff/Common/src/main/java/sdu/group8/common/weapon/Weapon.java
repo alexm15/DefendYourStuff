@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.data;
+package sdu.group8.common.weapon;
 
 import java.util.ArrayList;
 import java.util.UUID;
-import sdu.group8.common.enums.WeaponType;
+import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityContainer;
+import sdu.group8.common.weapon.WeaponType;
 
 /**
  *

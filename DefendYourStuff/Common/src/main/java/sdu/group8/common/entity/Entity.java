@@ -3,13 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.data;
+package sdu.group8.common.entity;
+
+
+import sdu.group8.common.data.CollisionType;
+import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.*;
+import java.util.UUID;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import sdu.group8.common.enums.CollisionType;
 import sdu.group8.common.enums.EntityType;
+
 
 /**
  *
