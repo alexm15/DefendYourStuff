@@ -5,7 +5,6 @@
  */
 package sdu.group8.common.entity;
 
-
 import sdu.group8.common.data.CollisionType;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.*;
@@ -13,8 +12,6 @@ import java.util.UUID;
 
 import java.util.ArrayList;
 import java.util.List;
-import sdu.group8.common.enums.EntityType;
-
 
 /**
  *
@@ -26,6 +23,7 @@ public abstract class Entity {
     private Dimension dimension;
     private Position pos;
     private CollisionContainer collisionContainer;
+    private boolean isHit = false;
 
     public Entity(Dimension dimension, Position pos, CollisionContainer collisionContainer) {
         this.ID = UUID.randomUUID();
@@ -90,8 +88,28 @@ public abstract class Entity {
         this.pos.setPosition(x, y);
     }
 
-        
+    public Dimension getDimension() {
+        return dimension;
+    }
+
+    public Position getPosition() {
+        return pos;
+    }
+
+    public float getRadius() {
+        return dimension.getRadius();
+    }
+
     public ArrayList<EntityType> getCollidableTypes() {
         return this.collisionContainer.getCollidableTypes();
     }
+
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setIsHit(boolean isHit) {
+        this.isHit = isHit;
+    }
+
 }

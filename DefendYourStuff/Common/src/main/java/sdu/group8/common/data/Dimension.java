@@ -12,12 +12,22 @@ package sdu.group8.common.data;
 public class Dimension {
     private float width;
     private float height;
+    private float radius;
 
-    public Dimension(float width, float height) {
+    public Dimension(float width, float height, float radius) {
         this.width = width;
         this.height = height;
+        this.radius = radius;
     }
 
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+    
     public float getWidth() {
         return width;
     }
