@@ -24,6 +24,10 @@ import sdu.group8.common.services.IGameProcessingService;
 public class PlayerController implements IGameProcessingService, IGamePluginService {
     
     Player player;
+    private boolean playerOnTheGround;
+    private float vertivalVelocity;
+    private float JUMP_FORCE = 100;
+    private float GRAVITY = 9.82f;
     
     @Override
     public void process(GameData gameData, World world) {
@@ -32,13 +36,18 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             Event event = new Event(player.getID().toString(), PLAYER_DIES); 
             gameData.addEvent(event);            
         }
+        if (!playerOnTheGround) {
+            player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
+            vertivalVelocity -= GRAVITY;
+        } else {
+            vertivalVelocity = 0;
+        }
         
         //Handle input
         //TODO add gravity and then implement jump
         boolean moveRight = true;
         boolean moveLeft = true;
         boolean jump = true;
-        boolean playerOnTheGround = true;
         
         if(moveRight) {
             player.setPosition(player.getX()+(player.getMoveSpeed()*gameData.getDelta()), player.getY());
@@ -47,7 +56,8 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         }
         if(jump) {
             if(playerOnTheGround) {
-                throw new UnsupportedOperationException();
+                vertivalVelocity += JUMP_FORCE;
+                player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
             }
         }
     }
