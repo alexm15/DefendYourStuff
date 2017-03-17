@@ -29,7 +29,7 @@ public class CollisionProcess implements IGamePostProcessingService {
         Collection<Character> characters = world.getCharacters();
         Collection<Projectile> projectiles = world.getProjectiles();
         Collection<Item> items = world.getItems();
-        
+
         for (Character character : characters) {
 
             Collection<Character> collidableCharacters = world.getCharacters(character.getCollidableTypes());
@@ -63,25 +63,29 @@ public class CollisionProcess implements IGamePostProcessingService {
         }
 
         for (Projectile projectile : projectiles) {
-            
-            Collection<Projectile> collidableProjectiles = world.getProjectiles(projectile.getCollidableTypes());
-            for(Projectile collidableProjectile : collidableProjectiles) {
-                
-            }
-            
-        }
-    }
-    //
-    //    if (character.getCollisionType() == CollisionType.BOX && collidableCharacter.getCollisionType() == CollisionType.BOX) {
-    //        boxCollision(character.getPosition(), character.getDimension(), collidableCharacter.getPosition(), collidableCharacter.getDimension());
-    //    } else if (character.getCollisionType() == CollisionType.CIRLCE && collidableCharacter.getCollisionType() == CollisionType.CIRLCE) {
-    //        circleCollision(character.getPosition(), character.getRadius(), collidableCharacter.getPosition(), collidableCharacter.getRadius());
-    //    } else if (character.getCollisionType() == CollisionType.CIRLCE && collidableCharacter.getCollisionType() == CollisionType.BOX) {
-    //        circleBoxCollision(character.getPosition(), character.getRadius(), collidableCharacter.getPosition(), collidableCharacter.getDimension());
-    //    } else if (character.getCollisionType() == CollisionType.BOX && collidableCharacter.getCollisionType() == CollisionType.CIRLCE) {
-    //        circleBoxCollision(collidableCharacter.getPosition(), collidableCharacter.getRadius(), character.getPosition(), character.getDimension());
-    //    }
 
+            Collection<Projectile> collidableProjectiles = world.getProjectiles(projectile.getCollidableTypes());
+            for (Projectile collidableProjectile : collidableProjectiles) {
+                if (circleCollision(projectile.getPosition(), projectile.getRadius(), collidableProjectile.getPosition(), collidableProjectile.getRadius())) {
+                    projectile.setIsHit(true);
+                    collidableProjectile.setIsHit(true);
+                }
+            }
+
+            Collection<Building> collidableBuildings = world.getBuildings(projectile.getCollidableTypes());
+            for (Building collidableBuilding : collidableBuildings) {
+                if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
+                    projectile.setIsHit(true);
+                    
+                    //TODO: damage building
+                }
+            }
+
+        }
+        
+        // TODO: Check collision for Abilities.
+    }
+    
     private boolean boxCollision(Position posE1, Dimension dimensionE1, Position posE2, Dimension dimensionE2) {
 
         float combinedX = Math.abs(posE1.getX() - posE2.getX());
