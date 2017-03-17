@@ -6,16 +6,16 @@
 package sdu.group8.collision;
 
 import java.util.Collection;
-import sdu.group8.common.data.Building;
-import sdu.group8.common.data.GameData;
-import sdu.group8.common.data.Character;
 import sdu.group8.common.data.Dimension;
-import sdu.group8.common.data.Item;
+import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.data.Projectile;
 import sdu.group8.common.data.World;
-import sdu.group8.common.enums.CollisionType;
-import sdu.group8.common.enums.EntityType;
+import sdu.group8.common.entity.Building;
+
+import sdu.group8.common.entity.EntityType;
+import sdu.group8.common.entity.Character;
+import sdu.group8.common.entity.Item;
+import sdu.group8.common.entity.Projectile;
 import sdu.group8.common.services.IGamePostProcessingService;
 
 /**

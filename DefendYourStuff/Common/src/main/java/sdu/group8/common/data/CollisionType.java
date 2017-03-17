@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.enums;
+package sdu.group8.common.data;
 
 /**
  *
  * @author Martin
  */
-public enum BuildingType {
-    SHOP, DEFENCE;
+public enum CollisionType {
+    BOX, CIRLCE;
 }

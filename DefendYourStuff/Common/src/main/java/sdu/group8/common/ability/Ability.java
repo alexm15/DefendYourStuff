@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.data;
+package sdu.group8.common.ability;
 
+import sdu.group8.common.data.DamageRange;
+import sdu.group8.common.data.Position;
 import java.util.UUID;
 
 /**

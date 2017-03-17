@@ -6,7 +6,7 @@
         <artifactId>DefendYourStuff-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>Common</artifactId>
+    <artifactId>Player</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -16,15 +16,6 @@
                 <extensions>true</extensions>
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
-                    <publicPackages>
-                        <publicPackage>sdu.group8.common.ability</publicPackage>
-                        <publicPackage>sdu.group8.common.data</publicPackage>
-                        <publicPackage>sdu.group8.common.entity</publicPackage>
-                        <publicPackage>sdu.group8.common.enums</publicPackage>
-                        <publicPackage>sdu.group8.common.events</publicPackage>
-                        <publicPackage>sdu.group8.common.services</publicPackage>
-                        <publicPackage>sdu.group8.common.weapon</publicPackage>
-                    </publicPackages>
                 </configuration>
             </plugin>
             <plugin>
@@ -41,6 +32,11 @@
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId>
             <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Common</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <properties>
