@@ -27,17 +27,17 @@ public class World<C extends Character, P extends Projectile, B extends Building
     public Collection<C> getCharacters() {
         return characters.values();
     }
-    
+
     public Collection<C> getCharacters(ArrayList<EntityType> entityTypes) {
         Collection<C> r = new ArrayList<>();
-        for(C character : getCharacters()) {
-            for(EntityType entityType : entityTypes) {
-                if(character.getEntityType().equals(entityType)) {
+        for (C character : getCharacters()) {
+            for (EntityType entityType : entityTypes) {
+                if (character.getEntityType().equals(entityType)) {
                     r.add(character);
                 }
             }
         }
-        
+
         return r;
     }
 
@@ -54,8 +54,21 @@ public class World<C extends Character, P extends Projectile, B extends Building
     }
 
     //For Buildings
-    public Collection<B> buildings() {
+    public Collection<B> getBuildings() {
         return buildings.values();
+    }
+
+    public Collection<B> getBuildings(ArrayList<EntityType> entityTypes) {
+        Collection<B> r = new ArrayList<>();
+        for (B building : getBuildings()) {
+            for (EntityType entityType : entityTypes) {
+                if (building.getEntityType().equals(entityType)) {
+                    r.add(building);
+                }
+            }
+        }
+
+        return r;
     }
 
     public void addBuilding(B entity) {
@@ -72,7 +85,7 @@ public class World<C extends Character, P extends Projectile, B extends Building
     }
 
     //For items
-    public Collection<Item> items() {
+    public Collection<Item> getItems() {
         return items.values();
     }
 
@@ -86,6 +99,37 @@ public class World<C extends Character, P extends Projectile, B extends Building
     }
 
     public void removeItem(Item entity) {
+        items.remove(entity.getID());
+    }
+
+    //For projectiles
+    public Collection<P> getProjectiles() {
+        return projectiles.values();
+    }
+
+    public Collection<P> getProjectiles(ArrayList<EntityType> entityTypes) {
+        Collection<P> r = new ArrayList<>();
+        for (P projectile : getProjectiles()) {
+            for (EntityType entityType : entityTypes) {
+                if (projectile.getEntityType().equals(entityType)) {
+                    r.add(projectile);
+                }
+            }
+        }
+
+        return r;
+    }
+    
+    public void addProjectile(P projectile) {
+        projectiles.put(projectile.getID(), projectile);
+
+    }
+
+    public void removeProjectile(String entityID) {
+        projectiles.remove(entityID);
+    }
+
+    public void removeProjectile(P entity) {
         items.remove(entity.getID());
     }
 }
