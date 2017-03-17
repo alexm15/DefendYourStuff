@@ -16,11 +16,21 @@ import sdu.group8.common.data.CollisionContainer;
 public class Projectile extends MovingEntity{
     private float weight;
     private float angle;
+    private float radius;
 
-    public Projectile(float weight, float angle, Dimension dimension, Position pos, CollisionContainer collision) {
+    public Projectile(float weight, float angle, float radius, Dimension dimension, Position pos, CollisionContainer collision) {
         super(dimension, pos, collision);
         this.weight = weight;
         this.angle = angle;
+        this.radius = radius;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
     }
 
     public float getWeight() {
