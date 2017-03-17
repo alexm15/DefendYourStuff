@@ -5,21 +5,17 @@
  */
 package sdu.group8.common.data;
 
-<<<<<<< HEAD
+
 import sdu.group8.common.entity.Building;
-=======
+import sdu.group8.common.entity.Item;
+import sdu.group8.common.entity.Projectile;
+import sdu.group8.common.enums.EntityType;
+import sdu.group8.common.entity.Character;
+
 import java.util.ArrayList;
->>>>>>> refs/remotes/origin/master
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-<<<<<<< HEAD
-import sdu.group8.common.entity.Item;
-import sdu.group8.common.entity.MovingEntity;
-=======
-import sdu.group8.common.enums.EntityType;
->>>>>>> refs/remotes/origin/master
 
 /**
  *

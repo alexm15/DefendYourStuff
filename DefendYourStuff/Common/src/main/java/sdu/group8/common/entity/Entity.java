@@ -5,18 +5,16 @@
  */
 package sdu.group8.common.entity;
 
-<<<<<<< HEAD:DefendYourStuff/Common/src/main/java/sdu/group8/common/entity/Entity.java
+
 import sdu.group8.common.data.CollisionType;
 import sdu.group8.common.data.Dimension;
-import sdu.group8.common.data.Position;
+import sdu.group8.common.data.*;
 import java.util.UUID;
-=======
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import sdu.group8.common.enums.CollisionType;
 import sdu.group8.common.enums.EntityType;
->>>>>>> refs/remotes/origin/master:DefendYourStuff/Common/src/main/java/sdu/group8/common/data/Entity.java
+
 
 /**
  *

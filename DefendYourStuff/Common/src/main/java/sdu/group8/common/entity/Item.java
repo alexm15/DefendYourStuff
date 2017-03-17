@@ -9,6 +9,7 @@ import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityContainer;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
+import sdu.group8.common.data.CollisionContainer;
 import java.util.ArrayList;
 
 /**

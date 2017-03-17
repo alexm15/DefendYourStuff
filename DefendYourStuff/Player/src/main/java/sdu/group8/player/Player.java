@@ -6,6 +6,7 @@
 package sdu.group8.player;
 
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.data.CollisionContainer;
 import sdu.group8.common.entity.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
@@ -21,8 +22,8 @@ public class Player extends Character {
     private float moveSpeed;
     private float weight;
 
-    public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, Ability... ab) {
-        super(health, dimension, pos, ab);
+    public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
+        super(health, dimension, pos, collision, ab);
         this.moveSpeed = moveSpeed;
         this.weight = weight;
     }

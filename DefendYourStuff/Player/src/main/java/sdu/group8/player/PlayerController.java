@@ -5,12 +5,14 @@
  */
 package sdu.group8.player;
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.data.CollisionContainer;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import static sdu.group8.common.data.CollisionType.BOX;
+import sdu.group8.common.enums.EntityType;
 import sdu.group8.common.events.Event;
 import static sdu.group8.common.events.EventType.PLAYER_DIES;
 import sdu.group8.common.services.IGamePluginService;
@@ -69,23 +71,24 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         float weight = 10;
         float width = 0;
         float height = 0;
-        Dimension dimension = new Dimension(BOX, width, height); //Should match the sprites size
+        Dimension dimension = new Dimension(width, height); //Should match the sprites size
         float x = 0;
         float y = 0;
         Position position = new Position(x,y); //Should be startposition
+        CollisionContainer collision = new CollisionContainer(BOX, EntityType.PLAYER, EntityType.ALLY);
         float AOE = 0;
         float minDamage = 0;
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
         Ability ability = new Ability(position, AOE, damageRange); //Should be a predifined ability
-        player = new Player(moveSpeed, weight, health, dimension , position , ability);
+        player = new Player(moveSpeed, weight, health, dimension, position, collision, ability);
         gameData.setPlayerGold(0); //TODO Move gold to playerGold
-        world.addMovingEntity(player);
+        world.addCharacters(player);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeMovingEntity(player);
+        world.removeCharacters(player);
     }
     
     
