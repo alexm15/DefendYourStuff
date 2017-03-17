@@ -7,7 +7,7 @@ package sdu.group8.common.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import sdu.group8.common.enums.CollisionType;
+import sdu.group8.common.data.CollisionType;
 import sdu.group8.common.enums.EntityType;
 
 /**
