@@ -96,10 +96,6 @@ public abstract class Entity {
         return pos;
     }
 
-    public float getRadius() {
-        return dimension.getRadius();
-    }
-
     public ArrayList<EntityType> getCollidableTypes() {
         return this.collisionContainer.getCollidableTypes();
     }

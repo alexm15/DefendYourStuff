@@ -12,7 +12,7 @@ import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import static sdu.group8.common.data.CollisionType.BOX;
-import sdu.group8.common.enums.EntityType;
+import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.events.Event;
 import static sdu.group8.common.events.EventType.PLAYER_DIES;
 import sdu.group8.common.services.IGamePluginService;
