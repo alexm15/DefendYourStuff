@@ -5,46 +5,69 @@
  */
 package sdu.group8.common.data;
 
+<<<<<<< HEAD
 import sdu.group8.common.entity.Building;
+=======
+import java.util.ArrayList;
+>>>>>>> refs/remotes/origin/master
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+<<<<<<< HEAD
 import sdu.group8.common.entity.Item;
 import sdu.group8.common.entity.MovingEntity;
+=======
+import sdu.group8.common.enums.EntityType;
+>>>>>>> refs/remotes/origin/master
 
 /**
  *
  * @author Martin
  */
-public class World {
+public class World<C extends Character, P extends Projectile, B extends Building> {
 
-    private Map<UUID, MovingEntity> movingEntities;
-    private Map<UUID, Building> buildings;
+    private Map<UUID, C> characters;
+    private Map<UUID, P> projectiles;
+    private Map<UUID, B> buildings;
     private Map<UUID, Item> items;
 
     //For MovingEntities
-    public Collection<MovingEntity> getMovingEntities() {
-        return movingEntities.values();
+    public Collection<C> getCharacters() {
+        return characters.values();
+    }
+    
+    public Collection<C> getCharacters(ArrayList<EntityType> entityTypes) {
+        Collection<C> r = new ArrayList<>();
+        for(C character : getCharacters()) {
+            for(EntityType entityType : entityTypes) {
+                if(character.getEntityType().equals(entityType)) {
+                    r.add(character);
+                }
+            }
+        }
+        
+        return r;
     }
 
-    public void addMovingEntity(MovingEntity entity) {
-        movingEntities.put(entity.getID(), entity);
+    public void addCharacters(C entity) {
+        characters.put(entity.getID(), entity);
     }
 
-    public void removeMovingEntity(String entityID) {
-        movingEntities.remove(entityID);
+    public void removeCharacters(String entityID) {
+        characters.remove(entityID);
     }
 
-    public void removeMovingEntity(MovingEntity entity) {
-        movingEntities.remove(entity.getID());
+    public void removeCharacters(C entity) {
+        characters.remove(entity.getID());
     }
 
     //For Buildings
-    public Collection<Building> buildings() {
+    public Collection<B> buildings() {
         return buildings.values();
     }
 
-    public void addBuilding(Building entity) {
+    public void addBuilding(B entity) {
         buildings.put(entity.getID(), entity);
 
     }
@@ -53,7 +76,7 @@ public class World {
         buildings.remove(entityID);
     }
 
-    public void removeBuilding(Building entity) {
+    public void removeBuilding(B entity) {
         buildings.remove(entity.getID());
     }
 

@@ -16,8 +16,8 @@ public abstract class MovingEntity extends Entity{
     private float dx;
     private float dy;
 
-    public MovingEntity(Dimension dimension, Position pos) {
-        super(dimension, pos);
+    public MovingEntity(Dimension dimension, Position pos, CollisionContainer collision) {
+        super(dimension, pos, collision);
     }
 
     public float getDx() {
