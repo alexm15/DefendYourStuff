@@ -5,56 +5,79 @@
  */
 package sdu.group8.common.data;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  *
  * @author Martin
  */
 public class GameKeys {
 
-    private static boolean[] keys;
-    private static boolean[] pkeys;
+    // use this for keycode reference: https://libgdx.badlogicgames.com/nightlies/docs/api/constant-values.html
+    public final int UP = 19; // Up arrow
+    public final int DOWN = 20; // down arrow
+    public final int LEFT = 21; // left arrow
+    public final int RIGHT = 22; // right arrow
 
-    private static final int NUM_KEYS = 8;
-    public static final int UP = 0;
-    public static final int LEFT = 1;
-    public static final int DOWN = 2;
-    public static final int RIGHT = 3;
-    public static final int ENTER = 4;
-    public static final int ESCAPE = 5;
-    public static final int SPACE = 6;
-    public static final int SHIFT = 7;
-    public static final int W = 8;
-    public static final int A = 9;
-    public static final int S = 10;
-    public static final int D = 11;
-    public static final int E = 12;
-    public static final int NUM_1 = 13;
-    public static final int NUM_2 = 14;
-    public static final int NUM_3 = 15;
-    public static final int NUM_4 = 16;
+    public final int SPACE = 62; // space
+    public final int ESCAPE = 131; // escape
+    public final int ENTER = 66; // Enter
+
+    public final int A = 29; // A
+    public final int W = 51; // W
+    public final int S = 47; // S
+    public final int D = 32; // D
+    public final int E = 33; // E
+
+    public final int NUM_1 = 8; // Numpad 1
+    public final int NUM_2 = 9; // Numpad 2
+    public final int NUM_3 = 10; // Numpad 3
+    public final int NUM_4 = 11; // Numpad 4
+
+    private Map<Integer, Boolean> currentKeyStates = new ConcurrentHashMap<>();
+    private Map<Integer, Boolean> previousKeyStates = new ConcurrentHashMap<>();
 
     public GameKeys() {
-        keys = new boolean[NUM_KEYS];
-        pkeys = new boolean[NUM_KEYS];
+        currentKeyStates.put(UP, false);
+        currentKeyStates.put(DOWN, false);
+        currentKeyStates.put(LEFT, false);
+        currentKeyStates.put(RIGHT, false);
 
+        currentKeyStates.put(SPACE, false);
+        currentKeyStates.put(ESCAPE, false);
+        currentKeyStates.put(ENTER, false);
+
+        currentKeyStates.put(A, false);
+        currentKeyStates.put(S, false);
+        currentKeyStates.put(W, false);
+        currentKeyStates.put(D, false);
+        currentKeyStates.put(E, false);
+
+        currentKeyStates.put(NUM_1, false);
+        currentKeyStates.put(NUM_2, false);
+        currentKeyStates.put(NUM_3, false);
+        currentKeyStates.put(NUM_4, false);
+
+        update();
     }
 
     public void update() {
-        for (int i = 0; i < NUM_KEYS; i++) {
-            pkeys[i] = keys[i];
-        }
+        previousKeyStates.clear();
+        previousKeyStates.putAll(currentKeyStates);
     }
 
-    public void setKey(int k, boolean b) {
-        keys[k] = b;
+    public boolean isKeyDown(int key) {
+        return currentKeyStates.get(key);
     }
 
-    public boolean isDown(int k) {
-        return keys[k];
+    public boolean isKeyPressed(int key) {
+        return currentKeyStates.get(key) && !previousKeyStates.get(key);
     }
 
-    public boolean isPressed(int k) {
-        return keys[k] && !pkeys[k];
+    public void setKeyState(int key, boolean state) {
+        currentKeyStates.put(key, state);
     }
-
 }
