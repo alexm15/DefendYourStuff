@@ -72,7 +72,7 @@ public class Chunk {
     }
     
     BlockTypes[][] grid = new BlockTypes[row][column];
-    BlockTypes[][] castleChunck = new BlockTypes[][] {
+    public BlockTypes[][] castleChunck = new BlockTypes[][] {
         {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
         {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
         {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},

@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -57,6 +58,7 @@ public class ChunkTest {
         
     }
     
+    @Ignore
     @Test
     public void testMakeCastleChunk() {
         System.out.println("print2DArray");

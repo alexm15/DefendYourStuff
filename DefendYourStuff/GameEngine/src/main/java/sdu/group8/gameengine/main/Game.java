@@ -123,18 +123,29 @@ public class Game
 
     //TODO: Change draw method later for sprites.
     private void draw() {
+        Chunk c = new Chunk();
         int[] gameColumn = new int[8];
         for (int i = 1; i <= 8; i++) {
-            gameColumn[i-1] = gameData.getDisplayWidth() / (i * 100);
+            gameColumn[i-1] = i*(gameData.getDisplayWidth() / 10);
         }
         int[] gameRows = new int[6];
         for (int i = 1; i <= 6; i++) {
-            gameRows[i-1] = gameData.getDisplayHeight() / (i * 100);
+            gameRows[i-1] = i*(gameData.getDisplayHeight() / 10);
+        }
+        System.out.println(gameColumn[0]);
+        System.out.println(gameRows[0]);
+        
+        BlockTypes[][] blocks = c.getCastleChunk();
+        System.out.println(blocks[0][0]);
+        batch.begin();
+        for (int i = 0; i < blocks.length; i++) {
+            for (int j = 0; j < blocks[i].length-1; j++) {
+                font.draw(batch, blocks[i][j].name(), gameColumn[i]/2, gameRows[j]/2);
+            }
         }
         
         
-        batch.begin();
-        font.draw(batch, "test", 0, 0);
+        
         batch.end();
         
         
