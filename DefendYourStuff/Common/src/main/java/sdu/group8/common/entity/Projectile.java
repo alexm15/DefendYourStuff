@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.data;
+package sdu.group8.common.entity;
 
-import sdu.group8.common.enums.CollisionType;
+import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Position;
+import sdu.group8.common.data.CollisionContainer;
 
 /**
  *
@@ -14,11 +16,21 @@ import sdu.group8.common.enums.CollisionType;
 public class Projectile extends MovingEntity{
     private float weight;
     private float angle;
+    private float radius;
 
-    public Projectile(float weight, float angle, Dimension dimension, Position pos) {
-        super(dimension, pos);
+    public Projectile(float weight, float angle, float radius, Dimension dimension, Position pos, CollisionContainer collision) {
+        super(dimension, pos, collision);
         this.weight = weight;
         this.angle = angle;
+        this.radius = radius;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
     }
 
     public float getWeight() {

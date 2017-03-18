@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.enums;
+package sdu.group8.common.entity;
 
 /**
  *
  * @author Martin
  */
-public enum QualityType {
-    COMMON, EPIC, LEGENDARY;
+public enum EntityType {
+    PLAYER, ENEMY, ALLY, DEFENCE, SHOP, PROJECTILE;
 }

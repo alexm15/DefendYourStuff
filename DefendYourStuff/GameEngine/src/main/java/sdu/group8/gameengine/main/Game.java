@@ -2,8 +2,11 @@ package sdu.group8.gameengine.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +18,8 @@ import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
+import sdu.group8.map.chunks.BlockTypes;
+import sdu.group8.map.chunks.Chunk;
 
 /**
  *
@@ -33,6 +38,9 @@ public class Game
     private List<IGamePluginService> gamePlugins = new ArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
+    private SpriteBatch batch;
+    private BitmapFont font;
+   
 
     @Override
     public void create() {
@@ -49,6 +57,14 @@ public class Game
         Gdx.input.setInputProcessor(
                 new GameInputProcessor(gameData)
         );
+        
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        font.setColor(Color.RED);
+        //TODO: create grid with matrix from Map module.
+        
+        
+        //TODO: load content of matrix into grid.
 
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
@@ -107,6 +123,21 @@ public class Game
 
     //TODO: Change draw method later for sprites.
     private void draw() {
+        int[] gameColumn = new int[8];
+        for (int i = 1; i <= 8; i++) {
+            gameColumn[i-1] = gameData.getDisplayWidth() / (i * 100);
+        }
+        int[] gameRows = new int[6];
+        for (int i = 1; i <= 6; i++) {
+            gameRows[i-1] = gameData.getDisplayHeight() / (i * 100);
+        }
+        
+        
+        batch.begin();
+        font.draw(batch, "test", 0, 0);
+        batch.end();
+        
+        
 
     }
 

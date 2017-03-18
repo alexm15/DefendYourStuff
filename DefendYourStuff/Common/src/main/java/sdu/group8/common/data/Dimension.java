@@ -5,29 +5,17 @@
  */
 package sdu.group8.common.data;
 
-import sdu.group8.common.enums.CollisionType;
-
 /**
  *
  * @author Martin
  */
 public class Dimension {
-    private CollisionType collisionType;
     private float width;
     private float height;
 
-    public Dimension(CollisionType collisionType, float width, float height) {
-        this.collisionType = collisionType;
+    public Dimension(float width, float height) {
         this.width = width;
         this.height = height;
-    }
-
-    public CollisionType getCollisionType() {
-        return collisionType;
-    }
-
-    public void setCollisionType(CollisionType collisionType) {
-        this.collisionType = collisionType;
     }
 
     public float getWidth() {

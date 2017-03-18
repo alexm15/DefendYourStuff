@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.events;
+package sdu.group8.common.weapon;
 
 /**
  *
  * @author Martin
  */
-public enum EventType {
-    CREATE_ABILITY, PLAYER_DIES;
+public enum WeaponType {
+    SWORD, LONGSWORD, BOW, LONGBOW;
 }

@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.data;
+package sdu.group8.common.entity;
 
-import sdu.group8.common.enums.CollisionType;
+import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Position;
+import sdu.group8.common.data.CollisionContainer;
 
 /**
  *
@@ -15,8 +17,8 @@ public abstract class MovingEntity extends Entity{
     private float dx;
     private float dy;
 
-    public MovingEntity(Dimension dimension, Position pos) {
-        super(dimension, pos);
+    public MovingEntity(Dimension dimension, Position pos, CollisionContainer collision) {
+        super(dimension, pos, collision);
     }
 
     public float getDx() {

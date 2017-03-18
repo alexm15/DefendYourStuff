@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.data;
+package sdu.group8.common.entity;
 
+import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityContainer;
+import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Position;
+import sdu.group8.common.data.CollisionContainer;
 import java.util.ArrayList;
-import sdu.group8.common.enums.CollisionType;
-import sdu.group8.common.enums.QualityType;
 
 /**
  *
@@ -18,8 +21,8 @@ public class Item extends Entity{
     private AbilityContainer abilities;
     private QualityType qualityType;
 
-    public Item(float expirationTime, QualityType qualityType, Dimension dimension, Position position, Ability... ab) {
-        super(dimension, position);
+    public Item(float expirationTime, QualityType qualityType, Dimension dimension, Position position, CollisionContainer collision, Ability... ab) {
+        super(dimension, position, collision);
         this.expirationTime = expirationTime;
         this.abilities = new AbilityContainer(ab);
         this.qualityType = qualityType;

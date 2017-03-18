@@ -18,8 +18,8 @@ public class Installer
         LwjglApplicationConfiguration cfg =
 			new LwjglApplicationConfiguration();
 		cfg.title = "DefendYourStuff";
-		cfg.width = 500;
-		cfg.height = 400;
+		cfg.width = 800;
+		cfg.height = 600;
 		cfg.useGL30 = false;
 		cfg.resizable = false;
 		

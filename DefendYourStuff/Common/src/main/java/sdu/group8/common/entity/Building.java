@@ -3,11 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.data;
+package sdu.group8.common.entity;
 
 import java.util.ArrayList;
-import sdu.group8.common.enums.BuildingType;
-import sdu.group8.common.enums.CollisionType;
+import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityContainer;
+import sdu.group8.common.data.Dimension;
+import sdu.group8.common.entity.Entity;
+import sdu.group8.common.data.HealthSystem;
+import sdu.group8.common.data.Position;
+import sdu.group8.common.data.CollisionContainer;
 
 /**
  *
@@ -20,8 +25,8 @@ public abstract class Building extends Entity{
     private int upgradeLevel;
     private HealthSystem health;
 
-    public Building(BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Dimension dimension, Position pos,  Ability... ab) {
-        super(dimension, pos);
+    public Building(Dimension dimension, Position pos, CollisionContainer collisionContainer, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
+        super(dimension, pos, collisionContainer);
         this.buildingType = buildingType;
         this.abilities = new AbilityContainer(ab);
         this.isAttackable = isAttackable;
