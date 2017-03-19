@@ -10,5 +10,5 @@ package sdu.group8.common.events;
  * @author Martin
  */
 public enum EventType {
-    CREATE_ABILITY, PLAYER_DIES;
+    CREATE_ABILITY, PLAYER_DIES, DAMAGE_BUILDING;
 }

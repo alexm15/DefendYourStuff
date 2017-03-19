@@ -32,8 +32,8 @@ public abstract class Entity {
         this.collisionContainer = collisionContainer;
     }
 
-    public UUID getID() {
-        return ID;
+    public String getID() {
+        return ID.toString();
     }
 
     public List<EntityType> getTypesToIgnore() {
