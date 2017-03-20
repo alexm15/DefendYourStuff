@@ -6,6 +6,7 @@
 package sdu.group8.collision;
 
 import java.util.Collection;
+import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
@@ -31,6 +32,7 @@ public class CollisionProcess implements IGamePostProcessingService {
         Collection<Character> characters = world.getCharacters();
         Collection<Projectile> projectiles = world.getProjectiles();
         Collection<Item> items = world.getItems();
+        Collection<Ability> abilities = world.getAbilities();
 
         for (Character character : characters) {
 
@@ -87,6 +89,27 @@ public class CollisionProcess implements IGamePostProcessingService {
         }
         
         // TODO: Check collision for Abilities.
+            for (Ability ability : abilities) {
+
+            Collection<Ability> collidableAbilities = world.getAbilities(ability.getCollidableTypes());
+            for (Ability collidableAbility : collidableAbilities) {
+                if (circleCollision(projectile.getPosition(), projectile.getRadius(), collidableProjectile.getPosition(), collidableProjectile.getRadius())) {
+                    projectile.setIsHit(true);
+                    collidableProjectile.setIsHit(true);
+                }
+            }
+
+            Collection<Building> collidableBuildings = world.getBuildings(projectile.getCollidableTypes());
+            for (Building collidableBuilding : collidableBuildings) {
+                if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
+                    projectile.setIsHit(true);
+                    
+                    //DISCUSS: Should projectile damage a building, or should the ability? Where would we get the damage from the projectile?
+                    gameData.addEvent(new Event(collidableBuilding.getID(), EventType.DAMAGE_BUILDING));
+                }
+            }
+
+        }
     }
     
     private boolean boxCollision(Position posE1, Dimension dimensionE1, Position posE2, Dimension dimensionE2) {
