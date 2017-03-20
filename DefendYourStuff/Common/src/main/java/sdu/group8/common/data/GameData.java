@@ -22,12 +22,17 @@ public class GameData {
     private final GameKeys keys;
     private final List<Event> events;
     private int playerGold;
+    private Position cursorPosition;
 
     public GameData() {
         this.keys = new GameKeys();
         this.events = new ArrayList<Event>();
     }
 
+    public Position getCursorPosition() {
+        return cursorPosition;
+    }
+    
     public int getPlayerGold() {
         return playerGold;
     }
