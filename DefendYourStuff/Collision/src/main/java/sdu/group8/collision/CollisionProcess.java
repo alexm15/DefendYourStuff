@@ -37,8 +37,15 @@ public class CollisionProcess implements IGamePostProcessingService {
 
             Collection<Character> collidableCharacters = world.getCharacters(character.getCollidableTypes());
             for (Character collidableCharacter : collidableCharacters) {
+                for (Ability ability : character.getAbilities()) {
+                    //TODO: Check for active abilities first
+                    if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
+                        ability.isHit();
+                        //TODO: Ability-Collision event
+                    }
+                }
                 if (boxCollision(character.getPosition(), character.getDimension(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
-
+                    // Character-Collision event
                 }
             }
 
@@ -50,6 +57,13 @@ public class CollisionProcess implements IGamePostProcessingService {
 
             Collection<Building> collidableBuildings = world.getBuildings(character.getCollidableTypes());
             for (Building collidableBuilding : collidableBuildings) {
+                for (Ability ability : character.getAbilities()) {
+                    //TODO: Check for active abilities first
+                    if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
+                        ability.isHit();
+                        //TODO: Ability-Collision event
+                    }
+                }
                 if (boxCollision(character.getPosition(), character.getDimension(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
                     if (character.getEntityType() == EntityType.PLAYER) {
                         //TODO: Create player shop/upgrade event for building.ID
@@ -74,10 +88,6 @@ public class CollisionProcess implements IGamePostProcessingService {
                 }
             }
 
-            for (Ability ability : projectile.getAbilities()) {
-
-            }
-
             Collection<Character> collidableCharacters = world.getCharacters(projectile.getCollidableTypes());
             for (Character collidableCharacter : collidableCharacters) {
                 for (Ability ability : projectile.getAbilities()) {
@@ -86,7 +96,7 @@ public class CollisionProcess implements IGamePostProcessingService {
                             projectile.setIsHit(true);
                             ability.setIsHit(true);
                         }
-                        
+
                         //TODO: Ability-Collision event
                     }
                 }
@@ -94,11 +104,15 @@ public class CollisionProcess implements IGamePostProcessingService {
 
             Collection<Building> collidableBuildings = world.getBuildings(projectile.getCollidableTypes());
             for (Building collidableBuilding : collidableBuildings) {
-                if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
-                    projectile.setIsHit(true);
+                for (Ability ability : projectile.getAbilities()) {
+                    if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
+                        if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
+                            projectile.setIsHit(true);
+                            ability.setIsHit(true);
+                        }
 
-                    //DISCUSS: Should projectile damage a building, or should the ability? Where would we get the damage from the projectile?
-                    gameData.addEvent(new Event(collidableBuilding.getID(), EventType.DAMAGE_BUILDING));
+                        //TODO: Ability-Collision event
+                    }
                 }
             }
 
