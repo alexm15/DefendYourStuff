@@ -20,8 +20,8 @@ import java.util.ArrayList;
 public class Character extends MovingEntity{
     private HealthSystem health;
 
-    public Character(float health, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
-        super(dimension, pos, collision, ab);
+    public Character(float health, Dimension dimension, Position pos, CollisionContainer collision) {
+        super(dimension, pos, collision);
         this.health = new HealthSystem(health);
     }
     
