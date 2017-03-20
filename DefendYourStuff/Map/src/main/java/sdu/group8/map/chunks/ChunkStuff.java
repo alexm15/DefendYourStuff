@@ -12,7 +12,7 @@ import static sdu.group8.map.chunks.BlockTypes.*;
  *
  * @author Alexander
  */
-public class Chunk {
+public class ChunkStuff {
     
     
 
@@ -53,7 +53,7 @@ public class Chunk {
         {AIR,    AIR},      
     };
     
-    public Chunk() {
+    public ChunkStuff() {
         
     }
     
