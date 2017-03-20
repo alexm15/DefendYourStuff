@@ -23,7 +23,6 @@ public abstract class Entity {
     private Dimension dimension;
     private Position pos;
     private CollisionContainer collisionContainer;
-    private boolean isHit = false;
 
     public Entity(Dimension dimension, Position pos, CollisionContainer collisionContainer) {
         this.ID = UUID.randomUUID();
@@ -98,14 +97,6 @@ public abstract class Entity {
 
     public ArrayList<EntityType> getCollidableTypes() {
         return this.collisionContainer.getCollidableTypes();
-    }
-
-    public boolean isHit() {
-        return isHit;
-    }
-
-    public void setIsHit(boolean isHit) {
-        this.isHit = isHit;
     }
 
 }

@@ -14,10 +14,12 @@ import java.util.UUID;
  * @author Martin
  */
 public class Ability {
+
     private UUID ID;
     private Position position;
     private float AOE;
     private DamageRange damageRange;
+    private boolean isHit = false;
 
     public Ability(Position position, float AOE, DamageRange damageRange) {
         this.ID = UUID.randomUUID();
@@ -53,5 +55,17 @@ public class Ability {
     public float getDamage() {
         return damageRange.getDamage();
     }
-    
+
+    public Position getPosition() {
+        return this.position;
+    }
+
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setIsHit(boolean isHit) {
+        this.isHit = isHit;
+    }
+
 }

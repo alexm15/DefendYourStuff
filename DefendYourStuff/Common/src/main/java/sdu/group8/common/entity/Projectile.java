@@ -18,6 +18,7 @@ public class Projectile extends MovingEntity{
     private float weight;
     private float angle;
     private float radius;
+    private boolean isHit = false;
 
     public Projectile(float weight, float angle, float radius, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
         super(dimension, pos, collision, ab);
@@ -49,6 +50,15 @@ public class Projectile extends MovingEntity{
     public void setAngle(float angle) {
         this.angle = angle;
     }
+
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setIsHit(boolean isHit) {
+        this.isHit = isHit;
+    }
+    
     
     
 }

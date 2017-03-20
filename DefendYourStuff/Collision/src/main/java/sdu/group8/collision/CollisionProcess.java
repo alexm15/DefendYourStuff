@@ -32,19 +32,16 @@ public class CollisionProcess implements IGamePostProcessingService {
         Collection<Character> characters = world.getCharacters();
         Collection<Projectile> projectiles = world.getProjectiles();
         Collection<Item> items = world.getItems();
-        Collection<Ability> abilities = world.getAbilities();
 
         for (Character character : characters) {
 
             Collection<Character> collidableCharacters = world.getCharacters(character.getCollidableTypes());
             for (Character collidableCharacter : collidableCharacters) {
                 if (boxCollision(character.getPosition(), character.getDimension(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
-                    character.setIsHit(true);
-                    collidableCharacter.setIsHit(true);
+
                 }
             }
 
-            
             for (Item item : items) {
                 if (boxCollision(character.getPosition(), character.getDimension(), item.getPosition(), item.getDimension())) {
                     // TODO: Create event that sends item.ID to the player. Let the player remove the item from World.
@@ -77,26 +74,21 @@ public class CollisionProcess implements IGamePostProcessingService {
                 }
             }
 
-            Collection<Building> collidableBuildings = world.getBuildings(projectile.getCollidableTypes());
-            for (Building collidableBuilding : collidableBuildings) {
-                if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
-                    projectile.setIsHit(true);
-                    
-                    //DISCUSS: Should projectile damage a building, or should the ability? Where would we get the damage from the projectile?
-                    gameData.addEvent(new Event(collidableBuilding.getID(), EventType.DAMAGE_BUILDING));
-                }
+            for (Ability ability : projectile.getAbilities()) {
+
             }
 
-        }
-        
-        // TODO: Check collision for Abilities.
-            for (Ability ability : abilities) {
-
-            Collection<Ability> collidableAbilities = world.getAbilities(ability.getCollidableTypes());
-            for (Ability collidableAbility : collidableAbilities) {
-                if (circleCollision(projectile.getPosition(), projectile.getRadius(), collidableProjectile.getPosition(), collidableProjectile.getRadius())) {
-                    projectile.setIsHit(true);
-                    collidableProjectile.setIsHit(true);
+            Collection<Character> collidableCharacters = world.getCharacters(projectile.getCollidableTypes());
+            for (Character collidableCharacter : collidableCharacters) {
+                for (Ability ability : projectile.getAbilities()) {
+                    if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
+                        if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
+                            projectile.setIsHit(true);
+                            ability.setIsHit(true);
+                        }
+                        
+                        //TODO: Ability-Collision event
+                    }
                 }
             }
 
@@ -104,7 +96,7 @@ public class CollisionProcess implements IGamePostProcessingService {
             for (Building collidableBuilding : collidableBuildings) {
                 if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
                     projectile.setIsHit(true);
-                    
+
                     //DISCUSS: Should projectile damage a building, or should the ability? Where would we get the damage from the projectile?
                     gameData.addEvent(new Event(collidableBuilding.getID(), EventType.DAMAGE_BUILDING));
                 }
@@ -112,7 +104,7 @@ public class CollisionProcess implements IGamePostProcessingService {
 
         }
     }
-    
+
     private boolean boxCollision(Position posE1, Dimension dimensionE1, Position posE2, Dimension dimensionE2) {
 
         float combinedX = Math.abs(posE1.getX() - posE2.getX());
