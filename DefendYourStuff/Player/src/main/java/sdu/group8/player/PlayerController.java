@@ -84,6 +84,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         player = new Player(moveSpeed, weight, health, dimension, position, collision, ability);
         gameData.setPlayerGold(0); //TODO Move gold to playerGold
         world.addCharacters(player);
+        
     }
 
     @Override

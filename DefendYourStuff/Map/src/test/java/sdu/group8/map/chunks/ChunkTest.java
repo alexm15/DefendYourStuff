@@ -20,7 +20,7 @@ import org.junit.Ignore;
  */
 public class ChunkTest {
     
-    private Chunk theChunk;
+    private ChunkStuff theChunk;
     
     public ChunkTest() {
     }
@@ -35,7 +35,7 @@ public class ChunkTest {
     
     @Before
     public void setUp() {
-        theChunk = new Chunk();
+        theChunk = new ChunkStuff();
     }
     
     @After
@@ -46,7 +46,7 @@ public class ChunkTest {
    
 
     /**
-     * Test of print2DArray method, of class Chunk.
+     * Test of print2DArray method, of class ChunkStuff.
      */
     @Test
     public void testPrint2DArray() {

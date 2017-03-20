@@ -14,12 +14,13 @@ import java.util.List;
 import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
+import sdu.group8.common.entity.Chunk;
+import sdu.group8.common.entity.ChunkTypes;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
-import sdu.group8.map.chunks.BlockTypes;
-import sdu.group8.map.chunks.Chunk;
+
 
 /**
  *
@@ -123,33 +124,47 @@ public class Game
 
     //TODO: Change draw method later for sprites.
     private void draw() {
-        Chunk c = new Chunk();
-        int[] gameColumn = new int[8];
+        
+        int[] windowsX = new int[8];
         for (int i = 1; i <= 8; i++) {
-            gameColumn[i-1] = i*(gameData.getDisplayWidth() / 10);
+            windowsX[i-1] = i*(gameData.getDisplayWidth() / 8);
         }
-        int[] gameRows = new int[6];
+        int[] windowsY = new int[6];
         for (int i = 1; i <= 6; i++) {
-            gameRows[i-1] = i*(gameData.getDisplayHeight() / 10);
-        }
-        System.out.println(gameColumn[0]);
-        System.out.println(gameRows[0]);
-        
-        BlockTypes[][] blocks = c.getCastleChunk();
-        System.out.println(blocks[0][0]);
-        batch.begin();
-        for (int i = 0; i < blocks.length; i++) {
-            for (int j = 0; j < blocks[i].length-1; j++) {
-                font.draw(batch, blocks[i][j].name(), gameColumn[i]/2, gameRows[j]/2);
-            }
+            windowsY[i-1] = i*(gameData.getDisplayHeight() / 6);
         }
         
+        previousMapLoad(windowsX, windowsY);
         
-        
-        batch.end();
-        
-        
+        Chunk castleChunk = world.getChunk(ChunkTypes.CASTLE_CHUNK);
+        System.out.println("The castleChunk: " + castleChunk);
 
+    }
+
+    private void previousMapLoad(int[] windowsX, int[] windowsY) {
+//        ChunkStuff c = new ChunkStuff();
+//        
+//        
+//        
+//        BlockTypes[][] blocks = c.getCastleChunk();
+//        batch.begin();
+//        for (int i = 0; i < blocks.length; i++) {
+//            for (int j = 0; j < blocks[i].length; j++) {
+//                font.draw(batch, blocks[i][j].name(), windowsX[i]-50, windowsY[j]-50);
+//            }
+//        }
+        
+        
+//        for (int i = 0; i < windowsX.length; i++) {
+//            System.out.println("WindowsX["+i+"] = " + windowsX[i]);
+//        }
+//        for (int i = 0; i < windowsY.length; i++) {
+//            System.out.println("WindowsY["+i+"] = " + windowsY[i]);
+//        }
+        
+        
+        
+        //batch.end();
     }
 
     @Override
