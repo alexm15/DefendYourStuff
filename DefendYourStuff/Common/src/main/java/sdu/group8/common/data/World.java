@@ -15,7 +15,6 @@ import sdu.group8.common.entity.Character;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  *
@@ -23,10 +22,10 @@ import java.util.UUID;
  */
 public class World<C extends Character, P extends Projectile, B extends Building> {
 
-    private Map<UUID, C> characters;
-    private Map<UUID, P> projectiles;
-    private Map<UUID, B> buildings;
-    private Map<UUID, Item> items;
+    private Map<String, C> characters;
+    private Map<String, P> projectiles;
+    private Map<String, B> buildings;
+    private Map<String, Item> items;
 
     //For MovingEntities
     public Collection<C> getCharacters() {

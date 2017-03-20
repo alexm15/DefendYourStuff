@@ -16,6 +16,8 @@ import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.entity.Character;
 import sdu.group8.common.entity.Item;
 import sdu.group8.common.entity.Projectile;
+import sdu.group8.common.events.Event;
+import sdu.group8.common.events.EventType;
 import sdu.group8.common.services.IGamePostProcessingService;
 
 /**
@@ -77,7 +79,8 @@ public class CollisionProcess implements IGamePostProcessingService {
                 if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
                     projectile.setIsHit(true);
                     
-                    //TODO: damage building
+                    //DISCUSS: Should projectile damage a building, or should the ability? Where would we get the damage from the projectile?
+                    gameData.addEvent(new Event(collidableBuilding.getID(), EventType.DAMAGE_BUILDING));
                 }
             }
 
