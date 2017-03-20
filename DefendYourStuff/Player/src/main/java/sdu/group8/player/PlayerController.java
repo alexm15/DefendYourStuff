@@ -12,6 +12,7 @@ import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import static sdu.group8.common.data.CollisionType.BOX;
+import sdu.group8.common.data.GameKeys;
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.events.Event;
 import static sdu.group8.common.events.EventType.PLAYER_DIES;
@@ -29,7 +30,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
     private boolean playerOnTheGround;
     private float vertivalVelocity;
     private float JUMP_FORCE = 100;
-    private float GRAVITY = 9.82f;
+    private float GRAVITY = 9.82f; //TODO move gravity to common  
     
     @Override
     public void process(GameData gameData, World world) {
@@ -45,18 +46,14 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             vertivalVelocity = 0;
         }
         
-        //Handle input
-        //TODO add gravity and then implement jump
-        boolean moveRight = true;
-        boolean moveLeft = true;
-        boolean jump = true;
+        //Handle input  
         
-        if(moveRight) {
+        if(gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             player.setPosition(player.getX()+(player.getMoveSpeed()*gameData.getDelta()), player.getY());
-        } else if(moveLeft) {
+        } else if(gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
             player.setPosition(player.getX()-(player.getMoveSpeed()*gameData.getDelta()), player.getY());
         }
-        if(jump) {
+        if(gameData.getKeys().isKeyDown(gameData.getKeys().W)) {
             if(playerOnTheGround) {
                 vertivalVelocity += JUMP_FORCE;
                 player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
