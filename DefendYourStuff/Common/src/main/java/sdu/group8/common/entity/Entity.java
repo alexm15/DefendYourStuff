@@ -12,6 +12,9 @@ import java.util.UUID;
 
 import java.util.ArrayList;
 import java.util.List;
+import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityContainer;
+
 
 /**
  *
@@ -23,14 +26,16 @@ public abstract class Entity {
     private Dimension dimension;
     private Position pos;
     private CollisionContainer collisionContainer;
+    private AbilityContainer abilities;
 
-    public Entity(Dimension dimension, Position pos, CollisionContainer collisionContainer) {
+    public Entity(Dimension dimension, Position pos, CollisionContainer collisionContainer, Ability... ab) {
         this.ID = UUID.randomUUID();
         this.dimension = dimension;
         this.pos = pos;
         this.collisionContainer = collisionContainer;
+        this.abilities = new AbilityContainer(ab);
     }
-
+    
     public String getID() {
         return ID.toString();
     }
@@ -97,6 +102,10 @@ public abstract class Entity {
 
     public ArrayList<EntityType> getCollidableTypes() {
         return this.collisionContainer.getCollidableTypes();
+    }
+    
+    public ArrayList<Ability> getAbilities() {
+        return abilities.getAbilites();
     }
 
 }
