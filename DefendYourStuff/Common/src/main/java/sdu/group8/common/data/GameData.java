@@ -32,6 +32,10 @@ public class GameData {
     public Position getCursorPosition() {
         return cursorPosition;
     }
+
+    public void setCursorPosition(Position cursorPosition) {
+        this.cursorPosition = cursorPosition;
+    }
     
     public int getPlayerGold() {
         return playerGold;

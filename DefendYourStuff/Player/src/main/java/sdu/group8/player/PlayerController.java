@@ -38,12 +38,14 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             Event event = new Event(player.getID().toString(), PLAYER_DIES); 
             gameData.addEvent(event);            
         }
-        if (!isPlayerOnGround()) {
+        if (!isPlayerOnGround(player)) {
             player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
             vertivalVelocity -= GRAVITY;
         } else {
             vertivalVelocity = 0;
         }
+        
+        Position position = gameData.getCursorPosition();
         
         //Handle input  
         
@@ -53,20 +55,19 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             player.setPosition(player.getX()-(player.getMoveSpeed()*gameData.getDelta()), player.getY());
         }
         if(gameData.getKeys().isKeyDown(gameData.getKeys().W)) {
-            if(isPlayerOnGround()) {
+            if(isPlayerOnGround(player)) {
                 vertivalVelocity += JUMP_FORCE;
                 player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
             }
         }
     }
     
-    private boolean isPlayerOnGround () {
-        /* 
-        Iterate through events and see if player collides with ground.
-        If player collides set to true
-        if not, set it to false
-        */
-        return true;
+    private boolean isPlayerOnGround (Player player) {
+        if(player.getPosition().getY() >= (100+player.getHeight()/2)) {
+            player.setPosition(player.getPosition().getX(), (100+player.getHeight()/2));
+            return true;
+        }
+        return false;
     }
 
     @Override
