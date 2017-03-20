@@ -42,6 +42,7 @@ public class CollisionProcess implements IGamePostProcessingService {
                 }
             }
 
+            
             for (Item item : items) {
                 if (boxCollision(character.getPosition(), character.getDimension(), item.getPosition(), item.getDimension())) {
                     // TODO: Create event that sends item.ID to the player. Let the player remove the item from World.

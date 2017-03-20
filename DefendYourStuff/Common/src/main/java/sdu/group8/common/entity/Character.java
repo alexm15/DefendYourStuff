@@ -18,17 +18,11 @@ import java.util.ArrayList;
  * @author Martin
  */
 public class Character extends MovingEntity{
-    private AbilityContainer abilites;
     private HealthSystem health;
 
     public Character(float health, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
-        super(dimension, pos, collision);
-        this.abilites = new AbilityContainer(ab);
+        super(dimension, pos, collision, ab);
         this.health = new HealthSystem(health);
-    }
-    
-    public ArrayList<Ability> getAbilities() {
-        return abilites.getAbilites();
     }
     
     public float getHealth() {

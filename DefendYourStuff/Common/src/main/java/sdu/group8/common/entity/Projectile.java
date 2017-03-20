@@ -5,6 +5,7 @@
  */
 package sdu.group8.common.entity;
 
+import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.CollisionContainer;
@@ -18,8 +19,8 @@ public class Projectile extends MovingEntity{
     private float angle;
     private float radius;
 
-    public Projectile(float weight, float angle, float radius, Dimension dimension, Position pos, CollisionContainer collision) {
-        super(dimension, pos, collision);
+    public Projectile(float weight, float angle, float radius, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
+        super(dimension, pos, collision, ab);
         this.weight = weight;
         this.angle = angle;
         this.radius = radius;
