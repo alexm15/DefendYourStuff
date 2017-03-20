@@ -42,12 +42,12 @@ public class GameInputProcessor extends InputAdapter {
 
     //Searches the list of all used keys, and returns true if that key is in that list
     public boolean keyDown(int k) {
-        gameData.getKeys().setKeyState(k, true);
+        gameData.getKeys().setKey(k, true);
         return true;
     }
 
     public boolean keyUp(int k) {
-        gameData.getKeys().setKeyState(k, false);
+        gameData.getKeys().setKey(k, false);
         return true;
     }
 
