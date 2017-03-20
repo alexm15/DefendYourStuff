@@ -30,8 +30,8 @@ public class Weapon {
         this.rangeMultiplier = rangeMultiplier;
     }
     
-    public UUID getID() {
-        return ID;
+    public String getID() {
+        return ID.toString();
     }
 
     public ArrayList<Ability> getAbilities() {

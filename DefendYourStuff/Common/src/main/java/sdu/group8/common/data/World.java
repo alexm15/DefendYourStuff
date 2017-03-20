@@ -11,10 +11,12 @@ import sdu.group8.common.entity.Item;
 import sdu.group8.common.entity.Projectile;
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.entity.Character;
+import sdu.group8.common.ability.Ability;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+
 
 /**
  *
@@ -26,6 +28,7 @@ public class World<C extends Character, P extends Projectile, B extends Building
     private Map<String, P> projectiles;
     private Map<String, B> buildings;
     private Map<String, Item> items;
+    private Map<String, Ability> abilities;
 
     //For MovingEntities
     public Collection<C> getCharacters() {
@@ -135,5 +138,22 @@ public class World<C extends Character, P extends Projectile, B extends Building
 
     public void removeProjectile(P entity) {
         items.remove(entity.getID());
+    }
+    //For abilities
+     public Collection<Ability> getAbilities() {
+        return abilities.values();
+    }
+
+    public void addAbility(Ability ability) {
+        abilities.put(ability.getID(), ability);
+
+    }
+
+    public void removeAbility(String entityID) {
+        abilities.remove(entityID);
+    }
+
+    public void removeAbility(Ability ability) {
+        abilities.remove(ability.getID());
     }
 }
