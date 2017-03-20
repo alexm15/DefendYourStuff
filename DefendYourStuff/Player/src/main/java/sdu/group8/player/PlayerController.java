@@ -28,8 +28,8 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
     
     Player player;
     private float vertivalVelocity;
-    private float JUMP_FORCE = 100;
-    private float GRAVITY = 9.82f; //TODO move gravity to common  
+    private float GRAVITY = 9.82f; //TODO move gravity to common 
+    
     
     @Override
     public void process(GameData gameData, World world) {
@@ -38,17 +38,15 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             Event event = new Event(player.getID().toString(), PLAYER_DIES); 
             gameData.addEvent(event);            
         }
+        //Handle gravity for player
         if (!isPlayerOnGround(player)) {
             player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
             vertivalVelocity -= GRAVITY;
         } else {
             vertivalVelocity = 0;
         }
-        
-        Position position = gameData.getCursorPosition();
-        
         //Handle input  
-        
+        player.setAimPoint(gameData.getCursorPosition());
         if(gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             player.setPosition(player.getX()+(player.getMoveSpeed()*gameData.getDelta()), player.getY());
         } else if(gameData.getKeys().isKeyDown(gameData.getKeys().A)) {

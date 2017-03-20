@@ -21,6 +21,8 @@ public class Player extends Character {
     private Weapon weapon;
     private float moveSpeed;
     private float weight;
+    private Position aimPoint;
+    private float JUMP_FORCE = 100;
 
     public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
         super(health, dimension, pos, collision, ab);
@@ -42,6 +44,14 @@ public class Player extends Character {
 
     public void setMoveSpeed(float moveSpeed) {
         this.moveSpeed = moveSpeed;
+    }
+
+    public Position getAimPoint() {
+        return aimPoint;
+    }
+
+    public void setAimPoint(Position aimPoint) {
+        this.aimPoint = aimPoint;
     }
     
     
