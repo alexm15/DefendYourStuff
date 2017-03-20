@@ -14,23 +14,42 @@ import sdu.group8.common.entity.Character;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import sdu.group8.common.entity.Entity;
+import sdu.group8.common.entity.Chunk;
+import sdu.group8.common.entity.ChunkTypes;
 
 /**
  *
  * @author Martin
  */
-public class World<C extends Character, P extends Projectile, B extends Building> {
+public class World<C extends Character, P extends Projectile, B extends Building, CHUNK extends Chunk> {
 
     private Map<UUID, C> characters;
     private Map<UUID, P> projectiles;
     private Map<UUID, B> buildings;
     private Map<UUID, Item> items;
+    private List<CHUNK> gameMap;
 
     //For MovingEntities
     public Collection<C> getCharacters() {
         return characters.values();
+    }
+    
+    public void addChunk(CHUNK chunk) {
+        gameMap.add(chunk);
+    }
+    
+    public CHUNK getChunk(ChunkTypes chunkType) {
+        for (CHUNK chunk : gameMap) {
+            if (chunk.getType() == chunkType) {
+                return chunk;
+            }
+            
+        }
+        return null;
     }
 
     public Collection<C> getCharacters(ArrayList<EntityType> entityTypes) {
@@ -136,5 +155,11 @@ public class World<C extends Character, P extends Projectile, B extends Building
 
     public void removeProjectile(P entity) {
         items.remove(entity.getID());
+    }
+
+    public void removeAllChunks() {
+        for (CHUNK chunk : gameMap) {
+            gameMap.remove(chunk);
+        }
     }
 }
