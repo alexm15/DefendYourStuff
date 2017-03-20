@@ -22,7 +22,7 @@ public class Player extends Character {
     private float moveSpeed;
     private float weight;
     private Position aimPoint;
-    private float JUMP_FORCE = 100;
+    private final float JUMP_FORCE = 100;
 
     public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
         super(health, dimension, pos, collision, ab);
@@ -53,8 +53,13 @@ public class Player extends Character {
     public void setAimPoint(Position aimPoint) {
         this.aimPoint = aimPoint;
     }
-    
-    
-    
-    
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public float getJUMP_FORCE() {
+        return JUMP_FORCE;
+    }
+       
 }
