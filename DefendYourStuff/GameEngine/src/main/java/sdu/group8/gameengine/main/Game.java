@@ -35,7 +35,7 @@ public class Game
     private List<IGamePluginService> gamePlugins = new ArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
-    private Collection<Character> characters = world.getCharacters();
+    private Collection<Character> characters;
 
     @Override
     public void create() {
@@ -56,6 +56,7 @@ public class Game
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
         }
+        characters = world.getCharacters();
     }
 
     private Game() {

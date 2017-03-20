@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package sdu.group8.player;
+import org.openide.util.lookup.ServiceProvider;
+import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.CollisionContainer;
 import sdu.group8.common.data.DamageRange;
@@ -24,6 +26,13 @@ import sdu.group8.common.services.IGameProcessingService;
  *
  * @author joach
  */
+@ServiceProviders(value = {
+    @ServiceProvider(service = IGameProcessingService.class)
+    ,
+    @ServiceProvider(service = IGamePluginService.class)}
+)
+
+
 public class PlayerController implements IGameProcessingService, IGamePluginService {
     
     Player player;
