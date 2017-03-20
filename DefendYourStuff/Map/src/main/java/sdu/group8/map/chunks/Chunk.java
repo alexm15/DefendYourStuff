@@ -73,13 +73,14 @@ public class Chunk {
     
     BlockTypes[][] grid = new BlockTypes[row][column];
     public BlockTypes[][] castleChunck = new BlockTypes[][] {
-        {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
-        {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
-        {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
-        {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
-        {AIR,           AIR,            CASTLE,         AIR,            AIR,            AIR,            AIR},
-        {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
-        {EARTH,         EARTH,          EARTH,          EARTH,          EARTH,          EARTH,          EARTH},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            CASTLE,         AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
         
     };
     
@@ -87,16 +88,34 @@ public class Chunk {
         return castleChunck;
     }
     
-    BlockTypes[][] rightBaseChunck = new BlockTypes[][] {
-        {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
-        {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
-        {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
-        {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
-        {FARM,          AIR,            AIR,            AIR,            AIR,            WALLTOWER,      AIR},
-        {AIR,           AIR,            AIR,            WELL,           AIR,            AIR,            AIR},
-        {EARTH,         EARTH,          EARTH,          EARTH,          EARTH,          EARTH,          EARTH},
+    
+    public BlockTypes[][] leftBaseChunk = new BlockTypes[][] {
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           WELL,           AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            WALLTOWER,      AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
         
     };
+    public BlockTypes[][] getRightBaseChunk() {
+        return leftBaseChunk;
+    }
+    
+    public BlockTypes[][] rightBaseChunck = new BlockTypes[][] {
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           WELL,           AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            WALLTOWER,      AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        
+    };
+    
     BlockTypes[][] leftBaseChunck = new BlockTypes[][] {
         {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
         {AIR,           AIR,            AIR,            AIR,            AIR,            AIR,            AIR},
