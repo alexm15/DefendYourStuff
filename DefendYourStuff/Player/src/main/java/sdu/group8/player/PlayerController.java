@@ -27,7 +27,6 @@ import sdu.group8.common.services.IGameProcessingService;
 public class PlayerController implements IGameProcessingService, IGamePluginService {
     
     Player player;
-    private boolean playerOnTheGround;
     private float vertivalVelocity;
     private float JUMP_FORCE = 100;
     private float GRAVITY = 9.82f; //TODO move gravity to common  
@@ -39,7 +38,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             Event event = new Event(player.getID().toString(), PLAYER_DIES); 
             gameData.addEvent(event);            
         }
-        if (!playerOnTheGround) {
+        if (!isPlayerOnGround()) {
             player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
             vertivalVelocity -= GRAVITY;
         } else {
@@ -54,11 +53,20 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             player.setPosition(player.getX()-(player.getMoveSpeed()*gameData.getDelta()), player.getY());
         }
         if(gameData.getKeys().isKeyDown(gameData.getKeys().W)) {
-            if(playerOnTheGround) {
+            if(isPlayerOnGround()) {
                 vertivalVelocity += JUMP_FORCE;
                 player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
             }
         }
+    }
+    
+    private boolean isPlayerOnGround () {
+        /* 
+        Iterate through events and see if player collides with ground.
+        If player collides set to true
+        if not, set it to false
+        */
+        return true;
     }
 
     @Override
