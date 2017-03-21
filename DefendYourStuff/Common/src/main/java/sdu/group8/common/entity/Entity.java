@@ -71,7 +71,7 @@ public abstract class Entity {
     public void setHeight(float height) {
         this.dimension.setHeight(height);
     }
-
+    
     public float getX() {
         return pos.getX();
     }
@@ -83,9 +83,21 @@ public abstract class Entity {
     public void setPosition(float x, float y) {
         this.pos.setPosition(x, y);
     }
+    
+    public void setPosition(Position pos) {
+        this.pos = pos;
+    }
 
     public Dimension getDimension() {
         return dimension;
+    }
+    
+    public void setDimension(float width, float height) {
+        this.dimension.setDimension(width, width);
+    }
+    
+    public void setDimension(Dimension dim) {
+        this.dimension = dim;
     }
 
     public Position getPosition() {

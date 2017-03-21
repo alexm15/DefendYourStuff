@@ -11,12 +11,11 @@ import sdu.group8.common.entity.Item;
 import sdu.group8.common.entity.Projectile;
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.entity.Character;
-import sdu.group8.common.ability.Ability;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -24,10 +23,10 @@ import java.util.Map;
  */
 public class World<C extends Character, P extends Projectile, B extends Building> {
 
-    private Map<String, C> characters;
-    private Map<String, P> projectiles;
-    private Map<String, B> buildings;
-    private Map<String, Item> items;
+    private Map<String, C> characters = new ConcurrentHashMap<>();
+    private Map<String, P> projectiles = new ConcurrentHashMap<>();
+    private Map<String, B> buildings = new ConcurrentHashMap<>();
+    private Map<String, Item> items = new ConcurrentHashMap<>();
 
     //For MovingEntities
     public Collection<C> getCharacters() {
