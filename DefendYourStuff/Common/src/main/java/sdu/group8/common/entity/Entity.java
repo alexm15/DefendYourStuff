@@ -5,7 +5,8 @@
  */
 package sdu.group8.common.entity;
 
-import sdu.group8.common.data.CollisionType;
+import sdu.group8.common.collision.CollisionContainer;
+import sdu.group8.common.collision.CollisionType;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.*;
 import java.util.UUID;

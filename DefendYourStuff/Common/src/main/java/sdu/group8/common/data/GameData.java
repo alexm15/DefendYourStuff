@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import sdu.group8.common.events.Event;
 import java.util.List;
-import sdu.group8.common.events.CollisionEvent;
+import sdu.group8.common.collision.CollisionEvent;
 
 /**
  *

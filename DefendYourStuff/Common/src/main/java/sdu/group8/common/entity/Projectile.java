@@ -7,7 +7,7 @@ package sdu.group8.common.entity;
 
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.data.CollisionContainer;
+import sdu.group8.common.collision.CollisionContainer;
 
 /**
  *

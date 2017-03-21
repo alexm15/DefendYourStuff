@@ -5,6 +5,7 @@
  */
 package sdu.group8.collision;
 
+import sdu.group8.common.collision.CollisionEvent;
 import java.util.Collection;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
@@ -28,103 +29,99 @@ import sdu.group8.common.services.IGamePostProcessingService;
 public class CollisionProcess implements IGamePostProcessingService {
 
     // Ability collision with Entity
-    private <E extends Entity> void handleAbilityCollision(E entity, E collidableEntity) {
+    private <E extends Entity> void handleAbilityCollision(GameData gameData, E entity, E collidableEntity) {
         for (Ability ability : entity.getAbilities()) {
             if (ability.isActive()) {
-                boolean collision = circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableEntity.getPosition(), collidableEntity.getDimension());
-                
-                if(collision) {
+
+                // check Ability-Entity collision
+                if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableEntity.getPosition(), collidableEntity.getDimension())) {
                     ability.setIsHit(true);
-                    //TODO
                 }
 
             }
         }
     }
 
+    private <E extends Entity> void createCollisionEvents(GameData gameData, E entity, E collidableEntity) {
+        gameData.addCollisionEvent(new CollisionEvent(entity.getID(), entity.getEntityType()));
+        gameData.addCollisionEvent(new CollisionEvent(collidableEntity.getID(), collidableEntity.getEntityType()));
+    }
+    
     @Override
     public void process(GameData gameData, World world) {
         Collection<Character> characters = world.getCharacters();
         Collection<Projectile> projectiles = world.getProjectiles();
         Collection<Item> items = world.getItems();
 
+        // Character collision
         for (Character character : characters) {
 
+            // Check character against other characters
             Collection<Character> collidableCharacters = world.getCharacters(character.getCollidableTypes());
             for (Character collidableCharacter : collidableCharacters) {
-                
+
                 handleAbilityCollision(character, collidableCharacter);
-                
+
                 // check Character-character collision
                 if (boxCollision(character.getPosition(), character.getDimension(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
-                    gameData.addCollisionEvent(new CollisionEvent(character.getID(), collidableCharacter.getID(), character.getEntityType(), collidableCharacter.getEntityType()));
+                    createCollisionEvents(gameData, character, collidableCharacter);
                 }
             }
 
+            // Check character against items
             for (Item item : items) {
                 if (boxCollision(character.getPosition(), character.getDimension(), item.getPosition(), item.getDimension())) {
-                    // TODO: Create event that sends item.ID to the player. Let the player remove the item from World.
+                    createCollisionEvents(gameData, character, item);
                 }
             }
 
+            // Check character against buildings
             Collection<Building> collidableBuildings = world.getBuildings(character.getCollidableTypes());
             for (Building collidableBuilding : collidableBuildings) {
-                for (Ability ability : character.getAbilities()) {
-                    //TODO: Check for active abilities first
-                    if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
-                        ability.isHit();
-                        //TODO: Ability-Collision event
-                    }
-                }
+
+                handleAbilityCollision(character, collidableBuilding);
+
                 if (boxCollision(character.getPosition(), character.getDimension(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
-                    if (character.getEntityType() == EntityType.PLAYER) {
-                        //TODO: Create player shop/upgrade event for building.ID
-                    }
-                    if (character.getEntityType() == EntityType.ENEMY) {
-                        //TODO: Create event for Enemy-Building collision
-                    }
-                    if (character.getEntityType() == EntityType.ALLY) {
-                        //TODO: Create event for Ally-Building collision
-                    }
+                    createCollisionEvents(gameData, character, collidableBuilding);
                 }
             }
         }
 
+        // Projectile collision
         for (Projectile projectile : projectiles) {
 
+            // Check projectile against other projectiles
             Collection<Projectile> collidableProjectiles = world.getProjectiles(projectile.getCollidableTypes());
             for (Projectile collidableProjectile : collidableProjectiles) {
+
+                // check projectile-projectile collision
                 if (circleCollision(projectile.getPosition(), projectile.getRadius(), collidableProjectile.getPosition(), collidableProjectile.getRadius())) {
-                    projectile.setIsHit(true);
-                    collidableProjectile.setIsHit(true);
+                    createCollisionEvents(gameData, projectile, collidableProjectile);
                 }
             }
 
+            // Check projectile against characters
             Collection<Character> collidableCharacters = world.getCharacters(projectile.getCollidableTypes());
             for (Character collidableCharacter : collidableCharacters) {
-                for (Ability ability : projectile.getAbilities()) {
-                    if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
-                        if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
-                            projectile.setIsHit(true);
-                            ability.setIsHit(true);
-                        }
 
-                        //TODO: Ability-Collision event
-                    }
+                handleAbilityCollision(projectile, collidableCharacter);
+
+                // Check projectile-character collision
+                if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
+                   createCollisionEvents(gameData, projectile, collidableCharacter);
                 }
             }
 
+            // Check projectile against buildings
             Collection<Building> collidableBuildings = world.getBuildings(projectile.getCollidableTypes());
             for (Building collidableBuilding : collidableBuildings) {
-                for (Ability ability : projectile.getAbilities()) {
-                    if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
-                        if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
-                            projectile.setIsHit(true);
-                            ability.setIsHit(true);
-                        }
 
-                        //TODO: Ability-Collision event
-                    }
+                // check projectile-building collision
+                handleAbilityCollision(projectile, collidableBuilding);
+
+                // check projectile-building collision
+                if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
+                    createCollisionEvents(gameData, projectile, collidableBuilding);
                 }
             }
 

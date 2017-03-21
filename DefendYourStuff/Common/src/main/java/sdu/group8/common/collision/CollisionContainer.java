@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.data;
+package sdu.group8.common.collision;
 
 import java.util.ArrayList;
 import java.util.List;
-import sdu.group8.common.data.CollisionType;
+import sdu.group8.common.collision.CollisionType;
 import sdu.group8.common.entity.EntityType;
 
 /**
