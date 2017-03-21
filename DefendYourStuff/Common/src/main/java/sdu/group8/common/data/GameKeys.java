@@ -77,7 +77,7 @@ public class GameKeys {
         return currentKeyStates.get(key) && !previousKeyStates.get(key);
     }
 
-    public void setKeyState(int key, boolean state) {
+    public void setKey(int key, boolean state) {
         currentKeyStates.put(key, state);
     }
 }
