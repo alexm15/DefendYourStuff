@@ -133,7 +133,6 @@ public class Game
         for (int i = 1; i <= 6; i++) {
             windowsY[i-1] = i*(gameData.getDisplayHeight() / 6);
         }
-        
         previousMapLoad(windowsX, windowsY);
         
         Chunk castleChunk = world.getChunk(ChunkTypes.CASTLE_CHUNK);
@@ -142,6 +141,8 @@ public class Game
     }
 
     private void previousMapLoad(int[] windowsX, int[] windowsY) {
+        
+        
 //        ChunkStuff c = new ChunkStuff();
 //        
 //        
@@ -153,15 +154,15 @@ public class Game
 //                font.draw(batch, blocks[i][j].name(), windowsX[i]-50, windowsY[j]-50);
 //            }
 //        }
-        
-        
+//        
+//        
 //        for (int i = 0; i < windowsX.length; i++) {
 //            System.out.println("WindowsX["+i+"] = " + windowsX[i]);
 //        }
 //        for (int i = 0; i < windowsY.length; i++) {
 //            System.out.println("WindowsY["+i+"] = " + windowsY[i]);
 //        }
-        
+//        
         
         
         //batch.end();

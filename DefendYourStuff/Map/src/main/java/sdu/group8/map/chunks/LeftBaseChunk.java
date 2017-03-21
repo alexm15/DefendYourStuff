@@ -6,12 +6,13 @@
 
 package sdu.group8.map.chunks;
 
+import sdu.group8.common.entity.BlockTypes;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.ChunkTypes;
-import static sdu.group8.map.chunks.BlockTypes.AIR;
-import static sdu.group8.map.chunks.BlockTypes.EARTH;
-import static sdu.group8.map.chunks.BlockTypes.WALLTOWER;
-import static sdu.group8.map.chunks.BlockTypes.WELL;
+import static sdu.group8.common.entity.BlockTypes.AIR;
+import static sdu.group8.common.entity.BlockTypes.EARTH;
+import static sdu.group8.common.entity.BlockTypes.WALLTOWER;
+import static sdu.group8.common.entity.BlockTypes.WELL;
 
 /**
  *
@@ -33,11 +34,6 @@ public class LeftBaseChunk extends Chunk
 
     public LeftBaseChunk(ChunkTypes type) {
         super(type);
-    }
-
-    public BlockTypes[][] getLeftBaseChunk() {
-        return leftBaseChunk;
-    }
-    
-    
+        setChunkMatrix(leftBaseChunk);
+    } 
 }

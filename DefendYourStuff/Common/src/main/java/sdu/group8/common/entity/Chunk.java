@@ -18,6 +18,7 @@ public abstract class Chunk
     private Position position;
     private Dimension dimension;
     private ChunkTypes type;
+    private BlockTypes[][] chunkMatrix;
     
     public Position getPosition() {
         return position;
@@ -42,8 +43,14 @@ public abstract class Chunk
     public ChunkTypes getType() {
         return type;
     }
-    
-    
+  
+    public BlockTypes[][] getChunkMatrix() {
+        return chunkMatrix;
+    }
+
+    public void setChunkMatrix(BlockTypes[][] chunkMatrix) {
+        this.chunkMatrix = chunkMatrix;
+    }
     
             
 }

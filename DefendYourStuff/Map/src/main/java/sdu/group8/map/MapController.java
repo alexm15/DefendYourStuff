@@ -6,6 +6,7 @@
 
 package sdu.group8.map;
 
+import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
@@ -21,6 +22,7 @@ import sdu.group8.map.chunks.RightBaseChunk;
  *
  * @author Alexander
  */
+@ServiceProviders()
 public class MapController implements IGamePluginService, IGameProcessingService
 {
 

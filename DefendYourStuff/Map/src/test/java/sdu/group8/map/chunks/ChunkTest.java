@@ -5,6 +5,7 @@
  */
 package sdu.group8.map.chunks;
 
+import sdu.group8.common.entity.BlockTypes;
 import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;

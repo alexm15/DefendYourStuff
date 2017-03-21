@@ -5,8 +5,9 @@
  */
 package sdu.group8.map.chunks;
 
+import sdu.group8.common.entity.BlockTypes;
 import java.util.Arrays;
-import static sdu.group8.map.chunks.BlockTypes.*;
+import static sdu.group8.common.entity.BlockTypes.*;
 
 /**
  *

@@ -6,9 +6,10 @@
 
 package sdu.group8.map.chunks;
 
-import static sdu.group8.map.chunks.BlockTypes.AIR;
-import static sdu.group8.map.chunks.BlockTypes.CASTLE;
-import static sdu.group8.map.chunks.BlockTypes.EARTH;
+import sdu.group8.common.entity.BlockTypes;
+import static sdu.group8.common.entity.BlockTypes.AIR;
+import static sdu.group8.common.entity.BlockTypes.CASTLE;
+import static sdu.group8.common.entity.BlockTypes.EARTH;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.ChunkTypes;
 
@@ -32,10 +33,6 @@ public class CastleChunk extends Chunk
 
     public CastleChunk(ChunkTypes type) {
         super(type);
-    }
-    
-    public BlockTypes[][] getCastleChunk() {
-        return castleChunck;
-    }
-    
+        setChunkMatrix(castleChunck);
+    } 
 }
