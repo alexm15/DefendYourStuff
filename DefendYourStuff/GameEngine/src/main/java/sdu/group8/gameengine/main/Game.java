@@ -2,6 +2,7 @@ package sdu.group8.gameengine.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -15,6 +16,7 @@ import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
+import sdu.group8.common.entity.Character;
 
 /**
  *
@@ -33,6 +35,7 @@ public class Game
     private List<IGamePluginService> gamePlugins = new ArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
+    private Collection<Character> characters;
 
     @Override
     public void create() {
@@ -53,6 +56,7 @@ public class Game
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
         }
+        characters = world.getCharacters();
     }
 
     private Game() {
@@ -107,7 +111,18 @@ public class Game
 
     //TODO: Change draw method later for sprites.
     private void draw() {
-
+         // Used to test playermovements
+        for (Character player : characters) {
+            sr.setColor(Color.RED);
+            sr.begin(ShapeRenderer.ShapeType.Filled);
+            float x = player.getX();
+            float y = player.getY();
+            float height = player.getHeight();
+            float width = player.getWidth();
+            sr.rect(x, y, width, height);
+            sr.end();   
+        }
+        
     }
 
     @Override
