@@ -20,6 +20,7 @@ public class Ability {
     private float AOE;
     private DamageRange damageRange;
     private boolean isHit = false;
+    private boolean isActive = false;
 
     public Ability(Position position, float AOE, DamageRange damageRange) {
         this.ID = UUID.randomUUID();
@@ -67,5 +68,12 @@ public class Ability {
     public void setIsHit(boolean isHit) {
         this.isHit = isHit;
     }
-
+    
+    public boolean isActive(){
+        return isActive;
+    } 
+    
+    public void setIsActive(){
+        this.isActive = isActive;
+    }
 }
