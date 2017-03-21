@@ -15,6 +15,7 @@ import sdu.group8.common.entity.Building;
 
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.entity.Character;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.common.entity.Item;
 import sdu.group8.common.entity.Projectile;
 import sdu.group8.common.events.*;
@@ -26,6 +27,21 @@ import sdu.group8.common.services.IGamePostProcessingService;
  */
 public class CollisionProcess implements IGamePostProcessingService {
 
+    // Ability collision with Entity
+    private <E extends Entity> void handleAbilityCollision(E entity, E collidableEntity) {
+        for (Ability ability : entity.getAbilities()) {
+            if (ability.isActive()) {
+                boolean collision = circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableEntity.getPosition(), collidableEntity.getDimension());
+                
+                if(collision) {
+                    ability.setIsHit(true);
+                    //TODO
+                }
+
+            }
+        }
+    }
+
     @Override
     public void process(GameData gameData, World world) {
         Collection<Character> characters = world.getCharacters();
@@ -34,19 +50,14 @@ public class CollisionProcess implements IGamePostProcessingService {
 
         for (Character character : characters) {
 
-            
             Collection<Character> collidableCharacters = world.getCharacters(character.getCollidableTypes());
             for (Character collidableCharacter : collidableCharacters) {
-                for (Ability ability : character.getAbilities()) {
-                    //TODO: Check for active abilities first
-                    if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
-                        ability.isHit();
-                        //TODO: Ability-Collision event
-                        
-                    }
-                }
+                
+                handleAbilityCollision(character, collidableCharacter);
+                
+                // check Character-character collision
                 if (boxCollision(character.getPosition(), character.getDimension(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
-                    // Character-Collision event
+                    gameData.addCollisionEvent(new CollisionEvent(character.getID(), collidableCharacter.getID(), character.getEntityType(), collidableCharacter.getEntityType()));
                 }
             }
 
