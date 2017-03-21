@@ -111,14 +111,18 @@ public class Game
 
     //TODO: Change draw method later for sprites.
     private void draw() {
+        /* // Used to test playermovements
         for (Character player : characters) {
+            sr.setColor(Color.RED);
+            sr.begin(ShapeRenderer.ShapeType.Filled);
             float x = player.getX();
             float y = player.getY();
             float height = player.getHeight();
             float width = player.getWidth();
             sr.rect(x, y, width, height);
             sr.end();   
-        } 
+        }
+        */
     }
 
     @Override
