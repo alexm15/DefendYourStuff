@@ -17,6 +17,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
+import sdu.group8.common.entity.BlockTypes;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.ChunkTypes;
@@ -31,26 +33,31 @@ public class World<C extends Character, P extends Projectile, B extends Building
     private Map<UUID, P> projectiles;
     private Map<UUID, B> buildings;
     private Map<UUID, Item> items;
-    private List<CHUNK> gameMap;
+    
 
     //For MovingEntities
     public Collection<C> getCharacters() {
         return characters.values();
     }
     
-    public void addChunk(CHUNK chunk) {
-        gameMap.add(chunk);
-    }
     
-    public CHUNK getChunk(ChunkTypes chunkType) {
-        for (CHUNK chunk : gameMap) {
-            if (chunk.getType() == chunkType) {
-                return chunk;
-            }
-            
-        }
-        return null;
-    }
+    
+    
+    
+//    
+
+//    public Chunk getChunk(ChunkTypes chunkType) {
+//        for (CHUNK chunk : getGameMap()) {
+//            
+//                if (chunk.getType().equals(chunkType)) {
+//                    return chunk;
+//                }
+//            }
+//        
+//        return null;
+//    }
+    
+  
 
     public Collection<C> getCharacters(ArrayList<EntityType> entityTypes) {
         Collection<C> r = new ArrayList<>();
@@ -157,9 +164,5 @@ public class World<C extends Character, P extends Projectile, B extends Building
         items.remove(entity.getID());
     }
 
-    public void removeAllChunks() {
-        for (CHUNK chunk : gameMap) {
-            gameMap.remove(chunk);
-        }
-    }
+    
 }

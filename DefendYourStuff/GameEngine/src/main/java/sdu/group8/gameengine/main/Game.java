@@ -8,19 +8,21 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
+import sdu.group8.common.entity.BlockTypes;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.ChunkTypes;
+import static sdu.group8.common.entity.ChunkTypes.*;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
-
 
 /**
  *
@@ -41,7 +43,20 @@ public class Game
     private static Game instance = null;
     private SpriteBatch batch;
     private BitmapFont font;
-   
+    
+
+    /**
+     * Positions chunk in the game window
+     */
+    private static int SCREEN = 8;
+    /**
+     * Positions chunk left of game window
+     */
+    private int LEFT_OF_SCREEN;
+    /**
+     * Positions chunk right of game window 
+     */
+    private int RIGHT_OF_SCREEN;
 
     @Override
     public void create() {
@@ -58,18 +73,17 @@ public class Game
         Gdx.input.setInputProcessor(
                 new GameInputProcessor(gameData)
         );
-        
+
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.RED);
-        //TODO: create grid with matrix from Map module.
-        
-        
-        //TODO: load content of matrix into grid.
 
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
         }
+        //TODO: load content of matrix into grid.
+
+        gameData.initGridForBlocks();
     }
 
     private Game() {
@@ -124,49 +138,47 @@ public class Game
 
     //TODO: Change draw method later for sprites.
     private void draw() {
+        LEFT_OF_SCREEN = 8;
+        RIGHT_OF_SCREEN = 8;
         
-        int[] windowsX = new int[8];
-        for (int i = 1; i <= 8; i++) {
-            windowsX[i-1] = i*(gameData.getDisplayWidth() / 8);
-        }
-        int[] windowsY = new int[6];
-        for (int i = 1; i <= 6; i++) {
-            windowsY[i-1] = i*(gameData.getDisplayHeight() / 6);
-        }
-        previousMapLoad(windowsX, windowsY);
+        ArrayList<BlockTypes[][]> middleChunk = gameData.getChunksMiddle();
+        ArrayList<BlockTypes[][]> leftChunk = gameData.getChunksRight();
+        ArrayList<BlockTypes[][]> rightChunk = gameData.getChunksLeft();
         
-        Chunk castleChunk = world.getChunk(ChunkTypes.CASTLE_CHUNK);
-        System.out.println("The castleChunk: " + castleChunk);
-
+        for (BlockTypes[][] chunk : middleChunk) {
+            loadScreenChunk(chunk, SCREEN);
+        }
+        for (BlockTypes[][] chunk : leftChunk) {
+            LEFT_OF_SCREEN -= 8;
+            loadScreenChunk(chunk, LEFT_OF_SCREEN);
+        }
+        for (BlockTypes[][] chunk : rightChunk) {
+            RIGHT_OF_SCREEN += 8;
+            loadScreenChunk(chunk, RIGHT_OF_SCREEN);
+        }
+        
+        sr.begin(ShapeType.Line);
+        sr.setColor(1, 1, 1, 1);
+        sr.line(0, 100, 800, 100);
+        sr.end();
     }
 
-    private void previousMapLoad(int[] windowsX, int[] windowsY) {
-        
-        
-//        ChunkStuff c = new ChunkStuff();
-//        
-//        
-//        
-//        BlockTypes[][] blocks = c.getCastleChunk();
-//        batch.begin();
-//        for (int i = 0; i < blocks.length; i++) {
-//            for (int j = 0; j < blocks[i].length; j++) {
-//                font.draw(batch, blocks[i][j].name(), windowsX[i]-50, windowsY[j]-50);
-//            }
-//        }
-//        
-//        
-//        for (int i = 0; i < windowsX.length; i++) {
-//            System.out.println("WindowsX["+i+"] = " + windowsX[i]);
-//        }
-//        for (int i = 0; i < windowsY.length; i++) {
-//            System.out.println("WindowsY["+i+"] = " + windowsY[i]);
-//        }
-//        
-        
-        
-        //batch.end();
+    /**
+     * 
+     * @param theChunk the chunk loaded in game window
+     * @param chunkPosition the chunk position in the game window. (See static int's for positions)
+     */
+    private void loadScreenChunk(BlockTypes[][] theChunk, int chunkPosition) {
+        batch.begin();
+        for (int i = 0; i < theChunk.length; i++) {
+            for (int j = 0; j < theChunk[i].length; j++) {
+                //FIXME: windowsX to ArrayList and choosing the right one.
+                //font.draw(batch, theChunk[i][j].name(), windowsX[i+chunkPosition] - 50, windowsY[j] - 50);
+            }
+        }
+        batch.end();
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -183,4 +195,6 @@ public class Game
     @Override
     public void dispose() {
     }
+
+    
 }

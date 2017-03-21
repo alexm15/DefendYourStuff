@@ -36,15 +36,15 @@ public class MapController implements IGamePluginService, IGameProcessingService
         Chunk castleChunk = new CastleChunk(CASTLE_CHUNK);
         Chunk leftBaseChunk = new LeftBaseChunk(LEFT_BASE_CHUNK);
         Chunk rightBaseChunk = new RightBaseChunk(RIGHT_BASE_CHUNK);
-        
-        world.addChunk(leftBaseChunk);
-        world.addChunk(rightBaseChunk);
-        world.addChunk(castleChunk);
+      
+        gameData.addLeftChunk(leftBaseChunk);
+        gameData.addRigtChunk(rightBaseChunk);
+        gameData.addMiddleChunk(castleChunk);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeAllChunks();
+        gameData.removeAllChunks();
     }
 
     @Override
