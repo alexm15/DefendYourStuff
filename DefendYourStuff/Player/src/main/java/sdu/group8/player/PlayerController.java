@@ -55,12 +55,16 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         }
         //Handle input  
         player.setAimPoint(gameData.getCursorPosition());
+        
+        if(gameData.getKeys().isKeyPressed(gameData.getKeys().E)) {
+            System.out.println("Aimpoint: " + player.getAimPoint());    //FIXME make libgdx aim the at the right place
+        }
         if(gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             player.setPosition(player.getX()+(player.getMoveSpeed()*gameData.getDelta()), player.getY());
         } else if(gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
             player.setPosition(player.getX()-(player.getMoveSpeed()*gameData.getDelta()), player.getY());
         }
-        if(gameData.getKeys().isKeyDown(gameData.getKeys().W)) {
+        if(gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {
             if(isPlayerOnGround(player)) {
                 vertivalVelocity += (player.getJUMP_FORCE()-player.getWeight());
                 player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
@@ -69,8 +73,8 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
     }
     
     private boolean isPlayerOnGround (Player player) {
-        if(player.getPosition().getY() >= (100+player.getHeight()/2)) {
-            player.setPosition(player.getPosition().getX(), (100+player.getHeight()/2));
+        if(player.getPosition().getY() <= 50+player.getHeight()/2) {
+            player.setPosition(player.getPosition().getX(), (50+player.getHeight()/2));
             return true;
         }
         return false;
@@ -81,11 +85,11 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         float health = 100;
         float moveSpeed = 100;
         float weight = 10;
-        float width = 0;
-        float height = 0;
+        float width = 50;
+        float height = 50;
         Dimension dimension = new Dimension(width, height); //Should match the sprites size
-        float x = 0;
-        float y = 0;
+        float x = gameData.getDisplayWidth()/2;
+        float y = gameData.getDisplayHeight()/2;
         Position position = new Position(x,y); //Should be startposition
         CollisionContainer collision = new CollisionContainer(BOX, EntityType.PLAYER, EntityType.ALLY);
         float AOE = 0;

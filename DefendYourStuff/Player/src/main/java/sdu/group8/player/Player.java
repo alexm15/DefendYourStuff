@@ -22,7 +22,7 @@ public class Player extends Character {
     private float moveSpeed;
     private float weight;
     private Position aimPoint;
-    private final float JUMP_FORCE = 100;
+    private final float JUMP_FORCE = 350;
 
     public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
         super(health, dimension, pos, collision, ab);
