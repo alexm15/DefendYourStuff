@@ -36,8 +36,8 @@ public abstract class Entity {
         this.abilities = new AbilityContainer(ab);
     }
     
-    public String getID() {
-        return ID.toString();
+    public UUID getID() {
+        return ID;
     }
 
     public List<EntityType> getTypesToIgnore() {

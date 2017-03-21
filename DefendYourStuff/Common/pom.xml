@@ -18,6 +18,7 @@
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
                         <publicPackage>sdu.group8.common.ability</publicPackage>
+                        <publicPackage>sdu.group8.common.collision</publicPackage>
                         <publicPackage>sdu.group8.common.data</publicPackage>
                         <publicPackage>sdu.group8.common.entity</publicPackage>
                         <publicPackage>sdu.group8.common.enums</publicPackage>

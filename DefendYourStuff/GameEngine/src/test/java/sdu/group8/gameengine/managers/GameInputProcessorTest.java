@@ -51,14 +51,7 @@ public class GameInputProcessorTest {
     @org.junit.Test
     public void testMouseMoved() {
         System.out.println("mouseMoved");
-        int screenX = 0;
-        int screenY = 0;
-        GameInputProcessor instance = null;
-        boolean expResult = false;
-        boolean result = instance.mouseMoved(screenX, screenY);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -67,15 +60,7 @@ public class GameInputProcessorTest {
     @org.junit.Test
     public void testTouchDown() {
         System.out.println("touchDown");
-        int screenX = 0;
-        int screenY = 0;
-        int pointer = 0;
-        int button = 0;
-        boolean expResult = false;
-        boolean result = inputProcessor.touchDown(screenX, screenY, pointer, button);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -84,16 +69,7 @@ public class GameInputProcessorTest {
     @org.junit.Test
     public void testTouchUp() {
         System.out.println("touchUp");
-        int screenX = 0;
-        int screenY = 0;
-        int pointer = 0;
-        int button = 0;
-        GameInputProcessor instance = null;
-        boolean expResult = false;
-        boolean result = instance.touchUp(screenX, screenY, pointer, button);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**

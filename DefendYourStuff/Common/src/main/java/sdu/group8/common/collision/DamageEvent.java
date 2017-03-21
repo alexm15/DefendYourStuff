@@ -5,6 +5,7 @@
  */
 package sdu.group8.common.collision;
 
+import java.util.UUID;
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.events.Event;
 
@@ -13,17 +14,17 @@ import sdu.group8.common.events.Event;
  * @author Martin
  */
 public class DamageEvent extends Event{
-    private String ID;
+    private UUID ID;
     private EntityType type;
     private float damage;
 
-    public DamageEvent(String ID, EntityType type, float dmg) {
+    public DamageEvent(UUID ID, EntityType type, float dmg) {
         this.ID = ID;
         this.type = type;
         this.damage = dmg;
     }
     
-    public String getID() {
+    public UUID getID() {
         return ID;
     }
     

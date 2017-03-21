@@ -15,6 +15,7 @@ import sdu.group8.common.entity.Character;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -23,10 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class World<C extends Character, P extends Projectile, B extends Building> {
 
-    private Map<String, C> characters = new ConcurrentHashMap<>();
-    private Map<String, P> projectiles = new ConcurrentHashMap<>();
-    private Map<String, B> buildings = new ConcurrentHashMap<>();
-    private Map<String, Item> items = new ConcurrentHashMap<>();
+    private Map<UUID, C> characters = new ConcurrentHashMap<>();
+    private Map<UUID, P> projectiles = new ConcurrentHashMap<>();
+    private Map<UUID, B> buildings = new ConcurrentHashMap<>();
+    private Map<UUID, Item> items = new ConcurrentHashMap<>();
 
     //For MovingEntities
     public Collection<C> getCharacters() {
@@ -50,11 +51,11 @@ public class World<C extends Character, P extends Projectile, B extends Building
         characters.put(entity.getID(), entity);
     }
 
-    public void removeCharacters(String entityID) {
+    public void removeCharacter(UUID entityID) {
         characters.remove(entityID);
     }
 
-    public void removeCharacters(C entity) {
+    public void removeCharacter(C entity) {
         characters.remove(entity.getID());
     }
 
@@ -81,7 +82,7 @@ public class World<C extends Character, P extends Projectile, B extends Building
 
     }
 
-    public void removeBuilding(String entityID) {
+    public void removeBuilding(UUID entityID) {
         buildings.remove(entityID);
     }
 
@@ -99,7 +100,7 @@ public class World<C extends Character, P extends Projectile, B extends Building
 
     }
 
-    public void removeItem(String entityID) {
+    public void removeItem(UUID entityID) {
         items.remove(entityID);
     }
 
@@ -130,7 +131,7 @@ public class World<C extends Character, P extends Projectile, B extends Building
 
     }
 
-    public void removeProjectile(String entityID) {
+    public void removeProjectile(UUID entityID) {
         projectiles.remove(entityID);
     }
 

@@ -47,14 +47,16 @@ public class CollisionProcessTest {
 
     @After
     public void tearDown() {
+        world.getBuildings().clear();
+        world.getCharacters().clear();
+        world.getItems().clear();
+        world.getProjectiles().clear();
     }
 
-    /**
-     * Test of process method, of class CollisionProcess.
-     */
+
     @org.junit.Test
-    public void testProcess() {
-        System.out.println("process");
+    public void createCollisionEvent() {
+        System.out.println("createCollisionEvent");
         CollisionProcess instance = new CollisionProcess();
 
         // player
@@ -70,7 +72,7 @@ public class CollisionProcessTest {
 
         // Enemy
         Dimension enemyDim = new Dimension(5, 5);
-        Position enemyPos = new Position(0, 0);
+        Position enemyPos = new Position(5, 5);
         DamageRange enemyDamageRange = new DamageRange(5, 100);
         Ability enemyAbility = new Ability(enemyPos, 0, enemyDamageRange);
         CollisionContainer enemyCollision = new CollisionContainer(EntityType.ENEMY, EntityType.ENEMY);
@@ -82,5 +84,6 @@ public class CollisionProcessTest {
         boolean result = gameData.getCollisionEvents().isEmpty();
         assertNotEquals(expectedResult, result);
     }
+    
 
 }
