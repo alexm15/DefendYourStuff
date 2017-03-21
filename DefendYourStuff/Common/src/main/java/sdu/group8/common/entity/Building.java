@@ -6,6 +6,7 @@
 package sdu.group8.common.entity;
 
 import java.util.ArrayList;
+import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.data.HealthSystem;
@@ -22,8 +23,8 @@ public abstract class Building extends Entity{
     private int upgradeLevel;
     private HealthSystem health;
 
-    public Building(Dimension dimension, Position pos, CollisionContainer collisionContainer, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health) {
-        super(dimension, pos, collisionContainer);
+    public Building(Dimension dimension, Position pos, CollisionContainer collisionContainer, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
+        super(dimension, pos, collisionContainer, ab);
         this.buildingType = buildingType;
         this.isAttackable = isAttackable;
         this.upgradeLevel = upgradeLevel;

@@ -6,10 +6,8 @@
 package sdu.group8.common.data;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import sdu.group8.common.events.Event;
-import java.util.List;
 import sdu.group8.common.collision.CollisionEvent;
+import sdu.group8.common.collision.DamageEvent;
 
 /**
  *
@@ -22,6 +20,7 @@ public class GameData {
     private int displayHeight;
     private final GameKeys keys;
     private final ArrayList<CollisionEvent> collisionEvents = new ArrayList<>();
+    private final ArrayList<DamageEvent> damageEvents = new ArrayList<>();
     private int playerGold;
 
     public GameData() {
@@ -44,18 +43,6 @@ public class GameData {
         this.playerGold -= gold;
     }
 
-    public void addCollisionEvent(CollisionEvent e) {
-        collisionEvents.add(e);
-    }
-
-    public void removeCollisionEvent(CollisionEvent e) {
-        collisionEvents.remove(e);
-    }
-
-    public ArrayList<CollisionEvent> getCollisionEvents() {
-        return collisionEvents;
-    }
-    
     public float getDelta() {
         return delta;
     }
@@ -63,6 +50,7 @@ public class GameData {
     public void setDelta(float delta) {
         this.delta = delta;
         expireCollisionEvents();
+        expireDamageEvents();
     }
 
     public int getDisplayWidth() {
@@ -85,12 +73,48 @@ public class GameData {
         return keys;
     }
 
+    // Colision Event
+    public void addCollisionEvent(CollisionEvent e) {
+        collisionEvents.add(e);
+    }
+
+    public void removeCollisionEvent(CollisionEvent e) {
+        collisionEvents.remove(e);
+    }
+
+    public ArrayList<CollisionEvent> getCollisionEvents() {
+        return collisionEvents;
+    }
+
     private void expireCollisionEvents() {
         //TODO: update method to use the wildcards generic collection
         for (CollisionEvent event : collisionEvents) {
             event.reduceExpiration(delta);
             if (event.isIsExpired()) {
                 removeCollisionEvent(event);
+            }
+        }
+    }
+
+    // DamageEvent
+    public void addDamageEvent(DamageEvent e) {
+        damageEvents.add(e);
+    }
+
+    public void removeDamageEvent(DamageEvent e) {
+        damageEvents.remove(e);
+    }
+
+    public ArrayList<DamageEvent> getDamageEvents() {
+        return damageEvents;
+    }
+
+    private void expireDamageEvents() {
+        //TODO: update method to use the wildcards generic collection
+        for (DamageEvent event : damageEvents) {
+            event.reduceExpiration(delta);
+            if (event.isIsExpired()) {
+                removeDamageEvent(event);
             }
         }
     }

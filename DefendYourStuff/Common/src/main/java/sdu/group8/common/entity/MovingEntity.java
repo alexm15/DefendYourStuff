@@ -5,6 +5,7 @@
  */
 package sdu.group8.common.entity;
 
+import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.collision.CollisionContainer;
@@ -18,8 +19,8 @@ public abstract class MovingEntity extends Entity {
     private float dx;
     private float dy;
 
-    public MovingEntity(Dimension dimension, Position pos, CollisionContainer collision) {
-        super(dimension, pos, collision);
+    public MovingEntity(Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
+        super(dimension, pos, collision, ab);
     }
         
 

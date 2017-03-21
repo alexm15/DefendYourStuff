@@ -47,7 +47,7 @@ public class World<C extends Character, P extends Projectile, B extends Building
         return r;
     }
 
-    public void addCharacters(C entity) {
+    public void addCharacter(C entity) {
         characters.put(entity.getID(), entity);
     }
 

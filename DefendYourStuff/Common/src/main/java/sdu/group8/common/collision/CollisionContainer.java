@@ -6,8 +6,6 @@
 package sdu.group8.common.collision;
 
 import java.util.ArrayList;
-import java.util.List;
-import sdu.group8.common.collision.CollisionType;
 import sdu.group8.common.entity.EntityType;
 
 /**
@@ -16,26 +14,16 @@ import sdu.group8.common.entity.EntityType;
  */
 public class CollisionContainer {
 
-    private CollisionType collisionType;
     private EntityType entityType;
     private ArrayList<EntityType> typesToIgnore;
 
-    public CollisionContainer(CollisionType collisionType, EntityType entityType, EntityType... et) {
-        this.collisionType = collisionType;
+    public CollisionContainer(EntityType entityType, EntityType... et) {
         this.entityType = entityType;
         this.typesToIgnore = new ArrayList<>();
 
         for (EntityType eType : et) {
             typesToIgnore.add(eType);
         }
-    }
-
-    public CollisionType getCollisionType() {
-        return collisionType;
-    }
-
-    public void setCollisionType(CollisionType collisionType) {
-        this.collisionType = collisionType;
     }
 
     public ArrayList<EntityType> getTypesToIgnore() {

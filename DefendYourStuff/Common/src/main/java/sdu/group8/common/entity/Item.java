@@ -5,6 +5,7 @@
  */
 package sdu.group8.common.entity;
 
+import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.collision.CollisionContainer;
@@ -17,7 +18,7 @@ public class Item extends Entity{
     private float expirationTime;
     private QualityType qualityType;
 
-    public Item(float expirationTime, QualityType qualityType, Dimension dimension, Position position, CollisionContainer collision) {
+    public Item(float expirationTime, QualityType qualityType, Dimension dimension, Position position, CollisionContainer collision, Ability... ab) {
         super(dimension, position, collision);
         this.expirationTime = expirationTime;
         this.qualityType = qualityType;

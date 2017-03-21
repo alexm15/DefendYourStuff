@@ -17,10 +17,10 @@ public class DamageEvent extends Event{
     private EntityType type;
     private float damage;
 
-    public DamageEvent(String ID, EntityType type1) {
+    public DamageEvent(String ID, EntityType type, float dmg) {
         this.ID = ID;
         this.type = type;
-        this.damage = damage;
+        this.damage = dmg;
     }
     
     public String getID() {

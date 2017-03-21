@@ -6,7 +6,6 @@
 package sdu.group8.common.entity;
 
 import sdu.group8.common.collision.CollisionContainer;
-import sdu.group8.common.collision.CollisionType;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.*;
 import java.util.UUID;
@@ -55,14 +54,6 @@ public abstract class Entity {
 
     public void setEntityType(EntityType entityType) {
         this.collisionContainer.setEntityType(entityType);
-    }
-
-    public CollisionType getCollisionType() {
-        return this.collisionContainer.getCollisionType();
-    }
-
-    public void setCollisionType(CollisionType collisionType) {
-        this.collisionContainer.setCollisionType(collisionType);
     }
 
     public float getWidth() {
