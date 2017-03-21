@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -23,10 +24,10 @@ import java.util.UUID;
  */
 public class World<C extends Character, P extends Projectile, B extends Building> {
 
-    private Map<UUID, C> characters;
-    private Map<UUID, P> projectiles;
-    private Map<UUID, B> buildings;
-    private Map<UUID, Item> items;
+    private Map<UUID, C> characters = new ConcurrentHashMap<>();
+    private Map<UUID, P> projectiles = new ConcurrentHashMap<>();
+    private Map<UUID, B> buildings = new ConcurrentHashMap<>();
+    private Map<UUID, Item> items = new ConcurrentHashMap<>();
 
     //For MovingEntities
     public Collection<C> getCharacters() {

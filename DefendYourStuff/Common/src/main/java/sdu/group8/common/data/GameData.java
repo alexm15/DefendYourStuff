@@ -22,12 +22,26 @@ public class GameData {
     private final GameKeys keys;
     private final List<Event> events;
     private int playerGold;
+    private Position cursorPosition;
+    private final float GRAVITY = 9.82f;
 
     public GameData() {
         this.keys = new GameKeys();
         this.events = new ArrayList<Event>();
     }
 
+    public Position getCursorPosition() {
+        return cursorPosition;
+    }
+
+    public float getGRAVITY() {
+        return GRAVITY;
+    }
+    
+    public void setCursorPosition(Position cursorPosition) {
+        this.cursorPosition = cursorPosition;
+    }
+    
     public int getPlayerGold() {
         return playerGold;
     }

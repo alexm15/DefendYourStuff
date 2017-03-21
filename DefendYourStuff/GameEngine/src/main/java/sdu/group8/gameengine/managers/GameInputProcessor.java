@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector3;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.GameKeys;
+import sdu.group8.common.data.Position;
 import sdu.group8.gameengine.main.Game;
 
 public class GameInputProcessor extends InputAdapter {
@@ -19,8 +20,10 @@ public class GameInputProcessor extends InputAdapter {
         this.gameData = gameData;
     }
 
+    @Override
     public boolean mouseMoved(int screenX, int screenY) {
-
+        Position cursorPosition = new Position(Gdx.input.getX(), Gdx.input.getY());
+        gameData.setCursorPosition(cursorPosition);
         return true;
     }
 
@@ -50,5 +53,4 @@ public class GameInputProcessor extends InputAdapter {
         gameData.getKeys().setKeyState(k, false);
         return true;
     }
-
 }

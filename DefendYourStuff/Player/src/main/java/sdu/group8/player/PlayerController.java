@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package sdu.group8.player;
+import org.openide.util.lookup.ServiceProvider;
+import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.CollisionContainer;
 import sdu.group8.common.data.DamageRange;
@@ -12,6 +14,7 @@ import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import static sdu.group8.common.data.CollisionType.BOX;
+import sdu.group8.common.data.GameKeys;
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.events.Event;
 import static sdu.group8.common.events.EventType.PLAYER_DIES;
@@ -23,13 +26,18 @@ import sdu.group8.common.services.IGameProcessingService;
  *
  * @author joach
  */
+@ServiceProviders(value = {
+    @ServiceProvider(service = IGameProcessingService.class)
+    ,
+    @ServiceProvider(service = IGamePluginService.class)}
+)
+
+
 public class PlayerController implements IGameProcessingService, IGamePluginService {
     
     Player player;
-    private boolean playerOnTheGround;
     private float vertivalVelocity;
-    private float JUMP_FORCE = 100;
-    private float GRAVITY = 9.82f;
+    
     
     @Override
     public void process(GameData gameData, World world) {
@@ -38,30 +46,38 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             Event event = new Event(player.getID().toString(), PLAYER_DIES); 
             gameData.addEvent(event);            
         }
-        if (!playerOnTheGround) {
+        //Handle gravity for player
+        if (!isPlayerOnGround(player)) {
             player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
-            vertivalVelocity -= GRAVITY;
+            vertivalVelocity -= gameData.getGRAVITY();
         } else {
             vertivalVelocity = 0;
         }
+        //Handle input  
+        player.setAimPoint(gameData.getCursorPosition());
         
-        //Handle input
-        //TODO add gravity and then implement jump
-        boolean moveRight = true;
-        boolean moveLeft = true;
-        boolean jump = true;
-        
-        if(moveRight) {
+        if(gameData.getKeys().isKeyPressed(gameData.getKeys().E)) {
+            System.out.println("Aimpoint: " + player.getAimPoint());    //FIXME make libgdx aim the at the right place
+        }
+        if(gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             player.setPosition(player.getX()+(player.getMoveSpeed()*gameData.getDelta()), player.getY());
-        } else if(moveLeft) {
+        } else if(gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
             player.setPosition(player.getX()-(player.getMoveSpeed()*gameData.getDelta()), player.getY());
         }
-        if(jump) {
-            if(playerOnTheGround) {
-                vertivalVelocity += JUMP_FORCE;
+        if(gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {
+            if(isPlayerOnGround(player)) {
+                vertivalVelocity += (player.getJUMP_FORCE()-player.getWeight());
                 player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
             }
         }
+    }
+    
+    private boolean isPlayerOnGround (Player player) {
+        if(player.getPosition().getY() <= 50+player.getHeight()/2) {
+            player.setPosition(player.getPosition().getX(), (50+player.getHeight()/2));
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -69,11 +85,11 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         float health = 100;
         float moveSpeed = 100;
         float weight = 10;
-        float width = 0;
-        float height = 0;
+        float width = 50;
+        float height = 50;
         Dimension dimension = new Dimension(width, height); //Should match the sprites size
-        float x = 0;
-        float y = 0;
+        float x = gameData.getDisplayWidth()/2;
+        float y = gameData.getDisplayHeight()/2;
         Position position = new Position(x,y); //Should be startposition
         CollisionContainer collision = new CollisionContainer(BOX, EntityType.PLAYER, EntityType.ALLY);
         float AOE = 0;
@@ -90,7 +106,4 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
     public void stop(GameData gameData, World world) {
         world.removeCharacters(player);
     }
-    
-    
-    
 }
