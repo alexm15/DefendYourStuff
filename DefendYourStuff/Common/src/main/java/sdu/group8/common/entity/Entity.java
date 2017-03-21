@@ -87,6 +87,10 @@ public abstract class Entity {
     public void setPosition(float x, float y) {
         this.pos.setPosition(x, y);
     }
+    
+    public void setPosition(Position pos) {
+        this.pos = pos;
+    }
 
     public Dimension getDimension() {
         return dimension;

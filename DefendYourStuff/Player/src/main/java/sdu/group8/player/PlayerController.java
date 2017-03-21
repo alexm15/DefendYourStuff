@@ -57,7 +57,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         player.setAimPoint(gameData.getCursorPosition());
         
         if(gameData.getKeys().isKeyPressed(gameData.getKeys().E)) {
-            System.out.println("Aimpoint: " + player.getAimPoint());    //FIXME make libgdx aim the at the right place
+            player.setPosition(player.getAimPoint());
         }
         if(gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             player.setPosition(player.getX()+(player.getMoveSpeed()*gameData.getDelta()), player.getY());

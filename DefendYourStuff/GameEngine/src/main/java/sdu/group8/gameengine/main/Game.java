@@ -111,7 +111,7 @@ public class Game
 
     //TODO: Change draw method later for sprites.
     private void draw() {
-        /* // Used to test playermovements
+         // Used to test playermovements
         for (Character player : characters) {
             sr.setColor(Color.RED);
             sr.begin(ShapeRenderer.ShapeType.Filled);
@@ -122,7 +122,7 @@ public class Game
             sr.rect(x, y, width, height);
             sr.end();   
         }
-        */
+        
     }
 
     @Override
