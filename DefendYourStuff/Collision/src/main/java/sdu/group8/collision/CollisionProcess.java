@@ -17,8 +17,7 @@ import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.entity.Character;
 import sdu.group8.common.entity.Item;
 import sdu.group8.common.entity.Projectile;
-import sdu.group8.common.events.Event;
-import sdu.group8.common.events.EventType;
+import sdu.group8.common.events.*;
 import sdu.group8.common.services.IGamePostProcessingService;
 
 /**
@@ -35,6 +34,7 @@ public class CollisionProcess implements IGamePostProcessingService {
 
         for (Character character : characters) {
 
+            
             Collection<Character> collidableCharacters = world.getCharacters(character.getCollidableTypes());
             for (Character collidableCharacter : collidableCharacters) {
                 for (Ability ability : character.getAbilities()) {
@@ -42,6 +42,7 @@ public class CollisionProcess implements IGamePostProcessingService {
                     if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
                         ability.isHit();
                         //TODO: Ability-Collision event
+                        
                     }
                 }
                 if (boxCollision(character.getPosition(), character.getDimension(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
