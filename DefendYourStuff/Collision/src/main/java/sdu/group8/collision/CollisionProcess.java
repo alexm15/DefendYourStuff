@@ -74,7 +74,7 @@ public class CollisionProcess implements IGamePostProcessingService {
     private <E extends Entity> void characterCollision(Character character, Collection<E> collidableEntities) {
         for (E collidableEntity : collidableEntities) {
 
-            // check characterAbility-entity box-circle collision
+            // check ability box-circle collision
             handleAbilityCollision(character, collidableEntity);
             handleAbilityCollision(collidableEntity, character);
 
@@ -88,7 +88,7 @@ public class CollisionProcess implements IGamePostProcessingService {
     private <E extends Entity> void projectileCollision(Projectile projectile, Collection<E> collidableEntities) {
         for (E collidableEntity : collidableEntities) {
 
-            // check projectileAbility-entity box-circle collision
+            // check ability box-circle collision
             handleAbilityCollision(projectile, collidableEntity);
             handleAbilityCollision(collidableEntity, projectile);
 
@@ -120,14 +120,14 @@ public class CollisionProcess implements IGamePostProcessingService {
 
     private boolean boxCollision(Position posE1, Dimension dimensionE1, Position posE2, Dimension dimensionE2) {
 
-        float combinedX = Math.abs(posE1.getX() - posE2.getX());
-        float combinedY = Math.abs(posE1.getY() - posE2.getY());
-        float yLength = (dimensionE1.getHeight() / 2) + (dimensionE2.getHeight() / 2);
-        float xLength = (dimensionE1.getWidth() / 2) + (dimensionE2.getWidth() / 2);
+        float distanceX = Math.abs(posE1.getX() - posE2.getX());
+        float distanceY = Math.abs(posE1.getY() - posE2.getY());
+        float combinedLengthX = (dimensionE1.getHeight() / 2) + (dimensionE2.getHeight() / 2);
+        float combinedLengthY = (dimensionE1.getWidth() / 2) + (dimensionE2.getWidth() / 2);
 
-        // If circle is inside or intersecting with the box dimensions, then there is a collision.
-        if (combinedX < xLength) {
-            if (combinedY < yLength) {
+        // If dimension is inside or intersecting with the other dimensions, then there is a collision.
+        if (distanceX < combinedLengthX) {
+            if (distanceY < combinedLengthY) {
                 return true;
             }
         }
@@ -135,38 +135,51 @@ public class CollisionProcess implements IGamePostProcessingService {
         return false;
     }
 
-    //TODO: Make a more specific(true) box-circle collision
-    private boolean circleBoxCollision(Position posE1, float radiusE1, Position posE2, Dimension dimensionE2) {
+    private boolean circleBoxCollision(Position circlePosition, float radius, Position boxPosition, Dimension boxDimension) {
 
-        float combinedX = Math.abs(posE1.getX() - posE2.getX());
-        float combinedY = Math.abs(posE1.getY() - posE2.getY());
-        float yLength = radiusE1 + (dimensionE2.getHeight() / 2);
-        float xLength = radiusE1 + (dimensionE2.getWidth() / 2);
+        float boxInnerBoundaryX = boxDimension.getWidth() / 2;
+        float boxInnerBoundaryY = boxDimension.getHeight() / 2;
 
-        // If circle is inside or intersecting with the box dimensions, then there is a collision.
-        if (combinedX < xLength) {
-            if (combinedY < yLength) {
+        // get position in world where each side of the rectangle is
+        float rectangleLeft = boxPosition.getX() - boxInnerBoundaryX;
+        float rectangleRight = boxPosition.getX() + boxInnerBoundaryX;
+        float rectangleTop = boxPosition.getY() - boxInnerBoundaryY;
+        float rectangleBottom = boxPosition.getY() + boxInnerBoundaryY;
+
+        // get side of the rectangle the circle is nearest
+        float closestX = clamp(rectangleLeft, circlePosition.getX(), rectangleRight);
+        float closestY = clamp(rectangleTop, circlePosition.getX(), rectangleBottom);
+
+        // if circle is inside of the rectangle
+        if (closestX == circlePosition.getX()) {
+            if (closestY == circlePosition.getY()) {
                 return true;
             }
         }
+        
+        // calculate x and y distance from circle and rectangle side
+        float distanceX = Math.abs(circlePosition.getX() - closestX);
+        float distanceY = Math.abs(circlePosition.getY() - closestY);
 
-        return false;
+        // calculate actual distance between circle and nearst point in rectangle
+        float hyp = (float) Math.hypot(distanceX, distanceY);
+
+        // if the distance is less than the circle radius, a collision is true
+        return (hyp <= radius);
     }
 
     private boolean circleCollision(Position e1, float radiusE1, Position e2, float radiusE2) {
-        boolean b = false;
-
-        // hyp = sqrt((x1-x2)^2 + (y1-y2)^2)
+        // Find distance between both entities (hyp)
         float x = e1.getX() - e2.getX();
         float y = e1.getY() - e2.getY();
         float hyp = (float) Math.hypot(x, y);
 
-        // If the distance between both entities (hyp) is less than their combined radius, there is a collision.
-        if ((radiusE1 + radiusE2) > hyp) {
-            b = true;
-        }
-
-        return b;
+        // If the distance between both entities (hyp) is less than equal their combined radius, there is a collision.
+        return hyp <= radiusE1 + radiusE2;
     }
 
+    // https://jsperf.com/math-clamp/9 - Best performance
+    private float clamp(float value, float min, float max) {
+        return Math.min(max, Math.max(min, value));
+    }
 }
