@@ -47,15 +47,15 @@ public class World<C extends Character, P extends Projectile, B extends Building
         return r;
     }
 
-    public void addCharacters(C entity) {
+    public void addCharacter(C entity) {
         characters.put(entity.getID(), entity);
     }
 
-    public void removeCharacters(String entityID) {
+    public void removeCharacter(UUID entityID) {
         characters.remove(entityID);
     }
 
-    public void removeCharacters(C entity) {
+    public void removeCharacter(C entity) {
         characters.remove(entity.getID());
     }
 
@@ -82,7 +82,7 @@ public class World<C extends Character, P extends Projectile, B extends Building
 
     }
 
-    public void removeBuilding(String entityID) {
+    public void removeBuilding(UUID entityID) {
         buildings.remove(entityID);
     }
 
@@ -100,7 +100,7 @@ public class World<C extends Character, P extends Projectile, B extends Building
 
     }
 
-    public void removeItem(String entityID) {
+    public void removeItem(UUID entityID) {
         items.remove(entityID);
     }
 
@@ -131,7 +131,7 @@ public class World<C extends Character, P extends Projectile, B extends Building
 
     }
 
-    public void removeProjectile(String entityID) {
+    public void removeProjectile(UUID entityID) {
         projectiles.remove(entityID);
     }
 

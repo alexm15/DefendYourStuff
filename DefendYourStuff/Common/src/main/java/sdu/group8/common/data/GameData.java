@@ -6,9 +6,8 @@
 package sdu.group8.common.data;
 
 import java.util.ArrayList;
-import sdu.group8.common.events.Event;
-import java.util.List;
-import sdu.group8.common.events.EventType;
+import sdu.group8.common.collision.CollisionEvent;
+import sdu.group8.common.collision.DamageEvent;
 
 /**
  *
@@ -20,14 +19,14 @@ public class GameData {
     private int displayWidth;
     private int displayHeight;
     private final GameKeys keys;
-    private final List<Event> events;
+    private final ArrayList<CollisionEvent> collisionEvents = new ArrayList<>();
+    private final ArrayList<DamageEvent> damageEvents = new ArrayList<>();
     private int playerGold;
     private Position cursorPosition;
     private final float GRAVITY = 9.82f;
 
     public GameData() {
         this.keys = new GameKeys();
-        this.events = new ArrayList<Event>();
     }
 
     public Position getCursorPosition() {
@@ -49,36 +48,13 @@ public class GameData {
     public void setPlayerGold(int playerGold) {
         this.playerGold = playerGold;
     }
-    
-    public void addPlayerGold (int gold) {
+
+    public void addPlayerGold(int gold) {
         this.playerGold += gold;
     }
-    
-    public void removePlayerGold (int gold) {
+
+    public void removePlayerGold(int gold) {
         this.playerGold -= gold;
-    }
-
-    public void addEvent(Event e) {
-        events.add(e);
-    }
-
-    public void removeEvent(Event e) {
-        events.remove(e);
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public List<Event> getEvents(EventType eventType, String id) {
-        List<Event> r = new ArrayList<>();
-
-        for (Event event : events) {
-            if (event.getEventType().equals(eventType) && event.getCreatorID().equals(id)) {
-                r.add(event);
-            }
-        }
-        return r;
     }
 
     public float getDelta() {
@@ -87,7 +63,8 @@ public class GameData {
 
     public void setDelta(float delta) {
         this.delta = delta;
-        expireEvents();
+        expireCollisionEvents();
+        expireDamageEvents();
     }
 
     public int getDisplayWidth() {
@@ -110,11 +87,48 @@ public class GameData {
         return keys;
     }
 
-    private void expireEvents() {
-        for (Event event : events) {
+    // Colision Event
+    public void addCollisionEvent(CollisionEvent e) {
+        collisionEvents.add(e);
+    }
+
+    public void removeCollisionEvent(CollisionEvent e) {
+        collisionEvents.remove(e);
+    }
+
+    public ArrayList<CollisionEvent> getCollisionEvents() {
+        return collisionEvents;
+    }
+
+    private void expireCollisionEvents() {
+        //TODO: update method to use the wildcards generic collection
+        for (CollisionEvent event : collisionEvents) {
             event.reduceExpiration(delta);
-            if(event.isIsExpired()) {
-                removeEvent(event);
+            if (event.isIsExpired()) {
+                removeCollisionEvent(event);
+            }
+        }
+    }
+
+    // DamageEvent
+    public void addDamageEvent(DamageEvent e) {
+        damageEvents.add(e);
+    }
+
+    public void removeDamageEvent(DamageEvent e) {
+        damageEvents.remove(e);
+    }
+
+    public ArrayList<DamageEvent> getDamageEvents() {
+        return damageEvents;
+    }
+
+    private void expireDamageEvents() {
+        //TODO: update method to use the wildcards generic collection
+        for (DamageEvent event : damageEvents) {
+            event.reduceExpiration(delta);
+            if (event.isIsExpired()) {
+                removeDamageEvent(event);
             }
         }
     }

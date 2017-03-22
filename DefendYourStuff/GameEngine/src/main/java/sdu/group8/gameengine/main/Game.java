@@ -106,7 +106,8 @@ public class Game
         for (IGamePostProcessingService postProcess : getPostProcesses()) {
             postProcess.process(gameData, world);
         }
-
+        
+        
     }
 
     //TODO: Change draw method later for sprites.

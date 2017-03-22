@@ -6,11 +6,9 @@
 package sdu.group8.common.entity;
 
 import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityContainer;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.data.CollisionContainer;
-import java.util.ArrayList;
+import sdu.group8.common.collision.CollisionContainer;
 
 /**
  *
@@ -18,13 +16,11 @@ import java.util.ArrayList;
  */
 public class Item extends Entity{
     private float expirationTime;
-    private AbilityContainer abilities;
     private QualityType qualityType;
 
     public Item(float expirationTime, QualityType qualityType, Dimension dimension, Position position, CollisionContainer collision, Ability... ab) {
         super(dimension, position, collision);
         this.expirationTime = expirationTime;
-        this.abilities = new AbilityContainer(ab);
         this.qualityType = qualityType;
     }
 
@@ -41,10 +37,6 @@ public class Item extends Entity{
         if(this.expirationTime < 0) {
             this.expirationTime = 0;
         }
-    }
-
-    public ArrayList<Ability> getAbilities() {
-        return abilities.getAbilites();
     }
 
     public QualityType getQualityType() {

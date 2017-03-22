@@ -5,9 +5,10 @@
  */
 package sdu.group8.common.entity;
 
+import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.data.CollisionContainer;
+import sdu.group8.common.collision.CollisionContainer;
 
 /**
  *
@@ -17,9 +18,10 @@ public class Projectile extends MovingEntity{
     private float weight;
     private float angle;
     private float radius;
+    private boolean isHit = false;
 
-    public Projectile(float weight, float angle, float radius, Dimension dimension, Position pos, CollisionContainer collision) {
-        super(dimension, pos, collision);
+    public Projectile(float weight, float angle, float radius, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
+        super(dimension, pos, collision, ab);
         this.weight = weight;
         this.angle = angle;
         this.radius = radius;
@@ -48,6 +50,15 @@ public class Projectile extends MovingEntity{
     public void setAngle(float angle) {
         this.angle = angle;
     }
+
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setIsHit(boolean isHit) {
+        this.isHit = isHit;
+    }
+    
     
     
 }

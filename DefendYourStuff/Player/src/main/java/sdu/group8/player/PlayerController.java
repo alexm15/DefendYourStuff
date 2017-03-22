@@ -7,17 +7,13 @@ package sdu.group8.player;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
-import sdu.group8.common.data.CollisionContainer;
+import sdu.group8.common.collision.CollisionContainer;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import static sdu.group8.common.data.CollisionType.BOX;
-import sdu.group8.common.data.GameKeys;
 import sdu.group8.common.entity.EntityType;
-import sdu.group8.common.events.Event;
-import static sdu.group8.common.events.EventType.PLAYER_DIES;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 
@@ -42,9 +38,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
     @Override
     public void process(GameData gameData, World world) {
         if (player.getHealth() == 0) {
-            //TODO Make event take UUID in instead of string
-            Event event = new Event(player.getID().toString(), PLAYER_DIES); 
-            gameData.addEvent(event);            
+            //TODO: remove player from world. Set isGameOver in gameData.           
         }
         //Handle gravity for player
         if (!isPlayerOnGround(player)) {
@@ -91,7 +85,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         float x = gameData.getDisplayWidth()/2;
         float y = gameData.getDisplayHeight()/2;
         Position position = new Position(x,y); //Should be startposition
-        CollisionContainer collision = new CollisionContainer(BOX, EntityType.PLAYER, EntityType.ALLY);
+        CollisionContainer collision = new CollisionContainer(EntityType.PLAYER, EntityType.ALLY);
         float AOE = 0;
         float minDamage = 0;
         float maxDamage = 0;
@@ -99,11 +93,11 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         Ability ability = new Ability(position, AOE, damageRange); //Should be a predifined ability
         player = new Player(moveSpeed, weight, health, dimension, position, collision, ability);
         gameData.setPlayerGold(0); //TODO Move gold to playerGold
-        world.addCharacters(player);
+        world.addCharacter(player);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeCharacters(player);
+        world.removeCharacter(player);
     }
 }
