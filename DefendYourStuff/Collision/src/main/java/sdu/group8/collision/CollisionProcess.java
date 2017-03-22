@@ -27,8 +27,13 @@ import sdu.group8.common.services.IGamePostProcessingService;
  */
 public class CollisionProcess implements IGamePostProcessingService {
 
+    GameData gameData;
+
     @Override
     public void process(GameData gameData, World world) {
+
+        this.gameData = gameData;
+
         Collection<Character> characters = world.getCharacters();
         Collection<Projectile> projectiles = world.getProjectiles();
         Collection<Item> items = world.getItems();
@@ -38,14 +43,14 @@ public class CollisionProcess implements IGamePostProcessingService {
 
             // Check character against other characters
             Collection<Character> collidableCharacters = world.getCharacters(character.getCollidableTypes());
-            characterCollision(gameData, character, collidableCharacters);
+            characterCollision(character, collidableCharacters);
 
             // Check character against items
-            characterCollision(gameData, character, items);
+            characterCollision(character, items);
 
             // Check character against buildings
             Collection<Building> collidableBuildings = world.getBuildings(character.getCollidableTypes());
-            characterCollision(gameData, character, collidableBuildings);
+            characterCollision(character, collidableBuildings);
         }
 
         // Projectile collision
@@ -53,64 +58,64 @@ public class CollisionProcess implements IGamePostProcessingService {
 
             // Check projectile against other projectiles
             Collection<Projectile> collidableProjectiles = world.getProjectiles(projectile.getCollidableTypes());
-            projectileCollision(gameData, projectile, collidableProjectiles);
+            projectileCollision(projectile, collidableProjectiles);
 
             // Check projectile against characters
             Collection<Character> collidableCharacters = world.getCharacters(projectile.getCollidableTypes());
-            projectileCollision(gameData, projectile, collidableCharacters);
+            projectileCollision(projectile, collidableCharacters);
 
             // Check projectile against buildings
             Collection<Building> collidableBuildings = world.getBuildings(projectile.getCollidableTypes());
-            projectileCollision(gameData, projectile, collidableBuildings);
+            projectileCollision(projectile, collidableBuildings);
 
         }
     }
 
-    private <E extends Entity> void characterCollision(GameData gameData, Character character, Collection<E> collidableEntities) {
+    private <E extends Entity> void characterCollision(Character character, Collection<E> collidableEntities) {
         for (E collidableEntity : collidableEntities) {
 
             // check characterAbility-entity box-circle collision
-            handleAbilityCollision(gameData, character, collidableEntity);
+            handleAbilityCollision(character, collidableEntity);
+            handleAbilityCollision(collidableEntity, character);
 
             // check character-building collision
             if (boxCollision(character.getPosition(), character.getDimension(), collidableEntity.getPosition(), collidableEntity.getDimension())) {
-                createCollisionEvents(gameData, character, collidableEntity);
+                createCollisionEvents(character, collidableEntity);
             }
         }
     }
 
-    private <E extends Entity> void projectileCollision(GameData gameData, Projectile projectile, Collection<E> collidableEntities) {
+    private <E extends Entity> void projectileCollision(Projectile projectile, Collection<E> collidableEntities) {
         for (E collidableEntity : collidableEntities) {
 
             // check projectileAbility-entity box-circle collision
-            handleAbilityCollision(gameData, projectile, collidableEntity);
+            handleAbilityCollision(projectile, collidableEntity);
+            handleAbilityCollision(collidableEntity, projectile);
 
             // check projectile-entity collision
             if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableEntity.getPosition(), collidableEntity.getDimension())) {
-                createCollisionEvents(gameData, projectile, collidableEntity);
+                createCollisionEvents(projectile, collidableEntity);
             }
         }
     }
 
-    // Ability collision with Entity
-    private <E extends Entity, V extends Entity> void handleAbilityCollision(GameData gameData, E entity, V collidableEntity) {
-        for (Ability ability : entity.getAbilities()) {
-
+    // Wildcard Ability collision with Entity
+    private <E extends Entity, V extends Entity> void handleAbilityCollision(E ownerrEntity, V collidableEntity) {
+        for (Ability ability : ownerrEntity.getAbilities()) {
             if (ability.isActive()) {
                 // check Ability-Entity collision
                 if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableEntity.getPosition(), collidableEntity.getDimension())) {
                     ability.setIsHit(true);
-                    gameData.addDamageEvent(new DamageEvent(entity.getID(), entity.getEntityType(), ability.getDamage()));
+                    gameData.addDamageEvent(new DamageEvent(collidableEntity.getID(), collidableEntity.getEntityType(), ability.getDamage()));
                 }
-
             }
         }
     }
 
-    // dynamic crate collision event
-    private <E extends Entity> void createCollisionEvents(GameData gameData, E entity, E collidableEntity) {
-        gameData.addCollisionEvent(new CollisionEvent(entity.getID(), entity.getEntityType()));
-        gameData.addCollisionEvent(new CollisionEvent(collidableEntity.getID(), collidableEntity.getEntityType()));
+    // Wildcard crate collision event
+    private <E extends Entity> void createCollisionEvents(E entity, E collidableEntity) {
+        gameData.addCollisionEvent(new CollisionEvent(entity.getID(), collidableEntity.getID()));
+        gameData.addCollisionEvent(new CollisionEvent(collidableEntity.getID(), entity.getID()));
     }
 
     private boolean boxCollision(Position posE1, Dimension dimensionE1, Position posE2, Dimension dimensionE2) {
