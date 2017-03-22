@@ -100,8 +100,8 @@ public class CollisionProcess implements IGamePostProcessingService {
     }
 
     // Wildcard Ability collision with Entity
-    private <E extends Entity, V extends Entity> void handleAbilityCollision(E ownerrEntity, V collidableEntity) {
-        for (Ability ability : ownerrEntity.getAbilities()) {
+    private <E extends Entity, V extends Entity> void handleAbilityCollision(E ownerEntity, V collidableEntity) {
+        for (Ability ability : ownerEntity.getAbilities()) {
             if (ability.isActive()) {
                 // check Ability-Entity collision
                 if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableEntity.getPosition(), collidableEntity.getDimension())) {
