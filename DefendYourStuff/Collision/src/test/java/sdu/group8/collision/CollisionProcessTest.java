@@ -53,7 +53,9 @@ public class CollisionProcessTest {
         world.getProjectiles().clear();
     }
 
-
+    /**
+     * Test of adding a collision event to gameData.
+     */
     @org.junit.Test
     public void createCollisionEvent() {
         System.out.println("createCollisionEvent");

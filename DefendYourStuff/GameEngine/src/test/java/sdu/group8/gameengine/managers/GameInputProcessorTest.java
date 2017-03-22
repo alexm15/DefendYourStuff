@@ -51,7 +51,7 @@ public class GameInputProcessorTest {
     @org.junit.Test
     public void testMouseMoved() {
         System.out.println("mouseMoved");
-
+        //TODO: check for mouse movement
     }
 
     /**
@@ -60,7 +60,7 @@ public class GameInputProcessorTest {
     @org.junit.Test
     public void testTouchDown() {
         System.out.println("touchDown");
-
+        //TODO: check for mouse click down
     }
 
     /**
@@ -69,6 +69,7 @@ public class GameInputProcessorTest {
     @org.junit.Test
     public void testTouchUp() {
         System.out.println("touchUp");
+        //TODO: check for mouse click up
 
     }
 
@@ -108,7 +109,7 @@ public class GameInputProcessorTest {
     public void testKeyPressed() {
         System.out.println("keyPressed");
         int k = 19;
-        boolean expResult1 =  false;
+        boolean expResult1 = false;
         boolean result1 = gameData.getKeys().isKeyPressed(k);
         boolean expResult2 = inputProcessor.keyDown(k);
         boolean result2 = gameData.getKeys().isKeyPressed(k);
