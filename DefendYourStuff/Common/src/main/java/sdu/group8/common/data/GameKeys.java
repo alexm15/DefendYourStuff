@@ -36,6 +36,9 @@ public class GameKeys {
     public final int NUM_2 = 9; // Numpad 2
     public final int NUM_3 = 10; // Numpad 3
     public final int NUM_4 = 11; // Numpad 4
+    
+    public final int MOUSE_LEFT = 0;
+    public final int MOUSE_RIGHT = 1;
 
     private Map<Integer, Boolean> currentKeyStates = new ConcurrentHashMap<>();
     private Map<Integer, Boolean> previousKeyStates = new ConcurrentHashMap<>();
@@ -61,6 +64,10 @@ public class GameKeys {
         currentKeyStates.put(NUM_3, false);
         currentKeyStates.put(NUM_4, false);
 
+        currentKeyStates.put(MOUSE_LEFT, false);
+        currentKeyStates.put(MOUSE_RIGHT, false);
+        
+        
         update();
     }
 

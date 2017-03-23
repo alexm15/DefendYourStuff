@@ -19,12 +19,13 @@ public class GameData {
     private int displayWidth;
     private int displayHeight;
     private final int GROUND_HEIGHT = 50;
+    private final float GRAVITY = 9.82f;
     private final GameKeys keys;
     private final ArrayList<CollisionEvent> collisionEvents = new ArrayList<>();
     private final ArrayList<DamageEvent> damageEvents = new ArrayList<>();
     private int playerGold;
     private Position cursorPosition;
-    private final float GRAVITY = 9.82f;
+
 
     public GameData() {
         this.keys = new GameKeys();

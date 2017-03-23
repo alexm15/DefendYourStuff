@@ -28,18 +28,12 @@ public class GameInputProcessor extends InputAdapter {
     }
 
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-            //Game.CAM.unproject(tp.set(screenX, screenY, 0));
-            //gameData.getMouse().setMouse(GameMouse.LEFT, true);
-        }
-        if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
-            //gameData.getMouse().setMouse(GameMouse.RIGHT, true);
-        }
+            gameData.getKeys().setKey(button, true);
         return true;
     }
 
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
+            gameData.getKeys().setKey(button, false);
         return false;
     }
 
