@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package sdu.group8.player;
+
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
@@ -17,7 +18,6 @@ import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 
-
 /**
  *
  * @author joach
@@ -28,13 +28,12 @@ import sdu.group8.common.services.IGameProcessingService;
     @ServiceProvider(service = IGamePluginService.class)}
 )
 
-
 public class PlayerController implements IGameProcessingService, IGamePluginService {
-    
+
     Player player;
-    private float vertivalForce;
+    private float verticalVelocity;
     private GameData gd;
-    
+
     @Override
     public void process(GameData gameData, World world) {
         this.gd = gameData;
@@ -43,36 +42,35 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         }
         //Handle gravity for player
         if (!isPlayerOnGround(player)) {
-            player.setPosition(player.getX(), player.getY()+vertivalForce*gameData.getDelta());
-            vertivalForce -= gameData.getGRAVITY();
+            player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
+            verticalVelocity -= gameData.getGRAVITY();
         } else {
-            vertivalForce = 0;
+            verticalVelocity = 0;
         }
         //Handle input  
         player.setAimPoint(gameData.getCursorPosition());
-        
+
         //TODO: change E to mouse rigth click and maybe left click
-        if(gameData.getKeys().isKeyPressed(gameData.getKeys().E)) {
+        if (gameData.getKeys().isKeyPressed(gameData.getKeys().E)) {
             //TODO: handle mouse click
         }
-        
-        
-        if(gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
-            player.setPosition(player.getX()+(player.getMoveSpeed()*gameData.getDelta()), player.getY());
-        } else if(gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
-            player.setPosition(player.getX()-(player.getMoveSpeed()*gameData.getDelta()), player.getY());
+
+        if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
+            player.setPosition(player.getX() + (player.getMoveSpeed() * gameData.getDelta()), player.getY());
+        } else if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
+            player.setPosition(player.getX() - (player.getMoveSpeed() * gameData.getDelta()), player.getY());
         }
-        if(gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {
-            if(isPlayerOnGround(player)) {
-                vertivalForce += player.getVerticalVelocity();
-                player.setPosition(player.getX(), player.getY()+vertivalForce*gameData.getDelta());
+        if (gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {
+            if (isPlayerOnGround(player)) {
+                verticalVelocity += player.getVerticalForce();
+                player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
             }
         }
     }
-    
-    private boolean isPlayerOnGround (Player player) {
-        if(player.getPosition().getY() <= gd.getGROUND_HEIGHT() + player.getHeight()/2) {
-            player.setPosition(player.getPosition().getX(), (50+player.getHeight()/2));
+
+    private boolean isPlayerOnGround(Player player) {
+        if (player.getPosition().getY() <= gd.getGROUND_HEIGHT() + player.getHeight() / 2) {
+            player.setPosition(player.getPosition().getX(), (gd.getGROUND_HEIGHT() + player.getHeight() / 2));
             return true;
         }
         return false;
@@ -86,9 +84,9 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         float width = 50;
         float height = 50;
         Dimension dimension = new Dimension(width, height); //Should match the sprites size
-        float x = gameData.getDisplayWidth()/2;
-        float y = gameData.getDisplayHeight()/2;
-        Position position = new Position(x,y); //Should be startposition
+        float x = gameData.getDisplayWidth() / 2;
+        float y = gameData.getDisplayHeight() / 2;
+        Position position = new Position(x, y); //Should be startposition
         CollisionContainer collision = new CollisionContainer(EntityType.PLAYER, EntityType.ALLY);
         float AOE = 0;
         float minDamage = 0;
