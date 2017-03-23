@@ -59,6 +59,10 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             //TODO: handle mouse click
             System.out.println("right mouse clicked, on pos: " + player.getAimPoint());
         }
+        else if(gameData.getKeys().isKeyPressed(gameData.getKeys().MOUSE_MIDDEL)){
+            //TODO: handle mouse middel click
+            System.out.println("Middel mouse clicked, on pos: " + player.getAimPoint());
+        }
 
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             player.setPosition(player.getX() + (player.getMoveSpeed() * gameData.getDelta()), player.getY());
