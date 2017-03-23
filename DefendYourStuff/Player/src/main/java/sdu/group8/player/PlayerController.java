@@ -81,9 +81,9 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         }
     }
 /**
- * is used to finde out if the player is on the ground
+ * is used to finde out if the player is on the ground OR under the ground
  * @param player the player that will be checked
- * @return true if the player is on the ground, else false
+ * @return true if the player is on the ground OR under the ground, else false
  */
     private boolean isPlayerOnGround(Player player) {
         if (player.getPosition().getY() <= gd.getGROUND_HEIGHT() + player.getHeight() / 2) {
