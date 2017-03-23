@@ -107,18 +107,18 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         float weight = 10;
         float width = 50;
         float height = 50;
-        Dimension dimension = new Dimension(width, height); //Should match the sprites size
+        Dimension dimension = new Dimension(width, height); //TODO: Should match the sprites size
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
-        Position position = new Position(x, y); //Should be startposition
+        Position position = new Position(x, y); //TODO: Should be startposition
         CollisionContainer collision = new CollisionContainer(EntityType.PLAYER, EntityType.ALLY);
         float AOE = 0;
         float minDamage = 0;
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        Ability ability = new Ability(position, AOE, damageRange); //Should be a predifined ability
+        Ability ability = new Ability(position, AOE, damageRange); //TODO: Should be a predifined ability
         player = new Player(moveSpeed, weight, health, dimension, position, collision, ability);
-        gameData.setPlayerGold(0); //TODO Move gold to playerGold
+        gameData.setPlayerGold(0); 
         world.addCharacter(player);
     }
 
