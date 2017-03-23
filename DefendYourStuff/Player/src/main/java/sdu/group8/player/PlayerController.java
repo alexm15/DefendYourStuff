@@ -50,41 +50,53 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         //Handle input  
         player.setAimPoint(gameData.getCursorPosition());
 
-
+        //Mouse input
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().MOUSE_LEFT)) {
             //TODO: handle mouse click
             System.out.println("left mouse clicked, on pos: " + player.getAimPoint());
-        } 
-        else if(gameData.getKeys().isKeyPressed(gameData.getKeys().MOUSE_RIGHT)){
+        
+        } else if (gameData.getKeys().isKeyPressed(gameData.getKeys().MOUSE_RIGHT)) {
             //TODO: handle mouse click
             System.out.println("right mouse clicked, on pos: " + player.getAimPoint());
-        }
-        else if(gameData.getKeys().isKeyPressed(gameData.getKeys().MOUSE_MIDDEL)){
+        
+        } else if (gameData.getKeys().isKeyPressed(gameData.getKeys().MOUSE_MIDDEL)) {
             //TODO: handle mouse middel click
             System.out.println("Middel mouse clicked, on pos: " + player.getAimPoint());
         }
 
+        //Keybord input
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             player.setPosition(player.getX() + (player.getMoveSpeed() * gameData.getDelta()), player.getY());
+        
         } else if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
             player.setPosition(player.getX() - (player.getMoveSpeed() * gameData.getDelta()), player.getY());
         }
+        
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {
             if (isPlayerOnGround(player)) {
+                setPlayerOnGround(player); //set player to ground level if player is under ground
                 verticalVelocity += player.getVerticalForce();
                 player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
             }
         }
     }
-
+/**
+ * is used to finde out if the player is on the ground
+ * @param player the player that will be checked
+ * @return true if the player is on the ground, else false
+ */
     private boolean isPlayerOnGround(Player player) {
         if (player.getPosition().getY() <= gd.getGROUND_HEIGHT() + player.getHeight() / 2) {
-            player.setPosition(player.getPosition().getX(), (gd.getGROUND_HEIGHT() + player.getHeight() / 2));
             return true;
         }
         return false;
     }
 
+    private void setPlayerOnGround(Player player){
+        player.setPosition(player.getPosition().getX(), (gd.getGROUND_HEIGHT() + player.getHeight() / 2));
+                
+    }
+    
     @Override
     public void start(GameData gameData, World world) {
         float health = 100;
