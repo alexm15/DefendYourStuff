@@ -80,6 +80,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             }
         }
     }
+    
 /**
  * is used to finde out if the player is on the ground OR under the ground
  * @param player the player that will be checked
@@ -91,6 +92,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         }
         return false;
     }
+    
 /**
  * sets the player to ground level
  * @param player 
