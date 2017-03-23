@@ -91,7 +91,10 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         }
         return false;
     }
-
+/**
+ * sets the player to ground level
+ * @param player 
+ */
     private void setPlayerOnGround(Player player){
         player.setPosition(player.getPosition().getX(), (gd.getGROUND_HEIGHT() + player.getHeight() / 2));
                 
