@@ -19,7 +19,8 @@ public class GameInputProcessor extends InputAdapter {
     public GameInputProcessor(GameData gameData) {
         this.gameData = gameData;
     }
-
+    
+    //Set mouse position
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         Position cursorPosition = new Position(Gdx.input.getX(), Gdx.graphics.getHeight()-Gdx.input.getY());
