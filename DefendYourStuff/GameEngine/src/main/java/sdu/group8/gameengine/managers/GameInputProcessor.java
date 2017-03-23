@@ -26,23 +26,27 @@ public class GameInputProcessor extends InputAdapter {
         gameData.setCursorPosition(cursorPosition);
         return true;
     }
-
+    //Set Mouse input to true when mouse button is pressed
+    @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             gameData.getKeys().setKey(button, true);
         return true;
     }
-
+    //Set mouse input to false when mouse button is relased
+    @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             gameData.getKeys().setKey(button, false);
         return false;
     }
 
-    //Searches the list of all used keys, and returns true if that key is in that list
+    //Set key to true when pressed
+    @Override
     public boolean keyDown(int k) {
         gameData.getKeys().setKey(k, true);
         return true;
     }
-
+    //Set key to false when released
+    @Override
     public boolean keyUp(int k) {
         gameData.getKeys().setKey(k, false);
         return true;
