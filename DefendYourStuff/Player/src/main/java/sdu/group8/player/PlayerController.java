@@ -50,7 +50,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
        
         //Handle input:
         
-        //Mouse input
+        //Mouse input.
         player.setAimPoint(gameData.getCursorPosition());
         
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().MOUSE_LEFT)) {
