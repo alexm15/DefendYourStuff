@@ -18,6 +18,7 @@ public class GameData {
     private float delta;
     private int displayWidth;
     private int displayHeight;
+    private final int GROUND_HEIGHT = 50;
     private final GameKeys keys;
     private final ArrayList<CollisionEvent> collisionEvents = new ArrayList<>();
     private final ArrayList<DamageEvent> damageEvents = new ArrayList<>();
@@ -27,6 +28,10 @@ public class GameData {
 
     public GameData() {
         this.keys = new GameKeys();
+    }
+
+    public int getGROUND_HEIGHT() {
+        return GROUND_HEIGHT;
     }
 
     public Position getCursorPosition() {

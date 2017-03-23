@@ -32,27 +32,31 @@ import sdu.group8.common.services.IGameProcessingService;
 public class PlayerController implements IGameProcessingService, IGamePluginService {
     
     Player player;
-    private float vertivalVelocity;
-    
+    private float vertivalForce;
+    private GameData gd;
     
     @Override
     public void process(GameData gameData, World world) {
+        this.gd = gameData;
         if (player.getHealth() == 0) {
             //TODO: remove player from world. Set isGameOver in gameData.           
         }
         //Handle gravity for player
         if (!isPlayerOnGround(player)) {
-            player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
-            vertivalVelocity -= gameData.getGRAVITY();
+            player.setPosition(player.getX(), player.getY()+vertivalForce*gameData.getDelta());
+            vertivalForce -= gameData.getGRAVITY();
         } else {
-            vertivalVelocity = 0;
+            vertivalForce = 0;
         }
         //Handle input  
         player.setAimPoint(gameData.getCursorPosition());
         
+        //TODO: change E to mouse rigth click and maybe left click
         if(gameData.getKeys().isKeyPressed(gameData.getKeys().E)) {
-            player.setPosition(player.getAimPoint());
+            //TODO: handle mouse clik
         }
+        
+        
         if(gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             player.setPosition(player.getX()+(player.getMoveSpeed()*gameData.getDelta()), player.getY());
         } else if(gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
@@ -60,14 +64,14 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         }
         if(gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {
             if(isPlayerOnGround(player)) {
-                vertivalVelocity += (player.getJUMP_FORCE()-player.getWeight());
-                player.setPosition(player.getX(), player.getY()+vertivalVelocity*gameData.getDelta());
+                vertivalForce += player.getVerticalVelocity();
+                player.setPosition(player.getX(), player.getY()+vertivalForce*gameData.getDelta());
             }
         }
     }
     
     private boolean isPlayerOnGround (Player player) {
-        if(player.getPosition().getY() <= 50+player.getHeight()/2) {
+        if(player.getPosition().getY() <= gd.getGROUND_HEIGHT() + player.getHeight()/2) {
             player.setPosition(player.getPosition().getX(), (50+player.getHeight()/2));
             return true;
         }
