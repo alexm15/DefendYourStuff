@@ -32,6 +32,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
 
     private Player player;
     private float verticalVelocity;
+    private GameData gameData;
 
     @Override
     public void process(GameData gameData, World world) {
@@ -45,13 +46,17 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
 
         handleKeyboardInput(gameData);
     }
+    
+    private float xMovement() {
+        return player.getMoveSpeed() * gameData.getDelta();
+    }
 
     private void handleKeyboardInput(GameData gameData) {
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
-            player.setPosition(player.getX() + (player.getMoveSpeed() * gameData.getDelta()), player.getY());
+            player.setPosition(player.getX() + xMovement(), player.getY());
 
         } else if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
-            player.setPosition(player.getX() - (player.getMoveSpeed() * gameData.getDelta()), player.getY());
+            player.setPosition(player.getX() - xMovement(), player.getY());
         }
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {
             if (isPlayerOnGround(player, gameData)) {
