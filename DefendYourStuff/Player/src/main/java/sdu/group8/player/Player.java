@@ -30,8 +30,8 @@ public class Player extends Character {
         this.weight = weight;
     }
     /**
-     * gets the player jump force
-     * @return the jump force for the player 
+     * Gets the player jump force.
+     * @return The jump force for the player.
      */
     public float getVerticalForce(){
         float verticalVelocity = JUMP_FORCE - weight;
