@@ -53,7 +53,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         
         //TODO: change E to mouse rigth click and maybe left click
         if(gameData.getKeys().isKeyPressed(gameData.getKeys().E)) {
-            //TODO: handle mouse clik
+            //TODO: handle mouse click
         }
         
         
