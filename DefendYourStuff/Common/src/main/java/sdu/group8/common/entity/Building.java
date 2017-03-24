@@ -7,12 +7,11 @@ package sdu.group8.common.entity;
 
 import java.util.ArrayList;
 import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityContainer;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.data.CollisionContainer;
+import sdu.group8.common.collision.CollisionContainer;
 
 /**
  *
@@ -20,15 +19,13 @@ import sdu.group8.common.data.CollisionContainer;
  */
 public abstract class Building extends Entity{
     private BuildingType buildingType;
-    private AbilityContainer abilities;
     private boolean isAttackable;
     private int upgradeLevel;
     private HealthSystem health;
 
     public Building(Dimension dimension, Position pos, CollisionContainer collisionContainer, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
-        super(dimension, pos, collisionContainer);
+        super(dimension, pos, collisionContainer, ab);
         this.buildingType = buildingType;
-        this.abilities = new AbilityContainer(ab);
         this.isAttackable = isAttackable;
         this.upgradeLevel = upgradeLevel;
         this.health = new HealthSystem(health);
@@ -40,10 +37,6 @@ public abstract class Building extends Entity{
 
     public void setBuildingType(BuildingType buildingType) {
         this.buildingType = buildingType;
-    }
-
-    public ArrayList<Ability> getAbilities() {
-        return abilities.getAbilites();
     }
 
     public boolean isAttackable() {

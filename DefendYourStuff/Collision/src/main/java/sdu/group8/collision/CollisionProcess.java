@@ -5,15 +5,18 @@
  */
 package sdu.group8.collision;
 
+import sdu.group8.common.collision.CollisionEvent;
 import java.util.Collection;
+import sdu.group8.common.ability.Ability;
+import sdu.group8.common.collision.DamageEvent;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Building;
 
-import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.entity.Character;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.common.entity.Item;
 import sdu.group8.common.entity.Projectile;
 import sdu.group8.common.services.IGamePostProcessingService;
@@ -30,62 +33,86 @@ public class CollisionProcess implements IGamePostProcessingService {
         Collection<Projectile> projectiles = world.getProjectiles();
         Collection<Item> items = world.getItems();
 
+        // Character collision
         for (Character character : characters) {
 
+            // Check character against other characters
             Collection<Character> collidableCharacters = world.getCharacters(character.getCollidableTypes());
-            for (Character collidableCharacter : collidableCharacters) {
-                if (boxCollision(character.getPosition(), character.getDimension(), collidableCharacter.getPosition(), collidableCharacter.getDimension())) {
-                    character.setIsHit(true);
-                    collidableCharacter.setIsHit(true);
-                }
-            }
+            characterCollision(gameData, character, collidableCharacters);
 
-            for (Item item : items) {
-                if (boxCollision(character.getPosition(), character.getDimension(), item.getPosition(), item.getDimension())) {
-                    // TODO: Create event that sends item.ID to the player. Let the player remove the item from World.
-                }
-            }
+            // Check character against items
+            characterCollision(gameData, character, items);
 
+            // Check character against buildings
             Collection<Building> collidableBuildings = world.getBuildings(character.getCollidableTypes());
-            for (Building collidableBuilding : collidableBuildings) {
-                if (boxCollision(character.getPosition(), character.getDimension(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
-                    if (character.getEntityType() == EntityType.PLAYER) {
-                        //TODO: Create player shop/upgrade event for building.ID
-                    }
-                    if (character.getEntityType() == EntityType.ENEMY) {
-                        //TODO: Create event for Enemy-Building collision
-                    }
-                    if (character.getEntityType() == EntityType.ALLY) {
-                        //TODO: Create event for Ally-Building collision
-                    }
-                }
-            }
+            characterCollision(gameData, character, collidableBuildings);
         }
 
+        // Projectile collision
         for (Projectile projectile : projectiles) {
 
+            // Check projectile against other projectiles
             Collection<Projectile> collidableProjectiles = world.getProjectiles(projectile.getCollidableTypes());
-            for (Projectile collidableProjectile : collidableProjectiles) {
-                if (circleCollision(projectile.getPosition(), projectile.getRadius(), collidableProjectile.getPosition(), collidableProjectile.getRadius())) {
-                    projectile.setIsHit(true);
-                    collidableProjectile.setIsHit(true);
-                }
-            }
+            projectileCollision(gameData, projectile, collidableProjectiles);
 
+            // Check projectile against characters
+            Collection<Character> collidableCharacters = world.getCharacters(projectile.getCollidableTypes());
+            projectileCollision(gameData, projectile, collidableCharacters);
+
+            // Check projectile against buildings
             Collection<Building> collidableBuildings = world.getBuildings(projectile.getCollidableTypes());
-            for (Building collidableBuilding : collidableBuildings) {
-                if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableBuilding.getPosition(), collidableBuilding.getDimension())) {
-                    projectile.setIsHit(true);
-                    
-                    //TODO: damage building
-                }
-            }
+            projectileCollision(gameData, projectile, collidableBuildings);
 
         }
-        
-        // TODO: Check collision for Abilities.
     }
-    
+
+    private <E extends Entity> void characterCollision(GameData gameData, Character character, Collection<E> collidableEntities) {
+        for (E collidableEntity : collidableEntities) {
+
+            // check characterAbility-entity box-circle collision
+            handleAbilityCollision(gameData, character, collidableEntity);
+
+            // check character-building collision
+            if (boxCollision(character.getPosition(), character.getDimension(), collidableEntity.getPosition(), collidableEntity.getDimension())) {
+                createCollisionEvents(gameData, character, collidableEntity);
+            }
+        }
+    }
+
+    private <E extends Entity> void projectileCollision(GameData gameData, Projectile projectile, Collection<E> collidableEntities) {
+        for (E collidableEntity : collidableEntities) {
+
+            // check projectileAbility-entity box-circle collision
+            handleAbilityCollision(gameData, projectile, collidableEntity);
+
+            // check projectile-entity collision
+            if (circleBoxCollision(projectile.getPosition(), projectile.getRadius(), collidableEntity.getPosition(), collidableEntity.getDimension())) {
+                createCollisionEvents(gameData, projectile, collidableEntity);
+            }
+        }
+    }
+
+    // Ability collision with Entity
+    private <E extends Entity, V extends Entity> void handleAbilityCollision(GameData gameData, E entity, V collidableEntity) {
+        for (Ability ability : entity.getAbilities()) {
+
+            if (ability.isActive()) {
+                // check Ability-Entity collision
+                if (circleBoxCollision(ability.getPosition(), ability.getAOE(), collidableEntity.getPosition(), collidableEntity.getDimension())) {
+                    ability.setIsHit(true);
+                    gameData.addDamageEvent(new DamageEvent(entity.getID(), entity.getEntityType(), ability.getDamage()));
+                }
+
+            }
+        }
+    }
+
+    // dynamic crate collision event
+    private <E extends Entity> void createCollisionEvents(GameData gameData, E entity, E collidableEntity) {
+        gameData.addCollisionEvent(new CollisionEvent(entity.getID(), entity.getEntityType()));
+        gameData.addCollisionEvent(new CollisionEvent(collidableEntity.getID(), collidableEntity.getEntityType()));
+    }
+
     private boolean boxCollision(Position posE1, Dimension dimensionE1, Position posE2, Dimension dimensionE2) {
 
         float combinedX = Math.abs(posE1.getX() - posE2.getX());

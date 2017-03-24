@@ -23,6 +23,7 @@ import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
+import sdu.group8.common.entity.Character;
 
 /**
  *
@@ -41,6 +42,7 @@ public class Game
     private List<IGamePluginService> gamePlugins = new ArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
+    private Collection<Character> characters;
     private SpriteBatch batch;
     private BitmapFont font;
     
@@ -81,6 +83,7 @@ public class Game
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
         }
+        characters = world.getCharacters();
         //TODO: load content of matrix into grid.
 
         gameData.initGridForBlocks();
@@ -133,7 +136,8 @@ public class Game
         for (IGamePostProcessingService postProcess : getPostProcesses()) {
             postProcess.process(gameData, world);
         }
-
+        
+        
     }
 
     //TODO: Change draw method later for sprites.
@@ -161,6 +165,18 @@ public class Game
         sr.setColor(1, 1, 1, 1);
         sr.line(0, 100, 800, 100);
         sr.end();
+         // Used to test playermovements
+        for (Character player : characters) {
+            sr.setColor(Color.RED);
+            sr.begin(ShapeRenderer.ShapeType.Filled);
+            float x = player.getX();
+            float y = player.getY();
+            float height = player.getHeight();
+            float width = player.getWidth();
+            sr.rect(x, y, width, height);
+            sr.end();   
+        }
+        
     }
 
     /**
