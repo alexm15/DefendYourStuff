@@ -14,21 +14,20 @@ import sdu.group8.common.events.Event;
  * @author Martin
  */
 public class CollisionEvent extends Event{
-    private UUID ID;
-    private EntityType type;
-    
+    private UUID creatorID;
+    private UUID colliderID;    
 
-    public CollisionEvent(UUID ID, EntityType type1) {
-        this.ID = ID;
-        this.type = type;
+    public CollisionEvent(UUID creatorID, UUID colliderID) {
+        this.creatorID = creatorID;
+        this.colliderID = colliderID;
     }
     
-    public UUID getID() {
-        return ID;
-    }
+    public UUID getCreatorID() {
+        return this.creatorID;
+    }  
     
-    public EntityType getType() {
-        return type;
-    }    
+    public UUID getColliderID() {
+        return this.colliderID;
+    }  
 
 }
