@@ -6,12 +6,10 @@
 package sdu.group8.common.entity;
 
 import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityContainer;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.collision.CollisionContainer;
-import java.util.ArrayList;
 
 /**
  *
