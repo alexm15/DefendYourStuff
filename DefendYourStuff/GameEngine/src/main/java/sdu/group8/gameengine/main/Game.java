@@ -86,7 +86,6 @@ public class Game
         characters = world.getCharacters();
         //TODO: load content of matrix into grid.
 
-        gameData.initGridForBlocks();
     }
 
     private Game() {
@@ -150,15 +149,15 @@ public class Game
         ArrayList<BlockTypes[][]> rightChunk = gameData.getChunksLeft();
         
         for (BlockTypes[][] chunk : middleChunk) {
-            loadScreenChunk(chunk, SCREEN);
+            loadScreenChunk(chunk, SCREEN, "Middle");
         }
         for (BlockTypes[][] chunk : leftChunk) {
             LEFT_OF_SCREEN -= 8;
-            loadScreenChunk(chunk, LEFT_OF_SCREEN);
+            loadScreenChunk(chunk, LEFT_OF_SCREEN, "Left");
         }
         for (BlockTypes[][] chunk : rightChunk) {
             RIGHT_OF_SCREEN += 8;
-            loadScreenChunk(chunk, RIGHT_OF_SCREEN);
+            loadScreenChunk(chunk, RIGHT_OF_SCREEN, "Right");
         }
         
         sr.begin(ShapeType.Line);
@@ -184,12 +183,22 @@ public class Game
      * @param theChunk the chunk loaded in game window
      * @param chunkPosition the chunk position in the game window. (See static int's for positions)
      */
-    private void loadScreenChunk(BlockTypes[][] theChunk, int chunkPosition) {
+    private void loadScreenChunk(BlockTypes[][] theChunk, int chunkPosition, String arrayPosition) {
         batch.begin();
+        ArrayList<Integer> a = new ArrayList<>();
+        if (arrayPosition.equalsIgnoreCase("middle")) {
+            a = gameData.getWindowsxMiddle();
+        }
+        else if (arrayPosition.equalsIgnoreCase("left")) {
+            a = gameData.getWindowsxLeft();
+        }
+        else if (arrayPosition.equalsIgnoreCase("right")) {
+            a = gameData.getWindowsxRight();
+        }
         for (int i = 0; i < theChunk.length; i++) {
             for (int j = 0; j < theChunk[i].length; j++) {
-                //FIXME: windowsX to ArrayList and choosing the right one.
-                //font.draw(batch, theChunk[i][j].name(), windowsX[i+chunkPosition] - 50, windowsY[j] - 50);
+                //FIXME: Fix array indexOutOfBoundsException
+                font.draw(batch, theChunk[i][j].name(), a.get(i+chunkPosition-1) - 50, gameData.getWindowsY()[j] - 50);
             }
         }
         batch.end();
