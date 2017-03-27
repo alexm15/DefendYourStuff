@@ -64,7 +64,7 @@ public class MapController
      * @param gameData for retrieving the lists needed
      * @param chunkToAdd the chunk to be added to the game.
      */
-    private void addChunkRightGameList(GameData gameData, Chunk chunkToAdd) {
+    public void addChunkRightGameList(GameData gameData, Chunk chunkToAdd) {
         gameData.addRigtChunk(chunkToAdd);
         int rightSize = gameData.getWindowsxRight().size();
         int middleGridSize = gameData.getWindowsxMiddle().size() * 100;
@@ -78,7 +78,7 @@ public class MapController
      * @param gameData for retrieving the lists needed
      * @param chunkToAdd the chunk to be added to the game.
      */
-    private void addChunkToLeftGameList(GameData gameData, Chunk chunkToAdd) {
+    public void addChunkToLeftGameList(GameData gameData, Chunk chunkToAdd) {
         gameData.addLeftChunk(chunkToAdd);
         int leftSize = gameData.getWindowsxLeft().size();
         for (int i = gameData.getWindowsxLeft().size()+1; i <= leftSize+columnsInGrid; i++) {

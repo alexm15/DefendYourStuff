@@ -13,6 +13,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
+import sdu.group8.common.entity.Chunk;
+import sdu.group8.common.entity.ChunkTypes;
+import sdu.group8.map.chunks.CastleChunk;
 
 /**
  *
@@ -71,6 +74,8 @@ public class MapControllerIT {
         assertEquals(900, firstIndexValueOfWindowsXRight);
     }
 
+    
+
     /**
      * Test of stop method, of class MapController.
      */
@@ -97,6 +102,36 @@ public class MapControllerIT {
         instance.process(gameData, world);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addChunkRightGameList method, of class MapController.
+     */
+    @Test
+    public void testAddChunkRightGameList() {
+        System.out.println("addChunkRightGameList");
+        Chunk chunkToAdd = new CastleChunk(ChunkTypes.CASTLE_CHUNK);
+        
+        instance.addChunkRightGameList(gameData, chunkToAdd);
+        int expectedSizeOfRightChunkList = 2;
+        int expectedSizeOfRightWindowsXList = 16;
+        assertEquals(expectedSizeOfRightChunkList, gameData.getChunksRight().size());
+        assertEquals(expectedSizeOfRightWindowsXList, gameData.getWindowsxRight().size());
+    }
+
+    /**
+     * Test of addChunkToLeftGameList method, of class MapController.
+     */
+    @Test
+    public void testAddChunkToLeftGameList() {
+        System.out.println("addChunkToLeftGameList");
+        Chunk chunkToAdd = new CastleChunk(ChunkTypes.CASTLE_CHUNK);
+        
+        instance.addChunkToLeftGameList(gameData, chunkToAdd);
+        int expectedSizeOfLeftChunkList = 2;
+        int expectedSizeOfLeftWindowsXList = 16;
+        assertEquals(expectedSizeOfLeftChunkList, gameData.getChunksLeft().size());
+        assertEquals(expectedSizeOfLeftWindowsXList, gameData.getWindowsxLeft().size());
     }
     
 }
