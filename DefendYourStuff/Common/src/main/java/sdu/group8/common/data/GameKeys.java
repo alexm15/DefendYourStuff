@@ -16,15 +16,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class GameKeys {
 
-    // use this for keycode reference: https://libgdx.badlogicgames.com/nightlies/docs/api/constant-values.html
-    public final int UP = 19; // Up arrow
-    public final int DOWN = 20; // down arrow
-    public final int LEFT = 21; // left arrow
+    /* use this for keycode reference: 
+    https://libgdx.badlogicgames.com/nightlies/docs/api/constant-values.html
+    */    
+    public final int UP = 19;    // Up arrow
+    public final int DOWN = 20;  // down arrow
+    public final int LEFT = 21;  // left arrow
     public final int RIGHT = 22; // right arrow
 
-    public final int SPACE = 62; // space
+    public final int SPACE = 62;   // space
     public final int ESCAPE = 131; // escape
-    public final int ENTER = 66; // Enter
+    public final int ENTER = 66;   // Enter
 
     public final int A = 29; // A
     public final int W = 51; // W
@@ -32,10 +34,16 @@ public class GameKeys {
     public final int D = 32; // D
     public final int E = 33; // E
 
-    public final int NUM_1 = 8; // Numpad 1
-    public final int NUM_2 = 9; // Numpad 2
+    public final int NUM_1 = 8;  // Numpad 1
+    public final int NUM_2 = 9;  // Numpad 2
     public final int NUM_3 = 10; // Numpad 3
     public final int NUM_4 = 11; // Numpad 4
+    
+    public final int MOUSE_LEFT = 0;    // Mouse left button
+    public final int MOUSE_RIGHT = 1;   // Mouse right button
+    public final int MOUSE_MIDDEL = 2;  // Mouse Middel button
+    public final int MOUSE_FORWARD = 4; // Mouse 1st side botton, forward
+    public final int MOUSE_BACK = 3;    // Mouse 2nd side botton, back
 
     private Map<Integer, Boolean> currentKeyStates = new ConcurrentHashMap<>();
     private Map<Integer, Boolean> previousKeyStates = new ConcurrentHashMap<>();
@@ -61,6 +69,13 @@ public class GameKeys {
         currentKeyStates.put(NUM_3, false);
         currentKeyStates.put(NUM_4, false);
 
+        currentKeyStates.put(MOUSE_LEFT, false);
+        currentKeyStates.put(MOUSE_RIGHT, false);
+        currentKeyStates.put(MOUSE_MIDDEL, false);
+        currentKeyStates.put(MOUSE_FORWARD, false);
+        currentKeyStates.put(MOUSE_BACK, false);
+        
+        
         update();
     }
 
