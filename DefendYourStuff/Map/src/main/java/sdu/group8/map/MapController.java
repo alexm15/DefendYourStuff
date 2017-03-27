@@ -5,7 +5,6 @@
  */
 package sdu.group8.map;
 
-import java.util.ArrayList;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
@@ -30,41 +29,61 @@ import sdu.group8.map.chunks.RightBaseChunk;
 public class MapController
         implements IGamePluginService, IGameProcessingService {
 
+    private int columnsInGrid = 8;
+    private int rowsInGrid = 6;
+    
     @Override
     public void start(GameData gameData, World world) {
+        //Three initial chunks for testing game
         Chunk castleChunk = new CastleChunk(CASTLE_CHUNK);
         Chunk leftBaseChunk = new LeftBaseChunk(LEFT_BASE_CHUNK);
         Chunk rightBaseChunk = new RightBaseChunk(RIGHT_BASE_CHUNK);
         
-        //gameData.setWindowsxMiddle(new ArrayList<Integer>(8));
-        //gameData.setWindowsxLeft(new ArrayList<Integer>(8));
-        //gameData.setWindowsxRight(new ArrayList<Integer>(8));
-        
-        gameData.setWindowsY(new int[6]);
-        for (int i = 1; i <= 6; i++) {
-            gameData.getWindowsY()[i - 1] = i * (gameData.getDisplayHeight() / 6);
+        //Sets windowsY array to 6 spaces
+        gameData.setWindowsY(new int[rowsInGrid]);
+        for (int i = 1; i <= rowsInGrid; i++) {
+            gameData.getWindowsY()[i - 1] = i * (gameData.getDisplayHeight() / rowsInGrid);
 
         }
         
-        gameData.addLeftChunk(leftBaseChunk);
-        int leftSize = gameData.getWindowsxLeft().size();
-        for (int i = gameData.getWindowsxLeft().size()+1; i <= leftSize+8; i++) {
-                gameData.getWindowsxLeft().add(i-1, (-i * (gameData.getDisplayWidth() / 8)));
-            }
         
+        addChunkToLeftGameList(gameData, leftBaseChunk);
         
+        //Initializes middle chunk list and middle window list
+        //Nothing is added to these lists after this. 
         gameData.addMiddleChunk(castleChunk);
-        int middleSize = gameData.getWindowsxMiddle().size();
-        for (int i = 1; i <= middleSize+8; i++) {
-            gameData.getWindowsxMiddle().add(i - 1, (i * (gameData.getDisplayWidth() / 8)));
+        for (int i = 1; i <= columnsInGrid; i++) {
+            gameData.getWindowsxMiddle().add(i - 1, (i * (gameData.getDisplayWidth() / columnsInGrid)));
         }
         
-        gameData.addRigtChunk(rightBaseChunk);
-        int rightSize = gameData.getWindowsxRight().size();
-        for (int i = gameData.getWindowsxRight().size()+1; i <= rightSize + 8; i++) {
-            gameData.getWindowsxRight().add(i - 1, (i * (gameData.getDisplayWidth() / 8)) + (gameData.getWindowsxMiddle().size() * 100));
-        }
+        addChunkRightGameList(gameData, rightBaseChunk);
 
+    }
+    /**
+     * Adds chunk to the right side of the gameMap
+     * @param gameData for retrieving the lists needed
+     * @param chunkToAdd the chunk to be added to the game.
+     */
+    private void addChunkRightGameList(GameData gameData, Chunk chunkToAdd) {
+        gameData.addRigtChunk(chunkToAdd);
+        int rightSize = gameData.getWindowsxRight().size();
+        int middleGridSize = gameData.getWindowsxMiddle().size() * 100;
+        for (int i = gameData.getWindowsxRight().size()+1; i <= rightSize + columnsInGrid; i++) {
+            gameData.getWindowsxRight().add(i - 1, (i * (gameData.getDisplayWidth() / columnsInGrid)) + (middleGridSize));
+        }
+    }
+
+    /**
+     * Adds chunk to the left side of the gameMap
+     * @param gameData for retrieving the lists needed
+     * @param chunkToAdd the chunk to be added to the game.
+     */
+    private void addChunkToLeftGameList(GameData gameData, Chunk chunkToAdd) {
+        gameData.addLeftChunk(chunkToAdd);
+        int leftSize = gameData.getWindowsxLeft().size();
+        for (int i = gameData.getWindowsxLeft().size()+1; i <= leftSize+columnsInGrid; i++) {
+            gameData.getWindowsxLeft().add(i-1, (-i * (gameData.getDisplayWidth() / columnsInGrid)));
+        }
     }
 
     @Override

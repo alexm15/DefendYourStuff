@@ -179,7 +179,7 @@ public class Game
     }
 
     /**
-     * 
+     * Draws the block layout of the specific chunk to the game window.
      * @param theChunk the chunk loaded in game window
      * @param chunkPosition the chunk position in the game window. (See static int's for positions)
      */
