@@ -36,9 +36,9 @@ public class MapController
         Chunk leftBaseChunk = new LeftBaseChunk(LEFT_BASE_CHUNK);
         Chunk rightBaseChunk = new RightBaseChunk(RIGHT_BASE_CHUNK);
         
-        gameData.setWindowsxMiddle(new ArrayList<Integer>(8));
-        gameData.setWindowsxLeft(new ArrayList<Integer>(8));
-        gameData.setWindowsxRight(new ArrayList<Integer>(8));
+        //gameData.setWindowsxMiddle(new ArrayList<Integer>(8));
+        //gameData.setWindowsxLeft(new ArrayList<Integer>(8));
+        //gameData.setWindowsxRight(new ArrayList<Integer>(8));
         
         gameData.setWindowsY(new int[6]);
         for (int i = 1; i <= 6; i++) {
@@ -52,16 +52,17 @@ public class MapController
                 gameData.getWindowsxLeft().add(i-1, (-i * (gameData.getDisplayWidth() / 8)));
             }
         
-        gameData.addRigtChunk(rightBaseChunk);
-        int rightSize = gameData.getWindowsxRight().size();
-        for (int i = gameData.getWindowsxRight().size()+1; i <= rightSize + 8; i++) {
-            gameData.getWindowsxRight().add(i - 1, (i * (gameData.getDisplayWidth() / 8)));
-        }
         
         gameData.addMiddleChunk(castleChunk);
         int middleSize = gameData.getWindowsxMiddle().size();
         for (int i = 1; i <= middleSize+8; i++) {
             gameData.getWindowsxMiddle().add(i - 1, (i * (gameData.getDisplayWidth() / 8)));
+        }
+        
+        gameData.addRigtChunk(rightBaseChunk);
+        int rightSize = gameData.getWindowsxRight().size();
+        for (int i = gameData.getWindowsxRight().size()+1; i <= rightSize + 8; i++) {
+            gameData.getWindowsxRight().add(i - 1, (i * (gameData.getDisplayWidth() / 8)) + (gameData.getWindowsxMiddle().size() * 100));
         }
 
     }

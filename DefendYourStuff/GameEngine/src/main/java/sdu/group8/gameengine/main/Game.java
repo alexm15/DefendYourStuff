@@ -198,7 +198,7 @@ public class Game
         for (int i = 0; i < theChunk.length; i++) {
             for (int j = 0; j < theChunk[i].length; j++) {
                 //FIXME: Fix array indexOutOfBoundsException
-                font.draw(batch, theChunk[i][j].name(), a.get(i+chunkPosition-1) - 50, gameData.getWindowsY()[j] - 50);
+                font.draw(batch, theChunk[i][j].name(), a.get(i) - 50, gameData.getWindowsY()[j] - 50);
             }
         }
         batch.end();
