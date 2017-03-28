@@ -65,6 +65,7 @@
         <module>Collision</module>
 
         <module>Map</module>
+        <module>CommonProjectile</module>
     </modules>
 
     <properties>
