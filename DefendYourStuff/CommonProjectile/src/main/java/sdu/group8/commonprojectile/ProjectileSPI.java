@@ -18,10 +18,22 @@ import sdu.group8.common.entity.Projectile;
  */
 public interface ProjectileSPI {
     
+    /**
+     * Creates a new Projectil and returns it to the caller
+     * @return a subtype of Projectile
+     */
     <P extends Projectile> P createProjectile(Entity e, GameData gameData);
+    /**
+     * @return a specific item using an ID
+     */
     <P extends Projectile> P getProjectile(World world, UUID id);
+    /**
+     * @return Item.class 
+     */
     <P extends Projectile> Class getClass();
+    /**
+     * Creates a collection of Projectiles
+     * @return a collection of Projectiles
+     */
     <P extends Projectile> Collection getProjectiles();
-    
-    
 }
