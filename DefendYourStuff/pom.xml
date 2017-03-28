@@ -65,6 +65,7 @@
         <module>Collision</module>
 
         <module>Map</module>
+        <module>CommonBuilding</module>
     </modules>
 
     <properties>
