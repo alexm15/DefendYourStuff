@@ -19,7 +19,7 @@ import sdu.group8.common.entity.ChunkTypes;
  */
 public class CastleChunk extends Chunk
 {
-    public BlockTypes[][] castleChunck = new BlockTypes[][] {
+    public final BlockTypes[][] CASTLE_CHUNK = new BlockTypes[][] {
         {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
         {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
         {EARTH,           AIR,            CASTLE,         AIR,            AIR,            AIR},
@@ -33,6 +33,6 @@ public class CastleChunk extends Chunk
 
     public CastleChunk(ChunkTypes type) {
         super(type);
-        setChunkMatrix(castleChunck);
+        setChunkMatrix(CASTLE_CHUNK);
     } 
 }

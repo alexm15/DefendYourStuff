@@ -20,7 +20,7 @@ import static sdu.group8.common.entity.BlockTypes.WELL;
  */
 public class LeftBaseChunk extends Chunk
 {
-    public BlockTypes[][] leftBaseChunk = new BlockTypes[][] {
+    public final BlockTypes[][] LEFT_BASE_CHUNK = new BlockTypes[][] {
         {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
         {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
         {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
@@ -34,6 +34,6 @@ public class LeftBaseChunk extends Chunk
 
     public LeftBaseChunk(ChunkTypes type) {
         super(type);
-        setChunkMatrix(leftBaseChunk);
+        setChunkMatrix(LEFT_BASE_CHUNK);
     } 
 }

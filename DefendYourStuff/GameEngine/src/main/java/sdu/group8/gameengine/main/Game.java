@@ -50,15 +50,15 @@ public class Game
     /**
      * Positions chunk in the game window
      */
-    private static int SCREEN = 8;
+    private int screen = 8;
     /**
      * Positions chunk left of game window
      */
-    private int LEFT_OF_SCREEN;
+    private int leftOfScreen;
     /**
      * Positions chunk right of game window 
      */
-    private int RIGHT_OF_SCREEN;
+    private int rightOfScreen;
 
     @Override
     public void create() {
@@ -141,23 +141,23 @@ public class Game
 
     //TODO: Change draw method later for sprites.
     private void draw() {
-        LEFT_OF_SCREEN = 8;
-        RIGHT_OF_SCREEN = 8;
+        leftOfScreen = 8;
+        rightOfScreen = 8;
         
         ArrayList<BlockTypes[][]> middleChunk = gameData.getChunksMiddle();
         ArrayList<BlockTypes[][]> leftChunk = gameData.getChunksRight();
         ArrayList<BlockTypes[][]> rightChunk = gameData.getChunksLeft();
         
         for (BlockTypes[][] chunk : middleChunk) {
-            loadScreenChunk(chunk, SCREEN, "Middle");
+            loadScreenChunk(chunk, screen, "Middle");
         }
         for (BlockTypes[][] chunk : leftChunk) {
-            LEFT_OF_SCREEN -= 8;
-            loadScreenChunk(chunk, LEFT_OF_SCREEN, "Left");
+            leftOfScreen -= 8;
+            loadScreenChunk(chunk, leftOfScreen, "Left");
         }
         for (BlockTypes[][] chunk : rightChunk) {
-            RIGHT_OF_SCREEN += 8;
-            loadScreenChunk(chunk, RIGHT_OF_SCREEN, "Right");
+            rightOfScreen += 8;
+            loadScreenChunk(chunk, rightOfScreen, "Right");
         }
         
         sr.begin(ShapeType.Line);
