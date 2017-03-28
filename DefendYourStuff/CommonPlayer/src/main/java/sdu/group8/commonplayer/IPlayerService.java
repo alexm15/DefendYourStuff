@@ -14,7 +14,22 @@ import sdu.group8.common.weapon.Weapon;
  * @author Alexander
  */
 public interface IPlayerService {
+    /**
+     * Gets the player object. 
+     * @param <C> a subtype of Character
+     * @param world the collection of entities in which the player object is located.
+     * @return the player object
+     */
     <C extends Character> C getPlayer(World world);
-     <C extends Character> C getPlayerClass();
-     void setWeapon(Weapon weapon);
+    /**
+     * Gets the class of the player object. 
+     * @param <C> a subtype of Character
+     * @return the Player subclass of Character.
+     */
+    <C extends Character> C getPlayerClass();
+    /**
+     * Changes the players weapon.
+     * @param weapon the new weapon.
+     */
+    void setWeapon(Weapon weapon);
 }
