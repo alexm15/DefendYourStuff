@@ -6,6 +6,8 @@
 package sdu.group8.common.data;
 
 import java.util.ArrayList;
+import sdu.group8.common.entity.BlockTypes;
+import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.collision.CollisionEvent;
 import sdu.group8.common.collision.DamageEvent;
 
@@ -26,10 +28,86 @@ public class GameData {
     private final GameKeys keys;
     private final ArrayList<CollisionEvent> collisionEvents = new ArrayList<>();
     private final ArrayList<DamageEvent> damageEvents = new ArrayList<>();
-
+    private ArrayList<BlockTypes[][]> chunksMiddle = new ArrayList<>();
+    private ArrayList<BlockTypes[][]> chunksLeft = new ArrayList<>();
+    private ArrayList<BlockTypes[][]> chunksRight = new ArrayList<>();
+    private int[] windowsY;
+    private ArrayList<Integer> windowsxRight = new ArrayList<>();
+    private ArrayList<Integer> windowsxLeft = new ArrayList<>();
+    private ArrayList<Integer> windowsxMiddle = new ArrayList<>();
 
     public GameData() {
         this.keys = new GameKeys();
+    }
+
+    public void addLeftChunk(Chunk chunk) {
+        chunksLeft.add(chunk.getChunkMatrix());
+
+    }
+
+    public void addRigtChunk(Chunk rightBaseChunk) {
+        chunksRight.add(rightBaseChunk.getChunkMatrix());
+    }
+
+    public void addMiddleChunk(Chunk castleChunk) {
+        chunksMiddle.add(castleChunk.getChunkMatrix());
+    }
+
+    public int[] getWindowsY() {
+        return windowsY;
+    }
+
+    public void setWindowsY(int[] windowsY) {
+        this.windowsY = windowsY;
+    }
+
+    public ArrayList<Integer> getWindowsxRight() {
+        return windowsxRight;
+    }
+
+    public void setWindowsxRight(ArrayList<Integer> windowsxRight) {
+        this.windowsxRight = windowsxRight;
+    }
+
+    public ArrayList<Integer> getWindowsxLeft() {
+        return windowsxLeft;
+    }
+
+    public void setWindowsxLeft(ArrayList<Integer> windowsxLeft) {
+        this.windowsxLeft = windowsxLeft;
+    }
+
+    public ArrayList<Integer> getWindowsxMiddle() {
+        return windowsxMiddle;
+    }
+
+    public void setWindowsxMiddle(ArrayList<Integer> windowsxMiddle) {
+        this.windowsxMiddle = windowsxMiddle;
+    }
+
+    
+    public ArrayList<BlockTypes[][]> getChunksMiddle() {
+        return chunksMiddle;
+    }
+
+    public ArrayList<BlockTypes[][]> getChunksLeft() {
+        return chunksLeft;
+    }
+
+    public ArrayList<BlockTypes[][]> getChunksRight() {
+        return chunksRight;
+    }
+
+    public void removeAllChunks() {
+        for (BlockTypes[][] chunk : chunksMiddle) {
+            chunksMiddle.remove(chunk);
+        }
+        for (BlockTypes[][] chunk : chunksRight) {
+            chunksRight.remove(chunk);
+        }
+        for (BlockTypes[][] chunk : chunksLeft) {
+            chunksLeft.remove(chunk);
+        }
     }
 
     public int getGROUND_HEIGHT() {
@@ -43,11 +121,11 @@ public class GameData {
     public float getGRAVITY() {
         return GRAVITY;
     }
-    
+
     public void setCursorPosition(Position cursorPosition) {
         this.cursorPosition = cursorPosition;
     }
-    
+
     public int getPlayerGold() {
         return playerGold;
     }
