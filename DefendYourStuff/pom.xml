@@ -66,6 +66,7 @@
 
         <module>Map</module>
         <module>CommonProjectile</module>
+        <module>CommonItem</module>
     </modules>
 
     <properties>
