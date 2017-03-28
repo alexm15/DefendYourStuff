@@ -18,8 +18,8 @@ import sdu.group8.common.entity.Projectile;
  */
 public interface ProjectileSPI {
     
-    <P extends Projectile> Projectile createProjectile(Entity e, GameData gameData);
-    <P extends Projectile> Projectile getProjectile(World world, UUID id);
+    <P extends Projectile> P createProjectile(Entity e, GameData gameData);
+    <P extends Projectile> P getProjectile(World world, UUID id);
     <P extends Projectile> Class getClass();
     <P extends Projectile> Collection getProjectiles();
     
