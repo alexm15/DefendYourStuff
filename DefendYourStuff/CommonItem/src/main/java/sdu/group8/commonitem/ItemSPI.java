@@ -32,7 +32,7 @@ public interface ItemSPI {
      */
     <I extends Item> Collection getItems();
     /**
-     * @return a specific item using an ID
+     * @return a specific item using an ID      
      */
     <I extends Item> I getItem(World world, UUID id);
 }
