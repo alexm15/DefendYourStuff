@@ -18,6 +18,7 @@ import sdu.group8.common.entity.*;
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
+import sdu.group8.commonplayer.IPlayerService;
 
 /**
  *
@@ -29,7 +30,8 @@ import sdu.group8.common.services.IGameProcessingService;
     @ServiceProvider(service = IGamePluginService.class)}
 )
 
-public class PlayerController implements IGameProcessingService, IGamePluginService {
+public class PlayerController
+        implements IGameProcessingService, IGamePluginService {
 
     private Player player;
     private float verticalVelocity;
@@ -45,7 +47,8 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         if (!player.isEntityOnGround(player, gameData)) {
             //player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
             verticalVelocity -= gameData.getGRAVITY();
-        } else {
+        }
+        else {
             verticalVelocity = 0;
         }
         horizontalVelocity = 0;
@@ -120,4 +123,5 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
     public void stop(GameData gameData, World world) {
         world.removeCharacter(player);
     }
+
 }

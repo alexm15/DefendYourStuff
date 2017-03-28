@@ -63,7 +63,7 @@
         <module>GameEngine</module>
         <module>Player</module>
         <module>Collision</module>
-
+        <module>CommonPlayer</module>
     </modules>
 
     <properties>
