@@ -63,6 +63,8 @@
         <module>GameEngine</module>
         <module>Player</module>
         <module>Collision</module>
+
+        <module>Map</module>
         <module>CommonPlayer</module>
         <module>CommonEnemy</module>
         <module>CommonAlly</module>
