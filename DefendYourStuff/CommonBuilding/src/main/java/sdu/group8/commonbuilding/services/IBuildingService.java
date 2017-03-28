@@ -16,8 +16,8 @@ import sdu.group8.common.weapon.Weapon;
  * @author Martin
  */
 public interface IBuildingService {
-    ArrayList<Building> getBuildings(World world);
-    Building getBuilding(World world, UUID ID);
+    ArrayList<? extends Building> getBuildings(World world);
+    <B extends Building> B getBuilding(World world, UUID ID);
     <B extends Building> Class getClass(B building);
     <B extends Building> void createBuilding(B building);
     <B extends Building> void upgradeBuilding(B building);
