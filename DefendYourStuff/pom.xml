@@ -67,6 +67,9 @@
         <module>Map</module>
         <module>CommonWeapon</module>
         <module>CommonBuilding</module>
+        <module>CommonPlayer</module>
+        <module>CommonEnemy</module>
+        <module>CommonAlly</module>
     </modules>
 
     <properties>
