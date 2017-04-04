@@ -23,10 +23,6 @@ public interface ItemSPI {
      */
     <I extends Item> I createItem(Entity e, GameData gameData);
     /**
-     * @return Item.class 
-     */
-    <I extends Item> Class getClass();
-    /**
      * Creates a collection of Items
      * @return a collection of items
      */
