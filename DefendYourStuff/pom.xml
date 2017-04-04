@@ -65,8 +65,8 @@
         <module>Collision</module>
 
         <module>Map</module>
-        <module>CommonProjectile</module>
         <module>CommonItem</module>
+        <module>CommonAbility</module>
     </modules>
 
     <properties>
