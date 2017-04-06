@@ -32,4 +32,5 @@ public interface IPlayerService {
      * @param weapon the new weapon.
      */
     void setWeapon(Weapon weapon);
+
 }

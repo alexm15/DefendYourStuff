@@ -11,12 +11,13 @@ import sdu.group8.common.entity.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.weapon.Weapon;
+import sdu.group8.commonplayer.IPlayer;
 
 /**
  *
  * @author joach
  */
-public class Player extends Character {
+public class Player extends Character implements IPlayer{
     
     private Weapon weapon;
     private float moveSpeed;
@@ -68,6 +69,11 @@ public class Player extends Character {
 
     public float getJUMP_FORCE() {
         return JUMP_FORCE;
+    }
+
+    @Override
+    public Position getPlayerPosition() {
+       return this.getPosition();
     }
        
 }
