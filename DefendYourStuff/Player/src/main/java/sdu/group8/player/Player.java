@@ -41,7 +41,7 @@ public class Player extends Character {
     public Weapon getWeapon() {
         return weapon;
     }
-        
+    
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;        
     }

@@ -70,6 +70,8 @@
         <module>CommonPlayer</module>
         <module>CommonEnemy</module>
         <module>CommonAlly</module>
+        <module>CommonItem</module>
+        <module>CommonAbility</module>
     </modules>
 
     <properties>
