@@ -15,7 +15,7 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Building;
 
-import sdu.group8.common.entity.Character;
+import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.entity.Item;
 import sdu.group8.common.entity.Projectile;
@@ -34,7 +34,7 @@ public class CollisionProcess implements IGamePostProcessingService {
 
         this.gameData = gameData;
 
-        Collection<Character> characters = world.getCharacters();
+        Collection<Character> characters = world.getEntities();
         Collection<Projectile> projectiles = world.getProjectiles();
         Collection<Item> items = world.getItems();
 
@@ -42,8 +42,8 @@ public class CollisionProcess implements IGamePostProcessingService {
         for (Character character : characters) {
 
             // Check character against other characters
-            Collection<Character> collidableCharacters = world.getCharacters(character.getCollidableTypes());
-            characterCollision(character, collidableCharacters);
+            //Collection<Character> collidableCharacters = world.getEntities(character.getCollidableTypes());
+            //characterCollision(character, collidableCharacters);
 
             // Check character against items
             characterCollision(character, items);
@@ -61,8 +61,8 @@ public class CollisionProcess implements IGamePostProcessingService {
             projectileCollision(projectile, collidableProjectiles);
 
             // Check projectile against characters
-            Collection<Character> collidableCharacters = world.getCharacters(projectile.getCollidableTypes());
-            projectileCollision(projectile, collidableCharacters);
+            // Collection<Character> collidableCharacters = world.getCharacters(projectile.getCollidableTypes());
+            //projectileCollision(projectile, collidableCharacters);
 
             // Check projectile against buildings
             Collection<Building> collidableBuildings = world.getBuildings(projectile.getCollidableTypes());

@@ -18,7 +18,7 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.Character;
+import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.entity.EntityType;
 
 /**
@@ -48,7 +48,7 @@ public class CollisionProcessTest {
     @After
     public void tearDown() {
         world.getBuildings().clear();
-        world.getCharacters().clear();
+        //world.getCharacters().clear();
         world.getItems().clear();
         world.getProjectiles().clear();
     }
@@ -68,7 +68,7 @@ public class CollisionProcessTest {
         Ability playerAbility = new Ability(playerPos, 0, playerDamageRange);
         CollisionContainer playerCollision = new CollisionContainer(EntityType.PLAYER, EntityType.PLAYER);
         Character player = new Character(100, playerDim, playerPos, playerCollision, playerAbility);
-        world.addCharacter(player);
+        //world.addCharacter(player);
 
         boolean expectedResult = gameData.getCollisionEvents().isEmpty();
 
@@ -79,7 +79,7 @@ public class CollisionProcessTest {
         Ability enemyAbility = new Ability(enemyPos, 0, enemyDamageRange);
         CollisionContainer enemyCollision = new CollisionContainer(EntityType.ENEMY, EntityType.ENEMY);
         Character enemy = new Character(100, enemyDim, enemyPos, enemyCollision, enemyAbility);
-        world.addCharacter(enemy);
+        //world.addCharacter(enemy);
 
         instance.process(gameData, world);
 
