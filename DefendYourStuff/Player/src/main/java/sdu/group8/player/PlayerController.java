@@ -116,12 +116,12 @@ public class PlayerController
         Ability ability = new Ability(position, AOE, damageRange); //TODO: Should be a predifined ability.
         player = new Player(moveSpeed, weight, health, dimension, position, collision, ability);
         gameData.setPlayerGold(0);
-        world.addCharacter(player);
+        world.addEntity(player);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeCharacter(player);
+        world.removeEntity(player);
     }
 
 }

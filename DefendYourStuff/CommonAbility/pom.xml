@@ -6,7 +6,7 @@
         <artifactId>DefendYourStuff-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>CommonPlayer</artifactId>
+    <artifactId>CommonAbility</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -17,7 +17,7 @@
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
-                        <publicPackage>sdu.group8.commonplayer</publicPackage>
+                        <publicPackage>sdu.group8.commonprojectile</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
@@ -41,13 +41,9 @@
             <artifactId>Common</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CommonCharacter</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <name>CommonAbility</name>
 </project>

@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.entity;
+package sdu.group8.commoncharacter;
 
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.collision.CollisionContainer;
+import sdu.group8.common.entity.MovingEntity;
 
 /**
  *

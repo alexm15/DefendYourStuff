@@ -10,7 +10,6 @@ import sdu.group8.common.entity.Building;
 import sdu.group8.common.entity.Item;
 import sdu.group8.common.entity.Projectile;
 import sdu.group8.common.entity.EntityType;
-import sdu.group8.common.entity.Character;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,18 +27,15 @@ import sdu.group8.common.entity.ChunkTypes;
  *
  * @author Martin
  */
-public class World<C extends Character, P extends Projectile, B extends Building, CHUNK extends Chunk> {
+public class World<E extends Entity, P extends Projectile, B extends Building, CHUNK extends Chunk> {
 
-    private Map<UUID, C> characters = new ConcurrentHashMap<>();
+    private Map<UUID, E> entitíes = new ConcurrentHashMap<>();
     private Map<UUID, P> projectiles = new ConcurrentHashMap<>();
     private Map<UUID, B> buildings = new ConcurrentHashMap<>();
     private Map<UUID, Item> items = new ConcurrentHashMap<>();
 
     //For MovingEntities
-    public Collection<C> getCharacters() {
-        return characters.values();
-    }
-    
+      
     
     
     
@@ -56,15 +52,17 @@ public class World<C extends Character, P extends Projectile, B extends Building
 //        
 //        return null;
 //    }
-    
-  
+    // For Entities
+    public Collection<E> getEntities() {
+        return entitíes.values();
+    }
 
-    public Collection<C> getCharacters(ArrayList<EntityType> entityTypes) {
-        Collection<C> r = new ArrayList<>();
-        for (C character : getCharacters()) {
+    public Collection<E> getEntity(ArrayList<EntityType> entityTypes) {
+        Collection<E> r = new ArrayList<>();
+        for (E entity : getEntities()) {
             for (EntityType entityType : entityTypes) {
-                if (character.getEntityType().equals(entityType)) {
-                    r.add(character);
+                if (entity.getEntityType().equals(entityType)) {
+                    r.add(entity);
                 }
             }
         }
@@ -72,17 +70,20 @@ public class World<C extends Character, P extends Projectile, B extends Building
         return r;
     }
 
-    public void addCharacter(C entity) {
-        characters.put(entity.getID(), entity);
+    public void addEntity(E entity) {
+        entitíes.put(entity.getID(), entity);
+
     }
 
-    public void removeCharacter(UUID entityID) {
-        characters.remove(entityID);
+    public void removeEntity(UUID entityID) {
+        entitíes.remove(entityID);
     }
 
-    public void removeCharacter(C entity) {
-        characters.remove(entity.getID());
+    public void removeEntity(E entity) {
+        entitíes.remove(entity.getID());
     }
+  
+
 
     //For Buildings
     public Collection<B> getBuildings() {

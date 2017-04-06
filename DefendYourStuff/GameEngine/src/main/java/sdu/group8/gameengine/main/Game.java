@@ -23,7 +23,7 @@ import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
-import sdu.group8.common.entity.Character;
+import sdu.group8.commoncharacter.Character;
 
 /**
  *
@@ -83,7 +83,7 @@ public class Game
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
         }
-        characters = world.getCharacters();
+        characters = world.getEntities();
         //TODO: load content of matrix into grid.
 
     }
