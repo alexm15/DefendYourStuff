@@ -20,19 +20,10 @@ import sdu.group8.common.entity.Chunk;
 public class World {
 
     private Map<UUID, Entity> entitíes = new ConcurrentHashMap<>();
+    private ArrayList<Chunk> chunkLeft = new ArrayList<>();
+    private Chunk chunkMiddle = null; //TODO: Set chunk middle to base chunk;
+    private ArrayList<Chunk> chunkRight = new ArrayList<>();
 
-    //For MovingEntities
-//    
-//    public Chunk getChunk(ChunkTypes chunkType) {
-//        for (CHUNK chunk : getGameMap()) {
-//            
-//                if (chunk.getType().equals(chunkType)) {
-//                    return chunk;
-//                }
-//            }
-//        
-//        return null;
-//    }
     // For Entities
     public Collection<Entity> getEntities() {
         return entitíes.values();
@@ -67,4 +58,30 @@ public class World {
     public Entity getEntity(UUID entityID) {
         return entitíes.get(entityID);
     }
+
+    public ArrayList<Chunk> getChunkLeft() {
+        return chunkLeft;
+    }
+
+    public void addChunkLeft(Chunk chunk) {
+        this.chunkLeft.add(chunk);
+    }
+
+    public Chunk getChunkMiddle() {
+        return chunkMiddle;
+    }
+
+    public void setChunkMiddle(Chunk chunkMiddle) {
+        this.chunkMiddle = chunkMiddle;
+    }
+
+    public ArrayList<Chunk> getChunkRight() {
+        return chunkRight;
+    }
+
+    public void addChunkRight(Chunk chunkRight) {
+        this.chunkRight.add(chunkRight);
+    }
+    
+    
 }

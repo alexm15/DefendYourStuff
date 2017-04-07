@@ -23,23 +23,22 @@ public class GameData {
     private int playerGold;
     private Position cursorPosition;
 
-    private final int GROUND_HEIGHT = 50;
+    private float ground_posX;
     private final float GRAVITY = 9.82f;
     private final GameKeys keys;
-    private final ArrayList<CollisionEvent> collisionEvents = new ArrayList<>();
-    private final ArrayList<DamageEvent> damageEvents = new ArrayList<>();
-    private ArrayList<BlockTypes[][]> chunksMiddle = new ArrayList<>();
-    private ArrayList<BlockTypes[][]> chunksLeft = new ArrayList<>();
-    private ArrayList<BlockTypes[][]> chunksRight = new ArrayList<>();
-    private int[] windowsY;
-    private ArrayList<Integer> windowsxRight = new ArrayList<>();
-    private ArrayList<Integer> windowsxLeft = new ArrayList<>();
-    private ArrayList<Integer> windowsxMiddle = new ArrayList<>();
 
     public GameData() {
         this.keys = new GameKeys();
     }
 
+    public float getGround_posX() {
+        return ground_posX;
+    }
+
+    public void setGround_posX(float ground_posX) {
+        this.ground_posX = ground_posX;
+    }
+    
     public void addLeftChunk(Chunk chunk) {
         chunksLeft.add(chunk.getChunkMatrix());
 
