@@ -20,8 +20,8 @@ public class Projectile extends MovingEntity{
     private float radius;
     private boolean isHit = false;
 
-    public Projectile(float weight, float angle, float radius, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
-        super(dimension, pos, collision, ab);
+    public Projectile(float weight, float angle, float radius, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(dimension, pos, collisionType, ab);
         this.weight = weight;
         this.angle = angle;
         this.radius = radius;
@@ -57,6 +57,11 @@ public class Projectile extends MovingEntity{
 
     public void setIsHit(boolean isHit) {
         this.isHit = isHit;
+    }
+
+    @Override
+    public void collision(Entity otherEntity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

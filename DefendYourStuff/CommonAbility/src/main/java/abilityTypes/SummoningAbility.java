@@ -7,16 +7,18 @@ package abilityTypes;
 
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.DamageRange;
+import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
+import sdu.group8.common.entity.CollisionType;
 
 /**
  *
  * @author joach
  */
 public class SummoningAbility extends Ability {
-    
-    public SummoningAbility(Position position, float AOE, DamageRange damageRange) {
-        super(position, AOE, damageRange);
+
+    public SummoningAbility(DamageRange damageRange, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(damageRange, dimension, pos, collisionType, ab);
     }
     
 }
