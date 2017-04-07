@@ -127,7 +127,7 @@ public class Game
     private void camLockTarget(Camera c, Vector2 target) {
         Vector3 position = c.position;
         position.x = target.x;
-        position.y = target.y;
+        position.y = 200;
         c.position.set(position);
 
         batch.setProjectionMatrix(c.combined);
