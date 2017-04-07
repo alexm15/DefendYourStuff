@@ -74,6 +74,7 @@
         <module>CommonAbility</module>
         <module>CommonCharacter</module>
         <module>Interacter</module>
+        <module>Ability</module>
     </modules>
 
     <properties>

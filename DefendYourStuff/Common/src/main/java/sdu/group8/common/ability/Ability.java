@@ -21,10 +21,13 @@ public class Ability extends MovingEntity{
     
     private DamageRange damageRange;
     private boolean isHit = false;
-    private boolean isActive = false;
+    private EffectContainer effects;
+    private float weight;
+    private float angle;
 
-    public Ability(DamageRange damageRange, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+    public Ability(DamageRange damageRange, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
         super(dimension, pos, collisionType, ab);
+        this.effects = effectContainer;
         this.damageRange = damageRange;
     }
 
@@ -40,16 +43,25 @@ public class Ability extends MovingEntity{
         this.isHit = isHit;
     }
     
-    public boolean isActive(){
-        return isActive;
-    } 
-    
-    public void setIsActive(){
-        this.isActive = isActive;
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public float getAngle() {
+        return angle;
+    }
+
+    public void setAngle(float angle) {
+        this.angle = angle;
     }
 
     @Override
     public void collision(Entity otherEntity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }
