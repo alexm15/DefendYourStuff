@@ -19,15 +19,11 @@ import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.BlockTypes;
-import sdu.group8.common.entity.Chunk;
-import sdu.group8.common.entity.ChunkTypes;
-import static sdu.group8.common.entity.ChunkTypes.*;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
-import sdu.group8.common.entity.Character;
-import sdu.group8.common.entity.Entity;
 import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerService;
 
@@ -58,10 +54,10 @@ public class Game
     private List<IGamePluginService> gamePlugins = new ArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
-    private Collection<Character> characters;
+    private Collection<Entity> entities;
     private SpriteBatch batch;
     private BitmapFont font;
-    private Character player;
+    private Entity player;
 
     /**
      * Positions chunk in the game window
@@ -144,11 +140,11 @@ public class Game
             postProcess.process(gameData, world);
         }
 
-        for (Object objectp : world.getCharacters()) {
+        for (Object objectp : world.getEntities()) {
             if (objectp instanceof IPlayer) {
-                this.player = (Character) objectp;
+                this.player = (Entity) objectp;
 
-                //FIXME: midlertid løsning til at tegne en player.
+                //FIXME: midlertid lÃ¸sning til at tegne en player.
                 sr.setColor(Color.RED);
                 sr.begin(ShapeRenderer.ShapeType.Filled);
                 float x = player.getX();

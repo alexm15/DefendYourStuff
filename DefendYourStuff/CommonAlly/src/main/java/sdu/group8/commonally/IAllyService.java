@@ -7,7 +7,7 @@ package sdu.group8.commonally;
 
 import java.util.UUID;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.Character;
+import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.entity.Entity;
 
 /**
