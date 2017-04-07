@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.BlockTypes;
 import sdu.group8.common.entity.Entity;
@@ -59,6 +60,7 @@ public class Game
     private BitmapFont font;
     private Entity player;
 
+
     /**
      * Positions chunk in the game window
      */
@@ -78,9 +80,12 @@ public class Game
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
-        CAM = new OrthographicCamera(400, 400);
-        CAM.setToOrtho(false, 400, 400);
+        
+        CAM = new OrthographicCamera();
+        CAM.setToOrtho(false, 800 , 600);
+
         CAM.update();
+        
         sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(
@@ -106,45 +111,23 @@ public class Game
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
-
+        camLockTarget(CAM);
         update();
 
-        gameData.getKeys().update();
+         gameData.getKeys().update();
 
         draw();
-
-        //cam follow player
-        Vector2 target = new Vector2(player.getX(), player.getY());
-
-        camLockTarget(CAM, target);
-
     }
 
-    private void camLockTarget(Camera c, Vector2 target) {
-        Vector3 position = c.position;
-        position.x = target.x;
-        position.y = 200;
-        c.position.set(position);
-
-        batch.setProjectionMatrix(c.combined);
-        c.update();
-
-    }
-
-    private void update() {
-
-        for (IGameProcessingService gameProcess : getGameProcesses()) {
-            gameProcess.process(gameData, world);
-        }
-        for (IGamePostProcessingService postProcess : getPostProcesses()) {
-            postProcess.process(gameData, world);
-        }
-
-        for (Object objectp : world.getEntities()) {
+    private void camLockTarget(Camera cam) {
+        for (Entity objectp : world.getEntities()) {
             if (objectp instanceof IPlayer) {
-                this.player = (Entity) objectp;
+                this.player = objectp;
 
-                //FIXME: midlertid lÃ¸sning til at tegne en player.
+                //FIXME: midlertid løsning til at tegne en player.
+                IPlayer p = (IPlayer) objectp;
+                Position pos = p.getPlayerPosition();
+                
                 sr.setColor(Color.RED);
                 sr.begin(ShapeRenderer.ShapeType.Filled);
                 float x = player.getX();
@@ -157,11 +140,28 @@ public class Game
             }
 
         }
+        Vector2 target = new Vector2(player.getX() + (player.getWidth()/2), player.getY()+ (player.getHeight()/2));
+        Vector3 position = cam.position;
+        position.x = target.x;
+//        position.y = target.y;
+        cam.update();
+
+    }
+
+    private void update() {
+
+        for (IGameProcessingService gameProcess : getGameProcesses()) {
+            gameProcess.process(gameData, world);
+        }
+        for (IGamePostProcessingService postProcess : getPostProcesses()) {
+            postProcess.process(gameData, world);
+        }
 
     }
 
     //TODO: Change draw method later for sprites.
     private void draw() {
+                batch.setProjectionMatrix(CAM.combined);
         leftOfScreen = 8;
         rightOfScreen = 8;
 
