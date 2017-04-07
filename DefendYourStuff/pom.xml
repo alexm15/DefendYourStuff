@@ -73,6 +73,7 @@
         <module>CommonItem</module>
         <module>CommonAbility</module>
         <module>CommonCharacter</module>
+        <module>Ability</module>
     </modules>
 
     <properties>
