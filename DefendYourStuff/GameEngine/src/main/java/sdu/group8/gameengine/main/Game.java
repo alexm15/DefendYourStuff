@@ -16,6 +16,7 @@ import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.BlockTypes;
+import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
@@ -42,7 +43,6 @@ public class Game
     private Collection<Entity> entities;
     private SpriteBatch batch;
     private BitmapFont font;
-    
 
     /**
      * Positions chunk in the game window
@@ -53,7 +53,7 @@ public class Game
      */
     private int leftOfScreen;
     /**
-     * Positions chunk right of game window 
+     * Positions chunk right of game window
      */
     private int rightOfScreen;
 
@@ -132,37 +132,36 @@ public class Game
         for (IGamePostProcessingService postProcess : getPostProcesses()) {
             postProcess.process(gameData, world);
         }
-        
-        
+
     }
 
     //TODO: Change draw method later for sprites.
     private void draw() {
         leftOfScreen = 8;
         rightOfScreen = 8;
+
+        Chunk middleChunk = world.getChunkMiddle();
+        ArrayList<Chunk> leftChunk = world.getChunksLeft();
+        ArrayList<Chunk> rightChunk = world.getChunksRight();
+
+        loadScreenChunk(middleChunk, screen, "Middle");
         
-        ArrayList<BlockTypes[][]> middleChunk = gameData.getChunksMiddle();
-        ArrayList<BlockTypes[][]> leftChunk = gameData.getChunksRight();
-        ArrayList<BlockTypes[][]> rightChunk = gameData.getChunksLeft();
-        
-        for (BlockTypes[][] chunk : middleChunk) {
-            loadScreenChunk(chunk, screen, "Middle");
-        }
-        for (BlockTypes[][] chunk : leftChunk) {
+        for (Chunk chunk : leftChunk) {
             leftOfScreen -= 8;
             loadScreenChunk(chunk, leftOfScreen, "Left");
         }
-        for (BlockTypes[][] chunk : rightChunk) {
+        for (Chunk chunk : rightChunk) {
             rightOfScreen += 8;
             loadScreenChunk(chunk, rightOfScreen, "Right");
         }
-        
+
         sr.begin(ShapeType.Line);
         sr.setColor(1, 1, 1, 1);
         sr.line(0, 100, 800, 100);
         sr.end();
-         // Used to test playermovements
-         // TODO: Insert player
+
+        // Used to test playermovements
+        // TODO: Insert player
 //        for (Entity player : entities) {
 //            sr.setColor(Color.RED);
 //            sr.begin(ShapeRenderer.ShapeType.Filled);
@@ -173,35 +172,35 @@ public class Game
 //            sr.rect(x, y, width, height);
 //            sr.end();   
 //        }
-        
     }
 
     /**
      * Draws the block layout of the specific chunk to the game window.
+     *
      * @param theChunk the chunk loaded in game window
-     * @param chunkPosition the chunk position in the game window. (See static int's for positions)
+     * @param chunkPosition the chunk position in the game window. (See static
+     * int's for positions)
      */
-    private void loadScreenChunk(BlockTypes[][] theChunk, int chunkPosition, String arrayPosition) {
+    private void loadScreenChunk(Chunk theChunk, int chunkPosition, String arrayPosition) {
         batch.begin();
         ArrayList<Integer> a = new ArrayList<>();
-        if (arrayPosition.equalsIgnoreCase("middle")) {
-            a = gameData.getWindowsxMiddle();
-        }
-        else if (arrayPosition.equalsIgnoreCase("left")) {
-            a = gameData.getWindowsxLeft();
-        }
-        else if (arrayPosition.equalsIgnoreCase("right")) {
-            a = gameData.getWindowsxRight();
-        }
-        for (int i = 0; i < theChunk.length; i++) {
-            for (int j = 0; j < theChunk[i].length; j++) {
-                //FIXME: Fix array indexOutOfBoundsException
-                font.draw(batch, theChunk[i][j].name(), a.get(i) - 50, gameData.getWindowsY()[j] - 50);
-            }
-        }
+
+        //TODO: Generate chunks
+//        if (arrayPosition.equalsIgnoreCase("middle")) {
+//            a = gameData.getWindowsxMiddle();
+//        } else if (arrayPosition.equalsIgnoreCase("left")) {
+//            a = gameData.getWindowsxLeft();
+//        } else if (arrayPosition.equalsIgnoreCase("right")) {
+//            a = gameData.getWindowsxRight();
+//        }
+//        for (int i = 0; i < theChunk.length; i++) {
+//            for (int j = 0; j < theChunk[i].length; j++) {
+//                //FIXME: Fix array indexOutOfBoundsException
+//                font.draw(batch, theChunk[i][j].name(), a.get(i) - 50, gameData.getWindowsY()[j] - 50);
+//            }
+//        }
         batch.end();
     }
-
 
     @Override
     public void resize(int width, int height) {
@@ -219,5 +218,4 @@ public class Game
     public void dispose() {
     }
 
-    
 }

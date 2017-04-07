@@ -5,12 +5,6 @@
  */
 package sdu.group8.common.data;
 
-import java.util.ArrayList;
-import sdu.group8.common.entity.BlockTypes;
-import sdu.group8.common.entity.Chunk;
-import sdu.group8.common.collision.CollisionEvent;
-import sdu.group8.common.collision.DamageEvent;
-
 /**
  *
  * @author Martin
@@ -23,7 +17,7 @@ public class GameData {
     private int playerGold;
     private Position cursorPosition;
 
-    private float ground_posX;
+    private float groundHeight;
     private final float GRAVITY = 9.82f;
     private final GameKeys keys;
 
@@ -31,87 +25,87 @@ public class GameData {
         this.keys = new GameKeys();
     }
 
-    public float getGround_posX() {
-        return ground_posX;
+    public float getGroundHeight() {
+        return groundHeight;
     }
 
-    public void setGround_posX(float ground_posX) {
-        this.ground_posX = ground_posX;
-    }
-    
-    public void addLeftChunk(Chunk chunk) {
-        chunksLeft.add(chunk.getChunkMatrix());
-
+    public void setGroundHeight(float groundHeight) {
+        this.groundHeight = groundHeight;
     }
 
-    public void addRigtChunk(Chunk rightBaseChunk) {
-        chunksRight.add(rightBaseChunk.getChunkMatrix());
+    public float getGroundPosX() {
+        return this.groundHeight;
     }
-
-    public void addMiddleChunk(Chunk castleChunk) {
-        chunksMiddle.add(castleChunk.getChunkMatrix());
-    }
-
-    public int[] getWindowsY() {
-        return windowsY;
-    }
-
-    public void setWindowsY(int[] windowsY) {
-        this.windowsY = windowsY;
-    }
-
-    public ArrayList<Integer> getWindowsxRight() {
-        return windowsxRight;
-    }
-
-    public void setWindowsxRight(ArrayList<Integer> windowsxRight) {
-        this.windowsxRight = windowsxRight;
-    }
-
-    public ArrayList<Integer> getWindowsxLeft() {
-        return windowsxLeft;
-    }
-
-    public void setWindowsxLeft(ArrayList<Integer> windowsxLeft) {
-        this.windowsxLeft = windowsxLeft;
-    }
-
-    public ArrayList<Integer> getWindowsxMiddle() {
-        return windowsxMiddle;
-    }
-
-    public void setWindowsxMiddle(ArrayList<Integer> windowsxMiddle) {
-        this.windowsxMiddle = windowsxMiddle;
-    }
-
-    
-    public ArrayList<BlockTypes[][]> getChunksMiddle() {
-        return chunksMiddle;
-    }
-
-    public ArrayList<BlockTypes[][]> getChunksLeft() {
-        return chunksLeft;
-    }
-
-    public ArrayList<BlockTypes[][]> getChunksRight() {
-        return chunksRight;
-    }
-
-    public void removeAllChunks() {
-        for (BlockTypes[][] chunk : chunksMiddle) {
-            chunksMiddle.remove(chunk);
-        }
-        for (BlockTypes[][] chunk : chunksRight) {
-            chunksRight.remove(chunk);
-        }
-        for (BlockTypes[][] chunk : chunksLeft) {
-            chunksLeft.remove(chunk);
-        }
-    }
-
-    public int getGROUND_HEIGHT() {
-        return GROUND_HEIGHT;
-    }
+//    
+//    public void addLeftChunk(Chunk chunk) {
+//        chunksLeft.add(chunk.getChunkMatrix());
+//
+//    }
+//
+//    public void addRigtChunk(Chunk rightBaseChunk) {
+//        chunksRight.add(rightBaseChunk.getChunkMatrix());
+//    }
+//
+//    public void addMiddleChunk(Chunk castleChunk) {
+//        chunksMiddle.add(castleChunk.getChunkMatrix());
+//    }
+//
+//    public int[] getWindowsY() {
+//        return windowsY;
+//    }
+//
+//    public void setWindowsY(int[] windowsY) {
+//        this.windowsY = windowsY;
+//    }
+//
+//    public ArrayList<Integer> getWindowsxRight() {
+//        return windowsxRight;
+//    }
+//
+//    public void setWindowsxRight(ArrayList<Integer> windowsxRight) {
+//        this.windowsxRight = windowsxRight;
+//    }
+//
+//    public ArrayList<Integer> getWindowsxLeft() {
+//        return windowsxLeft;
+//    }
+//
+//    public void setWindowsxLeft(ArrayList<Integer> windowsxLeft) {
+//        this.windowsxLeft = windowsxLeft;
+//    }
+//
+//    public ArrayList<Integer> getWindowsxMiddle() {
+//        return windowsxMiddle;
+//    }
+//
+//    public void setWindowsxMiddle(ArrayList<Integer> windowsxMiddle) {
+//        this.windowsxMiddle = windowsxMiddle;
+//    }
+//
+//    
+//    public ArrayList<BlockTypes[][]> getChunksMiddle() {
+//        return chunksMiddle;
+//    }
+//
+//    public ArrayList<BlockTypes[][]> getChunksLeft() {
+//        return chunksLeft;
+//    }
+//
+//    public ArrayList<BlockTypes[][]> getChunksRight() {
+//        return chunksRight;
+//    }
+//
+//    public void removeAllChunks() {
+//        for (BlockTypes[][] chunk : chunksMiddle) {
+//            chunksMiddle.remove(chunk);
+//        }
+//        for (BlockTypes[][] chunk : chunksRight) {
+//            chunksRight.remove(chunk);
+//        }
+//        for (BlockTypes[][] chunk : chunksLeft) {
+//            chunksLeft.remove(chunk);
+//        }
+//    }
 
     public Position getCursorPosition() {
         return cursorPosition;
@@ -147,8 +141,6 @@ public class GameData {
 
     public void setDelta(float delta) {
         this.delta = delta;
-        expireCollisionEvents();
-        expireDamageEvents();
     }
 
     public int getDisplayWidth() {
@@ -169,51 +161,5 @@ public class GameData {
 
     public GameKeys getKeys() {
         return keys;
-    }
-
-    // Colision Event
-    public void addCollisionEvent(CollisionEvent e) {
-        collisionEvents.add(e);
-    }
-
-    public void removeCollisionEvent(CollisionEvent e) {
-        collisionEvents.remove(e);
-    }
-
-    public ArrayList<CollisionEvent> getCollisionEvents() {
-        return collisionEvents;
-    }
-
-    private void expireCollisionEvents() {
-        //TODO: update method to use the wildcards generic collection
-        for (CollisionEvent event : collisionEvents) {
-            event.reduceExpiration(delta);
-            if (event.isIsExpired()) {
-                removeCollisionEvent(event);
-            }
-        }
-    }
-
-    // DamageEvent
-    public void addDamageEvent(DamageEvent e) {
-        damageEvents.add(e);
-    }
-
-    public void removeDamageEvent(DamageEvent e) {
-        damageEvents.remove(e);
-    }
-
-    public ArrayList<DamageEvent> getDamageEvents() {
-        return damageEvents;
-    }
-
-    private void expireDamageEvents() {
-        //TODO: update method to use the wildcards generic collection
-        for (DamageEvent event : damageEvents) {
-            event.reduceExpiration(delta);
-            if (event.isIsExpired()) {
-                removeDamageEvent(event);
-            }
-        }
     }
 }

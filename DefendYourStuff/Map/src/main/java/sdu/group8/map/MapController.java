@@ -33,28 +33,28 @@ public class MapController implements IGamePluginService, IMapUpdate {
 
     @Override
     public void start(GameData gameData, World world) {
-        //Three initial chunks for testing game
-        Chunk castleChunk = new CastleChunk(CASTLE_CHUNK);
-        Chunk leftBaseChunk = new LeftBaseChunk(LEFT_BASE_CHUNK);
-        Chunk rightBaseChunk = new RightBaseChunk(RIGHT_BASE_CHUNK);
-
-        //Sets windowsY array to 6 spaces
-        gameData.setWindowsY(new int[rowsInGrid]);
-        for (int i = 1; i <= rowsInGrid; i++) {
-            gameData.getWindowsY()[i - 1] = i * (gameData.getDisplayHeight() / rowsInGrid);
-
-        }
-
-        addChunkToLeftGameList(gameData, leftBaseChunk);
-
-        //Initializes middle chunk list and middle window list
-        //Nothing is added to these lists after this. 
-        gameData.addMiddleChunk(castleChunk);
-        for (int i = 1; i <= columnsInGrid; i++) {
-            gameData.getWindowsxMiddle().add(i - 1, (i * (gameData.getDisplayWidth() / columnsInGrid)));
-        }
-
-        addChunkRightGameList(gameData, rightBaseChunk);
+//        //Three initial chunks for testing game
+//        Chunk castleChunk = new CastleChunk(CASTLE_CHUNK);
+//        Chunk leftBaseChunk = new LeftBaseChunk(LEFT_BASE_CHUNK);
+//        Chunk rightBaseChunk = new RightBaseChunk(RIGHT_BASE_CHUNK);
+//
+//        //Sets windowsY array to 6 spaces
+//        gameData.setWindowsY(new int[rowsInGrid]);
+//        for (int i = 1; i <= rowsInGrid; i++) {
+//            gameData.getWindowsY()[i - 1] = i * (gameData.getDisplayHeight() / rowsInGrid);
+//
+//        }
+//
+//        addChunkToLeftGameList(gameData, leftBaseChunk);
+//
+//        //Initializes middle chunk list and middle window list
+//        //Nothing is added to these lists after this. 
+//        gameData.addMiddleChunk(castleChunk);
+//        for (int i = 1; i <= columnsInGrid; i++) {
+//            gameData.getWindowsxMiddle().add(i - 1, (i * (gameData.getDisplayWidth() / columnsInGrid)));
+//        }
+//
+//        addChunkRightGameList(gameData, rightBaseChunk);
 
     }
 
@@ -65,12 +65,12 @@ public class MapController implements IGamePluginService, IMapUpdate {
      * @param chunkToAdd the chunk to be added to the game.
      */
     public void addChunkRightGameList(GameData gameData, Chunk chunkToAdd) {
-        gameData.addRigtChunk(chunkToAdd);
-        int rightSize = gameData.getWindowsxRight().size();
-        int middleGridSize = gameData.getWindowsxMiddle().size() * 100;
-        for (int i = gameData.getWindowsxRight().size() + 1; i <= rightSize + columnsInGrid; i++) {
-            gameData.getWindowsxRight().add(i - 1, (i * (gameData.getDisplayWidth() / columnsInGrid)) + (middleGridSize));
-        }
+//        gameData.addRigtChunk(chunkToAdd);
+//        int rightSize = gameData.getWindowsxRight().size();
+//        int middleGridSize = gameData.getWindowsxMiddle().size() * 100;
+//        for (int i = gameData.getWindowsxRight().size() + 1; i <= rightSize + columnsInGrid; i++) {
+//            gameData.getWindowsxRight().add(i - 1, (i * (gameData.getDisplayWidth() / columnsInGrid)) + (middleGridSize));
+//        }
     }
 
     /**
@@ -80,16 +80,16 @@ public class MapController implements IGamePluginService, IMapUpdate {
      * @param chunkToAdd the chunk to be added to the game.
      */
     public void addChunkToLeftGameList(GameData gameData, Chunk chunkToAdd) {
-        gameData.addLeftChunk(chunkToAdd);
-        int leftSize = gameData.getWindowsxLeft().size();
-        for (int i = gameData.getWindowsxLeft().size() + 1; i <= leftSize + columnsInGrid; i++) {
-            gameData.getWindowsxLeft().add(i - 1, (-i * (gameData.getDisplayWidth() / columnsInGrid)));
-        }
+//        gameData.addLeftChunk(chunkToAdd);
+//        int leftSize = gameData.getWindowsxLeft().size();
+//        for (int i = gameData.getWindowsxLeft().size() + 1; i <= leftSize + columnsInGrid; i++) {
+//            gameData.getWindowsxLeft().add(i - 1, (-i * (gameData.getDisplayWidth() / columnsInGrid)));
+//        }
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        gameData.removeAllChunks();
+        world.removeAllChunks();
     }
 
     @Override

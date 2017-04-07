@@ -5,12 +5,15 @@
  */
 package sdu.group8.commonmap;
 
+import sdu.group8.common.data.Position;
+import sdu.group8.common.data.World;
+
 /**
  *
  * @author Martin
  */
 public abstract class Tile{
     
-    public abstract void createEntity();
+    public abstract void createEntity(World world, Position position);
     
 }

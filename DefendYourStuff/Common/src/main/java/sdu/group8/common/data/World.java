@@ -20,9 +20,9 @@ import sdu.group8.common.entity.Chunk;
 public class World {
 
     private Map<UUID, Entity> entitíes = new ConcurrentHashMap<>();
-    private ArrayList<Chunk> chunkLeft = new ArrayList<>();
+    private ArrayList<Chunk> chunksLeft = new ArrayList<>();
     private Chunk chunkMiddle = null; //TODO: Set chunk middle to base chunk;
-    private ArrayList<Chunk> chunkRight = new ArrayList<>();
+    private ArrayList<Chunk> chunksRight = new ArrayList<>();
 
     // For Entities
     public Collection<Entity> getEntities() {
@@ -59,28 +59,34 @@ public class World {
         return entitíes.get(entityID);
     }
 
-    public ArrayList<Chunk> getChunkLeft() {
-        return chunkLeft;
+    public ArrayList<Chunk> getChunksLeft() {
+        return chunksLeft;
     }
 
     public void addChunkLeft(Chunk chunk) {
-        this.chunkLeft.add(chunk);
+        this.chunksLeft.add(chunk);
     }
 
     public Chunk getChunkMiddle() {
         return chunkMiddle;
     }
 
-    public void setChunkMiddle(Chunk chunkMiddle) {
+    public void setChunksMiddle(Chunk chunkMiddle) {
         this.chunkMiddle = chunkMiddle;
     }
 
-    public ArrayList<Chunk> getChunkRight() {
-        return chunkRight;
+    public ArrayList<Chunk> getChunksRight() {
+        return chunksRight;
     }
 
-    public void addChunkRight(Chunk chunkRight) {
-        this.chunkRight.add(chunkRight);
+    public void addChunksRight(Chunk chunkRight) {
+        this.chunksRight.add(chunkRight);
+    }
+
+    public void removeAllChunks() {
+        this.chunksLeft.clear();
+        this.chunksRight.clear();
+        this.chunkMiddle = null;
     }
     
     
