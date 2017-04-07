@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author joach
  */
-class EffectContainer {
+public class EffectContainer {
     
     private ArrayList<Effect> effects;
     

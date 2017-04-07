@@ -9,6 +9,6 @@ package sdu.group8.common.ability;
  *
  * @author joach
  */
-class Effect {
+public class Effect {
     //ToDO Create Effects for abilities
 }
