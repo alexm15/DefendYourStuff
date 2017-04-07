@@ -111,8 +111,8 @@ public class PlayerController
         float minDamage = 0;
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        Ability ability = new Ability(position, AOE, damageRange); //TODO: Should be a predifined ability.
-        player = new Player(moveSpeed, weight, health, dimension, position, collision, ability);
+//        Ability ability = new Ability(position, AOE, damageRange); //TODO: Should be a predifined ability.
+//        player = new Player(moveSpeed, weight, health, dimension, position, collision, ability);
         gameData.setPlayerGold(0);
         world.addEntity(player);
     }

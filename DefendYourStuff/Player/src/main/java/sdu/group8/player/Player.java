@@ -10,6 +10,7 @@ import sdu.group8.common.collision.CollisionContainer;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
+import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.weapon.Weapon;
 
 /**
@@ -24,8 +25,8 @@ public class Player extends Character {
     private Position aimPoint;
     private final float JUMP_FORCE = 350;
 
-    public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, CollisionContainer collision, Ability... ab) {
-        super(health, dimension, pos, collision, ab);
+    public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(health, dimension, pos, collisionType, ab);
         this.moveSpeed = moveSpeed;
         this.weight = weight;
     }
