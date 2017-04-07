@@ -36,19 +36,8 @@ public class GameData {
     public float getGroundPosX() {
         return this.groundHeight;
     }
-//    
-//    public void addLeftChunk(Chunk chunk) {
-//        chunksLeft.add(chunk.getChunkMatrix());
-//
-//    }
-//
-//    public void addRigtChunk(Chunk rightBaseChunk) {
-//        chunksRight.add(rightBaseChunk.getChunkMatrix());
-//    }
-//
-//    public void addMiddleChunk(Chunk castleChunk) {
-//        chunksMiddle.add(castleChunk.getChunkMatrix());
-//    }
+
+    //TODO: Move to world or delete it
 //
 //    public int[] getWindowsY() {
 //        return windowsY;
@@ -94,19 +83,6 @@ public class GameData {
 //    public ArrayList<BlockTypes[][]> getChunksRight() {
 //        return chunksRight;
 //    }
-//
-//    public void removeAllChunks() {
-//        for (BlockTypes[][] chunk : chunksMiddle) {
-//            chunksMiddle.remove(chunk);
-//        }
-//        for (BlockTypes[][] chunk : chunksRight) {
-//            chunksRight.remove(chunk);
-//        }
-//        for (BlockTypes[][] chunk : chunksLeft) {
-//            chunksLeft.remove(chunk);
-//        }
-//    }
-
     public Position getCursorPosition() {
         return cursorPosition;
     }

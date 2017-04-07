@@ -61,6 +61,7 @@ public class MapControllerIT {
      */
     @Test
     public void testStart() {
+        // TODO: Implement test
 //        System.out.println("start");
 //        
 //        // TODO review the generated test code and remove the default call to fail.
@@ -81,6 +82,7 @@ public class MapControllerIT {
      */
     
     public void testStop() {
+        // TODO: Implement test
 //        System.out.println("stop");
 //        GameData gameData = null;
 //        World world = null;
@@ -95,6 +97,7 @@ public class MapControllerIT {
      */
     @Test
     public void testAddChunkRightGameList() {
+        // TODO: Implement test
 //        System.out.println("addChunkRightGameList");
 //        Chunk chunkToAdd = new CastleChunk(ChunkTypes.CASTLE_CHUNK);
 //        
@@ -110,6 +113,7 @@ public class MapControllerIT {
      */
     @Test
     public void testAddChunkToLeftGameList() {
+        // TODO: Implement test
 //        System.out.println("addChunkToLeftGameList");
 //        Chunk chunkToAdd = new CastleChunk(ChunkTypes.CASTLE_CHUNK);
 //        

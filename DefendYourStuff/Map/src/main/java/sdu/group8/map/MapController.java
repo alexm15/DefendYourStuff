@@ -33,6 +33,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
 
     @Override
     public void start(GameData gameData, World world) {
+        //TODO: Look at, or change it
 //        //Three initial chunks for testing game
 //        Chunk castleChunk = new CastleChunk(CASTLE_CHUNK);
 //        Chunk leftBaseChunk = new LeftBaseChunk(LEFT_BASE_CHUNK);
@@ -65,6 +66,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
      * @param chunkToAdd the chunk to be added to the game.
      */
     public void addChunkRightGameList(GameData gameData, Chunk chunkToAdd) {
+        //TODO: Look at, or change it
 //        gameData.addRigtChunk(chunkToAdd);
 //        int rightSize = gameData.getWindowsxRight().size();
 //        int middleGridSize = gameData.getWindowsxMiddle().size() * 100;
@@ -80,6 +82,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
      * @param chunkToAdd the chunk to be added to the game.
      */
     public void addChunkToLeftGameList(GameData gameData, Chunk chunkToAdd) {
+        //TODO: Look at, or change it
 //        gameData.addLeftChunk(chunkToAdd);
 //        int leftSize = gameData.getWindowsxLeft().size();
 //        for (int i = gameData.getWindowsxLeft().size() + 1; i <= leftSize + columnsInGrid; i++) {
@@ -94,7 +97,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
 
     @Override
     public void update(World world) {
-        
+
     }
 
 }
