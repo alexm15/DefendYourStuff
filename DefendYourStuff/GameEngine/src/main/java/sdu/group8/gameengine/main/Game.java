@@ -16,14 +16,11 @@ import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.BlockTypes;
-import sdu.group8.common.entity.Chunk;
-import sdu.group8.common.entity.ChunkTypes;
-import static sdu.group8.common.entity.ChunkTypes.*;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
-import sdu.group8.commoncharacter.Character;
 
 /**
  *
@@ -42,7 +39,7 @@ public class Game
     private List<IGamePluginService> gamePlugins = new ArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
-    private Collection<Character> characters;
+    private Collection<Entity> entities;
     private SpriteBatch batch;
     private BitmapFont font;
     
@@ -83,7 +80,7 @@ public class Game
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
         }
-        characters = world.getEntities();
+        entities = world.getEntities();
         //TODO: load content of matrix into grid.
 
     }
@@ -165,16 +162,17 @@ public class Game
         sr.line(0, 100, 800, 100);
         sr.end();
          // Used to test playermovements
-        for (Character player : characters) {
-            sr.setColor(Color.RED);
-            sr.begin(ShapeRenderer.ShapeType.Filled);
-            float x = player.getX();
-            float y = player.getY();
-            float height = player.getHeight();
-            float width = player.getWidth();
-            sr.rect(x, y, width, height);
-            sr.end();   
-        }
+         // TODO: Insert player
+//        for (Entity player : entities) {
+//            sr.setColor(Color.RED);
+//            sr.begin(ShapeRenderer.ShapeType.Filled);
+//            float x = player.getX();
+//            float y = player.getY();
+//            float height = player.getHeight();
+//            float width = player.getWidth();
+//            sr.rect(x, y, width, height);
+//            sr.end();   
+//        }
         
     }
 
