@@ -119,8 +119,6 @@ public abstract class Entity {
         return abilities.getAbilites();
     }
 
-    public void collision(Entity otherEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public abstract void collision(Entity otherEntity);
 
 }
