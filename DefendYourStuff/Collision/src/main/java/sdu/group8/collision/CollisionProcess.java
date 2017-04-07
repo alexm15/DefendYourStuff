@@ -31,7 +31,7 @@ public class CollisionProcess implements IGamePostProcessingService {
 
         // Character collision
         for (Entity entity : world.getEntities()) {
-
+            //TODO: refactor into methods.
             for (Entity otherEntity : world.getEntities()) {
                 if (!entity.getID().equals(otherEntity.getID())) {
                     if (entity.getCollisionType().equals(BOX)) {
@@ -55,7 +55,7 @@ public class CollisionProcess implements IGamePostProcessingService {
     }
 
     private <E extends Entity> void handleCollision(Character character, Collection<E> collidableEntities) {
-        
+
     }
 
     private boolean boxCollision(Entity entity, Entity otherEntity) {
