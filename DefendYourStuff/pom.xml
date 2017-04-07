@@ -65,6 +65,14 @@
         <module>Collision</module>
 
         <module>Map</module>
+        <module>CommonWeapon</module>
+        <module>CommonBuilding</module>
+        <module>CommonPlayer</module>
+        <module>CommonEnemy</module>
+        <module>CommonAlly</module>
+        <module>CommonItem</module>
+        <module>CommonAbility</module>
+        <module>CommonCharacter</module>
     </modules>
 
     <properties>

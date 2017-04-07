@@ -24,14 +24,14 @@ public abstract class Entity {
     private UUID ID;
     private Dimension dimension;
     private Position pos;
-    private CollisionContainer collisionContainer;
     private AbilityContainer abilities;
+    private CollisionType collisionType;
 
-    public Entity(Dimension dimension, Position pos, CollisionContainer collisionContainer, Ability... ab) {
+    public Entity(Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
         this.ID = UUID.randomUUID();
         this.dimension = dimension;
         this.pos = pos;
-        this.collisionContainer = collisionContainer;
+        this.collisionType = collisionType;
         this.abilities = new AbilityContainer(ab);
     }
 
@@ -63,20 +63,8 @@ public abstract class Entity {
         return ID;
     }
 
-    public List<EntityType> getTypesToIgnore() {
-        return collisionContainer.getTypesToIgnore();
-    }
-
-    public void addTypeToIgnore(EntityType et) {
-        collisionContainer.addTypeToIgnore(et);
-    }
-
-    public EntityType getEntityType() {
-        return collisionContainer.getEntityType();
-    }
-
-    public void setEntityType(EntityType entityType) {
-        this.collisionContainer.setEntityType(entityType);
+    public CollisionType getCollisionType() {
+        return collisionType;
     }
 
     public float getWidth() {
@@ -127,12 +115,10 @@ public abstract class Entity {
         return pos;
     }
 
-    public ArrayList<EntityType> getCollidableTypes() {
-        return this.collisionContainer.getCollidableTypes();
-    }
-
     public ArrayList<Ability> getAbilities() {
         return abilities.getAbilites();
     }
+
+    public abstract void collision(Entity otherEntity);
 
 }

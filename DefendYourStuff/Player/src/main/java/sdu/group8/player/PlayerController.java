@@ -14,7 +14,6 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.*;
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
@@ -29,7 +28,8 @@ import sdu.group8.common.services.IGameProcessingService;
     @ServiceProvider(service = IGamePluginService.class)}
 )
 
-public class PlayerController implements IGameProcessingService, IGamePluginService {
+public class PlayerController
+        implements IGameProcessingService, IGamePluginService {
 
     private Player player;
     private float verticalVelocity;
@@ -45,7 +45,8 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         if (!player.isEntityOnGround(player, gameData)) {
             //player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
             verticalVelocity -= gameData.getGRAVITY();
-        } else {
+        }
+        else {
             verticalVelocity = 0;
         }
         horizontalVelocity = 0;
@@ -101,7 +102,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         float weight = 10;
         float width = 50;
         float height = 50;
-        Dimension dimension = new Dimension(width, height); //TODO: Should match the sprites size.
+        Dimension dimension = new Dimension(width, height, width/2); //TODO: Should match the sprites size.
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
         Position position = new Position(x, y); //TODO: Should be startposition.
@@ -110,14 +111,15 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         float minDamage = 0;
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        Ability ability = new Ability(position, AOE, damageRange); //TODO: Should be a predifined ability.
-        player = new Player(moveSpeed, weight, health, dimension, position, collision, ability);
+//        Ability ability = new Ability(position, AOE, damageRange); //TODO: Should be a predifined ability.
+//        player = new Player(moveSpeed, weight, health, dimension, position, collision, ability);
         gameData.setPlayerGold(0);
-        world.addCharacter(player);
+        world.addEntity(player);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeCharacter(player);
+        world.removeEntity(player);
     }
+
 }

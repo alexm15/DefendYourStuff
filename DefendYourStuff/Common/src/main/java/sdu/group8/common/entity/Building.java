@@ -23,8 +23,8 @@ public abstract class Building extends Entity{
     private int upgradeLevel;
     private HealthSystem health;
 
-    public Building(Dimension dimension, Position pos, CollisionContainer collisionContainer, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
-        super(dimension, pos, collisionContainer, ab);
+    public Building(Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
+        super(dimension, pos, collisionType, ab);
         this.buildingType = buildingType;
         this.isAttackable = isAttackable;
         this.upgradeLevel = upgradeLevel;

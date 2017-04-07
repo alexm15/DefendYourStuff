@@ -8,57 +8,28 @@ package sdu.group8.common.ability;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Position;
 import java.util.UUID;
+import sdu.group8.common.data.Dimension;
+import sdu.group8.common.entity.CollisionType;
+import sdu.group8.common.entity.Entity;
+import sdu.group8.common.entity.MovingEntity;
 
 /**
  *
  * @author Martin
  */
-public class Ability {
-
-    private UUID ID;
-    private Position position;
-    private float AOE;
+public class Ability extends MovingEntity{
+    
     private DamageRange damageRange;
     private boolean isHit = false;
     private boolean isActive = false;
 
-    public Ability(Position position, float AOE, DamageRange damageRange) {
-        this.ID = UUID.randomUUID();
-        this.position = position;
-        this.AOE = AOE;
+    public Ability(DamageRange damageRange, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(dimension, pos, collisionType, ab);
         this.damageRange = damageRange;
-    }
-
-    public String getID() {
-        return ID.toString();
-    }
-
-    public float getX() {
-        return position.getX();
-    }
-
-    public float getY() {
-        return position.getY();
-    }
-
-    public void setPosition(float x, float y) {
-        this.position.setPosition(x, y);
-    }
-
-    public float getAOE() {
-        return AOE;
-    }
-
-    public void setAOE(float AOE) {
-        this.AOE = AOE;
     }
 
     public float getDamage() {
         return damageRange.getDamage();
-    }
-
-    public Position getPosition() {
-        return this.position;
     }
 
     public boolean isHit() {
@@ -75,5 +46,10 @@ public class Ability {
     
     public void setIsActive(){
         this.isActive = isActive;
+    }
+
+    @Override
+    public void collision(Entity otherEntity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

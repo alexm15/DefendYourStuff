@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.weapon;
+package sdu.group8.common.entity;
 
 /**
  *
  * @author Martin
  */
-public enum WeaponType {
-    SWORD, LONGSWORD, BOW, LONGBOW;
+public enum CollisionType {
+    BOX, CIRLCE;
 }

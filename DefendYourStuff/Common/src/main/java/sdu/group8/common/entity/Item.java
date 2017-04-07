@@ -18,8 +18,8 @@ public class Item extends Entity{
     private float expirationTime;
     private QualityType qualityType;
 
-    public Item(float expirationTime, QualityType qualityType, Dimension dimension, Position position, CollisionContainer collision, Ability... ab) {
-        super(dimension, position, collision);
+    public Item(float expirationTime, QualityType qualityType, Dimension dimension, Position position, CollisionType collisionType, Ability... ab) {
+        super(dimension, position, collisionType);
         this.expirationTime = expirationTime;
         this.qualityType = qualityType;
     }
@@ -45,6 +45,11 @@ public class Item extends Entity{
 
     public void setQualityType(QualityType qualityType) {
         this.qualityType = qualityType;
+    }
+
+    @Override
+    public void collision(Entity otherEntity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
