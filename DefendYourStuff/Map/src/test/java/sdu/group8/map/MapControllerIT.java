@@ -91,20 +91,6 @@ public class MapControllerIT {
     }
 
     /**
-     * Test of process method, of class MapController.
-     */
-    
-    public void testProcess() {
-        System.out.println("process");
-        GameData gameData = null;
-        World world = null;
-        MapController instance = new MapController();
-        instance.process(gameData, world);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of addChunkRightGameList method, of class MapController.
      */
     @Test
