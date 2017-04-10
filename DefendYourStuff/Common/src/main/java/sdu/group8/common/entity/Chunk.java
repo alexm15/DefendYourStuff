@@ -10,15 +10,21 @@ import sdu.group8.common.entity.BlockTypes;
 public abstract class Chunk {
 
     private int gridWidth;
-    private BlockTypes[][] chunkMatrix;
+    private BlockTypes[][] bgMatrix;
 
-    public Chunk(int gridWidth, BlockTypes[][] chunkMatrix) {
-        this.gridWidth = gridWidth;
-        this.chunkMatrix = chunkMatrix;
+    public Chunk() {
     }
 
-    public BlockTypes[][] getChunkMatrix() {
-        return chunkMatrix;
+    public BlockTypes[][] getBgMatrix() {
+        return this.bgMatrix;
+    }
+
+    public void setGridWidth(int gridWidth) {
+        this.gridWidth = gridWidth;
+    }
+
+    public void setBgMatrix(BlockTypes[][] bgMatrix) {
+        this.bgMatrix = bgMatrix;
     }
 
     public int getGridWidth() {

@@ -31,8 +31,9 @@ public class Chunk_BaseMiddle extends Chunk
         
     };
 
-    public Chunk_BaseMiddle(ChunkTypes type) {
-        super(type);
-        setChunkMatrix(CASTLE_CHUNK);
-    } 
+    public Chunk_BaseMiddle() {
+        setBgMatrix(CASTLE_CHUNK);
+        setGridWidth(8);
+    }
+    
 }
