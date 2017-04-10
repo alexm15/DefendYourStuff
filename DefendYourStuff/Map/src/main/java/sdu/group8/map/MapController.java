@@ -10,13 +10,8 @@ import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
-import static sdu.group8.common.entity.ChunkTypes.*;
 import sdu.group8.common.services.IGamePluginService;
-import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonmap.IMapUpdate;
-import sdu.group8.map.chunks.CastleChunk;
-import sdu.group8.map.chunks.LeftBaseChunk;
-import sdu.group8.map.chunks.RightBaseChunk;
 
 /**
  *
@@ -59,6 +54,16 @@ public class MapController implements IGamePluginService, IMapUpdate {
 
     }
 
+    @Override
+    public void stop(GameData gameData, World world) {
+        world.removeAllChunks();
+    }
+
+    @Override
+    public void update(World world) {
+
+    }
+
     /**
      * Adds chunk to the right side of the gameMap
      *
@@ -89,15 +94,4 @@ public class MapController implements IGamePluginService, IMapUpdate {
 //            gameData.getWindowsxLeft().add(i - 1, (-i * (gameData.getDisplayWidth() / columnsInGrid)));
 //        }
     }
-
-    @Override
-    public void stop(GameData gameData, World world) {
-        world.removeAllChunks();
-    }
-
-    @Override
-    public void update(World world) {
-
-    }
-
 }

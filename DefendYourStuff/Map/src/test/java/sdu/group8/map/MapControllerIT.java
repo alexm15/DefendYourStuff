@@ -15,7 +15,7 @@ import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.ChunkTypes;
-import sdu.group8.map.chunks.CastleChunk;
+import sdu.group8.map.chunks.Chunk_BaseMiddle;
 
 /**
  *

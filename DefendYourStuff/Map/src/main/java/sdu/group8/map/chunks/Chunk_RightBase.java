@@ -7,32 +7,33 @@
 package sdu.group8.map.chunks;
 
 import sdu.group8.common.entity.BlockTypes;
-import static sdu.group8.common.entity.BlockTypes.AIR;
-import static sdu.group8.common.entity.BlockTypes.CASTLE;
-import static sdu.group8.common.entity.BlockTypes.EARTH;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.ChunkTypes;
+import static sdu.group8.common.entity.BlockTypes.AIR;
+import static sdu.group8.common.entity.BlockTypes.EARTH;
+import static sdu.group8.common.entity.BlockTypes.WALLTOWER;
+import static sdu.group8.common.entity.BlockTypes.WELL;
 
 /**
  *
  * @author Alexander
  */
-public class CastleChunk extends Chunk
+public class Chunk_RightBase extends Chunk
 {
-    public final BlockTypes[][] CASTLE_CHUNK = new BlockTypes[][] {
-        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
-        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
-        {EARTH,           AIR,            CASTLE,         AIR,            AIR,            AIR},
+    public final BlockTypes[][] RIGHT_BASE_CHUNK = new BlockTypes[][] {
         {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
         {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
         {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           WELL,           AIR,            AIR,            AIR,            AIR},
         {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
+        {EARTH,           AIR,            WALLTOWER,      AIR,            AIR,            AIR},
         {EARTH,           AIR,            AIR,            AIR,            AIR,            AIR},
         
     };
 
-    public CastleChunk(ChunkTypes type) {
+    public Chunk_RightBase(ChunkTypes type) {
         super(type);
-        setChunkMatrix(CASTLE_CHUNK);
-    } 
+        setChunkMatrix(RIGHT_BASE_CHUNK);
+    }
 }

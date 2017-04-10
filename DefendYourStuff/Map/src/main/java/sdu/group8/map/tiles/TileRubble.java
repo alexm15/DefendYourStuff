@@ -26,4 +26,9 @@ public class TileRubble extends Tile {
         }
     }
 
+    @Override
+    public String getBackground() {
+        return "";
+    }
+
 }

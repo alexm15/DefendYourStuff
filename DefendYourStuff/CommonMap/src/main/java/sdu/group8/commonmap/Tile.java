@@ -14,6 +14,7 @@ import sdu.group8.common.data.World;
  */
 public abstract class Tile{
     
+    public abstract String getBackground();
     public abstract void createEntity(World world, Position position);
     
 }
