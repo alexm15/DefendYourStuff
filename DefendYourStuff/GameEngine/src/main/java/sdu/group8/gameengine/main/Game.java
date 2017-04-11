@@ -15,7 +15,6 @@ import java.util.List;
 import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.BlockTypes;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
@@ -43,18 +42,9 @@ public class Game
     private Collection<Entity> entities;
     private SpriteBatch batch;
     private BitmapFont font;
-
-    /**
-     * Positions chunk in the game window
-     */
+    
     private int screen = 8;
-    /**
-     * Positions chunk left of game window
-     */
     private int leftOfScreen;
-    /**
-     * Positions chunk right of game window
-     */
     private int rightOfScreen;
 
     @Override

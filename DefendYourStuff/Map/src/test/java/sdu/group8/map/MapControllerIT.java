@@ -10,12 +10,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.Chunk;
-import sdu.group8.common.entity.ChunkTypes;
-import sdu.group8.map.chunks.Chunk_BaseMiddle;
 
 /**
  *
@@ -62,66 +58,6 @@ public class MapControllerIT {
     @Test
     public void testStart() {
         // TODO: Implement test
-//        System.out.println("start");
-//        
-//        // TODO review the generated test code and remove the default call to fail.
-//        int firstIndexValueOfWindowsXMiddle = gameData.getWindowsxMiddle().get(0);
-//        assertEquals(100, firstIndexValueOfWindowsXMiddle);
-//        
-//        int firstIndexValueOfWindowsXLeft = gameData.getWindowsxLeft().get(0);
-//        assertEquals(-100, firstIndexValueOfWindowsXLeft);
-//        
-//        int firstIndexValueOfWindowsXRight = gameData.getWindowsxRight().get(0);
-//        assertEquals(900, firstIndexValueOfWindowsXRight);
-    }
-
-    
-
-    /**
-     * Test of stop method, of class MapController.
-     */
-    
-    public void testStop() {
-        // TODO: Implement test
-//        System.out.println("stop");
-//        GameData gameData = null;
-//        World world = null;
-//        MapController instance = new MapController();
-//        instance.stop(gameData, world);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addChunkRightGameList method, of class MapController.
-     */
-    @Test
-    public void testAddChunkRightGameList() {
-        // TODO: Implement test
-//        System.out.println("addChunkRightGameList");
-//        Chunk chunkToAdd = new CastleChunk(ChunkTypes.CASTLE_CHUNK);
-//        
-//        instance.addChunkRightGameList(gameData, chunkToAdd);
-//        int expectedSizeOfRightChunkList = 2;
-//        int expectedSizeOfRightWindowsXList = 16;
-//        assertEquals(expectedSizeOfRightChunkList, gameData.getChunksRight().size());
-//        assertEquals(expectedSizeOfRightWindowsXList, gameData.getWindowsxRight().size());
-    }
-
-    /**
-     * Test of addChunkToLeftGameList method, of class MapController.
-     */
-    @Test
-    public void testAddChunkToLeftGameList() {
-        // TODO: Implement test
-//        System.out.println("addChunkToLeftGameList");
-//        Chunk chunkToAdd = new CastleChunk(ChunkTypes.CASTLE_CHUNK);
-//        
-//        instance.addChunkToLeftGameList(gameData, chunkToAdd);
-//        int expectedSizeOfLeftChunkList = 2;
-//        int expectedSizeOfLeftWindowsXList = 16;
-//        assertEquals(expectedSizeOfLeftChunkList, gameData.getChunksLeft().size());
-//        assertEquals(expectedSizeOfLeftWindowsXList, gameData.getWindowsxLeft().size());
     }
     
 }
