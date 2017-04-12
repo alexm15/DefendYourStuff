@@ -13,7 +13,10 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.commonmap.IMapUpdate;
+import sdu.group8.map.chunks.Chunk_Forrest01;
 import sdu.group8.map.chunks.Chunk_Forrest02;
+import sdu.group8.map.chunks.Chunk_Grassland01;
+import sdu.group8.map.chunks.Chunk_Grassland02;
 
 /**
  *
@@ -76,7 +79,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
         // TODO: change into abstract factory for each chunk type (Forrest, Grassland etc.)
         switch (randomIntRange(0, 3)) {
             case 0:
-                newChunk = new Chunk_Forrest02();
+                newChunk = new Chunk_Forrest01();
                 break;
             case 1:
                 newChunk = new Chunk_Forrest02();
@@ -87,7 +90,12 @@ public class MapController implements IGamePluginService, IMapUpdate {
             case 3:
                 newChunk = new Chunk_Grassland02();
                 break;
+            default:
+                newChunk = new Chunk_Grassland01();
+                break;
         }
+        
+        return newChunk;
     }
 
     private int randomIntRange(int min, int max) {
