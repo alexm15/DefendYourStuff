@@ -12,5 +12,5 @@ import sdu.group8.common.data.World;
  * @author Martin
  */
 public interface IMapUpdate {
-    void update(World world);
+    void update(World world, boolean addToLeftSide);
 }

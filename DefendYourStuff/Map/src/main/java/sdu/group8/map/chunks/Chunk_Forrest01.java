@@ -19,13 +19,13 @@ import sdu.group8.map.tiles.Tile_WoodenFence;
  *
  * @author Martin
  */
-public class Chunk_Forrest extends Chunk {
+public class Chunk_Forrest01 extends Chunk {
     private Lookup lookup = Lookup.getDefault();
 
     private Tile air = new Tile_Air();
     private Tile d01 = new Tile_Dirt();
     
-    public final Tile[][] BG_FORREST = new Tile[][] {
+    public final Tile[][] BG_FORREST01 = new Tile[][] {
         {d01, air, air, air, air},
         {d01, air, air, air, air},
         {d01, air, air, air, air},
@@ -40,15 +40,15 @@ public class Chunk_Forrest extends Chunk {
         {d01, air, air, air, air}
     };
 
-    public Chunk_Forrest() {
-        setTileMatrix(BG_FORREST);
+    public Chunk_Forrest01() {
+        setTileMatrix(BG_FORREST01);
     }
 
     @Override
     public void createEntities(World world, int tileOffsetX) {
         
-        Position farm = new Position(((BG_FORREST[0].length / 4) + tileOffsetX) * 100, 100);
-        Position rubble = new Position(((BG_FORREST[0].length / 2) + tileOffsetX) * 100, 100);
+        Position farm = new Position(((BG_FORREST01[0].length / 4) + tileOffsetX) * 100, 100);
+        Position rubble = new Position(((BG_FORREST01[0].length / 2) + tileOffsetX) * 100, 100);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createRubbleBuilding(world, rubble);

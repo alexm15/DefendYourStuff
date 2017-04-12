@@ -5,6 +5,7 @@
  */
 package sdu.group8.map;
 
+import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
@@ -12,6 +13,7 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.commonmap.IMapUpdate;
+import sdu.group8.map.chunks.Chunk_Forrest02;
 
 /**
  *
@@ -60,38 +62,37 @@ public class MapController implements IGamePluginService, IMapUpdate {
     }
 
     @Override
-    public void update(World world) {
-
+    public void update(World world, boolean addToLeftSide) {
+        if (addToLeftSide) {
+            world.addChunkLeft(generateChunk(world.getChunksLeft().get(world.getChunksLeft().size())));
+        } else {
+            world.addChunkLeft(generateChunk(world.getChunksRight().get(world.getChunksRight().size())));
+        }
     }
 
-    /**
-     * Adds chunk to the right side of the gameMap
-     *
-     * @param gameData for retrieving the lists needed
-     * @param chunkToAdd the chunk to be added to the game.
-     */
-    public void addChunkRightGameList(GameData gameData, Chunk chunkToAdd) {
-        //TODO: Look at, or change it
-//        gameData.addRigtChunk(chunkToAdd);
-//        int rightSize = gameData.getWindowsxRight().size();
-//        int middleGridSize = gameData.getWindowsxMiddle().size() * 100;
-//        for (int i = gameData.getWindowsxRight().size() + 1; i <= rightSize + columnsInGrid; i++) {
-//            gameData.getWindowsxRight().add(i - 1, (i * (gameData.getDisplayWidth() / columnsInGrid)) + (middleGridSize));
-//        }
+    private Chunk generateChunk(Chunk lastChunk) {
+        Chunk newChunk;
+
+        // TODO: change into abstract factory for each chunk type (Forrest, Grassland etc.)
+        switch (randomIntRange(0, 3)) {
+            case 0:
+                newChunk = new Chunk_Forrest02();
+                break;
+            case 1:
+                newChunk = new Chunk_Forrest02();
+                break;
+            case 2:
+                newChunk = new Chunk_Grassland01();
+                break;
+            case 3:
+                newChunk = new Chunk_Grassland02();
+                break;
+        }
     }
 
-    /**
-     * Adds chunk to the left side of the gameMap
-     *
-     * @param gameData for retrieving the lists needed
-     * @param chunkToAdd the chunk to be added to the game.
-     */
-    public void addChunkToLeftGameList(GameData gameData, Chunk chunkToAdd) {
-        //TODO: Look at, or change it
-//        gameData.addLeftChunk(chunkToAdd);
-//        int leftSize = gameData.getWindowsxLeft().size();
-//        for (int i = gameData.getWindowsxLeft().size() + 1; i <= leftSize + columnsInGrid; i++) {
-//            gameData.getWindowsxLeft().add(i - 1, (-i * (gameData.getDisplayWidth() / columnsInGrid)));
-//        }
+    private int randomIntRange(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min + 1) + min;
     }
+
 }
