@@ -30,5 +30,7 @@ public abstract class Chunk {
     }
     
     public abstract void createEntities(World world, int tileOffsetX);
+    
+    public abstract String getBackgroundImageURL();
 
 }

@@ -58,4 +58,10 @@ public class Chunk_Base extends Chunk {
         }
     }
 
+    @Override
+    public String getBackgroundImageURL() {
+        //TODO: Set background image
+        return "";
+    }
+
 }
