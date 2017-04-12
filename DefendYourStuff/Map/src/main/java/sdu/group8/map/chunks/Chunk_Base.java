@@ -60,7 +60,7 @@ public class Chunk_Base extends Chunk {
 
     @Override
     public String getBackgroundImageURL() {
-        return "chunk_bg_base.png";
+        return "chunk_bg_base.PNG";
     }
 
 }

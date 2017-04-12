@@ -3,7 +3,6 @@ package sdu.group8.gameengine.main;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
@@ -30,7 +30,6 @@ import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
 import sdu.group8.commonplayer.IPlayer;
-import sdu.group8.commonplayer.IPlayerService;
 
 /**
  *
@@ -51,6 +50,8 @@ public class Game
     }
     private static OrthographicCamera CAM;
     private ShapeRenderer sr;
+    private SpriteBatch batch;
+    private BitmapFont font;
 
     private final GameData gameData = new GameData();
     private World world = new World();
@@ -60,10 +61,7 @@ public class Game
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
     private Collection<Entity> entities;
-    private SpriteBatch batch;
-    private BitmapFont font;
     private Entity player;
-
 
     private int screen = 8;
     private int leftOfScreen;
@@ -75,12 +73,11 @@ public class Game
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
-        
         CAM = new OrthographicCamera();
-        CAM.setToOrtho(false, 800 , 600);
+        CAM.setToOrtho(false, 800, 600);
 
         CAM.update();
-        
+
         sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(
@@ -109,7 +106,7 @@ public class Game
         camLockTarget(CAM);
         update();
 
-         gameData.getKeys().update();
+        gameData.getKeys().update();
 
         draw();
     }
@@ -122,7 +119,7 @@ public class Game
                 //FIXME: midlertid løsning til at tegne en player.
                 IPlayer p = (IPlayer) objectp;
                 Position pos = p.getPlayerPosition();
-                
+
                 sr.setColor(Color.RED);
                 sr.begin(ShapeRenderer.ShapeType.Filled);
                 float x = player.getX();
@@ -135,7 +132,7 @@ public class Game
             }
 
         }
-        Vector2 target = new Vector2(player.getX() + (player.getWidth()/2), player.getY()+ (player.getHeight()/2));
+        Vector2 target = new Vector2(player.getX() + (player.getWidth() / 2), player.getY() + (player.getHeight() / 2));
         Vector3 position = cam.position;
         position.x = target.x;
 //        position.y = target.y;
@@ -156,57 +153,17 @@ public class Game
 
     //TODO: Change draw method later for sprites.
     private void draw() {
-                batch.setProjectionMatrix(CAM.combined);
+        batch.setProjectionMatrix(CAM.combined);
         leftOfScreen = 8;
         rightOfScreen = 8;
 
-        ArrayList<BlockTypes[][]> middleChunk = gameData.getChunksMiddle();
-        ArrayList<BlockTypes[][]> leftChunk = gameData.getChunksRight();
-        ArrayList<BlockTypes[][]> rightChunk = gameData.getChunksLeft();
-
-        for (BlockTypes[][] chunk : middleChunk) {
-            loadScreenChunk(chunk, screen, "Middle");
-        }
-        for (BlockTypes[][] chunk : leftChunk) {
-            leftOfScreen -= 8;
-            loadScreenChunk(chunk, leftOfScreen, "Left");
-        }
-        for (BlockTypes[][] chunk : rightChunk) {
-            rightOfScreen += 8;
-            loadScreenChunk(chunk, rightOfScreen, "Right");
-        }
-
         sr.begin(ShapeType.Line);
-        sr.setColor(1, 1, 1, 1);
+        sr.setColor(Color.MAROON);
         sr.line(0, 100, 800, 100);
         sr.end();
+        
+        //drawMap();
 
-    }
-
-    /**
-     * Draws the block layout of the specific chunk to the game window.
-     *
-     * @param theChunk the chunk loaded in game window
-     * @param chunkPosition the chunk position in the game window. (See static
-     * int's for positions)
-     */
-    private void loadScreenChunk(BlockTypes[][] theChunk, int chunkPosition, String arrayPosition) {
-        batch.begin();
-        ArrayList<Integer> a = new ArrayList<>();
-        if (arrayPosition.equalsIgnoreCase("middle")) {
-            a = gameData.getWindowsxMiddle();
-        } else if (arrayPosition.equalsIgnoreCase("left")) {
-            a = gameData.getWindowsxLeft();
-        } else if (arrayPosition.equalsIgnoreCase("right")) {
-            a = gameData.getWindowsxRight();
-        }
-        for (int i = 0; i < theChunk.length; i++) {
-            for (int j = 0; j < theChunk[i].length; j++) {
-                //FIXME: Fix array indexOutOfBoundsException
-                font.draw(batch, theChunk[i][j].name(), a.get(i) - 50, gameData.getWindowsY()[j] - 50);
-            }
-        }
-        batch.end();
     }
 
     public Collection<? extends IGameProcessingService> getGameProcesses() {
@@ -219,72 +176,6 @@ public class Game
 
     public Collection<? extends IGamePostProcessingService> getPostProcesses() {
         return lookup.lookupAll(IGamePostProcessingService.class);
-    }
-
-    @Override
-    public void render() {
-
-        // clear screen to black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        gameData.setDelta(Gdx.graphics.getDeltaTime());
-
-        update();
-
-        draw();
-
-        gameData.getKeys().update();
-    }
-
-    private void update() {
-
-        for (IGameProcessingService gameProcess : getGameProcesses()) {
-            gameProcess.process(gameData, world);
-        }
-        for (IGamePostProcessingService postProcess : getPostProcesses()) {
-            postProcess.process(gameData, world);
-        }
-
-    }
-
-    //TODO: Change draw method later for sprites.
-    private void draw() {
-        leftOfScreen = 8;
-        rightOfScreen = 8;
-
-        Chunk middleChunk = world.getChunkMiddle();
-        ArrayList<Chunk> leftChunk = world.getChunksLeft();
-        ArrayList<Chunk> rightChunk = world.getChunksRight();
-
-        loadScreenChunk(middleChunk, screen, "Middle");
-
-        for (Chunk chunk : leftChunk) {
-            leftOfScreen -= 8;
-            loadScreenChunk(chunk, leftOfScreen, "Left");
-        }
-        for (Chunk chunk : rightChunk) {
-            rightOfScreen += 8;
-            loadScreenChunk(chunk, rightOfScreen, "Right");
-        }
-
-        sr.begin(ShapeType.Line);
-        sr.setColor(1, 1, 1, 1);
-        sr.line(0, 100, 800, 100);
-        sr.end();
-
-        // Used to test playermovements
-        // TODO: Insert player
-//        for (Entity player : entities) {
-//            sr.setColor(Color.RED);
-//            sr.begin(ShapeRenderer.ShapeType.Filled);
-//            float x = player.getX();
-//            float y = player.getY();
-//            float height = player.getHeight();
-//            float width = player.getWidth();
-//            sr.rect(x, y, width, height);
-//            sr.end();   
-//        }
     }
 
     /**
@@ -324,18 +215,18 @@ public class Game
         Chunk chunkMiddle = world.getChunkMiddle();
         Tile[][] chunkMiddleTileMatrix = chunkMiddle.getTileMatrix();
         Texture base_bg_texture = new Texture(getTextureFile(chunkMiddle.getBackgroundImageURL()));
-        
-        Position base_bg_position = new Position(0, 0);
+
+        Position base_bg_position = new Position(0, 100);
         drawSprite(base_bg_texture, base_bg_position);
-        
-        for (int r = chunkMiddleTileMatrix.length; r >= 0; r--) {
+
+        for (int r = chunkMiddleTileMatrix.length-1; r >= 0; r--) {
 
             for (int c = 0; c < chunkMiddleTileMatrix[r].length; c++) {
                 Tile currentTile = chunkMiddleTileMatrix[r][c];
 
                 Texture texture = new Texture(getTextureFile(currentTile.getImageURL()));
                 Position spritePosition = new Position((tileOffsetX + r) * TILE_SIZE, c * TILE_SIZE);
-                
+
                 drawSprite(texture, spritePosition);
             }
         }
@@ -365,13 +256,13 @@ public class Game
         }
 
         System.out.println("Can't find texture: " + texturePath);
-        fileHandle = Gdx.files.classpath("defaultImage.png");
+        fileHandle = Gdx.files.classpath("defaultImage.PNG");
         return fileHandle;
     }
 
     private void drawSprite(Texture texture, Position position) {
         Sprite sprite = new Sprite(texture);
-        
+
         sprite.setPosition(position.getX(), position.getY());
 
         batch.begin();

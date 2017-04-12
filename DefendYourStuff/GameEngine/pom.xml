@@ -119,10 +119,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>sdu.group8</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>CommonPlayer</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <type>jar</type>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <properties>

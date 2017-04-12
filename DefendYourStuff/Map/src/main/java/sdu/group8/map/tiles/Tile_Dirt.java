@@ -15,7 +15,7 @@ public class Tile_Dirt implements Tile{
 
     @Override
     public String getImageURL() {
-        return "";
+        return "tile_dirt.PNG";
     }
     
 }

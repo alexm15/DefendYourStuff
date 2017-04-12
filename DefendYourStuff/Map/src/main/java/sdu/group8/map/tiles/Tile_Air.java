@@ -8,7 +8,7 @@ public class Tile_Air implements Tile{
 
     @Override
     public String getImageURL() {
-        return "";
+        return "defaultImage.PNG";
     }
 
 }
