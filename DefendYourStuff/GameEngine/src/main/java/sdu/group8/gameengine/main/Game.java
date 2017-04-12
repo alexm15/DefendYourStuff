@@ -67,6 +67,18 @@ public class Game
     private int leftOfScreen;
     private int rightOfScreen;
 
+    public Collection<? extends IGameProcessingService> getGameProcesses() {
+        return lookup.lookupAll(IGameProcessingService.class);
+    }
+
+    public Collection<? extends IGamePluginService> getGamePlugins() {
+        return lookup.lookupAll(IGamePluginService.class);
+    }
+
+    public Collection<? extends IGamePostProcessingService> getPostProcesses() {
+        return lookup.lookupAll(IGamePostProcessingService.class);
+    }
+
     @Override
     public void create() {
 
@@ -92,7 +104,6 @@ public class Game
             gamePlugin.start(gameData, world);
         }
 
-        //TODO: load content of matrix into grid.
     }
 
     @Override
@@ -103,7 +114,6 @@ public class Game
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
-        camLockTarget(CAM);
         update();
 
         gameData.getKeys().update();
@@ -151,59 +161,20 @@ public class Game
 
     }
 
-    //TODO: Change draw method later for sprites.
     private void draw() {
         batch.setProjectionMatrix(CAM.combined);
         leftOfScreen = 8;
         rightOfScreen = 8;
 
+        // Draw sprites
+        drawMap();
+
+        camLockTarget(CAM); // Draw player
+
         sr.begin(ShapeType.Line);
         sr.setColor(Color.MAROON);
         sr.line(0, 100, 800, 100);
         sr.end();
-        
-        //drawMap();
-
-    }
-
-    public Collection<? extends IGameProcessingService> getGameProcesses() {
-        return lookup.lookupAll(IGameProcessingService.class);
-    }
-
-    public Collection<? extends IGamePluginService> getGamePlugins() {
-        return lookup.lookupAll(IGamePluginService.class);
-    }
-
-    public Collection<? extends IGamePostProcessingService> getPostProcesses() {
-        return lookup.lookupAll(IGamePostProcessingService.class);
-    }
-
-    /**
-     * Draws the block layout of the specific chunk to the game window.
-     *
-     * @param theChunk the chunk loaded in game window
-     * @param chunkPosition the chunk position in the game window. (See static
-     * int's for positions)
-     */
-    private void loadScreenChunk(Chunk theChunk, int chunkPosition, String arrayPosition) {
-        batch.begin();
-        ArrayList<Integer> a = new ArrayList<>();
-
-        //TODO: Generate chunks
-//        if (arrayPosition.equalsIgnoreCase("middle")) {
-//            a = gameData.getWindowsxMiddle();
-//        } else if (arrayPosition.equalsIgnoreCase("left")) {
-//            a = gameData.getWindowsxLeft();
-//        } else if (arrayPosition.equalsIgnoreCase("right")) {
-//            a = gameData.getWindowsxRight();
-//        }
-//        for (int i = 0; i < theChunk.length; i++) {
-//            for (int j = 0; j < theChunk[i].length; j++) {
-//                //FIXME: Fix array indexOutOfBoundsException
-//                font.draw(batch, theChunk[i][j].name(), a.get(i) - 50, gameData.getWindowsY()[j] - 50);
-//            }
-//        }
-        batch.end();
     }
 
     private void drawMap() {
@@ -216,18 +187,21 @@ public class Game
         Tile[][] chunkMiddleTileMatrix = chunkMiddle.getTileMatrix();
         Texture base_bg_texture = new Texture(getTextureFile(chunkMiddle.getBackgroundImageURL()));
 
-        Position base_bg_position = new Position(0, 100);
-        drawSprite(base_bg_texture, base_bg_position);
+        Position base_bg_position = new Position(0, 0);
+        drawToSpriteBatch(base_bg_texture, base_bg_position);
 
-        for (int r = chunkMiddleTileMatrix.length-1; r >= 0; r--) {
+        for (int r = chunkMiddleTileMatrix.length - 1; r >= 0; r--) {
 
             for (int c = 0; c < chunkMiddleTileMatrix[r].length; c++) {
-                Tile currentTile = chunkMiddleTileMatrix[r][c];
-
-                Texture texture = new Texture(getTextureFile(currentTile.getImageURL()));
+//                Tile currentTile = chunkMiddleTileMatrix[r][c];
+//
+//                Texture texture = new Texture(getTextureFile(currentTile.getImageURL()));
                 Position spritePosition = new Position((tileOffsetX + r) * TILE_SIZE, c * TILE_SIZE);
-
-                drawSprite(texture, spritePosition);
+//
+//                drawToSpriteBatch(texture, spritePosition);
+                batch.begin();
+                font.draw(batch, "Hey", spritePosition.getX(), spritePosition.getY());
+                batch.end();
             }
         }
     }
@@ -262,11 +236,13 @@ public class Game
 
     private void drawSprite(Texture texture, Position position) {
         Sprite sprite = new Sprite(texture);
-
         sprite.setPosition(position.getX(), position.getY());
-
-        batch.begin();
         sprite.draw(batch);
+    }
+
+    private void drawToSpriteBatch(Texture texture, Position position) {
+        batch.begin();
+        batch.draw(texture, position.getX(), position.getY());
         batch.end();
     }
 }

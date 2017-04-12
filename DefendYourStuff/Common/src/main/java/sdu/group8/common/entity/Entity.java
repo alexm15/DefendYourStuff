@@ -41,7 +41,7 @@ public abstract class Entity {
      * false.
      */
     public boolean isEntityOnGround(Entity entity, GameData gameData) {
-        if (entity.getPosition().getY() <= gameData.getGroundHeight() + entity.getHeight() / 2) {
+        if (entity.getPosition().getY() <= gameData.getGroundHeight()) {
             return true;
         }
         return false;

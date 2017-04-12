@@ -17,7 +17,7 @@ public class GameData {
     private int playerGold;
     private Position cursorPosition;
 
-    private float groundHeight;
+    private float groundHeight = 100;
     private final float GRAVITY = 9.82f;
     private final GameKeys keys;
 
