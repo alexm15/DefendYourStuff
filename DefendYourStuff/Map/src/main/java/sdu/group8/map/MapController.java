@@ -13,6 +13,7 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.commonmap.IMapUpdate;
+import sdu.group8.map.chunks.Chunk_Base;
 import sdu.group8.map.chunks.Chunk_Forrest01;
 import sdu.group8.map.chunks.Chunk_Forrest02;
 import sdu.group8.map.chunks.Chunk_Grassland01;
@@ -56,6 +57,10 @@ public class MapController implements IGamePluginService, IMapUpdate {
 //        }
 //
 //        addChunkRightGameList(gameData, rightBaseChunk);
+
+
+        Chunk chunkMiddle = new Chunk_Base();
+        world.setChunksMiddle(chunkMiddle);
 
     }
 

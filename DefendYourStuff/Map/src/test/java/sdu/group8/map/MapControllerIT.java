@@ -12,6 +12,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
+import sdu.group8.common.entity.Chunk;
+import sdu.group8.map.chunks.Chunk_Base;
+
+import static org.junit.Assert.*;
 
 /**
  *
@@ -33,6 +37,7 @@ public class MapControllerIT {
     private GameData gameData;
     private World world;
     private MapController instance;
+    private Chunk chunkBase;
 
     @Before
     public void setUp() {
@@ -43,6 +48,7 @@ public class MapControllerIT {
         gameData.setDisplayWidth(800);
         instance.start(gameData, world);
         
+        chunkBase = new Chunk_Base();
     }
     
     @After
@@ -60,4 +66,16 @@ public class MapControllerIT {
         // TODO: Implement test
     }
     
+    /**
+     * Test Dimension of chunks
+     */
+    @Test
+    public void testChunkDimension() {
+        float expectedW = 12.0f;
+        float expectedH = 5.0f;
+        float resultW = chunkBase.getDimension().getWidth();
+        float resultH = chunkBase.getDimension().getHeight();
+        assertTrue(expectedH == resultH);
+        assertTrue(expectedW == resultW);
+    }
 }

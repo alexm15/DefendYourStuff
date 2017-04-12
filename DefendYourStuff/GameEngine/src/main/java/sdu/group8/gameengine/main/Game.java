@@ -2,10 +2,13 @@ package sdu.group8.gameengine.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -14,9 +17,11 @@ import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.Entity;
+import sdu.group8.common.entity.Tile;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
@@ -42,7 +47,7 @@ public class Game
     private Collection<Entity> entities;
     private SpriteBatch batch;
     private BitmapFont font;
-    
+
     private int screen = 8;
     private int leftOfScreen;
     private int rightOfScreen;
@@ -135,7 +140,7 @@ public class Game
         ArrayList<Chunk> rightChunk = world.getChunksRight();
 
         loadScreenChunk(middleChunk, screen, "Middle");
-        
+
         for (Chunk chunk : leftChunk) {
             leftOfScreen -= 8;
             loadScreenChunk(chunk, leftOfScreen, "Left");
@@ -192,6 +197,32 @@ public class Game
         batch.end();
     }
 
+    private void drawMap() {
+
+        int tileOffsetX = 0;
+        //TODO: set tile size in GameData
+        final int TILE_SIZE = 100;
+
+        Chunk chunkMiddle = world.getChunkMiddle();
+        Tile[][] chunkMiddleTileMatrix = chunkMiddle.getTileMatrix();
+        Texture base_bg_texture = new Texture(getTextureFile(chunkMiddle.getBackgroundImageURL()));
+        
+        Position base_bg_position = new Position(0, 0);
+        drawSprite(base_bg_texture, base_bg_position);
+        
+        for (int r = chunkMiddleTileMatrix.length; r >= 0; r--) {
+
+            for (int c = 0; c < chunkMiddleTileMatrix[r].length; c++) {
+                Tile currentTile = chunkMiddleTileMatrix[r][c];
+
+                Texture texture = new Texture(getTextureFile(currentTile.getImageURL()));
+                Position spritePosition = new Position((tileOffsetX + r) * TILE_SIZE, c * TILE_SIZE);
+                
+                drawSprite(texture, spritePosition);
+            }
+        }
+    }
+
     @Override
     public void resize(int width, int height) {
     }
@@ -208,4 +239,25 @@ public class Game
     public void dispose() {
     }
 
+    private FileHandle getTextureFile(String texturePath) {
+        FileHandle fileHandle = Gdx.files.classpath(texturePath);
+
+        if (fileHandle.exists()) {
+            return fileHandle;
+        }
+
+        System.out.println("Can't find texture: " + texturePath);
+        fileHandle = Gdx.files.classpath("defaultImage.png");
+        return fileHandle;
+    }
+
+    private void drawSprite(Texture texture, Position position) {
+        Sprite sprite = new Sprite(texture);
+        
+        sprite.setPosition(position.getX(), position.getY());
+
+        batch.begin();
+        sprite.draw(batch);
+        batch.end();
+    }
 }

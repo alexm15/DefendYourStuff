@@ -22,7 +22,7 @@ public abstract class Chunk {
 
     public void setTileMatrix(Tile[][] bgMatrix) {
         this.bgMatrix = bgMatrix;
-        this.dimension = new Dimension(bgMatrix[0].length, bgMatrix[1].length, 0);
+        this.dimension = new Dimension(bgMatrix.length, bgMatrix[0].length, 0);
     }
 
     public Dimension getDimension() {
