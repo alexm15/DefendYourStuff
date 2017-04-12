@@ -2,6 +2,7 @@ package sdu.group8.gameengine.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,6 +29,8 @@ import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
+import sdu.group8.commonplayer.IPlayer;
+import sdu.group8.commonplayer.IPlayerService;
 
 /**
  *
@@ -34,6 +39,16 @@ import sdu.group8.gameengine.managers.GameInputProcessor;
 public class Game
         implements ApplicationListener {
 
+    public static Game getInstance() {
+        if (instance == null) {
+            return new Game();
+        }
+        return instance;
+    }
+
+    private Game() {
+
+    }
     private static OrthographicCamera CAM;
     private ShapeRenderer sr;
 
@@ -47,6 +62,8 @@ public class Game
     private Collection<Entity> entities;
     private SpriteBatch batch;
     private BitmapFont font;
+    private Entity player;
+
 
     private int screen = 8;
     private int leftOfScreen;
@@ -58,10 +75,12 @@ public class Game
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
-        CAM = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        CAM.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
-        CAM.update();
+        
+        CAM = new OrthographicCamera();
+        CAM.setToOrtho(false, 800 , 600);
 
+        CAM.update();
+        
         sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(
@@ -75,20 +94,119 @@ public class Game
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
         }
-        entities = world.getEntities();
+
         //TODO: load content of matrix into grid.
-
     }
 
-    private Game() {
+    @Override
+    public void render() {
 
+        // clear screen to black
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        gameData.setDelta(Gdx.graphics.getDeltaTime());
+        camLockTarget(CAM);
+        update();
+
+         gameData.getKeys().update();
+
+        draw();
     }
 
-    public static Game getInstance() {
-        if (instance == null) {
-            return new Game();
+    private void camLockTarget(Camera cam) {
+        for (Entity objectp : world.getEntities()) {
+            if (objectp instanceof IPlayer) {
+                this.player = objectp;
+
+                //FIXME: midlertid løsning til at tegne en player.
+                IPlayer p = (IPlayer) objectp;
+                Position pos = p.getPlayerPosition();
+                
+                sr.setColor(Color.RED);
+                sr.begin(ShapeRenderer.ShapeType.Filled);
+                float x = player.getX();
+                float y = player.getY();
+                float height = player.getHeight();
+                float width = player.getWidth();
+                sr.rect(x, y, width, height);
+                sr.end();
+
+            }
+
         }
-        return instance;
+        Vector2 target = new Vector2(player.getX() + (player.getWidth()/2), player.getY()+ (player.getHeight()/2));
+        Vector3 position = cam.position;
+        position.x = target.x;
+//        position.y = target.y;
+        cam.update();
+
+    }
+
+    private void update() {
+
+        for (IGameProcessingService gameProcess : getGameProcesses()) {
+            gameProcess.process(gameData, world);
+        }
+        for (IGamePostProcessingService postProcess : getPostProcesses()) {
+            postProcess.process(gameData, world);
+        }
+
+    }
+
+    //TODO: Change draw method later for sprites.
+    private void draw() {
+                batch.setProjectionMatrix(CAM.combined);
+        leftOfScreen = 8;
+        rightOfScreen = 8;
+
+        ArrayList<BlockTypes[][]> middleChunk = gameData.getChunksMiddle();
+        ArrayList<BlockTypes[][]> leftChunk = gameData.getChunksRight();
+        ArrayList<BlockTypes[][]> rightChunk = gameData.getChunksLeft();
+
+        for (BlockTypes[][] chunk : middleChunk) {
+            loadScreenChunk(chunk, screen, "Middle");
+        }
+        for (BlockTypes[][] chunk : leftChunk) {
+            leftOfScreen -= 8;
+            loadScreenChunk(chunk, leftOfScreen, "Left");
+        }
+        for (BlockTypes[][] chunk : rightChunk) {
+            rightOfScreen += 8;
+            loadScreenChunk(chunk, rightOfScreen, "Right");
+        }
+
+        sr.begin(ShapeType.Line);
+        sr.setColor(1, 1, 1, 1);
+        sr.line(0, 100, 800, 100);
+        sr.end();
+
+    }
+
+    /**
+     * Draws the block layout of the specific chunk to the game window.
+     *
+     * @param theChunk the chunk loaded in game window
+     * @param chunkPosition the chunk position in the game window. (See static
+     * int's for positions)
+     */
+    private void loadScreenChunk(BlockTypes[][] theChunk, int chunkPosition, String arrayPosition) {
+        batch.begin();
+        ArrayList<Integer> a = new ArrayList<>();
+        if (arrayPosition.equalsIgnoreCase("middle")) {
+            a = gameData.getWindowsxMiddle();
+        } else if (arrayPosition.equalsIgnoreCase("left")) {
+            a = gameData.getWindowsxLeft();
+        } else if (arrayPosition.equalsIgnoreCase("right")) {
+            a = gameData.getWindowsxRight();
+        }
+        for (int i = 0; i < theChunk.length; i++) {
+            for (int j = 0; j < theChunk[i].length; j++) {
+                //FIXME: Fix array indexOutOfBoundsException
+                font.draw(batch, theChunk[i][j].name(), a.get(i) - 50, gameData.getWindowsY()[j] - 50);
+            }
+        }
+        batch.end();
     }
 
     public Collection<? extends IGameProcessingService> getGameProcesses() {
