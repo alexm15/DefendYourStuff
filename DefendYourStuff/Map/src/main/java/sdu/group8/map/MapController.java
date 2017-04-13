@@ -30,9 +30,6 @@ import sdu.group8.map.chunks.Chunk_Portal01;
 )
 public class MapController implements IGamePluginService, IMapUpdate {
 
-    private int columnsInGrid = 8;
-    private int rowsInGrid = 6;
-
     @Override
     public void start(GameData gameData, World world) {
         Chunk chunkMiddle = new Chunk_Base(0);
