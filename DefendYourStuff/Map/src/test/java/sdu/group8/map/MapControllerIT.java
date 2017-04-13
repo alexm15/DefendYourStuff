@@ -48,7 +48,7 @@ public class MapControllerIT {
         gameData.setDisplayWidth(800);
         instance.start(gameData, world);
         
-        chunkBase = new Chunk_Base();
+        chunkBase = new Chunk_Base(0);
     }
     
     @After

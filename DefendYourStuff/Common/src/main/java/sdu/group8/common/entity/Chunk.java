@@ -12,8 +12,10 @@ public abstract class Chunk {
 
     private Dimension dimension;
     private Tile[][] bgMatrix;
+    private int tileOffsetX;
 
-    public Chunk() {
+    public Chunk(int tileOffsetX) {
+        this.tileOffsetX = tileOffsetX;
     }
 
     public Tile[][] getTileMatrix() {
@@ -27,6 +29,10 @@ public abstract class Chunk {
 
     public Dimension getDimension() {
         return dimension;
+    }
+
+    public int getTileOffsetX() {
+        return tileOffsetX;
     }
     
     public abstract void createEntities(World world, int tileOffsetX);

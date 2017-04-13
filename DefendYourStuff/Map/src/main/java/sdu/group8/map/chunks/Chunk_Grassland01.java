@@ -39,8 +39,9 @@ public class Chunk_Grassland01 extends Chunk {
         {d01, air, air, air, air},
         {d01, air, air, air, air}
     };
-
-    public Chunk_Grassland01() {
+    
+    public Chunk_Grassland01(int tileOffsetX) {
+        super(tileOffsetX);
         setTileMatrix(BG_GRASSLAND01);
     }
 

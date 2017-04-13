@@ -40,7 +40,8 @@ public class Chunk_Base extends Chunk {
         {d01, w01, air, air, air}
     };
 
-    public Chunk_Base() {
+    public Chunk_Base(int tileOffsetX) {
+        super(tileOffsetX);
         setTileMatrix(BG_BASE);
     }
 

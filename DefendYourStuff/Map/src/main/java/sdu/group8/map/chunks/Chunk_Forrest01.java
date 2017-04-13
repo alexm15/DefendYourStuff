@@ -39,8 +39,9 @@ public class Chunk_Forrest01 extends Chunk {
         {d01, air, air, air, air},
         {d01, air, air, air, air}
     };
-
-    public Chunk_Forrest01() {
+    
+    public Chunk_Forrest01(int tileOffsetX) {
+        super(tileOffsetX);
         setTileMatrix(BG_FORREST01);
     }
 

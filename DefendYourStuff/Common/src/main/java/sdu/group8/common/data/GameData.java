@@ -18,11 +18,16 @@ public class GameData {
     private Position cursorPosition;
 
     private float groundHeight = 100;
+    private final int TILE_SIZE = 100;
     private final float GRAVITY = 9.82f;
     private final GameKeys keys;
 
     public GameData() {
         this.keys = new GameKeys();
+    }
+
+    public int getTILE_SIZE() {
+        return TILE_SIZE;
     }
 
     public float getGroundHeight() {

@@ -2,6 +2,7 @@ package sdu.group8.gameengine.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -52,6 +53,7 @@ public class Game
     private ShapeRenderer sr;
     private SpriteBatch batch;
     private BitmapFont font;
+    private AssetManager assetManager;
 
     private final GameData gameData = new GameData();
     private World world = new World();
@@ -81,7 +83,7 @@ public class Game
 
     @Override
     public void create() {
-
+        assetManager = new AssetManager();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -104,6 +106,14 @@ public class Game
             gamePlugin.start(gameData, world);
         }
 
+        assetManager.load("chunk_bg_base.PNG", Texture.class);
+        assetManager.load("chunk_bg_forrest01.PNG", Texture.class);
+        assetManager.load("chunk_bg_forrest02.PNG", Texture.class);
+        assetManager.load("chunk_bg_grassland01.PNG", Texture.class);
+        assetManager.load("chunk_bg_grassland02.PNG", Texture.class);
+        assetManager.load("defaultImage.PNG", Texture.class);
+        assetManager.load("tile_dirt.PNG", Texture.class);
+        assetManager.load("tile_woodenFence.PNG", Texture.class);
     }
 
     @Override
@@ -118,36 +128,9 @@ public class Game
 
         gameData.getKeys().update();
 
-        draw();
-    }
-
-    private void camLockTarget(Camera cam) {
-        for (Entity objectp : world.getEntities()) {
-            if (objectp instanceof IPlayer) {
-                this.player = objectp;
-
-                //FIXME: midlertid løsning til at tegne en player.
-                IPlayer p = (IPlayer) objectp;
-                Position pos = p.getPlayerPosition();
-
-                sr.setColor(Color.RED);
-                sr.begin(ShapeRenderer.ShapeType.Filled);
-                float x = player.getX();
-                float y = player.getY();
-                float height = player.getHeight();
-                float width = player.getWidth();
-                sr.rect(x, y, width, height);
-                sr.end();
-
-            }
-
+        if (assetManager.update()) {
+            draw();
         }
-        Vector2 target = new Vector2(player.getX() + (player.getWidth() / 2), player.getY() + (player.getHeight() / 2));
-        Vector3 position = cam.position;
-        position.x = target.x;
-//        position.y = target.y;
-        cam.update();
-
     }
 
     private void update() {
@@ -185,25 +168,58 @@ public class Game
 
         Chunk chunkMiddle = world.getChunkMiddle();
         Tile[][] chunkMiddleTileMatrix = chunkMiddle.getTileMatrix();
-        Texture base_bg_texture = new Texture(getTextureFile(chunkMiddle.getBackgroundImageURL()));
+        //Texture base_bg_texture = new Texture(getTextureFile(chunkMiddle.getBackgroundImageURL()));
+        //drawToSpriteBatch(base_bg_texture, 0, 0);
 
-        Position base_bg_position = new Position(0, 0);
-        drawToSpriteBatch(base_bg_texture, base_bg_position);
-
-        for (int r = chunkMiddleTileMatrix.length - 1; r >= 0; r--) {
-
-            for (int c = 0; c < chunkMiddleTileMatrix[r].length; c++) {
-//                Tile currentTile = chunkMiddleTileMatrix[r][c];
-//
-//                Texture texture = new Texture(getTextureFile(currentTile.getImageURL()));
-                Position spritePosition = new Position((tileOffsetX + r) * TILE_SIZE, c * TILE_SIZE);
-//
-//                drawToSpriteBatch(texture, spritePosition);
-                batch.begin();
-                font.draw(batch, "Hey", spritePosition.getX(), spritePosition.getY());
-                batch.end();
-            }
+        renderChunk(chunkMiddle);
+        for (Chunk chunk : world.getChunksRight()) {
+            renderChunk(chunk);
         }
+    }
+
+    private void renderChunk(Chunk chunk) {
+        int posX = 0;
+        int posY = 0;
+        int tileOffsetX = chunk.getTileOffsetX();
+        Tile[][] chunkTileMatrix = chunk.getTileMatrix();
+
+        for (Tile[] tileRow : chunkTileMatrix) {
+            for (Tile tile : tileRow) {
+                drawTextureFromAsset(tile.getImageURL(), (tileOffsetX + posX) * gameData.getTILE_SIZE(), posY * gameData.getTILE_SIZE());
+                posY++;
+            }
+            posX++;
+            posY = 0;
+        }
+    }
+
+    private void camLockTarget(Camera cam) {
+        for (Entity objectp : world.getEntities()) {
+            if (objectp instanceof IPlayer) {
+                this.player = objectp;
+
+                //FIXME: midlertid løsning til at tegne en player.
+                IPlayer p = (IPlayer) objectp;
+                Position pos = p.getPlayerPosition();
+
+                sr.setColor(Color.RED);
+                sr.begin(ShapeRenderer.ShapeType.Filled);
+                float x = player.getX();
+                float y = player.getY();
+                float height = player.getHeight();
+                float width = player.getWidth();
+                sr.rect(x, y, width, height);
+                sr.end();
+
+            }
+
+        }
+        Vector2 target = new Vector2(player.getX() + (player.getWidth() / 2), player.getY() + (player.getHeight() / 2));
+        Vector3 position = cam.position;
+        position.x = target.x;
+//        position.y = target.y;
+        cam.update();
+
     }
 
     @Override
@@ -240,9 +256,16 @@ public class Game
         sprite.draw(batch);
     }
 
-    private void drawToSpriteBatch(Texture texture, Position position) {
+    private void drawTextureFromAsset(String path, float x, float y) {
+        Texture tex = assetManager.get(path, Texture.class);
         batch.begin();
-        batch.draw(texture, position.getX(), position.getY());
+        batch.draw(tex, x, y);
+        batch.end();
+    }
+
+    private void drawToSpriteBatch(Texture texture, float x, float y) {
+        batch.begin();
+        batch.draw(texture, x, y);
         batch.end();
     }
 }

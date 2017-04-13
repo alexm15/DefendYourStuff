@@ -57,10 +57,18 @@ public class MapController implements IGamePluginService, IMapUpdate {
 //        }
 //
 //        addChunkRightGameList(gameData, rightBaseChunk);
+            
+        Chunk chunkMiddle = new Chunk_Base(0);
+        world.setChunksMiddle(chunkMiddle);    
 
-
-        Chunk chunkMiddle = new Chunk_Base();
-        world.setChunksMiddle(chunkMiddle);
+        Chunk chunkRight1 = new Chunk_Forrest01(12);
+        Chunk chunkRight2 = new Chunk_Forrest02(12 + 12);
+        Chunk chunkRight3 = new Chunk_Grassland01(12 + 12 + 12);
+        Chunk chunkRight4 = new Chunk_Grassland02(12 + 12 + 12 + 12);
+        world.addChunksRight(chunkRight1);
+        world.addChunksRight(chunkRight2);
+        world.addChunksRight(chunkRight3);
+        world.addChunksRight(chunkRight4);
 
     }
 
@@ -84,19 +92,19 @@ public class MapController implements IGamePluginService, IMapUpdate {
         // TODO: change into abstract factory for each chunk type (Forrest, Grassland etc.)
         switch (randomIntRange(0, 3)) {
             case 0:
-                newChunk = new Chunk_Forrest01();
+                newChunk = new Chunk_Forrest01((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
                 break;
             case 1:
-                newChunk = new Chunk_Forrest02();
+                newChunk = new Chunk_Forrest02((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
                 break;
             case 2:
-                newChunk = new Chunk_Grassland01();
+                newChunk = new Chunk_Grassland01((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
                 break;
             case 3:
-                newChunk = new Chunk_Grassland02();
+                newChunk = new Chunk_Grassland02((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
                 break;
             default:
-                newChunk = new Chunk_Grassland01();
+                newChunk = new Chunk_Grassland01((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
                 break;
         }
         
