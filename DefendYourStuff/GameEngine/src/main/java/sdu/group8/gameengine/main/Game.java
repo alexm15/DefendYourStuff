@@ -108,9 +108,9 @@ public class Game
         assetManager.load("Chunks/chunk_bg_grassland01.PNG", Texture.class);
         assetManager.load("Chunks/chunk_bg_grassland02.PNG", Texture.class);
         assetManager.load("Chunks/chunk_bg_portal01.PNG", Texture.class);
-        
+
         assetManager.load("defaultImage.PNG", Texture.class);
-        
+
         assetManager.load("Tiles/tile_dirt.PNG", Texture.class);
         assetManager.load("Tiles/tile_woodenFence.PNG", Texture.class);
     }
@@ -160,21 +160,39 @@ public class Game
     private void drawMap() {
 
         Chunk chunkMiddle = world.getChunkMiddle();
-        renderChunk(chunkMiddle);
+        renderRightChunk(chunkMiddle);
 
         for (Chunk chunk : world.getChunksRight()) {
-            renderChunk(chunk);
+            renderRightChunk(chunk);
         }
 
-//        for (Chunk chunk : world.getChunksLeft()) {
-//            renderChunk(chunk);
-//        }
+        for (Chunk chunk : world.getChunksLeft()) {
+            renderLeftChunk(chunk);
+        }
     }
 
-    private void renderChunk(Chunk chunk) {
+    private void renderRightChunk(Chunk chunk) {
         int posX = 0;
         int posY = 0;
         int tileOffsetX = chunk.getTileOffsetX();
+        Tile[][] chunkTileMatrix = chunk.getTileMatrix();
+
+        drawTextureFromAsset(chunk.getBackgroundImageURL(), (posX + tileOffsetX) * gameData.getTILE_SIZE(), gameData.getTILE_SIZE());
+        for (Tile[] tileRow : chunkTileMatrix) {
+            for (Tile tile : tileRow) {
+                drawTextureFromAsset(tile.getImageURL(), (tileOffsetX + posX) * gameData.getTILE_SIZE(), posY * gameData.getTILE_SIZE());
+                posY++;
+            }
+            posX++;
+            posY = 0;
+        }
+    }
+
+    private void renderLeftChunk(Chunk chunk) {
+        int posX = 0;
+        int posY = 0;
+        // Flip the offset to the left side.
+        int tileOffsetX = (int) (((chunk.getTileOffsetX() - world.getChunkMiddle().getDimension().getWidth()) * -1) - chunk.getDimension().getWidth());
         Tile[][] chunkTileMatrix = chunk.getTileMatrix();
 
         drawTextureFromAsset(chunk.getBackgroundImageURL(), (posX + tileOffsetX) * gameData.getTILE_SIZE(), gameData.getTILE_SIZE());

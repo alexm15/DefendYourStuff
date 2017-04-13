@@ -42,7 +42,6 @@ public class MapController implements IGamePluginService, IMapUpdate {
         for (int i = 0; i < leftSidePortal; i++) {
             lastChunkLeftSide = generateChunk(lastChunkLeftSide);
             world.addChunkLeft(lastChunkLeftSide);
-
         }
         world.addChunkLeft(generatePortalChunk(lastChunkLeftSide.getTileOffsetX()));
 
@@ -66,9 +65,11 @@ public class MapController implements IGamePluginService, IMapUpdate {
     @Override
     public void update(World world, boolean addToLeftSide) {
         if (addToLeftSide) {
-            world.addChunkLeft(generateChunk(world.getChunksLeft().get(world.getChunksLeft().size())));
+            Chunk lastChunk = world.getChunksLeft().get(world.getChunksLeft().size());
+            world.addChunkLeft(generateChunk(lastChunk));
         } else {
-            world.addChunkRight(generateChunk(world.getChunksRight().get(world.getChunksRight().size())));
+            Chunk lastChunk = world.getChunksRight().get(world.getChunksRight().size());
+            world.addChunkRight(generateChunk(lastChunk));
         }
     }
 
