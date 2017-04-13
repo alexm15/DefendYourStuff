@@ -26,18 +26,14 @@ public class Chunk_Grassland02 extends Chunk {
     private Tile d01 = new Tile_Dirt();
 
     private final Tile[][] BG_GRASSLAND02 = new Tile[][]{
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air}
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
     };
 
     public Chunk_Grassland02(int tileOffsetX) {
@@ -48,19 +44,18 @@ public class Chunk_Grassland02 extends Chunk {
     @Override
     public void createEntities(World world, int tileOffsetX) {
 
-        Position farm = new Position(((BG_GRASSLAND02[0].length / 4) + tileOffsetX) * 100, 100);
-        Position rubble = new Position(((BG_GRASSLAND02[0].length / 2) + tileOffsetX) * 100, 100);
+        Position rubble1 = new Position(((getDimension().getWidth() / 4) + tileOffsetX) * 100, 100);
+        Position rubble2 = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + tileOffsetX) * 100, 100);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
-            buildable.createRubbleBuilding(world, rubble);
-            buildable.createFarmBuilding(world, farm);
+            buildable.createRubbleBuilding(world, rubble1);
+            buildable.createRubbleBuilding(world, rubble2);
         }
     }
 
     @Override
     public String getBackgroundImageURL() {
-        // TODO: set background castle image
-        return "";
+        return "Chunks/chunk_bg_grassland02.PNG";
     }
 
 }

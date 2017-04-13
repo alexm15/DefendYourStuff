@@ -15,7 +15,7 @@ public class Tile_WoodenFence implements Tile{
 
     @Override
     public String getImageURL() {
-        return "tile_woodenFence.PNG";
+        return "Tiles/tile_woodenFence.PNG";
     }
     
 }

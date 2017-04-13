@@ -26,18 +26,14 @@ public class Chunk_Forrest01 extends Chunk {
     private Tile d01 = new Tile_Dirt();
     
     public final Tile[][] BG_FORREST01 = new Tile[][] {
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air},
-        {d01, air, air, air, air}
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
     };
     
     public Chunk_Forrest01(int tileOffsetX) {
@@ -48,8 +44,8 @@ public class Chunk_Forrest01 extends Chunk {
     @Override
     public void createEntities(World world, int tileOffsetX) {
         
-        Position farm = new Position(((BG_FORREST01[0].length / 4) + tileOffsetX) * 100, 100);
-        Position rubble = new Position(((BG_FORREST01[0].length / 2) + tileOffsetX) * 100, 100);
+        Position farm = new Position(((getDimension().getWidth() / 4) + tileOffsetX) * 100, 100);
+        Position rubble = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + tileOffsetX) * 100, 100);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createRubbleBuilding(world, rubble);
@@ -59,8 +55,7 @@ public class Chunk_Forrest01 extends Chunk {
 
     @Override
     public String getBackgroundImageURL() {
-        // TODO: set background castle image
-        return "";
+        return "Chunks/chunk_bg_forrest01.PNG";
     }
 
 }

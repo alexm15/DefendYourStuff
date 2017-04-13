@@ -26,18 +26,18 @@ public class Chunk_Base extends Chunk {
     private Tile w01 = new Tile_WoodenFence();
 
     public final Tile[][] BG_BASE = new Tile[][]{
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air},
-        {d01, w01, air, air, air}
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air},
+        {d01, w01, air, air, air, air}
     };
 
     public Chunk_Base(int tileOffsetX) {
@@ -49,8 +49,8 @@ public class Chunk_Base extends Chunk {
     public void createEntities(World world, int tileOffsetX) {
 
         Position wallLeft = new Position(tileOffsetX * 100, 100);
-        Position wallRight = new Position((BG_BASE[0].length + tileOffsetX) * 100, 100);
-        Position CastleDoor = new Position(((BG_BASE[0].length / 2) + tileOffsetX) * 100, 100);
+        Position wallRight = new Position((getDimension().getWidth() + tileOffsetX) * 100, 100);
+        Position CastleDoor = new Position(((getDimension().getWidth() / 2) + tileOffsetX) * 100, 100);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createWallBuilding(world, wallLeft);
@@ -61,7 +61,7 @@ public class Chunk_Base extends Chunk {
 
     @Override
     public String getBackgroundImageURL() {
-        return "chunk_bg_base.PNG";
+        return "Chunks/chunk_bg_base.PNG";
     }
 
 }

@@ -34,33 +34,10 @@ public class MapController implements IGamePluginService, IMapUpdate {
 
     @Override
     public void start(GameData gameData, World world) {
-        //TODO: Look at, or change it
-//        //Three initial chunks for testing game
-//        Chunk castleChunk = new CastleChunk(CASTLE_CHUNK);
-//        Chunk leftBaseChunk = new LeftBaseChunk(LEFT_BASE_CHUNK);
-//        Chunk rightBaseChunk = new RightBaseChunk(RIGHT_BASE_CHUNK);
-//
-//        //Sets windowsY array to 6 spaces
-//        gameData.setWindowsY(new int[rowsInGrid]);
-//        for (int i = 1; i <= rowsInGrid; i++) {
-//            gameData.getWindowsY()[i - 1] = i * (gameData.getDisplayHeight() / rowsInGrid);
-//
-//        }
-//
-//        addChunkToLeftGameList(gameData, leftBaseChunk);
-//
-//        //Initializes middle chunk list and middle window list
-//        //Nothing is added to these lists after this. 
-//        gameData.addMiddleChunk(castleChunk);
-//        for (int i = 1; i <= columnsInGrid; i++) {
-//            gameData.getWindowsxMiddle().add(i - 1, (i * (gameData.getDisplayWidth() / columnsInGrid)));
-//        }
-//
-//        addChunkRightGameList(gameData, rightBaseChunk);
-            
         Chunk chunkMiddle = new Chunk_Base(0);
-        world.setChunksMiddle(chunkMiddle);    
+        world.setChunksMiddle(chunkMiddle);
 
+        //TODO: generate chunks for left and right side.
         Chunk chunkRight1 = new Chunk_Forrest01(12);
         Chunk chunkRight2 = new Chunk_Forrest02(12 + 12);
         Chunk chunkRight3 = new Chunk_Grassland01(12 + 12 + 12);
@@ -86,31 +63,80 @@ public class MapController implements IGamePluginService, IMapUpdate {
         }
     }
 
+    /**
+     * Returns a random chunk from a random biome, such as forrst or grassland.
+     * @param lastChunk
+     * @return 
+     */
     private Chunk generateChunk(Chunk lastChunk) {
         Chunk newChunk;
 
-        // TODO: change into abstract factory for each chunk type (Forrest, Grassland etc.)
-        switch (randomIntRange(0, 3)) {
+        // TODO: Make switch for each chunk type (Forrest, Grassland etc.)
+        switch (randomIntRange(0, 1)) {
             case 0:
-                newChunk = new Chunk_Forrest01((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
+                newChunk = generateGrasslandChunk(lastChunk);
                 break;
             case 1:
-                newChunk = new Chunk_Forrest02((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
+                newChunk = generateForrestChunk(lastChunk);
                 break;
-            case 2:
+            default:
+                newChunk = generateGrasslandChunk(lastChunk);
+                break;
+        }
+
+        return newChunk;
+    }
+    /**
+     * Return a random grassland chunk.
+     * @param lastChunk The last chunk in the arraylist from world. Used to set the position of the new chunk's tiles.
+     * @return 
+     */
+    private Chunk generateGrasslandChunk(Chunk lastChunk) {
+        Chunk newChunk;
+        switch (randomIntRange(0, 1)) {
+            case 0:
                 newChunk = new Chunk_Grassland01((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
                 break;
-            case 3:
+            case 1:
                 newChunk = new Chunk_Grassland02((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
                 break;
             default:
                 newChunk = new Chunk_Grassland01((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
                 break;
         }
-        
+
         return newChunk;
     }
 
+    /**
+     * Return a random forrest chunk.
+     * @param lastChunk The last chunk in the arraylist from world. Used to set the position of the new chunk's tiles.
+     * @return 
+     */
+    private Chunk generateForrestChunk(Chunk lastChunk) {
+        Chunk newChunk;
+        switch (randomIntRange(0, 1)) {
+            case 0:
+                newChunk = new Chunk_Forrest01((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
+                break;
+            case 1:
+                newChunk = new Chunk_Forrest02((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
+                break;
+            default:
+                newChunk = new Chunk_Forrest01((int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth()));
+                break;
+        }
+
+        return newChunk;
+    }
+
+    /**
+     * Return random integer between min and max, inclusive.
+     *
+     * @param min integer minimum value
+     * @param max integer maximum value
+     * @return random int between min and max.
+     */
     private int randomIntRange(int min, int max) {
         Random random = new Random();
         return random.nextInt(max - min + 1) + min;

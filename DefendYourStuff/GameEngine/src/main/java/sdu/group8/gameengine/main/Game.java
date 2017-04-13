@@ -65,10 +65,6 @@ public class Game
     private Collection<Entity> entities;
     private Entity player;
 
-    private int screen = 8;
-    private int leftOfScreen;
-    private int rightOfScreen;
-
     public Collection<? extends IGameProcessingService> getGameProcesses() {
         return lookup.lookupAll(IGameProcessingService.class);
     }
@@ -106,14 +102,14 @@ public class Game
             gamePlugin.start(gameData, world);
         }
 
-        assetManager.load("chunk_bg_base.PNG", Texture.class);
-        assetManager.load("chunk_bg_forrest01.PNG", Texture.class);
-        assetManager.load("chunk_bg_forrest02.PNG", Texture.class);
-        assetManager.load("chunk_bg_grassland01.PNG", Texture.class);
-        assetManager.load("chunk_bg_grassland02.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_bg_base.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_bg_forrest01.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_bg_forrest02.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_bg_grassland01.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_bg_grassland02.PNG", Texture.class);
         assetManager.load("defaultImage.PNG", Texture.class);
-        assetManager.load("tile_dirt.PNG", Texture.class);
-        assetManager.load("tile_woodenFence.PNG", Texture.class);
+        assetManager.load("Tiles/tile_dirt.PNG", Texture.class);
+        assetManager.load("Tiles/tile_woodenFence.PNG", Texture.class);
     }
 
     @Override
@@ -146,10 +142,8 @@ public class Game
 
     private void draw() {
         batch.setProjectionMatrix(CAM.combined);
-        leftOfScreen = 8;
-        rightOfScreen = 8;
 
-        // Draw sprites
+        // Draw chunks
         drawMap();
 
         camLockTarget(CAM); // Draw player
@@ -162,17 +156,14 @@ public class Game
 
     private void drawMap() {
 
-        int tileOffsetX = 0;
-        //TODO: set tile size in GameData
-        final int TILE_SIZE = 100;
-
         Chunk chunkMiddle = world.getChunkMiddle();
-        Tile[][] chunkMiddleTileMatrix = chunkMiddle.getTileMatrix();
-        //Texture base_bg_texture = new Texture(getTextureFile(chunkMiddle.getBackgroundImageURL()));
-        //drawToSpriteBatch(base_bg_texture, 0, 0);
-
         renderChunk(chunkMiddle);
+
         for (Chunk chunk : world.getChunksRight()) {
+            renderChunk(chunk);
+        }
+
+        for (Chunk chunk : world.getChunksLeft()) {
             renderChunk(chunk);
         }
     }
@@ -183,6 +174,7 @@ public class Game
         int tileOffsetX = chunk.getTileOffsetX();
         Tile[][] chunkTileMatrix = chunk.getTileMatrix();
 
+        drawTextureFromAsset(chunk.getBackgroundImageURL(), (posX + tileOffsetX) * 100, gameData.getTILE_SIZE());
         for (Tile[] tileRow : chunkTileMatrix) {
             for (Tile tile : tileRow) {
                 drawTextureFromAsset(tile.getImageURL(), (tileOffsetX + posX) * gameData.getTILE_SIZE(), posY * gameData.getTILE_SIZE());
@@ -238,34 +230,10 @@ public class Game
     public void dispose() {
     }
 
-    private FileHandle getTextureFile(String texturePath) {
-        FileHandle fileHandle = Gdx.files.classpath(texturePath);
-
-        if (fileHandle.exists()) {
-            return fileHandle;
-        }
-
-        System.out.println("Can't find texture: " + texturePath);
-        fileHandle = Gdx.files.classpath("defaultImage.PNG");
-        return fileHandle;
-    }
-
-    private void drawSprite(Texture texture, Position position) {
-        Sprite sprite = new Sprite(texture);
-        sprite.setPosition(position.getX(), position.getY());
-        sprite.draw(batch);
-    }
-
     private void drawTextureFromAsset(String path, float x, float y) {
         Texture tex = assetManager.get(path, Texture.class);
         batch.begin();
         batch.draw(tex, x, y);
-        batch.end();
-    }
-
-    private void drawToSpriteBatch(Texture texture, float x, float y) {
-        batch.begin();
-        batch.draw(texture, x, y);
         batch.end();
     }
 }
