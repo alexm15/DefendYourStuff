@@ -37,29 +37,27 @@ public class MapController implements IGamePluginService, IMapUpdate {
     public void start(GameData gameData, World world) {
         Chunk chunkMiddle = new Chunk_Base(0);
         world.setChunksMiddle(chunkMiddle);
-
+        
         //Generate chunks on the left side of base, until it a portal is created.
         int leftSidePortal = randomIntRange(7, 10);
+        Chunk lastChunkLeftSide = chunkMiddle;
+
         for (int i = 0; i < leftSidePortal; i++) {
-            if (i == 0) {
-                world.addChunkLeft(generateChunk(chunkMiddle));
-            } else {
-                world.addChunkLeft(generateChunk(world.getChunksLeft().get(i)));
-            }
+            lastChunkLeftSide = generateChunk(lastChunkLeftSide);
+            world.addChunkLeft(lastChunkLeftSide);
+
         }
-        world.addChunkLeft(generatePortalChunk(world.getChunksLeft().get(leftSidePortal).getTileOffsetX()));
-        
-        
+        world.addChunkLeft(generatePortalChunk(lastChunkLeftSide.getTileOffsetX()));
+
         //Generate chunks on the right side of base, until it a portal is created.
         int rightSidePortal = randomIntRange(7, 10);
+        Chunk lastChunkRightSide = chunkMiddle;
+
         for (int i = 0; i < rightSidePortal; i++) {
-            if (i == 0) {
-                world.addChunkRight(generateChunk(chunkMiddle));
-            } else {
-                world.addChunkRight(generateChunk(world.getChunksRight().get(i)));
-            }
+            lastChunkRightSide = generateChunk(lastChunkRightSide);
+            world.addChunkRight(lastChunkRightSide);
         }
-        world.addChunkRight(generatePortalChunk(world.getChunksRight().get(rightSidePortal).getTileOffsetX()));
+        world.addChunkRight(generatePortalChunk(lastChunkRightSide.getTileOffsetX()));
 
     }
 
@@ -73,7 +71,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
         if (addToLeftSide) {
             world.addChunkLeft(generateChunk(world.getChunksLeft().get(world.getChunksLeft().size())));
         } else {
-            world.addChunkLeft(generateChunk(world.getChunksRight().get(world.getChunksRight().size())));
+            world.addChunkRight(generateChunk(world.getChunksRight().get(world.getChunksRight().size())));
         }
     }
 

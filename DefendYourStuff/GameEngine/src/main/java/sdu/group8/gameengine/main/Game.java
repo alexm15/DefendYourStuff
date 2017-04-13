@@ -166,9 +166,9 @@ public class Game
             renderChunk(chunk);
         }
 
-        for (Chunk chunk : world.getChunksLeft()) {
-            renderChunk(chunk);
-        }
+//        for (Chunk chunk : world.getChunksLeft()) {
+//            renderChunk(chunk);
+//        }
     }
 
     private void renderChunk(Chunk chunk) {
@@ -177,7 +177,7 @@ public class Game
         int tileOffsetX = chunk.getTileOffsetX();
         Tile[][] chunkTileMatrix = chunk.getTileMatrix();
 
-        drawTextureFromAsset(chunk.getBackgroundImageURL(), (posX + tileOffsetX) * 100, gameData.getTILE_SIZE());
+        drawTextureFromAsset(chunk.getBackgroundImageURL(), (posX + tileOffsetX) * gameData.getTILE_SIZE(), gameData.getTILE_SIZE());
         for (Tile[] tileRow : chunkTileMatrix) {
             for (Tile tile : tileRow) {
                 drawTextureFromAsset(tile.getImageURL(), (tileOffsetX + posX) * gameData.getTILE_SIZE(), posY * gameData.getTILE_SIZE());
