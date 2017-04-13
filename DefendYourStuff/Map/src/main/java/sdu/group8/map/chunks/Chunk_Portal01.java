@@ -13,19 +13,19 @@ import sdu.group8.common.entity.Tile;
 import sdu.group8.commonbuilding.services.Buildable;
 import sdu.group8.map.tiles.Tile_Air;
 import sdu.group8.map.tiles.Tile_Dirt;
-import sdu.group8.map.tiles.Tile_WoodenFence;
 
 /**
  *
  * @author Martin
  */
-public class Chunk_Forrest02 extends Chunk {
+public class Chunk_Portal01 extends Chunk {
+
     private Lookup lookup = Lookup.getDefault();
 
     private Tile air = new Tile_Air();
     private Tile d01 = new Tile_Dirt();
-    
-    public final Tile[][] BG_FORREST02 = new Tile[][] {
+
+    private final Tile[][] BG_PORTAL01 = new Tile[][]{
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},
@@ -36,26 +36,24 @@ public class Chunk_Forrest02 extends Chunk {
         {d01, air, air, air, air, air},
     };
 
-    public Chunk_Forrest02(int tileOffsetX) {
+    public Chunk_Portal01(int tileOffsetX) {
         super(tileOffsetX);
-        setTileMatrix(BG_FORREST02);
+        setTileMatrix(BG_PORTAL01);
     }
 
     @Override
     public void createEntities(World world) {
-        
-        Position rubble1 = new Position(((getDimension().getWidth() / 4) + this.getTileOffsetX()) * 100, 100);
-        Position rubble2 = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getTileOffsetX()) * 100, 100);
 
+        Position portal = new Position(((getDimension().getWidth() / 2) + this.getTileOffsetX()) * 100, 100);
+        
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
-            buildable.createRubbleBuilding(world, rubble1);
-            buildable.createRubbleBuilding(world, rubble2);
+            //TODO: create portal
         }
     }
 
     @Override
     public String getBackgroundImageURL() {
-        return "Chunks/chunk_bg_forrest02.PNG";
+        return "Chunks/chunk_bg_portal01.PNG";
     }
 
 }

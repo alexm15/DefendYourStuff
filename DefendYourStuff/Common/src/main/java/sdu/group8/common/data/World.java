@@ -79,7 +79,7 @@ public class World {
         return chunksRight;
     }
 
-    public void addChunksRight(Chunk chunkRight) {
+    public void addChunkRight(Chunk chunkRight) {
         this.chunksRight.add(chunkRight);
     }
 
