@@ -28,6 +28,7 @@ import sdu.group8.common.entity.Tile;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
+import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.gameengine.managers.GameInputProcessor;
 import sdu.group8.commonplayer.IPlayer;
 
@@ -119,7 +120,7 @@ public class Game
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
+
         // If asset manager is done loading assets.
         if (assetManager.update()) {
             CAM.update();
@@ -139,6 +140,26 @@ public class Game
         }
         for (IGamePostProcessingService postProcess : getPostProcesses()) {
             postProcess.process(gameData, world);
+        }
+
+        float camLeftPos = CAM.position.x - CAM.viewportWidth;
+        float camRightPos = CAM.position.x + CAM.viewportWidth;
+
+        Chunk secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() -1);
+        float lastLeftPos = (secondLastChunk.getTileOffsetX() - world.getChunkMiddle().getTileOffsetX() * -1);
+
+        if (lastLeftPos < camLeftPos) {
+            for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
+                service.update(world, true);
+            }
+        }
+
+        secondLastChunk = world.getChunksRight().get(world.getChunksRight().size()-1);
+        float lastRightPos = secondLastChunk.getTileOffsetX();
+        if (lastRightPos > camRightPos) {
+            for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
+                service.update(world, false);
+            }
         }
 
     }
