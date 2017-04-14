@@ -2,25 +2,34 @@ package sdu.group8.gameengine.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.GameKeys;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.BlockTypes;
+import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.Entity;
+import sdu.group8.common.entity.Tile;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
+import sdu.group8.commonplayer.IPlayer;
 
 /**
  *
@@ -29,8 +38,21 @@ import sdu.group8.gameengine.managers.GameInputProcessor;
 public class Game
         implements ApplicationListener {
 
+    public static Game getInstance() {
+        if (instance == null) {
+            return new Game();
+        }
+        return instance;
+    }
+
+    private Game() {
+
+    }
     private static OrthographicCamera CAM;
     private ShapeRenderer sr;
+    private SpriteBatch batch;
+    private BitmapFont font;
+    private AssetManager assetManager;
 
     private final GameData gameData = new GameData();
     private World world = new World();
@@ -40,61 +62,6 @@ public class Game
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
     private Collection<Entity> entities;
-    private SpriteBatch batch;
-    private BitmapFont font;
-    
-
-    /**
-     * Positions chunk in the game window
-     */
-    private int screen = 8;
-    /**
-     * Positions chunk left of game window
-     */
-    private int leftOfScreen;
-    /**
-     * Positions chunk right of game window 
-     */
-    private int rightOfScreen;
-
-    @Override
-    public void create() {
-
-        gameData.setDisplayWidth(Gdx.graphics.getWidth());
-        gameData.setDisplayHeight(Gdx.graphics.getHeight());
-
-        CAM = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        CAM.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
-        CAM.update();
-
-        sr = new ShapeRenderer();
-
-        Gdx.input.setInputProcessor(
-                new GameInputProcessor(gameData)
-        );
-
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-        font.setColor(Color.RED);
-
-        for (IGamePluginService gamePlugin : getGamePlugins()) {
-            gamePlugin.start(gameData, world);
-        }
-        entities = world.getEntities();
-        //TODO: load content of matrix into grid.
-
-    }
-
-    private Game() {
-
-    }
-
-    public static Game getInstance() {
-        if (instance == null) {
-            return new Game();
-        }
-        return instance;
-    }
 
     public Collection<? extends IGameProcessingService> getGameProcesses() {
         return lookup.lookupAll(IGameProcessingService.class);
@@ -109,99 +76,154 @@ public class Game
     }
 
     @Override
+    public void create() {
+        assetManager = new AssetManager();
+        gameData.setDisplayWidth(Gdx.graphics.getWidth());
+        gameData.setDisplayHeight(Gdx.graphics.getHeight());
+
+        CAM = new OrthographicCamera();
+        CAM.setToOrtho(false, 800, 600);
+
+        sr = new ShapeRenderer();
+
+        Gdx.input.setInputProcessor(
+                new GameInputProcessor(gameData)
+        );
+
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        font.setColor(Color.RED);
+
+        for (IGamePluginService gamePlugin : getGamePlugins()) {
+            gamePlugin.start(gameData, world);
+        }
+
+        assetManager.load("Chunks/chunk_bg_base.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_bg_forrest01.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_bg_forrest02.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_bg_grassland01.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_bg_grassland02.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_bg_portal01.PNG", Texture.class);
+
+        assetManager.load("defaultImage.PNG", Texture.class);
+
+        assetManager.load("Player/defaultPlayer.PNG", Texture.class);
+
+        assetManager.load("Tiles/tile_dirt.PNG", Texture.class);
+        assetManager.load("Tiles/tile_woodenFence.PNG", Texture.class);
+    }
+
+    @Override
     public void render() {
 
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        // If asset manager is done loading assets.
+        if (assetManager.update()) {
+            CAM.update();
+            batch.setProjectionMatrix(CAM.combined);
+            gameData.setDelta(Gdx.graphics.getDeltaTime());
 
-        gameData.setDelta(Gdx.graphics.getDeltaTime());
+            update();
 
-        update();
-
-        draw();
-
-        gameData.getKeys().update();
+            gameData.getKeys().update();
+            draw();
+        }
     }
 
     private void update() {
-
         for (IGameProcessingService gameProcess : getGameProcesses()) {
             gameProcess.process(gameData, world);
         }
         for (IGamePostProcessingService postProcess : getPostProcesses()) {
             postProcess.process(gameData, world);
         }
-        
-        
+
     }
 
-    //TODO: Change draw method later for sprites.
     private void draw() {
-        leftOfScreen = 8;
-        rightOfScreen = 8;
-        
-        ArrayList<BlockTypes[][]> middleChunk = gameData.getChunksMiddle();
-        ArrayList<BlockTypes[][]> leftChunk = gameData.getChunksRight();
-        ArrayList<BlockTypes[][]> rightChunk = gameData.getChunksLeft();
-        
-        for (BlockTypes[][] chunk : middleChunk) {
-            loadScreenChunk(chunk, screen, "Middle");
-        }
-        for (BlockTypes[][] chunk : leftChunk) {
-            leftOfScreen -= 8;
-            loadScreenChunk(chunk, leftOfScreen, "Left");
-        }
-        for (BlockTypes[][] chunk : rightChunk) {
-            rightOfScreen += 8;
-            loadScreenChunk(chunk, rightOfScreen, "Right");
-        }
-        
+
+        // Draw chunks
+        drawMap();
+
+        drawPlayer(); // Draw player
+
         sr.begin(ShapeType.Line);
-        sr.setColor(1, 1, 1, 1);
+        sr.setColor(Color.MAROON);
         sr.line(0, 100, 800, 100);
         sr.end();
-         // Used to test playermovements
-         // TODO: Insert player
-//        for (Entity player : entities) {
-//            sr.setColor(Color.RED);
-//            sr.begin(ShapeRenderer.ShapeType.Filled);
-//            float x = player.getX();
-//            float y = player.getY();
-//            float height = player.getHeight();
-//            float width = player.getWidth();
-//            sr.rect(x, y, width, height);
-//            sr.end();   
-//        }
-        
     }
 
-    /**
-     * Draws the block layout of the specific chunk to the game window.
-     * @param theChunk the chunk loaded in game window
-     * @param chunkPosition the chunk position in the game window. (See static int's for positions)
-     */
-    private void loadScreenChunk(BlockTypes[][] theChunk, int chunkPosition, String arrayPosition) {
-        batch.begin();
-        ArrayList<Integer> a = new ArrayList<>();
-        if (arrayPosition.equalsIgnoreCase("middle")) {
-            a = gameData.getWindowsxMiddle();
+    private void drawMap() {
+
+        Chunk chunkMiddle = world.getChunkMiddle();
+        renderRightChunk(chunkMiddle);
+
+        for (Chunk chunk : world.getChunksRight()) {
+            renderRightChunk(chunk);
         }
-        else if (arrayPosition.equalsIgnoreCase("left")) {
-            a = gameData.getWindowsxLeft();
+
+        for (Chunk chunk : world.getChunksLeft()) {
+            renderLeftChunk(chunk);
         }
-        else if (arrayPosition.equalsIgnoreCase("right")) {
-            a = gameData.getWindowsxRight();
-        }
-        for (int i = 0; i < theChunk.length; i++) {
-            for (int j = 0; j < theChunk[i].length; j++) {
-                //FIXME: Fix array indexOutOfBoundsException
-                font.draw(batch, theChunk[i][j].name(), a.get(i) - 50, gameData.getWindowsY()[j] - 50);
+    }
+
+    private void renderRightChunk(Chunk chunk) {
+        int posX = 0;
+        int posY = 0;
+        int tileOffsetX = chunk.getTileOffsetX();
+        Tile[][] chunkTileMatrix = chunk.getTileMatrix();
+
+        drawTextureFromAsset(chunk.getBackgroundImageURL(), (posX + tileOffsetX) * gameData.getTILE_SIZE(), gameData.getTILE_SIZE());
+        for (Tile[] tileRow : chunkTileMatrix) {
+            for (Tile tile : tileRow) {
+                drawTextureFromAsset(tile.getImageURL(), (tileOffsetX + posX) * gameData.getTILE_SIZE(), posY * gameData.getTILE_SIZE());
+                posY++;
             }
+            posX++;
+            posY = 0;
         }
-        batch.end();
     }
 
+    private void renderLeftChunk(Chunk chunk) {
+        int posX = 0;
+        int posY = 0;
+        // Flip the offset to the left side.
+        int tileOffsetX = (int) (((chunk.getTileOffsetX() - world.getChunkMiddle().getDimension().getWidth()) * -1) - chunk.getDimension().getWidth());
+        Tile[][] chunkTileMatrix = chunk.getTileMatrix();
+
+        drawTextureFromAsset(chunk.getBackgroundImageURL(), (posX + tileOffsetX) * gameData.getTILE_SIZE(), gameData.getTILE_SIZE());
+        for (Tile[] tileRow : chunkTileMatrix) {
+            for (Tile tile : tileRow) {
+                drawTextureFromAsset(tile.getImageURL(), (tileOffsetX + posX) * gameData.getTILE_SIZE(), posY * gameData.getTILE_SIZE());
+                posY++;
+            }
+            posX++;
+            posY = 0;
+        }
+    }
+
+    private void drawPlayer() {
+        //TODO: Generalise for all entities;
+
+        Entity player = null;
+        for (Entity objectp : world.getEntities()) {
+            if (objectp instanceof IPlayer) {
+                player = objectp;
+
+                drawTextureFromAsset(player.getImageURL(), player.getX() - (player.getWidth() / 2), player.getY());
+
+            }
+
+            //Set camera position.
+            Vector3 camPos = CAM.position.cpy();
+            CAM.position.set(player.getX(), camPos.y, camPos.z);
+            CAM.update();
+
+        }
+    }
 
     @Override
     public void resize(int width, int height) {
@@ -219,5 +241,10 @@ public class Game
     public void dispose() {
     }
 
-    
+    private void drawTextureFromAsset(String path, float x, float y) {
+        Texture tex = assetManager.get(path, Texture.class);
+        batch.begin();
+        batch.draw(tex, x, y);
+        batch.end();
+    }
 }

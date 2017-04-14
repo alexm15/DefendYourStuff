@@ -6,18 +6,18 @@
 package sdu.group8.player;
 
 import sdu.group8.common.ability.Ability;
-import sdu.group8.common.collision.CollisionContainer;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.weapon.Weapon;
+import sdu.group8.commonplayer.IPlayer;
 
 /**
  *
  * @author joach
  */
-public class Player extends Character {
+public class Player extends Character implements IPlayer{
     
     private Weapon weapon;
     private float moveSpeed;
@@ -25,8 +25,8 @@ public class Player extends Character {
     private Position aimPoint;
     private final float JUMP_FORCE = 350;
 
-    public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(health, dimension, pos, collisionType, ab);
+    public Player(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(health, imageURL, dimension, pos, collisionType, ab);
         this.moveSpeed = moveSpeed;
         this.weight = weight;
     }
@@ -69,6 +69,11 @@ public class Player extends Character {
 
     public float getJUMP_FORCE() {
         return JUMP_FORCE;
+    }
+
+    @Override
+    public float getPlayerMoveSpeed() {
+       return this.moveSpeed;
     }
        
 }
