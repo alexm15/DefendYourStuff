@@ -14,7 +14,6 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
@@ -99,7 +98,7 @@ public class PlayerController
     @Override
     public void start(GameData gameData, World world) {
         float health = 100;
-        float moveSpeed = 200;
+        float moveSpeed = 100;
         float weight = 10;
         float width = 50;
         float height = 50;
@@ -107,12 +106,13 @@ public class PlayerController
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
         Position position = new Position(x, y); //TODO: Should be startposition.
+        CollisionContainer collision = new CollisionContainer(EntityType.PLAYER, EntityType.ALLY);
         float AOE = 0;
         float minDamage = 0;
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        String imageURL = "Player/defaultPlayer.PNG";
-        player = new Player(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
+//        Ability ability = new Ability(position, AOE, damageRange); //TODO: Should be a predifined ability.
+//        player = new Player(moveSpeed, weight, health, dimension, position, collision, ability);
         gameData.setPlayerGold(0);
         world.addEntity(player);
     }

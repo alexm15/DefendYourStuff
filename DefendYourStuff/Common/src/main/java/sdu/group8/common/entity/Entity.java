@@ -5,11 +5,13 @@
  */
 package sdu.group8.common.entity;
 
+import sdu.group8.common.collision.CollisionContainer;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.*;
 import java.util.UUID;
 
 import java.util.ArrayList;
+import java.util.List;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityContainer;
 
@@ -24,10 +26,8 @@ public abstract class Entity {
     private Position pos;
     private AbilityContainer abilities;
     private CollisionType collisionType;
-    private String imageURL;
 
-    public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        this.imageURL = imageURL;
+    public Entity(Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
         this.ID = UUID.randomUUID();
         this.dimension = dimension;
         this.pos = pos;
@@ -43,7 +43,7 @@ public abstract class Entity {
      * false.
      */
     public boolean isEntityOnGround(Entity entity, GameData gameData) {
-        if (entity.getPosition().getY() <= gameData.getGroundHeight()) {
+        if (entity.getPosition().getY() <= gameData.getGROUND_HEIGHT() + entity.getHeight() / 2) {
             return true;
         }
         return false;
@@ -55,14 +55,10 @@ public abstract class Entity {
      * @param player
      */
     public void setEntityOnGround(Entity entity, GameData gameData) {
-        entity.setPosition(entity.getPosition().getX(), (gameData.getGroundHeight() + entity.getHeight() / 2));
+        entity.setPosition(entity.getPosition().getX(), (gameData.getGROUND_HEIGHT() + entity.getHeight() / 2));
 
     }
 
-    public String getImageURL() {
-        return imageURL;
-    }
-    
     public UUID getID() {
         return ID;
     }

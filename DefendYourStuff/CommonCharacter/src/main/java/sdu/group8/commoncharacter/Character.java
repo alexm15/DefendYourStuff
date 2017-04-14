@@ -20,8 +20,8 @@ import sdu.group8.common.entity.MovingEntity;
 public class Character extends MovingEntity{
     private HealthSystem health;
 
-    public Character(float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(imageURL, dimension, pos, collisionType, ab);
+    public Character(float health, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(dimension, pos, collisionType, ab);
         this.health = new HealthSystem(health);
     }
     
@@ -41,5 +41,4 @@ public class Character extends MovingEntity{
     public void collision(Entity otherEntity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

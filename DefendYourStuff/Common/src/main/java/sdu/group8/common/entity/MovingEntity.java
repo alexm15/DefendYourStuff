@@ -18,8 +18,8 @@ public abstract class MovingEntity extends Entity {
     private float dx;
     private float dy;
 
-    public MovingEntity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(imageURL, dimension, pos, collisionType, ab);
+    public MovingEntity(Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(dimension, pos, collisionType, ab);
     }
         
 

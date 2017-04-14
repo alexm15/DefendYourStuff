@@ -22,7 +22,7 @@ public class Installer
 		cfg.height = 600;
 		cfg.useGL30 = false;
 		cfg.resizable = false;
-                
+		
 		new LwjglApplication(Game.getInstance(), cfg);
     }
 
