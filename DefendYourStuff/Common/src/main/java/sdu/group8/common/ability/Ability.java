@@ -7,7 +7,6 @@ package sdu.group8.common.ability;
 
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Position;
-import java.util.UUID;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
@@ -25,8 +24,8 @@ public class Ability extends MovingEntity{
     private float weight;
     private float angle;
 
-    public Ability(DamageRange damageRange, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
-        super(dimension, pos, collisionType, ab);
+    public Ability(DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
+        super(imageURL, dimension, pos, collisionType, ab);
         this.effects = effectContainer;
         this.damageRange = damageRange;
     }

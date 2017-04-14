@@ -36,7 +36,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
         world.setChunksMiddle(chunkMiddle);
         
         //Generate chunks on the left side of base, until it a portal is created.
-        int leftSidePortal = randomIntRange(7, 10);
+        int leftSidePortal = randomIntRange(6, 7);
         Chunk lastChunkLeftSide = chunkMiddle;
 
         for (int i = 0; i < leftSidePortal; i++) {
@@ -46,7 +46,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
         world.addChunkLeft(generatePortalChunk(lastChunkLeftSide.getTileOffsetX()));
 
         //Generate chunks on the right side of base, until it a portal is created.
-        int rightSidePortal = randomIntRange(7, 10);
+        int rightSidePortal = randomIntRange(6, 7);
         Chunk lastChunkRightSide = chunkMiddle;
 
         for (int i = 0; i < rightSidePortal; i++) {

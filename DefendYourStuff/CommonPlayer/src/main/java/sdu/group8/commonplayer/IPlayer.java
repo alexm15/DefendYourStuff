@@ -13,8 +13,8 @@ import sdu.group8.common.data.Position;
  */
 public interface IPlayer {
         /**
-     * gets the player position.
-     * @return player position.
+     * gets the player movespeed.
+     * @return player movespeed.
      */
-    Position getPlayerPosition();
+    float getPlayerMoveSpeed();
 }

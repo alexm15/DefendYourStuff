@@ -99,7 +99,7 @@ public class PlayerController
     @Override
     public void start(GameData gameData, World world) {
         float health = 100;
-        float moveSpeed = 100;
+        float moveSpeed = 200;
         float weight = 10;
         float width = 50;
         float height = 50;
@@ -111,7 +111,8 @@ public class PlayerController
         float minDamage = 0;
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        player = new Player(moveSpeed, weight, health, dimension, position, CollisionType.BOX);
+        String imageURL = "Player/defaultPlayer.PNG";
+        player = new Player(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
         gameData.setPlayerGold(0);
         world.addEntity(player);
     }

@@ -25,8 +25,8 @@ public class Player extends Character implements IPlayer{
     private Position aimPoint;
     private final float JUMP_FORCE = 350;
 
-    public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(health, dimension, pos, collisionType, ab);
+    public Player(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(health, imageURL, dimension, pos, collisionType, ab);
         this.moveSpeed = moveSpeed;
         this.weight = weight;
     }
@@ -72,8 +72,8 @@ public class Player extends Character implements IPlayer{
     }
 
     @Override
-    public Position getPlayerPosition() {
-       return this.getPosition();
+    public float getPlayerMoveSpeed() {
+       return this.moveSpeed;
     }
        
 }

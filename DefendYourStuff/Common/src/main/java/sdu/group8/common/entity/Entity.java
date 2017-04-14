@@ -24,8 +24,10 @@ public abstract class Entity {
     private Position pos;
     private AbilityContainer abilities;
     private CollisionType collisionType;
+    private String imageURL;
 
-    public Entity(Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+    public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        this.imageURL = imageURL;
         this.ID = UUID.randomUUID();
         this.dimension = dimension;
         this.pos = pos;
@@ -57,6 +59,10 @@ public abstract class Entity {
 
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+    
     public UUID getID() {
         return ID;
     }

@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.data.Position;
+import sdu.group8.common.data.GameKeys;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.Entity;
@@ -63,7 +62,6 @@ public class Game
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
     private Collection<Entity> entities;
-    private Entity player;
 
     public Collection<? extends IGameProcessingService> getGameProcesses() {
         return lookup.lookupAll(IGameProcessingService.class);
@@ -85,8 +83,6 @@ public class Game
 
         CAM = new OrthographicCamera();
         CAM.setToOrtho(false, 800, 600);
-
-        CAM.update();
 
         sr = new ShapeRenderer();
 
@@ -111,6 +107,8 @@ public class Game
 
         assetManager.load("defaultImage.PNG", Texture.class);
 
+        assetManager.load("Player/defaultPlayer.PNG", Texture.class);
+
         assetManager.load("Tiles/tile_dirt.PNG", Texture.class);
         assetManager.load("Tiles/tile_woodenFence.PNG", Texture.class);
     }
@@ -121,19 +119,21 @@ public class Game
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        gameData.setDelta(Gdx.graphics.getDeltaTime());
-        update();
-
-        gameData.getKeys().update();
-
+        
+        // If asset manager is done loading assets.
         if (assetManager.update()) {
+            CAM.update();
+            batch.setProjectionMatrix(CAM.combined);
+            gameData.setDelta(Gdx.graphics.getDeltaTime());
+
+            update();
+
+            gameData.getKeys().update();
             draw();
         }
     }
 
     private void update() {
-
         for (IGameProcessingService gameProcess : getGameProcesses()) {
             gameProcess.process(gameData, world);
         }
@@ -144,12 +144,11 @@ public class Game
     }
 
     private void draw() {
-        batch.setProjectionMatrix(CAM.combined);
 
         // Draw chunks
         drawMap();
 
-        camLockTarget(CAM); // Draw player
+        drawPlayer(); // Draw player
 
         sr.begin(ShapeType.Line);
         sr.setColor(Color.MAROON);
@@ -206,33 +205,24 @@ public class Game
         }
     }
 
-    private void camLockTarget(Camera cam) {
+    private void drawPlayer() {
+        //TODO: Generalise for all entities;
+
+        Entity player = null;
         for (Entity objectp : world.getEntities()) {
             if (objectp instanceof IPlayer) {
-                this.player = objectp;
+                player = objectp;
 
-                //FIXME: midlertid løsning til at tegne en player.
-                IPlayer p = (IPlayer) objectp;
-                Position pos = p.getPlayerPosition();
-
-                sr.setColor(Color.RED);
-                sr.begin(ShapeRenderer.ShapeType.Filled);
-                float x = player.getX();
-                float y = player.getY();
-                float height = player.getHeight();
-                float width = player.getWidth();
-                sr.rect(x, y, width, height);
-                sr.end();
+                drawTextureFromAsset(player.getImageURL(), player.getX() - (player.getWidth() / 2), player.getY());
 
             }
 
-        }
-        Vector2 target = new Vector2(player.getX() + (player.getWidth() / 2), player.getY() + (player.getHeight() / 2));
-        Vector3 position = cam.position;
-        position.x = target.x;
-//        position.y = target.y;
-        cam.update();
+            //Set camera position.
+            Vector3 camPos = CAM.position.cpy();
+            CAM.position.set(player.getX(), camPos.y, camPos.z);
+            CAM.update();
 
+        }
     }
 
     @Override

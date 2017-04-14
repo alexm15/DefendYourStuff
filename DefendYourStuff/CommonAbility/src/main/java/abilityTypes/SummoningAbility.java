@@ -18,8 +18,8 @@ import sdu.group8.common.entity.CollisionType;
  */
 public class SummoningAbility extends Ability {
 
-    public SummoningAbility(DamageRange damageRange, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
-        super(damageRange, dimension, pos, collisionType, effectContainer, ab);
+    public SummoningAbility(DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
+        super(damageRange, imageURL, dimension, pos, collisionType, effectContainer, ab);
     }
     
 }

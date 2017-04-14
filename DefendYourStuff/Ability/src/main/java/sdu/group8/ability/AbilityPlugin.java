@@ -42,7 +42,8 @@ public class AbilityPlugin implements IGamePluginService {
         float maxDamage = 20;
         EffectContainer effectContainer = new EffectContainer();
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        Ability abi = new Ability(damageRange, dimension, position, CollisionType.CIRLCE, effectContainer);
+        String imageURL = "";
+        Ability abi = new Ability(damageRange, imageURL, dimension, position, CollisionType.CIRLCE, effectContainer);
         
         return abi;
     }
