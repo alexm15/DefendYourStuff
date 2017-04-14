@@ -34,26 +34,26 @@ public class MapController implements IGamePluginService, IMapUpdate {
     public void start(GameData gameData, World world) {
         Chunk chunkMiddle = new Chunk_Base(0);
         world.setChunksMiddle(chunkMiddle);
-        
+
         //Generate chunks on the left side of base, until it a portal is created.
-        int leftSidePortal = randomIntRange(6, 7);
+        int leftSidePortal = randomIntRange(2, 3);
         Chunk lastChunkLeftSide = chunkMiddle;
 
         for (int i = 0; i < leftSidePortal; i++) {
             lastChunkLeftSide = generateChunk(lastChunkLeftSide);
             world.addChunkLeft(lastChunkLeftSide);
         }
-        world.addChunkLeft(generatePortalChunk(lastChunkLeftSide.getTileOffsetX()));
+        world.addChunkLeft(generatePortalChunk(lastChunkLeftSide));
 
         //Generate chunks on the right side of base, until it a portal is created.
-        int rightSidePortal = randomIntRange(6, 7);
+        int rightSidePortal = randomIntRange(2, 3);
         Chunk lastChunkRightSide = chunkMiddle;
 
         for (int i = 0; i < rightSidePortal; i++) {
             lastChunkRightSide = generateChunk(lastChunkRightSide);
             world.addChunkRight(lastChunkRightSide);
         }
-        world.addChunkRight(generatePortalChunk(lastChunkRightSide.getTileOffsetX()));
+        world.addChunkRight(generatePortalChunk(lastChunkRightSide));
 
     }
 
@@ -65,11 +65,13 @@ public class MapController implements IGamePluginService, IMapUpdate {
     @Override
     public void update(World world, boolean addToLeftSide) {
         if (addToLeftSide) {
-            Chunk lastChunk = world.getChunksLeft().get(world.getChunksLeft().size());
+            Chunk lastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 1);
             world.addChunkLeft(generateChunk(lastChunk));
+            System.out.println("Added new left chunk");
         } else {
-            Chunk lastChunk = world.getChunksRight().get(world.getChunksRight().size());
+            Chunk lastChunk = world.getChunksRight().get(world.getChunksRight().size() - 1);
             world.addChunkRight(generateChunk(lastChunk));
+            System.out.println("Added new right chunk");
         }
     }
 
@@ -152,7 +154,8 @@ public class MapController implements IGamePluginService, IMapUpdate {
      * @param tileOffsetX The number of tiles to offset the new chunk.
      * @return
      */
-    Chunk generatePortalChunk(int tileOffsetX) {
+    Chunk generatePortalChunk(Chunk lastChunk) {
+        int tileOffsetX = (int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth());
         return new Chunk_Portal01(tileOffsetX);
     }
 

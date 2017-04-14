@@ -21,7 +21,7 @@ public class World {
 
     private Map<UUID, Entity> entitíes = new ConcurrentHashMap<>();
     private ArrayList<Chunk> chunksLeft = new ArrayList<>();
-    private Chunk chunkMiddle = null; //TODO: Set chunk middle to base chunk;
+    private Chunk chunkMiddle = null;
     private ArrayList<Chunk> chunksRight = new ArrayList<>();
 
     // For Entities
@@ -79,8 +79,8 @@ public class World {
         return chunksRight;
     }
 
-    public void addChunkRight(Chunk chunkRight) {
-        this.chunksRight.add(chunkRight);
+    public void addChunkRight(Chunk chunk) {
+        this.chunksRight.add(chunk);
     }
 
     public void removeAllChunks() {

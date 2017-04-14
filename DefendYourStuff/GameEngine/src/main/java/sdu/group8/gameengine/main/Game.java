@@ -64,6 +64,8 @@ public class Game
     private static Game instance = null;
     private Collection<Entity> entities;
 
+    private boolean testIMapUpdate = false;
+
     public Collection<? extends IGameProcessingService> getGameProcesses() {
         return lookup.lookupAll(IGameProcessingService.class);
     }
@@ -142,26 +144,26 @@ public class Game
             postProcess.process(gameData, world);
         }
 
-        float camLeftPos = CAM.position.x - CAM.viewportWidth;
-        float camRightPos = CAM.position.x + CAM.viewportWidth;
+        float camPositionX = CAM.position.x;
 
-        Chunk secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() -1);
-        float lastLeftPos = (secondLastChunk.getTileOffsetX() - world.getChunkMiddle().getTileOffsetX() * -1);
+        Chunk secondLastChunk = world.getChunksRight().get(world.getChunksRight().size() - 2);
+        float secondLastOffsetX = secondLastChunk.getTileOffsetX() * gameData.getTILE_SIZE();
 
-        if (lastLeftPos < camLeftPos) {
-            for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
-                service.update(world, true);
-            }
-        }
-
-        secondLastChunk = world.getChunksRight().get(world.getChunksRight().size()-1);
-        float lastRightPos = secondLastChunk.getTileOffsetX();
-        if (lastRightPos > camRightPos) {
+        if (camPositionX > secondLastOffsetX) {
             for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
                 service.update(world, false);
             }
         }
 
+        secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 2);
+        secondLastOffsetX = (int) (((secondLastChunk.getTileOffsetX() - world.getChunkMiddle().getDimension().getWidth()) * -1) - secondLastChunk.getDimension().getWidth());
+        secondLastOffsetX *= gameData.getTILE_SIZE();
+        
+        if (camPositionX < secondLastOffsetX) {
+            for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
+                service.update(world, true);
+            }
+        }
     }
 
     private void draw() {
