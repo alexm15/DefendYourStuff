@@ -88,7 +88,7 @@ public class Game
         CAM.setToOrtho(false, 800, 600);
 
         sr = new ShapeRenderer();
-        
+
         Gdx.input.setInputProcessor(
                 new GameInputProcessor(gameData)
         );
@@ -137,6 +137,9 @@ public class Game
     }
 
     private void update() {
+
+        updateCamera();
+
         for (IGameProcessingService gameProcess : getGameProcesses()) {
             gameProcess.process(gameData, world);
         }
@@ -158,7 +161,7 @@ public class Game
         secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 2);
         secondLastOffsetX = (int) (((secondLastChunk.getTileOffsetX() - world.getChunkMiddle().getDimension().getWidth()) * -1) - secondLastChunk.getDimension().getWidth());
         secondLastOffsetX *= gameData.getTILE_SIZE();
-        
+
         if (camPositionX < secondLastOffsetX) {
             for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
                 service.update(world, true);
@@ -171,12 +174,7 @@ public class Game
         // Draw chunks
         drawMap();
 
-        drawPlayer(); // Draw player
-
-        sr.begin(ShapeType.Line);
-        sr.setColor(Color.MAROON);
-        sr.line(0, 100, 800, 100);
-        sr.end();
+        drawEntities(); // Draw entities
     }
 
     private void drawMap() {
@@ -228,24 +226,32 @@ public class Game
         }
     }
 
-    private void drawPlayer() {
+    private void drawEntities() {
         //TODO: Generalise for all entities;
 
-        Entity player = null;
-        for (Entity objectp : world.getEntities()) {
-            if (objectp instanceof IPlayer) {
-                player = objectp;
-
-                drawTextureFromAsset(player.getImageURL(), player.getX() - (player.getWidth() / 2), player.getY());
-
-            }
-
-            //Set camera position.
-            Vector3 camPos = CAM.position.cpy();
-            CAM.position.set(player.getX(), camPos.y, camPos.z);
-            CAM.update();
-
+        for (Entity entity : world.getEntities()) {
+            drawTextureFromAsset(entity.getImageURL(), entity.getX() - (entity.getWidth() / 2), entity.getY());
         }
+    }
+
+    private void updateCamera() {
+        Vector3 camPos = CAM.position.cpy();
+        CAM.position.set(gameData.getPlayerPosition().getX(), camPos.y, camPos.z);
+        CAM.update();
+
+        //        if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
+        //            float moveSpeed = 200;
+        //
+        //            //Set camera position.
+        //            Vector3 camPos = CAM.position.cpy();
+        //
+        //            float posX = camPos.x;
+        //            posX += moveSpeed * gameData.getDelta();
+        //
+        //            CAM.position.set(posX, camPos.y, camPos.z);
+        //            CAM.update();
+        //
+        //        }
     }
 
     @Override
