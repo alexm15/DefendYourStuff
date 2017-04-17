@@ -88,7 +88,7 @@ public class Game
         CAM.setToOrtho(false, 800, 600);
 
         sr = new ShapeRenderer();
-
+        
         Gdx.input.setInputProcessor(
                 new GameInputProcessor(gameData)
         );

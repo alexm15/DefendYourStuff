@@ -13,6 +13,7 @@ public abstract class Chunk {
     private Dimension dimension;
     private Tile[][] bgMatrix;
     private int tileOffsetX;
+    protected final int TILE_SIZE = 100;
 
     public Chunk(int tileOffsetX) {
         this.tileOffsetX = tileOffsetX;

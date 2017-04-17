@@ -44,7 +44,7 @@ public class Chunk_Portal01 extends Chunk {
     @Override
     public void createEntities(World world) {
 
-        Position portal = new Position(((getDimension().getWidth() / 2) + this.getTileOffsetX()) * 100, 100);
+        Position portal = new Position(((getDimension().getWidth() / 2) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
         
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             //TODO: create portal

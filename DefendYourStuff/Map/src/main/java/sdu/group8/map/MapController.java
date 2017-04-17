@@ -33,6 +33,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
     @Override
     public void start(GameData gameData, World world) {
         Chunk chunkMiddle = new Chunk_Base(0);
+        //chunkMiddle.createEntities(world);
         world.setChunksMiddle(chunkMiddle);
 
         //Generate chunks on the left side of base, until it a portal is created.
@@ -41,6 +42,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
 
         for (int i = 0; i < leftSidePortal; i++) {
             lastChunkLeftSide = generateChunk(lastChunkLeftSide);
+            //lastChunkLeftSide.createEntities(world);
             world.addChunkLeft(lastChunkLeftSide);
         }
         world.addChunkLeft(generatePortalChunk(lastChunkLeftSide));
@@ -51,6 +53,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
 
         for (int i = 0; i < rightSidePortal; i++) {
             lastChunkRightSide = generateChunk(lastChunkRightSide);
+            //lastChunkRightSide.createEntities(world);
             world.addChunkRight(lastChunkRightSide);
         }
         world.addChunkRight(generatePortalChunk(lastChunkRightSide));

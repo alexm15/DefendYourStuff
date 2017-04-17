@@ -44,8 +44,8 @@ public class Chunk_Grassland01 extends Chunk {
     @Override
     public void createEntities(World world) {
         
-        Position farm = new Position(((getDimension().getWidth() / 4) + this.getTileOffsetX()) * 100, 100);
-        Position rubble = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getTileOffsetX()) * 100, 100);
+        Position farm = new Position(((getDimension().getWidth() / 4) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
+        Position rubble = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createRubbleBuilding(world, rubble);
