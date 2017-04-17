@@ -76,6 +76,7 @@
         <module>Interacter</module>
         <module>Ability</module>
         <module>CommonMap</module>
+        <module>Building</module>
     </modules>
 
     <properties>
