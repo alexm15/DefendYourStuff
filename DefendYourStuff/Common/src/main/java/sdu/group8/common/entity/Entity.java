@@ -86,13 +86,21 @@ public abstract class Entity {
     public void setHeight(float height) {
         this.dimension.setHeight(height);
     }
+    
+    public void setY(float y) {
+        pos.setY(y);
+    }
 
-    public float getX() {
-        return pos.getX();
+    public void setX(float x) {
+        pos.setX(x);
     }
 
     public float getY() {
         return pos.getY();
+    }
+    
+    public float getX() {
+        return pos.getX();
     }
 
     public void setPosition(float x, float y) {

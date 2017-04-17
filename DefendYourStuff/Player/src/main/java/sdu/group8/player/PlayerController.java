@@ -24,8 +24,7 @@ import sdu.group8.common.services.IGameProcessingService;
  * @author joach
  */
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class)
-    ,
+    @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class)}
 )
 
@@ -46,8 +45,8 @@ public class PlayerController
         if (!player.isEntityOnGround(player, gameData)) {
             //player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
             verticalVelocity -= gameData.getGRAVITY();
-        }
-        else {
+        } else {
+            player.setY(gameData.getGroundHeight());
             verticalVelocity = 0;
         }
         horizontalVelocity = 0;
@@ -55,8 +54,9 @@ public class PlayerController
         handleMouseInput(gameData);
 
         handleKeyboardInput(gameData);
-
-        player.setPosition(player.getX() + horizontalVelocity, player.getY() + verticalVelocity * gameData.getDelta());
+        Position position = new Position(player.getX() + horizontalVelocity, player.getY() + verticalVelocity * gameData.getDelta());
+        player.setPosition(position);
+        gameData.setPlayerPosition(position);
 
     }
 
@@ -103,7 +103,7 @@ public class PlayerController
         float weight = 10;
         float width = 50;
         float height = 50;
-        Dimension dimension = new Dimension(width, height, width/2); //TODO: Should match the sprites size.
+        Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
         Position position = new Position(x, y); //TODO: Should be startposition.
@@ -115,6 +115,7 @@ public class PlayerController
         player = new Player(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
         gameData.setPlayerGold(0);
         world.addEntity(player);
+        gameData.setPlayerPosition(position);
     }
 
     @Override

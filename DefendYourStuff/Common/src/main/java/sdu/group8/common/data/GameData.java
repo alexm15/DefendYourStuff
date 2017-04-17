@@ -16,6 +16,7 @@ public class GameData {
     private int displayHeight;
     private int playerGold;
     private Position cursorPosition;
+    private Position playerPosition;
 
     private float groundHeight = 100;
     private final int TILE_SIZE = 100;
@@ -24,6 +25,14 @@ public class GameData {
 
     public GameData() {
         this.keys = new GameKeys();
+    }
+
+    public Position getPlayerPosition() {
+        return playerPosition;
+    }
+
+    public void setPlayerPosition(Position playerPosition) {
+        this.playerPosition = playerPosition;
     }
 
     public int getTILE_SIZE() {
