@@ -57,7 +57,7 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
         Ability[] abilities = new Ability[1]; 
         
         Building castle = 
-                new Castle("Building/castle.PNG", castleDimension, position, 
+                new Castle("Building/castle.png", castleDimension, position, 
                         CollisionType.BOX, BuildingType.DEFENCE, 
                         true, upgradeLvl, health, abilities);
         
