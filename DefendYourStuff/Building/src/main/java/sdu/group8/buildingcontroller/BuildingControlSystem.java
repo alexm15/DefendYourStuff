@@ -6,6 +6,8 @@
 
 package sdu.group8.buildingcontroller;
 
+import org.openide.util.lookup.ServiceProvider;
+import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.buildingentities.Castle;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityContainer;
@@ -25,6 +27,11 @@ import sdu.group8.commonbuilding.services.Buildable;
  *
  * @author Alexander
  */
+@ServiceProviders(value = {
+    @ServiceProvider(service = IGameProcessingService.class),
+    @ServiceProvider(service = IGamePluginService.class),
+    @ServiceProvider(service = Buildable.class)}
+)
 public class BuildingControlSystem implements IGamePluginService, IGameProcessingService, Buildable
 {
 
@@ -53,6 +60,8 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
                 new Castle("Building/castle.PNG", castleDimension, position, 
                         CollisionType.BOX, BuildingType.DEFENCE, 
                         true, upgradeLvl, health, abilities);
+        
+        world.addEntity(castle);
     }
 
     @Override
