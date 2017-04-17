@@ -48,6 +48,7 @@ public class PlayerController
             verticalVelocity -= gameData.getGRAVITY();
         }
         else {
+            player.setY(gameData.getGroundHeight());
             verticalVelocity = 0;
         }
         horizontalVelocity = 0;
