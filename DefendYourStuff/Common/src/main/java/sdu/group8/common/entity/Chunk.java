@@ -3,54 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sdu.group8.common.entity;
 
 import sdu.group8.common.data.Dimension;
-import sdu.group8.common.data.Position;
+import sdu.group8.common.data.World;
 
-/**
- *
- * @author Alexander
- */
-public abstract class Chunk 
-{
-    private Position position;
+public abstract class Chunk {
+
     private Dimension dimension;
-    private ChunkTypes type;
-    private BlockTypes[][] chunkMatrix;
-    
-    public Position getPosition() {
-        return position;
+    private Tile[][] bgMatrix;
+    private int tileOffsetX;
+    protected final int TILE_SIZE = 100;
+
+    public Chunk(int tileOffsetX) {
+        this.tileOffsetX = tileOffsetX;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public Tile[][] getTileMatrix() {
+        return this.bgMatrix;
+    }
+
+    public void setTileMatrix(Tile[][] bgMatrix) {
+        this.bgMatrix = bgMatrix;
+        this.dimension = new Dimension(bgMatrix.length, bgMatrix[0].length, 0);
     }
 
     public Dimension getDimension() {
         return dimension;
     }
 
-    public void setDimension(Dimension dimension) {
-        this.dimension = dimension;
-    }
-
-    public Chunk(ChunkTypes type) {
-        this.type = type;
-    }
-
-    public ChunkTypes getType() {
-        return type;
-    }
-  
-    public BlockTypes[][] getChunkMatrix() {
-        return chunkMatrix;
-    }
-
-    public void setChunkMatrix(BlockTypes[][] chunkMatrix) {
-        this.chunkMatrix = chunkMatrix;
+    public int getTileOffsetX() {
+        return tileOffsetX;
     }
     
-            
+    public abstract void createEntities(World world);
+    
+    public abstract String getBackgroundImageURL();
+
 }

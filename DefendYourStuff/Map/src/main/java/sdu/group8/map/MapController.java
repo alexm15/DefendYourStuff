@@ -5,95 +5,183 @@
  */
 package sdu.group8.map;
 
+import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
-import static sdu.group8.common.entity.ChunkTypes.*;
 import sdu.group8.common.services.IGamePluginService;
-import sdu.group8.common.services.IGameProcessingService;
-import sdu.group8.map.chunks.CastleChunk;
-import sdu.group8.map.chunks.LeftBaseChunk;
-import sdu.group8.map.chunks.RightBaseChunk;
+import sdu.group8.commonmap.IMapUpdate;
+import sdu.group8.map.chunks.Chunk_Base;
+import sdu.group8.map.chunks.Chunk_Forrest01;
+import sdu.group8.map.chunks.Chunk_Forrest02;
+import sdu.group8.map.chunks.Chunk_Grassland01;
+import sdu.group8.map.chunks.Chunk_Grassland02;
+import sdu.group8.map.chunks.Chunk_Portal01;
 
 /**
  *
  * @author Alexander
  */
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class)
-    , 
+    @ServiceProvider(service = IMapUpdate.class),
     @ServiceProvider(service = IGamePluginService.class)}
 )
-public class MapController
-        implements IGamePluginService, IGameProcessingService {
+public class MapController implements IGamePluginService, IMapUpdate {
 
-    private int columnsInGrid = 8;
-    private int rowsInGrid = 6;
-    
     @Override
     public void start(GameData gameData, World world) {
-        //Three initial chunks for testing game
-        Chunk castleChunk = new CastleChunk(CASTLE_CHUNK);
-        Chunk leftBaseChunk = new LeftBaseChunk(LEFT_BASE_CHUNK);
-        Chunk rightBaseChunk = new RightBaseChunk(RIGHT_BASE_CHUNK);
-        
-        //Sets windowsY array to 6 spaces
-        gameData.setWindowsY(new int[rowsInGrid]);
-        for (int i = 1; i <= rowsInGrid; i++) {
-            gameData.getWindowsY()[i - 1] = i * (gameData.getDisplayHeight() / rowsInGrid);
+        Chunk chunkMiddle = new Chunk_Base(0);
+        chunkMiddle.createEntities(world);
+        world.setChunksMiddle(chunkMiddle);
 
-        }
-        
-        
-        addChunkToLeftGameList(gameData, leftBaseChunk);
-        
-        //Initializes middle chunk list and middle window list
-        //Nothing is added to these lists after this. 
-        gameData.addMiddleChunk(castleChunk);
-        for (int i = 1; i <= columnsInGrid; i++) {
-            gameData.getWindowsxMiddle().add(i - 1, (i * (gameData.getDisplayWidth() / columnsInGrid)));
-        }
-        
-        addChunkRightGameList(gameData, rightBaseChunk);
+        //Generate chunks on the left side of base, until it a portal is created.
+        int leftSidePortal = randomIntRange(2, 3);
+        Chunk lastChunkLeftSide = chunkMiddle;
 
-    }
-    /**
-     * Adds chunk to the right side of the gameMap
-     * @param gameData for retrieving the lists needed
-     * @param chunkToAdd the chunk to be added to the game.
-     */
-    public void addChunkRightGameList(GameData gameData, Chunk chunkToAdd) {
-        gameData.addRigtChunk(chunkToAdd);
-        int rightSize = gameData.getWindowsxRight().size();
-        int middleGridSize = gameData.getWindowsxMiddle().size() * 100;
-        for (int i = gameData.getWindowsxRight().size()+1; i <= rightSize + columnsInGrid; i++) {
-            gameData.getWindowsxRight().add(i - 1, (i * (gameData.getDisplayWidth() / columnsInGrid)) + (middleGridSize));
+        for (int i = 0; i < leftSidePortal; i++) {
+            lastChunkLeftSide = generateChunk(lastChunkLeftSide);
+            lastChunkLeftSide.createEntities(world);
+            world.addChunkLeft(lastChunkLeftSide);
         }
-    }
+        world.addChunkLeft(generatePortalChunk(lastChunkLeftSide));
 
-    /**
-     * Adds chunk to the left side of the gameMap
-     * @param gameData for retrieving the lists needed
-     * @param chunkToAdd the chunk to be added to the game.
-     */
-    public void addChunkToLeftGameList(GameData gameData, Chunk chunkToAdd) {
-        gameData.addLeftChunk(chunkToAdd);
-        int leftSize = gameData.getWindowsxLeft().size();
-        for (int i = gameData.getWindowsxLeft().size()+1; i <= leftSize+columnsInGrid; i++) {
-            gameData.getWindowsxLeft().add(i-1, (-i * (gameData.getDisplayWidth() / columnsInGrid)));
+        //Generate chunks on the right side of base, until it a portal is created.
+        int rightSidePortal = randomIntRange(2, 3);
+        Chunk lastChunkRightSide = chunkMiddle;
+
+        for (int i = 0; i < rightSidePortal; i++) {
+            lastChunkRightSide = generateChunk(lastChunkRightSide);
+            lastChunkRightSide.createEntities(world);
+            world.addChunkRight(lastChunkRightSide);
         }
+        world.addChunkRight(generatePortalChunk(lastChunkRightSide));
+
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        gameData.removeAllChunks();
+        world.removeAllChunks();
     }
 
     @Override
-    public void process(GameData gameData, World world) {
+    public void update(World world, boolean addToLeftSide) {
+        Chunk lastChunk = getLastChunk(world, addToLeftSide);
+        Chunk newChunk = generateChunk(lastChunk);
+        newChunk.createEntities(world);
+        
+        if (addToLeftSide) {
+            world.addChunkLeft(newChunk);
+        } else {
+            world.addChunkRight(generateChunk(lastChunk));
+        }
+    }
 
+    private Chunk getLastChunk(World world, boolean addToLeftSide) {
+        Chunk lastChunk = null;
+        if (addToLeftSide) {
+            lastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 1);
+        } else {
+            lastChunk = world.getChunksRight().get(world.getChunksRight().size() - 1);
+        }
+        return lastChunk;
+
+    }
+
+    /**
+     *
+     * Returns a random chunk from a random biome, such as forrst or grassland.
+     *
+     * @param lastChunk The last chunk in the world arraylist for chunks.
+     * @return
+     */
+    private Chunk generateChunk(Chunk lastChunk) {
+        Chunk newChunk;
+        int tileOffsetX = (int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth());
+
+        switch (randomIntRange(0, 1)) {
+            case 0:
+                newChunk = generateGrasslandChunk(tileOffsetX);
+                break;
+            case 1:
+                newChunk = generateForrestChunk(tileOffsetX);
+                break;
+            default:
+                newChunk = generateGrasslandChunk(tileOffsetX);
+                break;
+        }
+        return newChunk;
+    }
+
+    /**
+     * Return a random grassland chunk.
+     *
+     * @param tileOffsetX The number of tiles to offset the new chunk.
+     * @return
+     */
+    private Chunk generateGrasslandChunk(int tileOffsetX) {
+        Chunk newChunk;
+
+        switch (randomIntRange(0, 1)) {
+            case 0:
+                newChunk = new Chunk_Grassland01(tileOffsetX);
+                break;
+            case 1:
+                newChunk = new Chunk_Grassland02(tileOffsetX);
+                break;
+            default:
+                newChunk = new Chunk_Grassland01(tileOffsetX);
+                break;
+        }
+
+        return newChunk;
+    }
+
+    /**
+     * Return a random forrest chunk.
+     *
+     * @param tileOffsetX The number of tiles to offset the new chunk.
+     * @return
+     */
+    Chunk generateForrestChunk(int tileOffsetX) {
+        Chunk newChunk;
+        switch (randomIntRange(0, 1)) {
+            case 0:
+                newChunk = new Chunk_Forrest01(tileOffsetX);
+                break;
+            case 1:
+                newChunk = new Chunk_Forrest02(tileOffsetX);
+                break;
+            default:
+                newChunk = new Chunk_Forrest01(tileOffsetX);
+                break;
+        }
+
+        return newChunk;
+    }
+
+    /**
+     * Return a portal chunk.
+     *
+     * @param tileOffsetX The number of tiles to offset the new chunk.
+     * @return
+     */
+    Chunk generatePortalChunk(Chunk lastChunk) {
+        int tileOffsetX = (int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth());
+        return new Chunk_Portal01(tileOffsetX);
+    }
+
+    /**
+     * Return random integer between min and max, inclusive.
+     *
+     * @param min integer minimum value
+     * @param max integer maximum value
+     * @return random int between min and max.
+     */
+    private int randomIntRange(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min + 1) + min;
     }
 
 }

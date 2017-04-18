@@ -6,6 +6,7 @@
 package abilityTypes;
 
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.EffectContainer;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
@@ -17,8 +18,8 @@ import sdu.group8.common.entity.CollisionType;
  */
 public class RangedAbility extends Ability {
 
-    public RangedAbility(DamageRange damageRange, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(damageRange, dimension, pos, collisionType, ab);
+    public RangedAbility(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
+        super(moveSpeed, weight, damageRange, imageURL, dimension, pos, collisionType, effectContainer, ab);
     }
     
 

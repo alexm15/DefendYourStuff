@@ -5,13 +5,11 @@
  */
 package sdu.group8.common.entity;
 
-import sdu.group8.common.collision.CollisionContainer;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.*;
 import java.util.UUID;
 
 import java.util.ArrayList;
-import java.util.List;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityContainer;
 
@@ -26,8 +24,10 @@ public abstract class Entity {
     private Position pos;
     private AbilityContainer abilities;
     private CollisionType collisionType;
+    private String imageURL;
 
-    public Entity(Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+    public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        this.imageURL = imageURL;
         this.ID = UUID.randomUUID();
         this.dimension = dimension;
         this.pos = pos;
@@ -35,6 +35,10 @@ public abstract class Entity {
         this.abilities = new AbilityContainer(ab);
     }
 
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+    
     /**
      * Is used to finde out if the entity is on the ground OR under the ground.
      *
@@ -43,7 +47,7 @@ public abstract class Entity {
      * false.
      */
     public boolean isEntityOnGround(Entity entity, GameData gameData) {
-        if (entity.getPosition().getY() <= gameData.getGROUND_HEIGHT() + entity.getHeight() / 2) {
+        if (entity.getPosition().getY() <= gameData.getGroundHeight()) {
             return true;
         }
         return false;
@@ -55,10 +59,14 @@ public abstract class Entity {
      * @param player
      */
     public void setEntityOnGround(Entity entity, GameData gameData) {
-        entity.setPosition(entity.getPosition().getX(), (gameData.getGROUND_HEIGHT() + entity.getHeight() / 2));
+        entity.setPosition(entity.getPosition().getX(), (gameData.getGroundHeight() + entity.getHeight() / 2));
 
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+    
     public UUID getID() {
         return ID;
     }
@@ -82,13 +90,21 @@ public abstract class Entity {
     public void setHeight(float height) {
         this.dimension.setHeight(height);
     }
+    
+    public void setY(float y) {
+        pos.setY(y);
+    }
 
-    public float getX() {
-        return pos.getX();
+    public void setX(float x) {
+        pos.setX(x);
     }
 
     public float getY() {
         return pos.getY();
+    }
+    
+    public float getX() {
+        return pos.getX();
     }
 
     public void setPosition(float x, float y) {
