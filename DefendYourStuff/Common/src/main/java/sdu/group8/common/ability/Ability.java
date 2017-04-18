@@ -16,17 +16,33 @@ import sdu.group8.common.entity.MovingEntity;
  *
  * @author Martin
  */
-public class Ability extends MovingEntity{
+public class Ability extends MovingEntity {
     
     private DamageRange damageRange;
     private boolean isHit = false;
     private EffectContainer effects;
     private float angle;
 
-    public Ability(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
-        super(moveSpeed, weight, imageURL, dimension, pos, collisionType, ab);
+    public Ability(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer) {
+        super(moveSpeed, weight, imageURL, dimension, pos, collisionType);
         this.effects = effectContainer;
         this.damageRange = damageRange;
+    }
+
+    public DamageRange getDamageRange() {
+        return damageRange;
+    }
+
+    public void setDamageRange(DamageRange damageRange) {
+        this.damageRange = damageRange;
+    }
+
+    public EffectContainer getEffects() {
+        return effects;
+    }
+
+    public void setEffects(EffectContainer effects) {
+        this.effects = effects;
     }
 
     public float getDamage() {

@@ -18,8 +18,8 @@ import sdu.group8.common.entity.CollisionType;
  */
 public class RangedAbility extends Ability {
 
-    public RangedAbility(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
-        super(moveSpeed, weight, damageRange, imageURL, dimension, pos, collisionType, effectContainer, ab);
+    public RangedAbility(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer) {
+        super(moveSpeed, weight, damageRange, imageURL, dimension, pos, collisionType, effectContainer);
     }
     
 
