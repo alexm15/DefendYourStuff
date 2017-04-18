@@ -20,19 +20,12 @@ import sdu.group8.commonbuilding.services.IDefBuilding;
  *
  * @author Alexander
  */
-public class Castle extends Building implements IDefBuilding
+public class Wall extends Building implements IDefBuilding
 {
 
-    public Castle(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
+    public Wall(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
         super(imageURL, dimension, pos, collisionType, buildingType, isAttackable, upgradeLevel, health, ab);
     }
-
-    @Override
-    public String getImageURL() {
-        return "Building/castle.png";
-    }
-    
-    
 
     @Override
     public void collision(Entity otherEntity) {
