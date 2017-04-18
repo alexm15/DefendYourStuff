@@ -77,6 +77,7 @@
         <module>Ability</module>
         <module>CommonMap</module>
         <module>Building</module>
+        <module>Enemy</module>
     </modules>
 
     <properties>

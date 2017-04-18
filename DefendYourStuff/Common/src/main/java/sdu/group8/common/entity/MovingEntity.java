@@ -17,11 +17,14 @@ public abstract class MovingEntity extends Entity {
 
     private float dx;
     private float dy;
-
-    public MovingEntity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+    private float moveSpeed;
+    private float weight;
+    
+    public MovingEntity(float moveSpeed, float weight, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
         super(imageURL, dimension, pos, collisionType, ab);
+        this.moveSpeed = moveSpeed;
+        this.weight = weight;
     }
-        
 
     public float getDx() {
         return dx;
@@ -43,4 +46,22 @@ public abstract class MovingEntity extends Entity {
         this.dx = dx;
         this.dy = dy;
     }
+
+    public float getMoveSpeed() {
+        return moveSpeed;
+    }
+
+    public void setMoveSpeed(float moveSpeed) {
+        this.moveSpeed = moveSpeed;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+    
+    
 }

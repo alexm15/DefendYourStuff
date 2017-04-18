@@ -3,24 +3,19 @@ package sdu.group8.gameengine.main;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.data.GameKeys;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.Entity;
@@ -30,7 +25,6 @@ import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.gameengine.managers.GameInputProcessor;
-import sdu.group8.commonplayer.IPlayer;
 
 /**
  *
@@ -111,12 +105,15 @@ public class Game
         assetManager.load("defaultImage.PNG", Texture.class);
 
         assetManager.load("Player/defaultPlayer.PNG", Texture.class);
+        
+        assetManager.load("Enemy/dickbutt.gif", Texture.class);
 
         assetManager.load("Tiles/tile_dirt.PNG", Texture.class);
         assetManager.load("Tiles/tile_woodenFence.PNG", Texture.class);
         assetManager.load("Building/castle.png", Texture.class);
         assetManager.load("Building/rubble.png", Texture.class);
         
+        assetManager.load("Tiles/tile_air.png", Texture.class);
     }
 
     @Override
