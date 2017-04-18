@@ -27,36 +27,30 @@ import sdu.group8.commonenemy.IEnemyService;
 public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService {
 
     private Map<UUID, Character> enemies = new ConcurrentHashMap<>();
-    private float demoMove = 0;
-    private boolean demoGoLeft = true;
 
     @Override
     public void process(GameData gameData, World world) {
+        
+        float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
+        
         for (Character enemy : enemies.values()) {
-            
-            demoMove = enemy.getX();
-            
-            if (demoMove < -300) {
-                demoGoLeft = false;
-            }
-            if (demoMove > 0) {
-                demoGoLeft = true;
-            }
+            float horizontalPos = enemy.getX();
 
-            if (demoGoLeft) {
-                demoMove -= enemy.getMoveSpeed() * gameData.getDelta();
+            if (enemy.getX() < basePosX) {
+                horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
             }
             else {
-                demoMove += enemy.getMoveSpeed() * gameData.getDelta();
+                horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
             }
             
-            enemy.setX(demoMove);
+            enemy.setX(horizontalPos);
         }
     }
 
     @Override
     public void start(GameData gameData, World world) {
-        createMediumEnemy(world, gameData);
+        createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
+        createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
     }
 
     @Override
@@ -65,7 +59,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     }
 
     @Override
-    public void createMediumEnemy(World world, GameData gameData) {
+    public void createMediumEnemy(World world, GameData gameData, Position position) {
         MediumEnemy enemy;
         float health = 100;
         float moveSpeed = 200;
@@ -75,13 +69,18 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
         float x = 0;
         float y = gameData.getTILE_SIZE();
-        Position position = new Position(x, y); //TODO: Should be startposition.
 
         String imageURL = "Enemy/dickbutt.gif";
         enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
         gameData.setPlayerGold(0);
         world.addEntity(enemy);
         enemies.put(enemy.getID(), enemy);
+    }
+
+    @Override
+    public void removeAllEnemies(World world) {
+        //TODO: implement this method
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
