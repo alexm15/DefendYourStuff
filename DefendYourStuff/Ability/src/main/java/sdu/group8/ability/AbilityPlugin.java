@@ -43,7 +43,7 @@ public class AbilityPlugin implements IGamePluginService {
         EffectContainer effectContainer = new EffectContainer();
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
         String imageURL = "";
-        Ability abi = new Ability(damageRange, imageURL, dimension, position, CollisionType.CIRLCE, effectContainer);
+        Ability abi = new Ability(moveSpeed, weight, damageRange, imageURL, dimension, position, CollisionType.CIRLCE, effectContainer);
         
         return abi;
     }

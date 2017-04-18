@@ -6,6 +6,7 @@
 package sdu.group8.collision;
 
 import java.util.Collection;
+import org.openide.util.lookup.ServiceProvider;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
@@ -16,10 +17,7 @@ import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePostProcessingService;
 
-/**
- *
- * @author Martin
- */
+@ServiceProvider(service = IGamePostProcessingService.class)
 public class CollisionProcess implements IGamePostProcessingService {
 
     GameData gameData;
