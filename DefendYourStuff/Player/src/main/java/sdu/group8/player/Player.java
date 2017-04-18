@@ -10,6 +10,7 @@ import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.common.weapon.Weapon;
 import sdu.group8.commonplayer.IPlayer;
 
@@ -74,6 +75,11 @@ public class Player extends Character implements IPlayer{
     @Override
     public float getPlayerMoveSpeed() {
        return this.moveSpeed;
+    }
+
+    @Override
+    public void collision(Entity otherEntity) {
+        // TODO: create actions
     }
        
 }
