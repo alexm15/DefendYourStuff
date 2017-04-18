@@ -15,14 +15,12 @@ import sdu.group8.common.collision.CollisionContainer;
  * @author Martin
  */
 public class Projectile extends MovingEntity{
-    private float weight;
     private float angle;
     private float radius;
     private boolean isHit = false;
 
-    public Projectile(float weight, float angle, float radius, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(imageURL, dimension, pos, collisionType, ab);
-        this.weight = weight;
+    public Projectile(float moveSpeed, float weight, float angle, float radius, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(moveSpeed, weight, imageURL, dimension, pos, collisionType, ab);
         this.angle = angle;
         this.radius = radius;
     }
@@ -33,14 +31,6 @@ public class Projectile extends MovingEntity{
 
     public void setRadius(float radius) {
         this.radius = radius;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
     }
 
     public float getAngle() {
@@ -61,7 +51,7 @@ public class Projectile extends MovingEntity{
 
     @Override
     public void collision(Entity otherEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
      
 }

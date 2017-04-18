@@ -19,8 +19,8 @@ import sdu.group8.common.entity.MovingEntity;
 public abstract class Character extends MovingEntity{
     private HealthSystem health;
 
-    public Character(float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(imageURL, dimension, pos, collisionType, ab);
+    public Character(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(moveSpeed, weight, imageURL, dimension, pos, collisionType, ab);
         this.health = new HealthSystem(health);
     }
     

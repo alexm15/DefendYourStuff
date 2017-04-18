@@ -17,14 +17,16 @@ import sdu.group8.commoncharacter.Character;
  *
  * @author Martin
  */
-public class Enemy extends Character implements IEnemy{
+public class MediumEnemy extends Character implements IEnemy{
     
-    public Enemy(float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(health, imageURL, dimension, pos, collisionType, ab);
+    public MediumEnemy(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(moveSpeed, weight, health, imageURL, dimension, pos, collisionType, ab);
     }
     
     @Override
     public void collision(Entity otherEntity) {
-        
+        String imageURL = otherEntity.getImageURL();
+        otherEntity.setImageURL(this.getImageURL());
+        this.setImageURL(imageURL);
     }
 }

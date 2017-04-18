@@ -35,6 +35,10 @@ public abstract class Entity {
         this.abilities = new AbilityContainer(ab);
     }
 
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+    
     /**
      * Is used to finde out if the entity is on the ground OR under the ground.
      *

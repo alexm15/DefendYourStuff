@@ -21,22 +21,18 @@ import sdu.group8.commonplayer.IPlayer;
 public class Player extends Character implements IPlayer{
     
     private Weapon weapon;
-    private float moveSpeed;
-    private float weight;
     private Position aimPoint;
     private final float JUMP_FORCE = 350;
 
     public Player(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(health, imageURL, dimension, pos, collisionType, ab);
-        this.moveSpeed = moveSpeed;
-        this.weight = weight;
+        super(moveSpeed, weight, health, imageURL, dimension, pos, collisionType, ab);
     }
     /**
      * Gets the player jump force.
      * @return The jump force for the player.
      */
     public float getVerticalForce(){
-        float verticalVelocity = JUMP_FORCE - weight;
+        float verticalVelocity = JUMP_FORCE - getWeight();
         return verticalVelocity;
     }
     
@@ -48,14 +44,6 @@ public class Player extends Character implements IPlayer{
         this.weapon = weapon;        
     }
 
-    public float getMoveSpeed() {
-        return moveSpeed;
-    }
-
-    public void setMoveSpeed(float moveSpeed) {
-        this.moveSpeed = moveSpeed;
-    }
-
     public Position getAimPoint() {
         return aimPoint;
     }
@@ -64,17 +52,13 @@ public class Player extends Character implements IPlayer{
         this.aimPoint = aimPoint;
     }
 
-    public float getWeight() {
-        return weight;
-    }
-
     public float getJUMP_FORCE() {
         return JUMP_FORCE;
     }
 
     @Override
     public float getPlayerMoveSpeed() {
-       return this.moveSpeed;
+       return getMoveSpeed();
     }
 
     @Override
