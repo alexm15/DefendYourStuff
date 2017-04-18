@@ -10,6 +10,7 @@ import java.util.List;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.buildingentities.Castle;
+import sdu.group8.buildingentities.Rubble;
 import sdu.group8.buildingentities.Tower;
 import sdu.group8.buildingentities.Wall;
 import sdu.group8.common.ability.Ability;
@@ -99,18 +100,18 @@ public class BuildingControlSystem
 
     @Override
     public void createRubbleBuilding(World world, Position position) {
-        Dimension rubbleDimension = new Dimension(200, 100, 0);
+        Dimension rubbleDimension = new Dimension(35, 20, 0);
         //TODO: Determine stats for rubble building
         float health = 100;
         int upgradeLvl = 1;
         Ability[] abilities = new Ability[0];
 
-        Building castle
-                = new Castle("Building/rubble.png", rubbleDimension, position,
+        Building rubble
+                = new Rubble("Building/rubble.png", rubbleDimension, position,
                         CollisionType.BOX, BuildingType.DEFENCE,
                         true, upgradeLvl, health, abilities);
 
-        world.addEntity(castle);
+        world.addEntity(rubble);
     }
 
     private void castleProcess(GameData gameData, World world) {
