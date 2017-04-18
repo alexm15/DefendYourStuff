@@ -7,7 +7,6 @@ package sdu.group8.common.ability;
 
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Position;
-import java.util.UUID;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
@@ -22,11 +21,10 @@ public class Ability extends MovingEntity{
     private DamageRange damageRange;
     private boolean isHit = false;
     private EffectContainer effects;
-    private float weight;
     private float angle;
 
-    public Ability(DamageRange damageRange, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
-        super(dimension, pos, collisionType, ab);
+    public Ability(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
+        super(moveSpeed, weight, imageURL, dimension, pos, collisionType, ab);
         this.effects = effectContainer;
         this.damageRange = damageRange;
     }
@@ -43,14 +41,6 @@ public class Ability extends MovingEntity{
         this.isHit = isHit;
     }
     
-    public float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
-
     public float getAngle() {
         return angle;
     }
@@ -61,7 +51,7 @@ public class Ability extends MovingEntity{
 
     @Override
     public void collision(Entity otherEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
 }

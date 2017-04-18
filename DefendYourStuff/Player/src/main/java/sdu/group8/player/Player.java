@@ -6,36 +6,33 @@
 package sdu.group8.player;
 
 import sdu.group8.common.ability.Ability;
-import sdu.group8.common.collision.CollisionContainer;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.common.weapon.Weapon;
+import sdu.group8.commonplayer.IPlayer;
 
 /**
  *
  * @author joach
  */
-public class Player extends Character {
+public class Player extends Character implements IPlayer{
     
     private Weapon weapon;
-    private float moveSpeed;
-    private float weight;
     private Position aimPoint;
     private final float JUMP_FORCE = 350;
 
-    public Player(float moveSpeed, float weight, float health, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(health, dimension, pos, collisionType, ab);
-        this.moveSpeed = moveSpeed;
-        this.weight = weight;
+    public Player(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+        super(moveSpeed, weight, health, imageURL, dimension, pos, collisionType, ab);
     }
     /**
      * Gets the player jump force.
      * @return The jump force for the player.
      */
     public float getVerticalForce(){
-        float verticalVelocity = JUMP_FORCE - weight;
+        float verticalVelocity = JUMP_FORCE - getWeight();
         return verticalVelocity;
     }
     
@@ -47,14 +44,6 @@ public class Player extends Character {
         this.weapon = weapon;        
     }
 
-    public float getMoveSpeed() {
-        return moveSpeed;
-    }
-
-    public void setMoveSpeed(float moveSpeed) {
-        this.moveSpeed = moveSpeed;
-    }
-
     public Position getAimPoint() {
         return aimPoint;
     }
@@ -63,12 +52,18 @@ public class Player extends Character {
         this.aimPoint = aimPoint;
     }
 
-    public float getWeight() {
-        return weight;
-    }
-
     public float getJUMP_FORCE() {
         return JUMP_FORCE;
+    }
+
+    @Override
+    public float getPlayerMoveSpeed() {
+       return getMoveSpeed();
+    }
+
+    @Override
+    public void collision(Entity otherEntity) {
+        // TODO: create actions
     }
        
 }

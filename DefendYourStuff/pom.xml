@@ -73,7 +73,10 @@
         <module>CommonItem</module>
         <module>CommonAbility</module>
         <module>CommonCharacter</module>
+        <module>Interacter</module>
         <module>Ability</module>
+        <module>CommonMap</module>
+        <module>Enemy</module>
     </modules>
 
     <properties>

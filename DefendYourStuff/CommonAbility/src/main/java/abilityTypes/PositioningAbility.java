@@ -18,8 +18,8 @@ import sdu.group8.common.entity.CollisionType;
  */
 public class PositioningAbility extends Ability{
 
-    public PositioningAbility(DamageRange damageRange, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
-        super(damageRange, dimension, pos, collisionType, effectContainer, ab);
+    public PositioningAbility(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
+        super(moveSpeed, weight, damageRange, imageURL, dimension, pos, collisionType, effectContainer, ab);
     }
  
     

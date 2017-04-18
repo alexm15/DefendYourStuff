@@ -7,14 +7,10 @@ package sdu.group8.common.entity;
 
 /**
  *
- * @author Alexander
+ * @author Martin
  */
-public enum BlockTypes {
-    AIR, EARTH, BLACKSMITH, CASTLE, WELL, TOWER, WALL, FARM, PORTAL, RUBBLE,
-    PROPABILITY, WALLTOWER;
-    //TODO: Add more propability blocks. 
+public interface Tile{
     
+    String getImageURL();
     
-    
- 
 }
