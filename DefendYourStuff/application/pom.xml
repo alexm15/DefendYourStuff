@@ -65,6 +65,11 @@
             <artifactId>Map</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Building</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
