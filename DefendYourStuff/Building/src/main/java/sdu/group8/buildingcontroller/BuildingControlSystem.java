@@ -139,7 +139,7 @@ public class BuildingControlSystem
         Ability[] abilities = new Ability[1];
 
         Building destroyedCastle
-                = new Castle("Building/DestroyedCastle.png", castleDimension, position,
+                = new Castle("Game Over", castleDimension, position,
                         CollisionType.BOX, BuildingType.DEFENCE,
                         true, upgradeLvl, health, abilities);
 
