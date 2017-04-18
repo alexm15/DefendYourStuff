@@ -10,13 +10,11 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
-import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commoncharacter.Character;
@@ -29,10 +27,31 @@ import sdu.group8.commonenemy.IEnemyService;
 public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService {
 
     private Map<UUID, Character> enemies = new ConcurrentHashMap<>();
+    private float demoMove = 0;
+    private boolean demoGoLeft = true;
 
     @Override
     public void process(GameData gameData, World world) {
+        for (Character enemy : enemies.values()) {
+            
+            demoMove = enemy.getX();
+            
+            if (demoMove < -300) {
+                demoGoLeft = false;
+            }
+            if (demoMove > 0) {
+                demoGoLeft = true;
+            }
 
+            if (demoGoLeft) {
+                demoMove -= enemy.getMoveSpeed() * gameData.getDelta();
+            }
+            else {
+                demoMove += enemy.getMoveSpeed() * gameData.getDelta();
+            }
+            
+            enemy.setX(demoMove);
+        }
     }
 
     @Override
@@ -55,9 +74,9 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         float height = 50;
         Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
         float x = 0;
-        float y = gameData.getTILE_SIZE() * 1.5f;
+        float y = gameData.getTILE_SIZE();
         Position position = new Position(x, y); //TODO: Should be startposition.
-        
+
         String imageURL = "Enemy/dickbutt.gif";
         enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
         gameData.setPlayerGold(0);
