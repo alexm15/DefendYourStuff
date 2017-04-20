@@ -14,8 +14,8 @@ import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.map.chunks.Chunk_Base;
-import sdu.group8.map.chunks.Chunk_Forrest01;
-import sdu.group8.map.chunks.Chunk_Forrest02;
+import sdu.group8.map.chunks.Chunk_Forest01;
+import sdu.group8.map.chunks.Chunk_Forest02;
 import sdu.group8.map.chunks.Chunk_Grassland01;
 import sdu.group8.map.chunks.Chunk_Grassland02;
 import sdu.group8.map.chunks.Chunk_Portal01;
@@ -160,13 +160,13 @@ public class MapController implements IGamePluginService, IMapUpdate {
 
         switch (randomIntRange(0, 1)) {
             case 0:
-                newChunk = new Chunk_Forrest01(positionOffset);
+                newChunk = new Chunk_Forest01(positionOffset);
                 break;
             case 1:
-                newChunk = new Chunk_Forrest02(positionOffset);
+                newChunk = new Chunk_Forest02(positionOffset);
                 break;
             default:
-                newChunk = new Chunk_Forrest01(positionOffset);
+                newChunk = new Chunk_Forest01(positionOffset);
                 break;
         }
 

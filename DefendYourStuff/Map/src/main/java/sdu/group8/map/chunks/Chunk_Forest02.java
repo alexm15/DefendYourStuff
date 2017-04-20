@@ -18,14 +18,14 @@ import sdu.group8.map.tiles.Tile_Dirt;
  *
  * @author Martin
  */
-public class Chunk_Forrest02 extends Chunk {
+public class Chunk_Forest02 extends Chunk {
 
     private Lookup lookup = Lookup.getDefault();
 
     private Tile air = new Tile_Air();
     private Tile d01 = new Tile_Dirt();
 
-    public final Tile[][] BG_FORREST02 = new Tile[][]{
+    public final Tile[][] BG_FOREST02 = new Tile[][]{
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},
@@ -35,9 +35,9 @@ public class Chunk_Forrest02 extends Chunk {
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},};
 
-    public Chunk_Forrest02(float positionOffset) {
+    public Chunk_Forest02(float positionOffset) {
         super(positionOffset);
-        setTileMatrix(BG_FORREST02);
+        setTileMatrix(BG_FOREST02);
     }
 
     @Override
