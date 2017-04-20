@@ -72,6 +72,10 @@ public class Game
         return lookup.lookupAll(IGamePostProcessingService.class);
     }
 
+    public Collection<? extends IMapUpdate> getIMapUpdate() {
+        return lookup.lookupAll(IMapUpdate.class);
+    }
+
     @Override
     public void create() {
         assetManager = new AssetManager();
@@ -152,29 +156,30 @@ public class Game
         for (IGamePostProcessingService postProcess : getPostProcesses()) {
             postProcess.process(gameData, world);
         }
+        
+        float camPositionX = CAM.position.x;
 
-        //TODO: Call IMapUpdate when camera nears last chunk
-//        float camPositionX = CAM.position.x;
-//
-//        Chunk secondLastChunk = world.getChunksRight().get(world.getChunksRight().size() - 2);
-//        float secondLastOffsetX = secondLastChunk.getPositionOffset() * gameData.getTILE_SIZE();
-//
-//        if (camPositionX > secondLastOffsetX) {
-//            for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
-//                service.update(world, false);
-//            }
-//        }
-//
-//        secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 2);
-//        secondLastOffsetX = (int) (((secondLastChunk.getPositionOffset() - world.getChunkMiddle().getDimension().getWidth()) * -1) - secondLastChunk.getDimension().getWidth());
-//
-//        if (camPositionX < secondLastOffsetX) {
-//            for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
-//                service.update(world, true);
-//            }
-//        }
+        Chunk secondLastChunk = world.getChunksRight().get(world.getChunksRight().size() - 2);
+        float secondLastOffsetX = secondLastChunk.getPositionOffset();
+
+        // Update Map if camera is near the end at the left side
+        if (camPositionX > secondLastOffsetX) {
+            for (IMapUpdate service : getIMapUpdate()) {
+                service.update(world, false);
+            }
+        }
+
+        secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 2);
+        secondLastOffsetX = secondLastChunk.getPositionOffset();
+
+        // Update Map if camera is near the end at the right side
+        if (camPositionX < secondLastOffsetX) {
+            for (IMapUpdate service : getIMapUpdate()) {
+                service.update(world, true);
+            }
+        }
     }
-
+    
     private void draw() {
         batch.begin();
 
@@ -220,6 +225,7 @@ public class Game
     private void drawSecondBackground(Chunk chunk, float positionOffset) {
         drawTextureFromAsset(chunk.getSecondBackgroundImageURL(), positionOffset, chunk.getTILE_SIZE());
 
+        //TODO: add functionality so that the second background image slightly moves when the player is in the chunk.
 //        float chunkPosX = tileOffSetX * gameData.getTILE_SIZE();
 //        float middlePosX = chunkPosX + ((chunk.getDimension().getWidth() / 2) * gameData.getTILE_SIZE());
 //
