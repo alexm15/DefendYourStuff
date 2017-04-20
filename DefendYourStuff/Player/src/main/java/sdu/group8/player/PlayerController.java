@@ -111,7 +111,7 @@ public class PlayerController
         float minDamage = 0;
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        String imageURL = "Player/defaultPlayer.PNG";
+        String imageURL = "Player/defaultPlayer.png";
         player = new Player(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
         gameData.setPlayerGold(0);
         world.addEntity(player);

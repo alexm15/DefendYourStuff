@@ -34,30 +34,31 @@ public class MapController implements IGamePluginService, IMapUpdate {
     public void start(GameData gameData, World world) {
         Chunk chunkMiddle = new Chunk_Base(0);
         chunkMiddle.createEntities(world);
+        world.addChunkRight(chunkMiddle);
         world.setChunksMiddle(chunkMiddle);
 
-        //Generate chunks on the left side of base, until it a portal is created.
-        int leftSidePortal = randomIntRange(2, 3);
-        Chunk lastChunkLeftSide = chunkMiddle;
+        int portalOffsetLeft = randomIntRange(5, 7);
+        int portalOffsetRight = randomIntRange(5, 7);
 
-        for (int i = 0; i < leftSidePortal; i++) {
-            lastChunkLeftSide = generateChunk(lastChunkLeftSide);
-            lastChunkLeftSide.createEntities(world);
-            world.addChunkLeft(lastChunkLeftSide);
+        generateChunksUntilPortal(world, chunkMiddle, portalOffsetLeft, true);
+        generateChunksUntilPortal(world, chunkMiddle, portalOffsetRight, false);
+    }
+
+    /**
+     * Generate chunks until a portal should be generated
+     * @param world
+     * @param lastChunk
+     * @param portalOffset
+     * @param addToLeftSide 
+     */
+    private void generateChunksUntilPortal(World world, Chunk startChunk, int portalOffset, boolean addToLeftSide) {
+        Chunk lastChunk = startChunk;
+        for (int i = 0; i < portalOffset; i++) {
+            lastChunk = generateChunk(lastChunk, addToLeftSide);
+            lastChunk.createEntities(world);
+            addToWorld(world, lastChunk, addToLeftSide);
         }
-        world.addChunkLeft(generatePortalChunk(lastChunkLeftSide));
-
-        //Generate chunks on the right side of base, until it a portal is created.
-        int rightSidePortal = randomIntRange(2, 3);
-        Chunk lastChunkRightSide = chunkMiddle;
-
-        for (int i = 0; i < rightSidePortal; i++) {
-            lastChunkRightSide = generateChunk(lastChunkRightSide);
-            lastChunkRightSide.createEntities(world);
-            world.addChunkRight(lastChunkRightSide);
-        }
-        world.addChunkRight(generatePortalChunk(lastChunkRightSide));
-
+        addToWorld(world, generatePortalChunk(lastChunk, addToLeftSide), addToLeftSide);
     }
 
     @Override
@@ -68,13 +69,16 @@ public class MapController implements IGamePluginService, IMapUpdate {
     @Override
     public void update(World world, boolean addToLeftSide) {
         Chunk lastChunk = getLastChunk(world, addToLeftSide);
-        Chunk newChunk = generateChunk(lastChunk);
+        Chunk newChunk = generateChunk(lastChunk, addToLeftSide);
         newChunk.createEntities(world);
-        
+        addToWorld(world, newChunk, addToLeftSide);
+    }
+
+    private void addToWorld(World world, Chunk chunk, boolean addToLeftSide) {
         if (addToLeftSide) {
-            world.addChunkLeft(newChunk);
+            world.addChunkLeft(chunk);
         } else {
-            world.addChunkRight(generateChunk(lastChunk));
+            world.addChunkRight(chunk);
         }
     }
 
@@ -96,21 +100,28 @@ public class MapController implements IGamePluginService, IMapUpdate {
      * @param lastChunk The last chunk in the world arraylist for chunks.
      * @return
      */
-    private Chunk generateChunk(Chunk lastChunk) {
+    private Chunk generateChunk(Chunk lastChunk, boolean addToLeftSide) {
         Chunk newChunk;
-        int tileOffsetX = (int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth());
+        float positionOffset = lastChunk.getPositionOffset();
 
         switch (randomIntRange(0, 1)) {
             case 0:
-                newChunk = generateGrasslandChunk(tileOffsetX);
+                newChunk = generateGrasslandChunk(positionOffset);
                 break;
             case 1:
-                newChunk = generateForrestChunk(tileOffsetX);
+                newChunk = generateForrestChunk(positionOffset);
                 break;
             default:
-                newChunk = generateGrasslandChunk(tileOffsetX);
+                newChunk = generateGrasslandChunk(positionOffset);
                 break;
         }
+
+        if (addToLeftSide) {
+            newChunk.setPositionOffset(positionOffset - newChunk.getDimension().getWidth());
+        } else {
+            newChunk.setPositionOffset(positionOffset + lastChunk.getDimension().getWidth());
+        }
+
         return newChunk;
     }
 
@@ -120,18 +131,18 @@ public class MapController implements IGamePluginService, IMapUpdate {
      * @param tileOffsetX The number of tiles to offset the new chunk.
      * @return
      */
-    private Chunk generateGrasslandChunk(int tileOffsetX) {
+    private Chunk generateGrasslandChunk(float positionOffset) {
         Chunk newChunk;
 
         switch (randomIntRange(0, 1)) {
             case 0:
-                newChunk = new Chunk_Grassland01(tileOffsetX);
+                newChunk = new Chunk_Grassland01(positionOffset);
                 break;
             case 1:
-                newChunk = new Chunk_Grassland02(tileOffsetX);
+                newChunk = new Chunk_Grassland02(positionOffset);
                 break;
             default:
-                newChunk = new Chunk_Grassland01(tileOffsetX);
+                newChunk = new Chunk_Grassland01(positionOffset);
                 break;
         }
 
@@ -144,17 +155,18 @@ public class MapController implements IGamePluginService, IMapUpdate {
      * @param tileOffsetX The number of tiles to offset the new chunk.
      * @return
      */
-    Chunk generateForrestChunk(int tileOffsetX) {
+    Chunk generateForrestChunk(float positionOffset) {
         Chunk newChunk;
+
         switch (randomIntRange(0, 1)) {
             case 0:
-                newChunk = new Chunk_Forrest01(tileOffsetX);
+                newChunk = new Chunk_Forrest01(positionOffset);
                 break;
             case 1:
-                newChunk = new Chunk_Forrest02(tileOffsetX);
+                newChunk = new Chunk_Forrest02(positionOffset);
                 break;
             default:
-                newChunk = new Chunk_Forrest01(tileOffsetX);
+                newChunk = new Chunk_Forrest01(positionOffset);
                 break;
         }
 
@@ -167,9 +179,17 @@ public class MapController implements IGamePluginService, IMapUpdate {
      * @param tileOffsetX The number of tiles to offset the new chunk.
      * @return
      */
-    Chunk generatePortalChunk(Chunk lastChunk) {
-        int tileOffsetX = (int) (lastChunk.getTileOffsetX() + lastChunk.getDimension().getWidth());
-        return new Chunk_Portal01(tileOffsetX);
+    Chunk generatePortalChunk(Chunk lastChunk, boolean addToLeftSide) {
+        float positionOffset = lastChunk.getPositionOffset();
+        Chunk portal = new Chunk_Portal01(positionOffset);
+        
+        if (addToLeftSide) {
+            portal.setPositionOffset(positionOffset - portal.getDimension().getWidth());
+        } else {
+            portal.setPositionOffset(positionOffset + lastChunk.getDimension().getWidth());
+        }
+        
+        return portal;
     }
 
     /**

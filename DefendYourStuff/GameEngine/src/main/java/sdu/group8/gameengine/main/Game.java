@@ -95,29 +95,38 @@ public class Game
             gamePlugin.start(gameData, world);
         }
 
-        assetManager.load("Chunks/chunk_bg_base.PNG", Texture.class);
-        assetManager.load("Chunks/chunk_bg_forrest01.PNG", Texture.class);
-        assetManager.load("Chunks/chunk_bg_forrest02.PNG", Texture.class);
-        assetManager.load("Chunks/chunk_bg_grassland01.PNG", Texture.class);
-        assetManager.load("Chunks/chunk_bg_grassland02.PNG", Texture.class);
-        assetManager.load("Chunks/chunk_bg_portal01.PNG", Texture.class);
-
-        assetManager.load("defaultImage.PNG", Texture.class);
-
-        assetManager.load("Player/defaultPlayer.PNG", Texture.class);
+        assetManager.load("Chunks/chunk_base_bg01.png", Texture.class);
+        assetManager.load("Chunks/chunk_base_bg02.png", Texture.class);
+        assetManager.load("Chunks/chunk_forest01_bg01.png", Texture.class);
+        assetManager.load("Chunks/chunk_forest01_bg02.png", Texture.class);
+        assetManager.load("Chunks/chunk_forest02_bg01.png", Texture.class);
+        assetManager.load("Chunks/chunk_forest02_bg02.png", Texture.class);
+        assetManager.load("Chunks/chunk_grassland01_bg01.png", Texture.class);
+        assetManager.load("Chunks/chunk_grassland01_bg02.png", Texture.class);
+        assetManager.load("Chunks/chunk_grassland02_bg01.png", Texture.class);
+        assetManager.load("Chunks/chunk_grassland02_bg02.png", Texture.class);
+        assetManager.load("Chunks/chunk_portal01_bg01.png", Texture.class);
+        assetManager.load("Chunks/chunk_portal01_bg02.png", Texture.class);
         
+        assetManager.load("World/world_chunk01_bg01.png", Texture.class);
+
+        assetManager.load("defaultImage.png", Texture.class);
+
+        assetManager.load("Player/defaultPlayer.png", Texture.class);
+
         assetManager.load("Enemy/dickbutt.gif", Texture.class);
 
-        assetManager.load("Tiles/tile_dirt.PNG", Texture.class);
-        assetManager.load("Tiles/tile_woodenFence.PNG", Texture.class);
+        assetManager.load("Tiles/tile_dirt.png", Texture.class);
+        assetManager.load("Tiles/tile_brickWall.png", Texture.class);
         assetManager.load("Tiles/tile_air.png", Texture.class);
+
     }
 
     @Override
     public void render() {
 
-        // clear screen to black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        // clear screen to white
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // If asset manager is done loading assets.
@@ -144,60 +153,63 @@ public class Game
             postProcess.process(gameData, world);
         }
 
-        float camPositionX = CAM.position.x;
-
-        Chunk secondLastChunk = world.getChunksRight().get(world.getChunksRight().size() - 2);
-        float secondLastOffsetX = secondLastChunk.getTileOffsetX() * gameData.getTILE_SIZE();
-
-        if (camPositionX > secondLastOffsetX) {
-            for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
-                service.update(world, false);
-            }
-        }
-
-        secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 2);
-        secondLastOffsetX = (int) (((secondLastChunk.getTileOffsetX() - world.getChunkMiddle().getDimension().getWidth()) * -1) - secondLastChunk.getDimension().getWidth());
-        secondLastOffsetX *= gameData.getTILE_SIZE();
-
-        if (camPositionX < secondLastOffsetX) {
-            for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
-                service.update(world, true);
-            }
-        }
+        //TODO: Call IMapUpdate when camera nears last chunk
+//        float camPositionX = CAM.position.x;
+//
+//        Chunk secondLastChunk = world.getChunksRight().get(world.getChunksRight().size() - 2);
+//        float secondLastOffsetX = secondLastChunk.getPositionOffset() * gameData.getTILE_SIZE();
+//
+//        if (camPositionX > secondLastOffsetX) {
+//            for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
+//                service.update(world, false);
+//            }
+//        }
+//
+//        secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 2);
+//        secondLastOffsetX = (int) (((secondLastChunk.getPositionOffset() - world.getChunkMiddle().getDimension().getWidth()) * -1) - secondLastChunk.getDimension().getWidth());
+//
+//        if (camPositionX < secondLastOffsetX) {
+//            for (IMapUpdate service : lookup.lookupAll(IMapUpdate.class)) {
+//                service.update(world, true);
+//            }
+//        }
     }
 
     private void draw() {
+        batch.begin();
 
-        // Draw chunks
-        drawMap();
-
+        drawMap(); // Draw chunks
         drawEntities(); // Draw entities
+        
+        batch.end();
     }
 
     private void drawMap() {
 
-        Chunk chunkMiddle = world.getChunkMiddle();
-        renderRightChunk(chunkMiddle);
-
         for (Chunk chunk : world.getChunksRight()) {
-            renderRightChunk(chunk);
+            renderChunk(chunk);
         }
 
         for (Chunk chunk : world.getChunksLeft()) {
-            renderLeftChunk(chunk);
+            renderChunk(chunk);
         }
     }
 
-    private void renderRightChunk(Chunk chunk) {
-        int posX = 0;
-        int posY = 0;
-        int tileOffsetX = chunk.getTileOffsetX();
+    private void renderChunk(Chunk chunk) {
+        float posX = 0;
+        float posY = 0;
+        float positionOffset = chunk.getPositionOffset();
         Tile[][] chunkTileMatrix = chunk.getTileMatrix();
+        
+        //TODO: Choose random world background
+        drawTextureFromAsset("World/world_chunk01_bg01.png", positionOffset, chunk.getTILE_SIZE());
+        
+        drawSecondBackground(chunk, positionOffset);
+        drawTextureFromAsset(chunk.getFirstBackgroundImageURL(), positionOffset, chunk.getTILE_SIZE());
 
-        drawTextureFromAsset(chunk.getBackgroundImageURL(), (posX + tileOffsetX) * gameData.getTILE_SIZE(), gameData.getTILE_SIZE());
         for (Tile[] tileRow : chunkTileMatrix) {
             for (Tile tile : tileRow) {
-                drawTextureFromAsset(tile.getImageURL(), (tileOffsetX + posX) * gameData.getTILE_SIZE(), posY * gameData.getTILE_SIZE());
+                drawTextureFromAsset(tile.getImageURL(), positionOffset + (posX * chunk.getTILE_SIZE()), posY * chunk.getTILE_SIZE());
                 posY++;
             }
             posX++;
@@ -205,22 +217,26 @@ public class Game
         }
     }
 
-    private void renderLeftChunk(Chunk chunk) {
-        int posX = 0;
-        int posY = 0;
-        // Flip the offset to the left side.
-        int tileOffsetX = (int) (((chunk.getTileOffsetX() - world.getChunkMiddle().getDimension().getWidth()) * -1) - chunk.getDimension().getWidth());
-        Tile[][] chunkTileMatrix = chunk.getTileMatrix();
+    private void drawSecondBackground(Chunk chunk, float positionOffset) {
+        drawTextureFromAsset(chunk.getSecondBackgroundImageURL(), positionOffset, chunk.getTILE_SIZE());
 
-        drawTextureFromAsset(chunk.getBackgroundImageURL(), (posX + tileOffsetX) * gameData.getTILE_SIZE(), gameData.getTILE_SIZE());
-        for (Tile[] tileRow : chunkTileMatrix) {
-            for (Tile tile : tileRow) {
-                drawTextureFromAsset(tile.getImageURL(), (tileOffsetX + posX) * gameData.getTILE_SIZE(), posY * gameData.getTILE_SIZE());
-                posY++;
-            }
-            posX++;
-            posY = 0;
-        }
+//        float chunkPosX = tileOffSetX * gameData.getTILE_SIZE();
+//        float middlePosX = chunkPosX + ((chunk.getDimension().getWidth() / 2) * gameData.getTILE_SIZE());
+//
+//        float min = chunkPosX + ((chunk.getDimension().getWidth() / 4) * gameData.getTILE_SIZE());
+//        float max = min + ((chunk.getDimension().getWidth() / 2) * gameData.getTILE_SIZE());
+//
+//        float playerPosX = gameData.getPlayerPosition().getX();
+//
+//        float imagePosX = min;
+//
+//        if (playerPosX < min) {
+//            imagePosX = max;
+//        } else if (playerPosX > max) {
+//            imagePosX = min;
+//        } else if (playerPosX < middlePosX) {
+//
+//        }
     }
 
     private void drawEntities() {
@@ -269,8 +285,6 @@ public class Game
 
     private void drawTextureFromAsset(String path, float x, float y) {
         Texture tex = assetManager.get(path, Texture.class);
-        batch.begin();
         batch.draw(tex, x, y);
-        batch.end();
     }
 }

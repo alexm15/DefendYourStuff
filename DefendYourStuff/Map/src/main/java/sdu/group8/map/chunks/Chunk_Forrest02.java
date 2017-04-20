@@ -13,39 +13,38 @@ import sdu.group8.common.entity.Tile;
 import sdu.group8.commonbuilding.services.Buildable;
 import sdu.group8.map.tiles.Tile_Air;
 import sdu.group8.map.tiles.Tile_Dirt;
-import sdu.group8.map.tiles.Tile_WoodenFence;
 
 /**
  *
  * @author Martin
  */
 public class Chunk_Forrest02 extends Chunk {
+
     private Lookup lookup = Lookup.getDefault();
 
     private Tile air = new Tile_Air();
     private Tile d01 = new Tile_Dirt();
-    
-    public final Tile[][] BG_FORREST02 = new Tile[][] {
-        {d01, air, air, air, air, air},
-        {d01, air, air, air, air, air},
-        {d01, air, air, air, air, air},
-        {d01, air, air, air, air, air},
-        {d01, air, air, air, air, air},
-        {d01, air, air, air, air, air},
-        {d01, air, air, air, air, air},
-        {d01, air, air, air, air, air},
-    };
 
-    public Chunk_Forrest02(int tileOffsetX) {
-        super(tileOffsetX);
+    public final Tile[][] BG_FORREST02 = new Tile[][]{
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},
+        {d01, air, air, air, air, air},};
+
+    public Chunk_Forrest02(float positionOffset) {
+        super(positionOffset);
         setTileMatrix(BG_FORREST02);
     }
 
     @Override
     public void createEntities(World world) {
-        
-        Position rubble1 = new Position(((getDimension().getWidth() / 4) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
-        Position rubble2 = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
+
+        Position rubble1 = new Position(((getDimension().getWidth() / 4) + this.getPositionOffset()) * TILE_SIZE, TILE_SIZE);
+        Position rubble2 = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getPositionOffset()) * TILE_SIZE, TILE_SIZE);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createRubbleBuilding(world, rubble1);
@@ -54,8 +53,13 @@ public class Chunk_Forrest02 extends Chunk {
     }
 
     @Override
-    public String getBackgroundImageURL() {
-        return "Chunks/chunk_bg_forrest02.PNG";
+    public String getFirstBackgroundImageURL() {
+        return "Chunks/chunk_forest02_bg01.png";
+    }
+
+    @Override
+    public String getSecondBackgroundImageURL() {
+        return "Chunks/chunk_forest02_bg02.png";
     }
 
 }

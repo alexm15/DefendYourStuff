@@ -13,7 +13,6 @@ import sdu.group8.common.entity.Tile;
 import sdu.group8.commonbuilding.services.Buildable;
 import sdu.group8.map.tiles.Tile_Air;
 import sdu.group8.map.tiles.Tile_Dirt;
-import sdu.group8.map.tiles.Tile_WoodenFence;
 
 /**
  *
@@ -36,16 +35,16 @@ public class Chunk_Forrest01 extends Chunk {
         {d01, air, air, air, air, air},
     };
     
-    public Chunk_Forrest01(int tileOffsetX) {
-        super(tileOffsetX);
+    public Chunk_Forrest01(float positionOffset) {
+        super(positionOffset);
         setTileMatrix(BG_FORREST01);
     }
 
     @Override
     public void createEntities(World world) {
         
-        Position farm = new Position(((getDimension().getWidth() / 4) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
-        Position rubble = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
+        Position farm = new Position(((getDimension().getWidth() / 4) + this.getPositionOffset()) * TILE_SIZE, TILE_SIZE);
+        Position rubble = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getPositionOffset()) * TILE_SIZE, TILE_SIZE);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createRubbleBuilding(world, rubble);
@@ -54,8 +53,13 @@ public class Chunk_Forrest01 extends Chunk {
     }
 
     @Override
-    public String getBackgroundImageURL() {
-        return "Chunks/chunk_bg_forrest01.PNG";
+    public String getFirstBackgroundImageURL() {
+        return "Chunks/chunk_forest01_bg01.png";
+    }
+
+    @Override
+    public String getSecondBackgroundImageURL() {
+        return "Chunks/chunk_forest01_bg02.png";
     }
 
 }

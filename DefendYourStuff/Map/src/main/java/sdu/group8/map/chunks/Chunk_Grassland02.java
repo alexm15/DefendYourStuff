@@ -33,19 +33,18 @@ public class Chunk_Grassland02 extends Chunk {
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},
-        {d01, air, air, air, air, air},
-    };
+        {d01, air, air, air, air, air},};
 
-    public Chunk_Grassland02(int tileOffsetX) {
-        super(tileOffsetX);
+    public Chunk_Grassland02(float positionOffset) {
+        super(positionOffset);
         setTileMatrix(BG_GRASSLAND02);
     }
 
     @Override
     public void createEntities(World world) {
 
-        Position rubble1 = new Position(((getDimension().getWidth() / 4) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
-        Position rubble2 = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
+        Position rubble1 = new Position(((getDimension().getWidth() / 4) + this.getPositionOffset()) * TILE_SIZE, TILE_SIZE);
+        Position rubble2 = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getPositionOffset()) * TILE_SIZE, TILE_SIZE);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createRubbleBuilding(world, rubble1);
@@ -54,8 +53,13 @@ public class Chunk_Grassland02 extends Chunk {
     }
 
     @Override
-    public String getBackgroundImageURL() {
-        return "Chunks/chunk_bg_grassland02.PNG";
+    public String getFirstBackgroundImageURL() {
+        return "Chunks/chunk_grassland02_bg01.png";
+    }
+
+    @Override
+    public String getSecondBackgroundImageURL() {
+        return "Chunks/chunk_grassland02_bg01.png";
     }
 
 }

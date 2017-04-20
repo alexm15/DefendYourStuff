@@ -23,7 +23,7 @@ public class Chunk_Base extends Chunk {
 
     private Tile air = new Tile_Air();
     private Tile d01 = new Tile_Dirt();
-    private Tile w01 = new Tile_WoodenFence();
+    private Tile w01 = new Tile_BrickWall();
 
     public final Tile[][] BG_BASE = new Tile[][]{
         {d01, w01, air, air, air, air},
@@ -48,9 +48,9 @@ public class Chunk_Base extends Chunk {
     @Override
     public void createEntities(World world) {
 
-        Position wallLeft = new Position(this.getTileOffsetX() * 100, 100);
-        Position wallRight = new Position((getDimension().getWidth() + this.getTileOffsetX()) * 100, 100);
-        Position CastleDoor = new Position(((getDimension().getWidth() / 2) + this.getTileOffsetX()) * 100, 100);
+        Position wallLeft = new Position(this.getPositionOffset() * 100, 100);
+        Position wallRight = new Position((getDimension().getWidth() + this.getPositionOffset()) * 100, 100);
+        Position CastleDoor = new Position(((getDimension().getWidth() / 2) + this.getPositionOffset()) * 100, 100);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createWallBuilding(world, wallLeft);
@@ -60,8 +60,13 @@ public class Chunk_Base extends Chunk {
     }
 
     @Override
-    public String getBackgroundImageURL() {
-        return "Chunks/chunk_bg_base.PNG";
+    public String getFirstBackgroundImageURL() {
+        return "Chunks/chunk_base_bg01.png";
+    }
+
+    @Override
+    public String getSecondBackgroundImageURL() {
+        return "Chunks/chunk_base_bg02.png";
     }
 
 }

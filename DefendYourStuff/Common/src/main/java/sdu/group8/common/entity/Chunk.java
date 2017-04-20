@@ -12,11 +12,11 @@ public abstract class Chunk {
 
     private Dimension dimension;
     private Tile[][] bgMatrix;
-    private int tileOffsetX;
+    private float positionOffset;
     protected final int TILE_SIZE = 100;
 
-    public Chunk(int tileOffsetX) {
-        this.tileOffsetX = tileOffsetX;
+    public Chunk(float positionOffset) {
+        this.positionOffset = positionOffset;
     }
 
     public Tile[][] getTileMatrix() {
@@ -25,19 +25,29 @@ public abstract class Chunk {
 
     public void setTileMatrix(Tile[][] bgMatrix) {
         this.bgMatrix = bgMatrix;
-        this.dimension = new Dimension(bgMatrix.length, bgMatrix[0].length, 0);
+        this.dimension = new Dimension(bgMatrix.length * TILE_SIZE, bgMatrix[0].length * TILE_SIZE, 0);
     }
 
     public Dimension getDimension() {
         return dimension;
     }
 
-    public int getTileOffsetX() {
-        return tileOffsetX;
+    public float getPositionOffset() {
+        return positionOffset;
     }
-    
+
+    public int getTILE_SIZE() {
+        return TILE_SIZE;
+    }
+
+    public void setPositionOffset(float positionOffset) {
+        this.positionOffset = positionOffset;
+    }
+
     public abstract void createEntities(World world);
-    
-    public abstract String getBackgroundImageURL();
+
+    public abstract String getFirstBackgroundImageURL();
+
+    public abstract String getSecondBackgroundImageURL();
 
 }
