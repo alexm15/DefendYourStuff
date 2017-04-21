@@ -22,17 +22,15 @@ public abstract class Entity {
     private UUID ID;
     private Dimension dimension;
     private Position pos;
-    private AbilityContainer abilities;
     private CollisionType collisionType;
     private String imageURL;
 
-    public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+    public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType) {
         this.imageURL = imageURL;
         this.ID = UUID.randomUUID();
         this.dimension = dimension;
         this.pos = pos;
         this.collisionType = collisionType;
-        this.abilities = new AbilityContainer(ab);
     }
 
     public void setImageURL(String imageURL) {
@@ -129,10 +127,6 @@ public abstract class Entity {
 
     public Position getPosition() {
         return pos;
-    }
-
-    public ArrayList<Ability> getAbilities() {
-        return abilities.getAbilites();
     }
 
     public abstract void collision(Entity otherEntity);
