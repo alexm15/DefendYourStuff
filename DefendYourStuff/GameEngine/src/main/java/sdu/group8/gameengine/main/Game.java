@@ -107,6 +107,7 @@ public class Game
         assetManager.load("Player/defaultPlayer.PNG", Texture.class);
         
         assetManager.load("Enemy/dickbutt.gif", Texture.class);
+        assetManager.load("abilities/fireball.png", Texture.class);
 
         assetManager.load("Tiles/tile_dirt.PNG", Texture.class);
         assetManager.load("Tiles/tile_woodenFence.PNG", Texture.class);

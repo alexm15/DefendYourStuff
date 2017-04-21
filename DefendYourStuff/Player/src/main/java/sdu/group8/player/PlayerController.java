@@ -5,9 +5,11 @@
  */
 package sdu.group8.player;
 
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityContainer;
 import sdu.group8.common.collision.CollisionContainer;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
@@ -18,6 +20,7 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
+import sdu.group8.commonability.AbilitySPI;
 
 /**
  *
@@ -30,7 +33,8 @@ import sdu.group8.common.services.IGameProcessingService;
 
 public class PlayerController
         implements IGameProcessingService, IGamePluginService {
-
+    
+    private Lookup lookup = Lookup.getDefault();
     private Player player;
     private float verticalVelocity;
     private float horizontalVelocity;
@@ -53,14 +57,14 @@ public class PlayerController
 
         handleMouseInput(gameData);
 
-        handleKeyboardInput(gameData);
+        handleKeyboardInput(gameData, world);
         Position position = new Position(player.getX() + horizontalVelocity, player.getY() + verticalVelocity * gameData.getDelta());
         player.setPosition(position);
         gameData.setPlayerPosition(position);
 
     }
 
-    private void handleKeyboardInput(GameData gameData) {
+    private void handleKeyboardInput(GameData gameData, World world) {
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             horizontalVelocity += player.getMoveSpeed() * gameData.getDelta();
         }
@@ -75,6 +79,12 @@ public class PlayerController
                 verticalVelocity += player.getVerticalForce();
             }
         }
+        
+        if (gameData.getKeys().isKeyPressed(gameData.getKeys().SPACE)) {
+            AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
+            world.addEntity(abilityProvicer.createAbility(player, player.getAbilities().getAbilites().get(0), gameData));
+        }
+        
     }
 
     private void handleMouseInput(GameData gameData) {
@@ -112,7 +122,12 @@ public class PlayerController
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
         String imageURL = "Player/defaultPlayer.PNG";
-        player = new Player(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
+        Ability abil = null;
+        AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
+        //if(abilityProvicer!=null){
+            abil = abilityProvicer.getAbility("fireball");
+        //}
+        player = new Player(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX, abil);
         gameData.setPlayerGold(0);
         world.addEntity(player);
         gameData.setPlayerPosition(position);

@@ -17,7 +17,7 @@ import sdu.group8.commoncharacter.Character;
  *
  * @author Martin
  */
-public class MediumEnemy extends Character implements IEnemy{
+public class MediumEnemy extends Character implements IEnemy {
     
     public MediumEnemy(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
         super(moveSpeed, weight, health, imageURL, dimension, pos, collisionType, ab);
