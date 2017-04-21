@@ -6,6 +6,7 @@
 package sdu.group8.common.entity;
 
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Image;
 import sdu.group8.common.data.World;
 
 public abstract class Chunk {
@@ -13,10 +14,14 @@ public abstract class Chunk {
     private Dimension dimension;
     private Tile[][] bgMatrix;
     private float positionOffset;
+    private Image firstBackgroundImage;
+    private Image secondBackgroundImage;
     protected final int TILE_SIZE = 100;
 
-    public Chunk(float positionOffset) {
+    public Chunk(Image firstBackgroundImage, Image secondBackgroundImage, float positionOffset) {
         this.positionOffset = positionOffset;
+        this.firstBackgroundImage = firstBackgroundImage;
+        this.secondBackgroundImage = secondBackgroundImage;
     }
 
     public Tile[][] getTileMatrix() {
@@ -46,8 +51,12 @@ public abstract class Chunk {
 
     public abstract void createEntities(World world);
 
-    public abstract String getFirstBackgroundImageURL();
+    public Image getFirstBackgroundImage() {
+        return this.firstBackgroundImage;
+    }
 
-    public abstract String getSecondBackgroundImageURL();
+    public Image getSecondBackgroundImage() {
+        return this.secondBackgroundImage;
+    }
 
 }

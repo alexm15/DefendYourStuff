@@ -6,6 +6,7 @@
 package sdu.group8.map.chunks;
 
 import org.openide.util.Lookup;
+import sdu.group8.common.data.Image;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
@@ -40,8 +41,8 @@ public class Chunk_Base extends Chunk {
         {d01, w01, air, air, air, air}
     };
 
-    public Chunk_Base(int tileOffsetX) {
-        super(tileOffsetX);
+    public Chunk_Base(float positionOffset) {
+        super(new Image("Chunks/chunk_base_bg01.png", false), new Image("defaultBackground.png", false), positionOffset);
         setTileMatrix(BG_BASE);
     }
 
@@ -59,14 +60,5 @@ public class Chunk_Base extends Chunk {
         }
     }
 
-    @Override
-    public String getFirstBackgroundImageURL() {
-        return "Chunks/chunk_base_bg01.png";
-    }
-
-    @Override
-    public String getSecondBackgroundImageURL() {
-        return "Chunks/chunk_base_bg02.png";
-    }
 
 }

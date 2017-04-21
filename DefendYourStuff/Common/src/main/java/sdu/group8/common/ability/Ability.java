@@ -32,7 +32,7 @@ public class Ability extends MovingEntity {
     }
     
     public Ability(Ability ability) {
-        super(ability.getMoveSpeed(), ability.getWeight(), ability.getImageURL(), ability.getDimension(), ability.getPosition(), ability.getCollisionType());
+        super(ability.getMoveSpeed(), ability.getWeight(), ability.getImage().getImageURL(), ability.getDimension(), ability.getPosition(), ability.getCollisionType());
         this.effects = ability.getEffects();
         this.damageRange = ability.getDamageRange();
         this.name = ability.getName();

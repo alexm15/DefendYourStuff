@@ -25,8 +25,8 @@ public class MediumEnemy extends Character implements IEnemy {
     
     @Override
     public void collision(Entity otherEntity) {
-        String imageURL = otherEntity.getImageURL();
-        otherEntity.setImageURL(this.getImageURL());
-        this.setImageURL(imageURL);
+        String imageURL = otherEntity.getImage().getImageURL();
+        otherEntity.getImage().setImageURL(this.getImage().getImageURL());
+        this.getImage().setImageURL(imageURL);
     }
 }

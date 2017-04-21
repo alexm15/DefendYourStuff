@@ -45,8 +45,10 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
             if (demoGoLeft) {
                 demoMove -= enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.getImage().setReversed(false);
             } else {
                 demoMove += enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.getImage().setReversed(true);
             }
 
             enemy.setX(demoMove);

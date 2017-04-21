@@ -64,10 +64,12 @@ public class PlayerController
     private void handleKeyboardInput(GameData gameData, World world) {
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             horizontalVelocity += player.getMoveSpeed() * gameData.getDelta();
+            player.getImage().setReversed(true);
         }
 
         if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
             horizontalVelocity -= player.getMoveSpeed() * gameData.getDelta();
+            player.getImage().setReversed(false);
         }
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {
@@ -118,7 +120,7 @@ public class PlayerController
         float minDamage = 0;
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        String imageURL = "Player/defaultPlayer.png";
+        String imageURL = "Enemy/dickbutt.gif";
         Ability abil = null;
         AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
         //if(abilityProvicer!=null){

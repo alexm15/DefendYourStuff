@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -15,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
+import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.Image;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.Entity;
@@ -58,7 +61,10 @@ public class Game
     private static Game instance = null;
     private Collection<Entity> entities;
 
-    private boolean testIMapUpdate = false;
+    private Image firstBackgroundImage = new Image("World/world_chunk01_bg01.png", false);
+    private int firstBackgroundImageScrollX = 0;
+
+    private Image secondBackgroundImage = new Image("World/world_chunk01_bg01.png", false); //TODO: Change to mountains image
 
     public Collection<? extends IGameProcessingService> getGameProcesses() {
         return lookup.lookupAll(IGameProcessingService.class);
@@ -100,21 +106,15 @@ public class Game
         }
 
         assetManager.load("Chunks/chunk_base_bg01.png", Texture.class);
-        assetManager.load("Chunks/chunk_base_bg02.png", Texture.class);
         assetManager.load("Chunks/chunk_forest01_bg01.png", Texture.class);
         assetManager.load("Chunks/chunk_forest01_bg02.png", Texture.class);
-        assetManager.load("Chunks/chunk_forest02_bg01.png", Texture.class);
-        assetManager.load("Chunks/chunk_forest02_bg02.png", Texture.class);
         assetManager.load("Chunks/chunk_grassland01_bg01.png", Texture.class);
-        assetManager.load("Chunks/chunk_grassland01_bg02.png", Texture.class);
-        assetManager.load("Chunks/chunk_grassland02_bg01.png", Texture.class);
-        assetManager.load("Chunks/chunk_grassland02_bg02.png", Texture.class);
         assetManager.load("Chunks/chunk_portal01_bg01.png", Texture.class);
-        assetManager.load("Chunks/chunk_portal01_bg02.png", Texture.class);
-        
+
         assetManager.load("World/world_chunk01_bg01.png", Texture.class);
 
         assetManager.load("defaultImage.png", Texture.class);
+        assetManager.load("defaultBackground.png", Texture.class);
 
         assetManager.load("Player/defaultPlayer.png", Texture.class);
 
@@ -150,6 +150,7 @@ public class Game
     private void update() {
 
         updateCamera();
+        updateBackgroundImageForWorld();
 
         for (IGameProcessingService gameProcess : getGameProcesses()) {
             gameProcess.process(gameData, world);
@@ -157,7 +158,7 @@ public class Game
         for (IGamePostProcessingService postProcess : getPostProcesses()) {
             postProcess.process(gameData, world);
         }
-        
+
         float camPositionX = CAM.position.x;
 
         Chunk secondLastChunk = world.getChunksRight().get(world.getChunksRight().size() - 2);
@@ -180,13 +181,15 @@ public class Game
             }
         }
     }
-    
+
     private void draw() {
         batch.begin();
 
+        //drawTextureFromAsset(firstBackgroundImage, CAM.position.x - CAM.viewportWidth / 2, gameData.getTILE_SIZE()); // Draw second background for the world;
+        drawBackgroundImageForWorld(); //Draw first background for the world;
         drawMap(); // Draw chunks
         drawEntities(); // Draw entities
-        
+
         batch.end();
     }
 
@@ -206,16 +209,13 @@ public class Game
         float posY = 0;
         float positionOffset = chunk.getPositionOffset();
         Tile[][] chunkTileMatrix = chunk.getTileMatrix();
-        
-        //TODO: Choose random world background
-        drawTextureFromAsset("World/world_chunk01_bg01.png", positionOffset, chunk.getTILE_SIZE());
-        
-        drawSecondBackground(chunk, positionOffset);
-        drawTextureFromAsset(chunk.getFirstBackgroundImageURL(), positionOffset, chunk.getTILE_SIZE());
+
+        drawSecondBackgroundForChunk(chunk, positionOffset);
+        drawTextureFromAsset(chunk.getFirstBackgroundImage(), positionOffset, chunk.getTILE_SIZE());
 
         for (Tile[] tileRow : chunkTileMatrix) {
             for (Tile tile : tileRow) {
-                drawTextureFromAsset(tile.getImageURL(), positionOffset + (posX * chunk.getTILE_SIZE()), posY * chunk.getTILE_SIZE());
+                drawTextureFromAsset(tile.getImage(), positionOffset + (posX * chunk.getTILE_SIZE()), posY * chunk.getTILE_SIZE());
                 posY++;
             }
             posX++;
@@ -223,8 +223,8 @@ public class Game
         }
     }
 
-    private void drawSecondBackground(Chunk chunk, float positionOffset) {
-        drawTextureFromAsset(chunk.getSecondBackgroundImageURL(), positionOffset, chunk.getTILE_SIZE());
+    private void drawSecondBackgroundForChunk(Chunk chunk, float positionOffset) {
+        drawTextureFromAsset(chunk.getSecondBackgroundImage(), positionOffset, chunk.getTILE_SIZE());
 
         //TODO: add functionality so that the second background image slightly moves when the player is in the chunk.
 //        float chunkPosX = tileOffSetX * gameData.getTILE_SIZE();
@@ -250,28 +250,31 @@ public class Game
         //TODO: Generalise for all entities;
 
         for (Entity entity : world.getEntities()) {
-            drawTextureFromAsset(entity.getImageURL(), entity.getX() - (entity.getWidth() / 2), entity.getY() - entity.getHeight() / 2);
+            drawTextureFromAsset(entity.getImage(), entity.getX() - (entity.getWidth() / 2), entity.getY() - entity.getHeight() / 2);
         }
     }
 
     private void updateCamera() {
-        Vector3 camPos = CAM.position.cpy();
-        CAM.position.set(gameData.getPlayerPosition().getX(), camPos.y, camPos.z);
-        CAM.update();
+//        Vector3 camPos = CAM.position.cpy();
+//        CAM.position.set(gameData.getPlayerPosition().getX(), camPos.y, camPos.z);
+//        CAM.update();
 
-        //        if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
-        //            float moveSpeed = 200;
-        //
-        //            //Set camera position.
-        //            Vector3 camPos = CAM.position.cpy();
-        //
-        //            float posX = camPos.x;
-        //            posX += moveSpeed * gameData.getDelta();
-        //
-        //            CAM.position.set(posX, camPos.y, camPos.z);
-        //            CAM.update();
-        //
-        //        }
+        //Set camera position.
+        Vector3 camPos = CAM.position.cpy();
+        float posX = camPos.x;
+        float moveSpeed = 200;
+
+        if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
+            posX += moveSpeed * gameData.getDelta();
+
+        }
+        if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
+            posX -= moveSpeed * gameData.getDelta();
+
+        }
+        
+        CAM.position.set(posX, camPos.y, camPos.z);
+        CAM.update();
     }
 
     @Override
@@ -290,8 +293,25 @@ public class Game
     public void dispose() {
     }
 
-    private void drawTextureFromAsset(String path, float x, float y) {
-        Texture tex = assetManager.get(path, Texture.class);
-        batch.draw(tex, x, y);
+    private void drawTextureFromAsset(Image image, float x, float y) {
+        Texture tex = assetManager.get(image.getImageURL(), Texture.class);
+        Sprite sprite = new Sprite(tex);
+        sprite.flip(image.isReversed(), false);
+        batch.draw(sprite, x, y);
+    }
+
+    private void updateBackgroundImageForWorld() {
+        float newCamPosX = gameData.getPlayerPosition().getX();
+        if (newCamPosX <= firstBackgroundImageScrollX) {
+            firstBackgroundImageScrollX -= newCamPosX;
+        } else {
+            firstBackgroundImageScrollX += newCamPosX;
+        }
+    }
+
+    private void drawBackgroundImageForWorld() {
+        Texture tex = assetManager.get(firstBackgroundImage.getImageURL(), Texture.class);
+        tex.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        batch.draw(tex, CAM.position.x - CAM.viewportWidth / 2, 0, firstBackgroundImageScrollX, 0, gameData.getDisplayWidth(), gameData.getDisplayHeight());
     }
 }

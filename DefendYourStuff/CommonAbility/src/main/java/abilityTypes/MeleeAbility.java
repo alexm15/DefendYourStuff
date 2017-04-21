@@ -23,7 +23,7 @@ public class MeleeAbility extends Ability {
     }
     
     public MeleeAbility(Ability ability) {
-        super(ability.getMoveSpeed(), ability.getWeight(), ability.getDamageRange(), ability.getImageURL(), ability.getDimension(), ability.getPosition(), ability.getCollisionType(), ability.getName(), ability.getEffects());
+        super(ability.getMoveSpeed(), ability.getWeight(), ability.getDamageRange(), ability.getImage().getImageURL(), ability.getDimension(), ability.getPosition(), ability.getCollisionType(), ability.getName(), ability.getEffects());
     }
     
 }
