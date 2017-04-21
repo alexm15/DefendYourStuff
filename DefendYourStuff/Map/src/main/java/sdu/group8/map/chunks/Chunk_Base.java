@@ -42,7 +42,7 @@ public class Chunk_Base extends Chunk {
     };
 
     public Chunk_Base(float positionOffset) {
-        super(new Image("Chunks/chunk_base_bg01.png", false), new Image("defaultBackground.png", false), positionOffset);
+        super(new Image("defaultBackground.png", false), new Image("defaultBackground.png", false), positionOffset);
         setTileMatrix(BG_BASE);
     }
 
