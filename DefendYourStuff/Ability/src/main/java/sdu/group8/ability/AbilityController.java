@@ -117,8 +117,8 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
             ability = new Ability(ab);
         }
         float x = caller.getX();
-        System.out.println("Y pos: " + caller.getY());
-        float y = caller.getY()+15;
+        float y = caller.getY();
+        System.out.println("Y pos: " + ability.getY());
         ability.setPosition(x, y);
         return ability;
     }
