@@ -25,7 +25,7 @@ public interface AbilitySPI {
      * @param ab The ability to be created
      * @return a subtype of Ability
      */
-    <A extends Ability> A createAbility(Entity caller, Ability ab, GameData gameData);
+    Ability createAbility(Entity caller, Ability ab, GameData gameData);
     
     /**
      * Creates a new Ability and returns it to the caller
@@ -34,7 +34,7 @@ public interface AbilitySPI {
      * @param weapon The callers ability - used for multipliers
      * @return a subtype of Ability
      */
-    <A extends Ability> A createPlayerAbility(Entity caller, Ability ab, Weapon weapon, GameData gameData);
+    Ability createPlayerAbility(Entity caller, Ability ab, Weapon weapon, GameData gameData);
 
     /**
      * Creates a new Ability and returns it to the caller
@@ -42,7 +42,7 @@ public interface AbilitySPI {
      * @param ab The name of the ability to be created
      * @return a subtype of Ability
      */
-    <A extends Ability> A createAbility(Entity caller, String ab, GameData gameData);
+    Ability createAbility(Entity caller, String ab, GameData gameData);
     
     /**
      * Creates a new Ability and returns it to the caller
@@ -51,17 +51,17 @@ public interface AbilitySPI {
      * @param weapon The callers ability - used for multipliers
      * @return a subtype of Ability
      */
-    <A extends Ability> A createPlayerAbility(Entity caller, String ab, Weapon weapon, GameData gameData);
+    Ability createPlayerAbility(Entity caller, String ab, Weapon weapon, GameData gameData);
     
     /**
      * @return a specific ability using an ID
      */
-    <A extends Ability> A getAbility(World world, UUID id);
+    Ability getAbility(World world, UUID id);
     
     /**
      * @return a specific ability using an string
      */
-    <A extends Ability> A getAbility(World world, String name);
+    Ability getAbility(World world, String name);
     
     /**
      * Creates a collection of Abilities
@@ -92,4 +92,8 @@ public interface AbilitySPI {
      * @return a collection of summoning Abilities
      */
     <A extends Ability> Collection getSummoningAbilities();
+    
+    Ability getAbility(Ability ability);
+            
+    Ability getAbility(String name);
 }

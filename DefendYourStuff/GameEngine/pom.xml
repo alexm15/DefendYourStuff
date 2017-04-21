@@ -126,7 +126,8 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CommonMap</artifactId>
-            <version>${project.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
     <properties>

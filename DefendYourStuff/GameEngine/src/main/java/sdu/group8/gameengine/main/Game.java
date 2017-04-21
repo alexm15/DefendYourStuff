@@ -119,6 +119,7 @@ public class Game
         assetManager.load("Player/defaultPlayer.png", Texture.class);
 
         assetManager.load("Enemy/dickbutt.gif", Texture.class);
+        assetManager.load("abilities/fireball.png", Texture.class);
 
         assetManager.load("Tiles/tile_dirt.png", Texture.class);
         assetManager.load("Tiles/tile_brickWall.png", Texture.class);
@@ -249,7 +250,7 @@ public class Game
         //TODO: Generalise for all entities;
 
         for (Entity entity : world.getEntities()) {
-            drawTextureFromAsset(entity.getImageURL(), entity.getX() - (entity.getWidth() / 2), entity.getY());
+            drawTextureFromAsset(entity.getImageURL(), entity.getX() - (entity.getWidth() / 2), entity.getY() - entity.getHeight() / 2);
         }
     }
 

@@ -33,7 +33,7 @@ public class World {
         Collection<Entity> r = new ArrayList<>();
         for (Entity entity : getEntities()) {
             for (Class<E> entityType : entityTypes) {
-                if (entityType.equals(entityType)) {
+                if (entityType.equals(entity.getClass())) {
                     r.add(entity);
                 }
             }
