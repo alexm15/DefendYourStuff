@@ -51,11 +51,7 @@ public class CollisionProcess implements IGamePostProcessingService {
             }
         }
     }
-
-    private <E extends Entity> void handleCollision(Character character, Collection<E> collidableEntities) {
-
-    }
-
+    
     private boolean boxCollision(Entity entity, Entity otherEntity) {
 
         Position posE1 = entity.getPosition();

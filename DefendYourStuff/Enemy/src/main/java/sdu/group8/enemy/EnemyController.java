@@ -33,9 +33,9 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     @Override
     public void process(GameData gameData, World world) {
         for (Character enemy : enemies.values()) {
-            
+
             demoMove = enemy.getX();
-            
+
             if (demoMove < -300) {
                 demoGoLeft = false;
             }
@@ -45,12 +45,17 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
             if (demoGoLeft) {
                 demoMove -= enemy.getMoveSpeed() * gameData.getDelta();
-            }
-            else {
+            } else {
                 demoMove += enemy.getMoveSpeed() * gameData.getDelta();
             }
-            
+
             enemy.setX(demoMove);
+
+            if (!enemy.isEntityOnGround(enemy, gameData)) {
+
+            } else {
+                enemy.setEntityOnGround(enemy, gameData);
+            }
         }
     }
 

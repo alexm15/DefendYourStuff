@@ -48,9 +48,9 @@ public class PlayerController
         //Handle gravity for player
         if (!player.isEntityOnGround(player, gameData)) {
             //player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
-            verticalVelocity -= gameData.getGRAVITY();
+            verticalVelocity -= gameData.getGRAVITY() * player.getWeight();
         } else {
-            player.setY(gameData.getGroundHeight());
+            player.setEntityOnGround(player, gameData);
             verticalVelocity = 0;
         }
         horizontalVelocity = 0;
@@ -110,7 +110,7 @@ public class PlayerController
     public void start(GameData gameData, World world) {
         float health = 100;
         float moveSpeed = 200;
-        float weight = 10;
+        float weight = 1.25f;
         float width = 50;
         float height = 50;
         Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.

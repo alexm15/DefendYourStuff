@@ -81,8 +81,8 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
         float moveSpeed = 300;
         String name = "fireball";
         float weight = 0;
-        float width = 120;
-        float height = 120;
+        float width = 30;
+        float height = 30;
         Dimension dimension = new Dimension(width, height, width/2); //TODO: Should match the sprites size.
         float x = 0;
         float y = 0;
