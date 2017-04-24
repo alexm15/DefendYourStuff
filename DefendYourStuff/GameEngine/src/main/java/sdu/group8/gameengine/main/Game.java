@@ -258,22 +258,23 @@ public class Game
         camPos = CAM.position.cpy();
         int scrollSpeed = (int) (camPos.x / 4);
 
-        firstBackgroundImageScrollX = scrollSpeed;
-        secondBackgroundImageScrollX = scrollSpeed / 2;
-
 //        //Set camera position.
 //        Vector3 camPos = CAM.position.cpy();
 //        float posX = camPos.x;
 //        float moveSpeed = 200;
-//        
-//        if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
-//            posX += moveSpeed * gameData.getDelta();
-//
-//        }
-//        if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
-//            posX -= moveSpeed * gameData.getDelta();
-//        }
-//        CAM.update();
+
+//        firstBackgroundImageScrollX = scrollSpeed;
+//        secondBackgroundImageScrollX = scrollSpeed / 2;
+
+        if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
+            firstBackgroundImageScrollX -= 2;
+            secondBackgroundImageScrollX -= 1;
+        }
+        if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
+            firstBackgroundImageScrollX += 2;
+            secondBackgroundImageScrollX += 1;
+
+        }
     }
 
     @Override
