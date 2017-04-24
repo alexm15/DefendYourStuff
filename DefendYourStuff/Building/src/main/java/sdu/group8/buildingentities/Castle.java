@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sdu.group8.buildingentities;
 
 import sdu.group8.common.ability.Ability;
@@ -20,12 +19,14 @@ import sdu.group8.commonbuilding.services.IDefBuilding;
  *
  * @author Alexander
  */
-public class Castle extends Building implements IDefBuilding
-{
+public class Castle
+        extends Building
+        implements IDefBuilding {
 
-    public Castle(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
-        super(imageURL, dimension, pos, collisionType, buildingType, isAttackable, upgradeLevel, health, ab);
-    }    
+    public Castle(Position pos) {
+        super("Building/castle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, true, 0, 100, new Ability[1]);
+
+    }
 
     @Override
     public void collision(Entity otherEntity) {

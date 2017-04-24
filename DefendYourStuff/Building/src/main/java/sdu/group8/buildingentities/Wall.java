@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sdu.group8.buildingentities;
 
 import sdu.group8.common.ability.Ability;
@@ -20,8 +19,9 @@ import sdu.group8.commonbuilding.services.IDefBuilding;
  *
  * @author Alexander
  */
-public class Wall extends Building implements IDefBuilding
-{
+public class Wall
+        extends Building
+        implements IDefBuilding {
 
     public Wall(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
         super(imageURL, dimension, pos, collisionType, buildingType, isAttackable, upgradeLevel, health, ab);

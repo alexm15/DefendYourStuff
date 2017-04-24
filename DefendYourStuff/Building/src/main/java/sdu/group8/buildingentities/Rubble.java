@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sdu.group8.buildingentities;
 
 import sdu.group8.common.ability.Ability;
@@ -19,11 +18,16 @@ import sdu.group8.commonbuilding.services.IBuildingService;
  *
  * @author Alexander
  */
-public class Rubble extends Building implements IBuildingService
-{
+public class Rubble
+        extends Building
+        implements IBuildingService {
 
-    public Rubble(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
-        super(imageURL, dimension, pos, collisionType, buildingType, isAttackable, upgradeLevel, health, ab);
+    public Rubble(Position pos) {
+        super("Building/rubble.png",
+                new Dimension(35, 20, 0),
+                pos, CollisionType.BOX,
+                BuildingType.DEFENCE,
+                false, 1, 1, new Ability[0]);
     }
 
     @Override

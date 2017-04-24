@@ -5,28 +5,20 @@
  */
 package sdu.group8.buildingcontroller;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.buildingentities.Castle;
 import sdu.group8.buildingentities.Rubble;
 import sdu.group8.buildingentities.Tower;
 import sdu.group8.buildingentities.Wall;
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityContainer;
-import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Building;
-import sdu.group8.common.entity.BuildingType;
-import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonbuilding.services.Buildable;
-import sdu.group8.commonbuilding.services.IDefBuilding;
 
 /**
  *
@@ -52,65 +44,51 @@ public class BuildingControlSystem
 
     @Override
     public void process(GameData gameData, World world) {
-       
+
         castleProcess(gameData, world);
-        wallProcess(gameData, world);
-        towerProcess(gameData, world);
-        portalProcess(gameData, world);
-        shopProcess(gameData, world);
+        //FIXME: Identification by class doesn't work (Castle.class equals Wall.class apparently)
+//        wallProcess(gameData, world);
+//        towerProcess(gameData, world);
+//        portalProcess(gameData, world);
+//        shopProcess(gameData, world);
 
     }
 
     @Override
     public void createCastleBuilding(World world, Position position) {
-        Dimension castleDimension = new Dimension(200, 100, 0);
-        float health = 100;
-        int upgradeLvl = 1;
-        Ability[] abilities = new Ability[1];
-
-        Building castle
-                = new Castle("Building/castle.png", castleDimension, position,
-                        CollisionType.BOX, BuildingType.DEFENCE,
-                        true, upgradeLvl, health, abilities);
-
+        Building castle = new Castle(position);
         world.addEntity(castle);
     }
 
     @Override
     public void createTowerBuilding(World world, Position position) {
-        
-
+        //Building tower = new Tower(position)
+        //TODO: Simplify constructor like the one used for constructing castle
     }
 
     @Override
     public void createWallBuilding(World world, Position position) {
+        //TODO: Simplify constructor like the one used for constructing castle
     }
 
     @Override
     public void createFarmBuilding(World world, Position position) {
+        //TODO: Simplify constructor like the one used for constructing castle
     }
 
     @Override
     public void createBlacksmithBuilding(World world, Position position) {
+        //TODO: Simplify constructor like the one used for constructing castle
     }
 
     @Override
     public void createWellBuilding(World world, Position position) {
+        //TODO: Simplify constructor like the one used for constructing castle
     }
 
     @Override
     public void createRubbleBuilding(World world, Position position) {
-        Dimension rubbleDimension = new Dimension(35, 20, 0);
-        //TODO: Determine stats for rubble building
-        float health = 100;
-        int upgradeLvl = 1;
-        Ability[] abilities = new Ability[0];
-
-        Building rubble
-                = new Rubble("Building/rubble.png", rubbleDimension, position,
-                        CollisionType.BOX, BuildingType.DEFENCE,
-                        true, upgradeLvl, health, abilities);
-
+        Building rubble = new Rubble(position);
         world.addEntity(rubble);
     }
 
@@ -133,16 +111,7 @@ public class BuildingControlSystem
 
     @Override
     public void createDestroyedCastleBuilding(World world, Position position) {
-        Dimension castleDimension = new Dimension(200, 100, 0);
-        float health = 1000000;
-        int upgradeLvl = 1;
-        Ability[] abilities = new Ability[1];
-
-        Building destroyedCastle
-                = new Castle("Game Over", castleDimension, position,
-                        CollisionType.BOX, BuildingType.DEFENCE,
-                        true, upgradeLvl, health, abilities);
-
+        Building destroyedCastle = new Castle(position);
         world.addEntity(destroyedCastle);
     }
 
@@ -167,9 +136,18 @@ public class BuildingControlSystem
     }
 
     private void portalProcess(GameData gameData, World world) {
-//        for (Entity entity : world.getEntities(Portal.class)) {
-//            Portal portal = (Portal) entity;
-//        }
     }
 
+    /**
+     * Idea for design with as replacement of interface, so instead the
+     * interface buildable only contains this method and then the subclasses of
+     * Building is moved to CommonBuilding component.
+     */
+//    public Building createBuilding(Class<E> building, Position position) {
+//        if (building.equals(Castle.class)) {
+//            Building castle = new Castle(position);
+//            return castle;
+//        }
+//        return null;
+//    }
 }
