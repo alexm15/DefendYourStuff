@@ -6,6 +6,9 @@
 
 package sdu.group8.ai;
 
+import sdu.group8.common.data.Position;
+import sdu.group8.common.data.World;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.commonai.AI_Service;
 import sdu.group8.commoncharacter.Character;
 
@@ -17,9 +20,12 @@ public class AI_ControlSystem implements AI_Service
 {
 
     @Override
-    public Character assignAttackAndDodgeEnemyAI(Character enemy) {
-        enemy.setX(1);
-        return enemy;
+    public void assignAttackAndDodgeEnemyAI(World world, Character enemy) {
+        Position enemyPos = enemy.getPosition();
+        for (Entity entity : world.getEntities()) {
+            
+        }
+
     }
 
 }
