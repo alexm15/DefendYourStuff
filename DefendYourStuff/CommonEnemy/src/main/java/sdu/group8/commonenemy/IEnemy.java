@@ -4,11 +4,14 @@
  * and open the template in the editor.
  */
 package sdu.group8.commonenemy;
+
+import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.World;
+
 /**
  *
  * @author Alexander
  */
 public interface IEnemy {
-    
-    
+    void deathProcess(GameData gameData, World world);   
 }
