@@ -9,7 +9,6 @@ import abilityTypes.MeleeAbility;
 import abilityTypes.PositioningAbility;
 import abilityTypes.RangedAbility;
 import abilityTypes.SummoningAbility;
-import data.AbilityData;
 import java.util.Collection;
 import java.util.UUID;
 import org.openide.util.lookup.ServiceProvider;
@@ -50,6 +49,7 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     public void process(GameData gameData, World world) {
         for (Entity ability : world.getEntities(RangedAbility.class)) {
             if(!ability.isEntityOnGround(ability, gameData)) {
+                
                 Ability ab = (Ability) ability;
                 float horizontalVelocity = 0;
                 float verticalVelocity = 0;
@@ -60,9 +60,6 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
                 Position position = new Position(ability.getX() + horizontalVelocity, ability.getY() - verticalVelocity * gameData.getDelta());
                 ability.setPosition(position);   
             }
-            
-            
-            
         }
     }
     

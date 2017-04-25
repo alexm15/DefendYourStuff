@@ -49,9 +49,9 @@ public class Chunk_Base extends Chunk {
     @Override
     public void createEntities(World world) {
 
-        Position wallLeft = new Position(this.getPositionOffset() * 100, 100);
-        Position wallRight = new Position((getDimension().getWidth() + this.getPositionOffset()) * 100, 100);
-        Position CastleDoor = new Position(((getDimension().getWidth() / 2) + this.getPositionOffset()) * 100, 100);
+        Position wallLeft = new Position(this.getPositionOffset() * this.TILE_SIZE, this.TILE_SIZE);
+        Position wallRight = new Position((getDimension().getWidth() + this.getPositionOffset()) * this.TILE_SIZE, this.TILE_SIZE);
+        Position CastleDoor = new Position(((getDimension().getWidth() / 2) + this.getPositionOffset()) * this.TILE_SIZE, this.TILE_SIZE);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createWallBuilding(world, wallLeft);

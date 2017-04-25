@@ -59,7 +59,6 @@ public class Game
     private List<IGamePluginService> gamePlugins = new ArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
-    private Collection<Entity> entities;
 
     private Image firstBackgroundImage = new Image("World/world_hills01_bg.png", false);
     private Image secondBackgroundImage = new Image("World/world_mountains01_bg.png", false); //TODO: Change to mountains image
@@ -185,7 +184,6 @@ public class Game
     private void draw() {
         batch.begin();
 
-        //drawTextureFromAsset(secondBackgroundImage, CAM.position.x - CAM.viewportWidth / 2, gameData.getTILE_SIZE()); // Draw second background for the world;
         drawBackgroundImageForWorld(); //Draw backgrounds for the world;
         drawMap(); // Draw chunks
         drawEntities(); // Draw entities
@@ -256,23 +254,16 @@ public class Game
         CAM.update();
 
         camPos = CAM.position.cpy();
-        int scrollSpeed = (int) (camPos.x / 4);
-
-//        //Set camera position.
-//        Vector3 camPos = CAM.position.cpy();
-//        float posX = camPos.x;
-//        float moveSpeed = 200;
-
-//        firstBackgroundImageScrollX = scrollSpeed;
-//        secondBackgroundImageScrollX = scrollSpeed / 2;
+        int firstScrollSpeed = (int) (camPos.x / 4);
+        int secondScrollSpeed = firstScrollSpeed / 4;
 
         if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
-            firstBackgroundImageScrollX -= 2;
-            secondBackgroundImageScrollX -= 1;
+            firstBackgroundImageScrollX -= firstScrollSpeed;
+            secondBackgroundImageScrollX -= secondScrollSpeed;
         }
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
-            firstBackgroundImageScrollX += 2;
-            secondBackgroundImageScrollX += 1;
+            firstBackgroundImageScrollX += firstScrollSpeed;
+            secondBackgroundImageScrollX += secondScrollSpeed;
 
         }
     }

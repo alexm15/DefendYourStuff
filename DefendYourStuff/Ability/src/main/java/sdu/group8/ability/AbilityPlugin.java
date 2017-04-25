@@ -5,7 +5,6 @@
  */
 package sdu.group8.ability;
 import abilityTypes.RangedAbility;
-import data.AbilityData;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import sdu.group8.common.ability.Ability;
