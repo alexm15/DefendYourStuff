@@ -78,6 +78,7 @@
         <module>CommonMap</module>
         <module>Enemy</module>
         <module>AI</module>
+        <module>CommonAI</module>
     </modules>
 
     <properties>

@@ -5,10 +5,12 @@
  */
 package sdu.group8.commonai;
 
+import sdu.group8.commoncharacter.Character;
+
 /**
  *
  * @author Alexander
  */
 public interface AI_Service {
-    void assignAttackAndDodgeEnemyAI(Character enemy);
+    Character assignAttackAndDodgeEnemyAI(Character enemy);
 }
