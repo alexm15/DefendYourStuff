@@ -11,9 +11,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
+import sdu.group8.common.ability.Ability;
+import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
+import sdu.group8.common.entity.CollisionType;
+import sdu.group8.common.entity.Entity;
 
 /**
  *
@@ -44,6 +49,7 @@ public class EnemyControllerTest {
      * Test of process method, of class EnemyController.
      */
     @Test
+    @Ignore
     public void testProcess() {
         System.out.println("process");
         GameData gameData = null;
@@ -58,6 +64,7 @@ public class EnemyControllerTest {
      * Test of start method, of class EnemyController.
      */
     @Test
+    @Ignore
     public void testStart() {
         System.out.println("start");
         GameData gameData = null;
@@ -72,6 +79,7 @@ public class EnemyControllerTest {
      * Test of stop method, of class EnemyController.
      */
     @Test
+    @Ignore
     public void testStop() {
         System.out.println("stop");
         GameData gameData = null;
@@ -88,18 +96,32 @@ public class EnemyControllerTest {
     @Test
     public void testDeathProcess() {
         System.out.println("deathProcess");
-        GameData gameData = null;
-        World world = null;
-        EnemyController instance = new EnemyController();
-        instance.deathProcess(gameData, world);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        GameData gameData = new GameData();
+        World world = new World();
+        Dimension dim = new Dimension(1, 1, 0);
+        Position pos = new Position(0, 0);
+        Ability[] ab = new Ability[1];
+        System.out.println(gameData.getPlayerGold());
+        world.addEntity(new MediumEnemy(0, 0, 10, "", dim, pos, CollisionType.CIRLCE, ab));
+        EnemyController enemyCon = new EnemyController();
+        for (Entity e : world.getEntities()) {
+        if(e.getClass().equals(MediumEnemy.class)) {
+        MediumEnemy medEnemy = (MediumEnemy) e;
+        assertEquals(10, medEnemy.getHealth(),0);
+        medEnemy.reduceHealth(1000);
+        assertEquals(0, medEnemy.getHealth(),0);
+        enemyCon.deathProcess(gameData, world);
+        assertEquals(100, gameData.getPlayerGold());
+        System.out.println(gameData.getPlayerGold());     
+        }   
+        }      
     }
 
     /**
      * Test of createMediumEnemy method, of class EnemyController.
      */
     @Test
+    @Ignore
     public void testCreateMediumEnemy() {
         System.out.println("createMediumEnemy");
         World world = null;
@@ -115,6 +137,7 @@ public class EnemyControllerTest {
      * Test of removeAllEnemies method, of class EnemyController.
      */
     @Test
+    @Ignore
     public void testRemoveAllEnemies() {
         System.out.println("removeAllEnemies");
         World world = null;
