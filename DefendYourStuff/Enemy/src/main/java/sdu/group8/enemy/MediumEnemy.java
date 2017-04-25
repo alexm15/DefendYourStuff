@@ -12,12 +12,14 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonenemy.IEnemy;
 import sdu.group8.commoncharacter.Character;
+import sdu.group8.commonenemy.IEnemyAction;
+import sdu.group8.commonplayer.IPlayerAction;
 
 /**
  *
  * @author Martin
  */
-public class MediumEnemy extends Character implements IEnemy {
+public class MediumEnemy extends Character implements IEnemy, IPlayerAction{
     
     public MediumEnemy(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
         super(moveSpeed, weight, health, imageURL, dimension, pos, collisionType, ab);
@@ -25,8 +27,14 @@ public class MediumEnemy extends Character implements IEnemy {
     
     @Override
     public void collision(Entity otherEntity) {
-        String imageURL = otherEntity.getImage().getImageURL();
-        otherEntity.getImage().setImageURL(this.getImage().getImageURL());
-        this.getImage().setImageURL(imageURL);
+        if(otherEntity instanceof IEnemyAction) {
+            ((IEnemyAction) otherEntity).enemyAction((Entity)this);
+        }
+    }
+
+    @Override
+    public void playerAction(Entity player) {
+        //TODO: create ability in world
+        
     }
 }
