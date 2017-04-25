@@ -59,6 +59,7 @@ public class Game
     private List<IGamePluginService> gamePlugins = new ArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
+    private Collection<Entity> entities;
 
     private Image firstBackgroundImage = new Image("World/world_hills01_bg.png", false);
     private Image secondBackgroundImage = new Image("World/world_mountains01_bg.png", false); //TODO: Change to mountains image
@@ -184,6 +185,7 @@ public class Game
     private void draw() {
         batch.begin();
 
+        //drawTextureFromAsset(secondBackgroundImage, CAM.position.x - CAM.viewportWidth / 2, gameData.getTILE_SIZE()); // Draw second background for the world;
         drawBackgroundImageForWorld(); //Draw backgrounds for the world;
         drawMap(); // Draw chunks
         drawEntities(); // Draw entities
