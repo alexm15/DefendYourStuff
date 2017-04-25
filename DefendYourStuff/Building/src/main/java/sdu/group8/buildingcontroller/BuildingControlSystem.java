@@ -46,11 +46,10 @@ public class BuildingControlSystem
     public void process(GameData gameData, World world) {
 
         castleProcess(gameData, world);
-        //FIXME: Identification by class doesn't work (Castle.class equals Wall.class apparently)
-//        wallProcess(gameData, world);
-//        towerProcess(gameData, world);
-//        portalProcess(gameData, world);
-//        shopProcess(gameData, world);
+        wallProcess(gameData, world);
+        towerProcess(gameData, world);
+        portalProcess(gameData, world);
+        shopProcess(gameData, world);
 
     }
 
@@ -94,7 +93,7 @@ public class BuildingControlSystem
 
     private void castleProcess(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Castle.class)) {
-            Castle castle = (Castle) entity;
+            Building castle = (Building) entity;
             if (castle.getHealth() == 0) {
                 //TODO: set gamestate to game over
                 System.out.println("Game Over");
@@ -112,12 +111,13 @@ public class BuildingControlSystem
     @Override
     public void createDestroyedCastleBuilding(World world, Position position) {
         Building destroyedCastle = new Castle(position);
+        destroyedCastle.setImageURL("Game Over");
         world.addEntity(destroyedCastle);
     }
 
     private void wallProcess(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Wall.class)) {
-            Wall wall = (Wall) entity;
+            Building wall = (Building) entity;
             if (wall.getHealth() == 0) {
                 createRubbleBuilding(world, wall.getPosition());
                 world.removeEntity(wall);
@@ -127,13 +127,15 @@ public class BuildingControlSystem
 
     private void towerProcess(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Tower.class)) {
-            Tower tower = (Tower) entity;
+            Building tower = (Building) entity;
             if (tower.getHealth() == 0) {
                 createRubbleBuilding(world, tower.getPosition());
                 world.removeEntity(tower);
             }
         }
     }
+    
+    
 
     private void portalProcess(GameData gameData, World world) {
     }

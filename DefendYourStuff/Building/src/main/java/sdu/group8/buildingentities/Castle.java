@@ -24,7 +24,10 @@ public class Castle
         implements IDefBuilding {
 
     public Castle(Position pos) {
-        super("Building/castle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, true, 0, 100, new Ability[1]);
+        super("Building/castle.png", 
+                new Dimension(200, 100, 0), 
+                pos, CollisionType.BOX, BuildingType.DEFENCE, 
+                true, 0, 100, new Ability[1]);
 
     }
 

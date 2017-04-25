@@ -23,8 +23,11 @@ public class Tower
         extends Building
         implements IDefBuilding {
 
-    public Tower(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, Ability... ab) {
-        super(imageURL, dimension, pos, collisionType, buildingType, isAttackable, upgradeLevel, health, ab);
+    public Tower(String imageURL, Dimension dimension, Position pos, 
+            CollisionType collisionType, BuildingType buildingType, boolean isAttackable, 
+            int upgradeLevel, float health, Ability... ab) {
+        super(imageURL, dimension, pos, collisionType, 
+                buildingType, isAttackable, upgradeLevel, health, ab);
     }
 
     @Override
