@@ -15,16 +15,18 @@ import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyService;
+import sdu.group8.commonenemy.IEnemy;
 
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class)}
 )
-public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService {
+public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService, IEnemy {
 
     private Map<UUID, Character> enemies = new ConcurrentHashMap<>();
 
@@ -56,6 +58,25 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     @Override
     public void stop(GameData gameData, World world) {
 
+    }
+    
+    
+    @Override
+    public void deathProcess(GameData gameData, World world) {
+        for (Entity entity : world.getEntities(Character.class)) {
+            Character enemy = (Character) entity;
+            if (enemy.getHealth() == 0) {
+                System.out.println("$$$");
+                if(enemy.getClass().equals(MediumEnemy.class)){
+                    gameData.addPlayerGold(100);
+                    world.removeEntity(enemy);
+                }
+//                if(enemyType.getClass().equals(SmallEnemy.class)){
+//                    gameData.addPlayerGold(50);
+//                    world.removeEntity(enemy);
+//                }              
+            }
+        }
     }
 
     @Override
