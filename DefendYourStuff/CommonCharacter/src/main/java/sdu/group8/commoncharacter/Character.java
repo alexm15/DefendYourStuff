@@ -7,6 +7,7 @@ package sdu.group8.commoncharacter;
 
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityContainer;
+import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
@@ -23,7 +24,7 @@ public abstract class Character extends MovingEntity{
     private AbilityContainer abilities;
     
 
-    public Character(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
+    public Character(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, AbilityData... ab) {
         super(moveSpeed, weight, imageURL, dimension, pos, collisionType);
         this.health = new HealthSystem(health);
         this.abilities = new AbilityContainer(ab);

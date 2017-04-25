@@ -5,24 +5,18 @@
  */
 package sdu.group8.ability;
 
-import java.lang.reflect.Constructor;
 import sdu.group8.commonabilitytypes.MeleeAbility;
 import sdu.group8.commonabilitytypes.PositioningAbility;
 import sdu.group8.commonabilitytypes.RangedAbility;
 import sdu.group8.commonabilitytypes.SummoningAbility;
 import java.util.Collection;
-import java.util.UUID;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
-import sdu.group8.common.ability.EffectContainer;
-import sdu.group8.common.data.DamageRange;
-import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.common.weapon.Weapon;
@@ -69,35 +63,9 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
 //        //return abilityCatalog.getAbility(name);
 //        return fireball();
 //    }
-
+    
     @Override
-    public Ability useAbility(Entity caller, Ability ab, GameData gameData) {
-        Ability ability;
-        if(ab instanceof RangedAbility) {
-            ability = new RangedAbility(ab);
-        } else if (ab instanceof MeleeAbility ) {
-            ability = new MeleeAbility(ab);
-        } else if (ab instanceof PositioningAbility) {
-            ability = new PositioningAbility(ab);
-        } else if (ab instanceof SummoningAbility) {
-            ability = new SummoningAbility(ab);
-        } else {
-            ability = new Ability(ab);
-        }
-        float x = caller.getX();
-        float y = caller.getY();
-        System.out.println("Y pos: " + ability.getY());
-        ability.setPosition(x, y);
-        return ability;
-    }
-
-    @Override
-    public Ability usePlayerAbility(Entity caller, Ability ab, Weapon weapon, GameData gameData) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Ability useAbility(Entity caller, AbilityData abilityData, GameData gameData) {
+    public Ability useAbility(Entity caller, AbilityData abilityData) {
         Ability ability;
         Ability ab = abilityCatalog.getAbility(abilityData);
         if(ab instanceof RangedAbility) {
@@ -116,11 +84,6 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
         System.out.println("Y pos: " + ability.getY());
         ability.setPosition(x, y);
         return ability;
-    }
-
-    @Override
-    public Ability usePlayerAbility(Entity caller, String ab, Weapon weapon, GameData gameData) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

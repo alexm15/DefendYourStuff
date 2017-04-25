@@ -11,6 +11,7 @@ import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.weapon.Weapon;
 
 /**
@@ -25,34 +26,7 @@ public interface AbilitySPI {
      * @param ab The ability to be created
      * @return a subtype of Ability
      */
-    Ability useAbility(Entity caller, Ability ab, GameData gameData);
-    
-    /**
-     * Creates a new Ability and returns it to the caller
-     * @param caller The entity who creates the ability
-     * @param ab The ability to be created
-     * @param weapon The callers ability - used for multipliers
-     * @return a subtype of Ability
-     */
-    Ability usePlayerAbility(Entity caller, Ability ab, Weapon weapon, GameData gameData);
-    
-    /**
-     * Creates a new Ability and returns it to the caller
-     * @param caller The entity who creates the ability
-     * @param key The key of the ability to be created
-     * @return a subtype of Ability
-     */
-    Ability useAbility(Entity caller, String key, GameData gameData);
-    
-    /**
-     * Creates a new Ability and returns it to the caller
-     * @param caller The entity who creates the ability
-     * @param key The key of the ability to be created
-     * @param weapon The callers ability - used for multipliers
-     * @return a subtype of Ability
-     */
-    Ability usePlayerAbility(Entity caller, String key, Weapon weapon, GameData gameData);
-    
+    Ability useAbility(Entity caller, AbilityData abilityData);
     
     /**
      * Creates a collection of Abilities

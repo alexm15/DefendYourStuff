@@ -9,18 +9,15 @@ import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityContainer;
-import sdu.group8.common.collision.CollisionContainer;
+import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
-import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
-import sdu.group8.commonabilitytypes.MeleeAbility;
 import sdu.group8.commonability.services.AbilitySPI;
 
 /**
@@ -83,7 +80,7 @@ public class PlayerController
         
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().SPACE)) {
             AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
-            world.addEntity(abilityProvicer.createAbility(player, player.getAbilities().getAbilites().get(0), gameData));
+            //world.addEntity(abilityProvicer.useAbility(player, player.getAbilities().getAbilites().get(0), gameData));
         }
         
     }
@@ -109,26 +106,12 @@ public class PlayerController
 
     @Override
     public void start(GameData gameData, World world) {
-        float health = 100;
-        float moveSpeed = 200;
-        float weight = 1.25f;
-        float width = 50;
-        float height = 50;
-        Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
         Position position = new Position(x, y); //TODO: Should be startposition.
-        float AOE = 0;
-        float minDamage = 0;
-        float maxDamage = 0;
-        DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        String imageURL = "Player/defaultPlayer.PNG";
-        Ability abil = null;
-        AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
-        //if(abilityProvicer!=null){
-            abil = abilityProvicer.getAbility("fireball");
-        //}
-        player = new Player(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX, abil);
+        AbilityData ab = null;
+        
+        player = new Player(position, ab);
         gameData.setPlayerGold(0);
         world.addEntity(player);
         gameData.setPlayerPosition(position);

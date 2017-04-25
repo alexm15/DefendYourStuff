@@ -33,8 +33,7 @@ public class AbilityPlugin implements IGamePluginService, IPreStartPluginService
 
     @Override
     public void preStart(GameData gameData) {
-        Ability ab = fireball();
-        abilityCatalog.addAbility(ab);
+        fireball();
     }
     
     @Override

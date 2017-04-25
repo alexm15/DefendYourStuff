@@ -18,9 +18,7 @@
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
                         <publicPackage>data</publicPackage>
-                        <publicPackage>sdu.group8.commonability</publicPackage>
-                        <publicPackage>sdu.group8.commonability.abilityTypes</publicPackage>
-                        <publicPackage>sdu.group8.commonability.services</publicPackage>
+                        <publicPackage>sdu.group8.commonability.*</publicPackage>
                         <publicPackage>sdu/group8/commonability/abilityTypes</publicPackage>
                     </publicPackages>
                 </configuration>
