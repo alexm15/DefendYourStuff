@@ -23,7 +23,9 @@ public class AI_ControlSystem implements AI_Service
     public void assignAttackAndDodgeEnemyAI(World world, Character enemy) {
         Position enemyPos = enemy.getPosition();
         for (Entity entity : world.getEntities()) {
-            
+            if(entity instanceof IEnemyAction){
+                
+            }
         }
 
     }
