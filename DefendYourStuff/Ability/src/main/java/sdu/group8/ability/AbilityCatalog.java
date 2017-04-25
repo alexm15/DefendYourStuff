@@ -3,24 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package data;
+package sdu.group8.ability;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityData;
 
 /**
  *
  * @author joach
  */
-public class AbilityData {
+public class AbilityCatalog {
     
-    private Map<String, Ability> abilities = new ConcurrentHashMap<>();
+    private Map<AbilityData, Ability> abilities = new ConcurrentHashMap<>();
     
-    public void addEntity(Ability ability) {
-        abilities.put(ability.getName(), ability);
+    private static AbilityCatalog instance = null;
+   
+    public static AbilityCatalog getInstance() {
+      if(instance == null) {
+         instance = new AbilityCatalog();
+      }
+      return instance;
+    }
+    
+    private AbilityCatalog() {
+        
     }
     
     public Collection<Ability> getAbilities() {
@@ -40,17 +50,12 @@ public class AbilityData {
         return r;
     }
     
-    public void addAbility(Ability ability) {
-        abilities.put(ability.getName(), ability);
+    public void addAbility(AbilityData abilityData, Ability ability) {
+        abilities.put(abilityData, ability);
     }
     
-    public Ability getAbility(String name) {
-        return abilities.get(name);
-    }
-    
-    public Ability getAbility(Ability ability) {
-        return abilities.get(ability.getName());
-    }
-    
+    public Ability getAbility(AbilityData abilityData) {
+        return abilities.get(abilityData);
+    }   
     
 }

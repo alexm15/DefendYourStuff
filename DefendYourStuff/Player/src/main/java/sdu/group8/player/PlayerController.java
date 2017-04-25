@@ -20,7 +20,8 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
-import sdu.group8.commonability.AbilitySPI;
+import sdu.group8.commonabilitytypes.MeleeAbility;
+import sdu.group8.commonability.services.AbilitySPI;
 
 /**
  *

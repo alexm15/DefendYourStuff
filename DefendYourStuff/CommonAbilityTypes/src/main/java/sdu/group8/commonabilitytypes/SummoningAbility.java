@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package abilityTypes;
+package sdu.group8.commonabilitytypes;
 
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.EffectContainer;

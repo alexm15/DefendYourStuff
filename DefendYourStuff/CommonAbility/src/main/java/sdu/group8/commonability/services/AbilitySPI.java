@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.commonability;
+package sdu.group8.commonability.services;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -25,7 +25,7 @@ public interface AbilitySPI {
      * @param ab The ability to be created
      * @return a subtype of Ability
      */
-    Ability createAbility(Entity caller, Ability ab, GameData gameData);
+    Ability useAbility(Entity caller, Ability ab, GameData gameData);
     
     /**
      * Creates a new Ability and returns it to the caller
@@ -34,34 +34,25 @@ public interface AbilitySPI {
      * @param weapon The callers ability - used for multipliers
      * @return a subtype of Ability
      */
-    Ability createPlayerAbility(Entity caller, Ability ab, Weapon weapon, GameData gameData);
-
-    /**
-     * Creates a new Ability and returns it to the caller
-     * @param caller The entity who creates the ability
-     * @param ab The name of the ability to be created
-     * @return a subtype of Ability
-     */
-    Ability createAbility(Entity caller, String ab, GameData gameData);
+    Ability usePlayerAbility(Entity caller, Ability ab, Weapon weapon, GameData gameData);
     
     /**
      * Creates a new Ability and returns it to the caller
      * @param caller The entity who creates the ability
-     * @param ab The name of the ability to be created
+     * @param key The key of the ability to be created
+     * @return a subtype of Ability
+     */
+    Ability useAbility(Entity caller, String key, GameData gameData);
+    
+    /**
+     * Creates a new Ability and returns it to the caller
+     * @param caller The entity who creates the ability
+     * @param key The key of the ability to be created
      * @param weapon The callers ability - used for multipliers
      * @return a subtype of Ability
      */
-    Ability createPlayerAbility(Entity caller, String ab, Weapon weapon, GameData gameData);
+    Ability usePlayerAbility(Entity caller, String key, Weapon weapon, GameData gameData);
     
-    /**
-     * @return a specific ability using an ID
-     */
-    Ability getAbility(World world, UUID id);
-    
-    /**
-     * @return a specific ability using an string
-     */
-    Ability getAbility(World world, String name);
     
     /**
      * Creates a collection of Abilities
@@ -92,8 +83,4 @@ public interface AbilitySPI {
      * @return a collection of summoning Abilities
      */
     <A extends Ability> Collection getSummoningAbilities();
-    
-    Ability getAbility(Ability ability);
-            
-    Ability getAbility(String name);
 }

@@ -23,6 +23,7 @@ import sdu.group8.common.entity.Tile;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
+import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.gameengine.managers.GameInputProcessor;
 
@@ -71,6 +72,10 @@ public class Game
     public Collection<? extends IGamePostProcessingService> getPostProcesses() {
         return lookup.lookupAll(IGamePostProcessingService.class);
     }
+    
+    private Collection<? extends IPreStartPluginService> getPreGamePlugins() {
+        return lookup.lookupAll(IPreStartPluginService.class);
+    }
 
     @Override
     public void create() {
@@ -90,6 +95,10 @@ public class Game
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.RED);
+        
+        for (IPreStartPluginService preGamePlugin : getPreGamePlugins()) {
+            preGamePlugin.preStart(gameData);
+        }
 
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
@@ -274,4 +283,6 @@ public class Game
         batch.draw(tex, x, y);
         batch.end();
     }
+
+    
 }

@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package sdu.group8.ability;
-import abilityTypes.RangedAbility;
-import data.AbilityData;
+import sdu.group8.commonabilitytypes.RangedAbility;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import sdu.group8.common.ability.Ability;
@@ -17,43 +16,37 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.services.IGamePluginService;
+import sdu.group8.common.services.IPreStartPluginService;
+import sdu.group8.commonability.abilities.Fireball;
 
 /**
  *
  * @author joach
  */
-public class AbilityPlugin implements IGamePluginService {
+public class AbilityPlugin implements IGamePluginService, IPreStartPluginService {
     
-   private AbilityData abilityData; 
-   private static AbilityPlugin instance = null;
+   private AbilityCatalog abilityCatalog; 
    
-   public static AbilityPlugin getInstance() {
-      if(instance == null) {
-         instance = new AbilityPlugin();
-      }
-      return instance;
-   }
-    
-    private AbilityPlugin () {
-        abilityData = new AbilityData();
-    }
-
-    public AbilityData getAbilityData() {
-        return abilityData;
+    public AbilityPlugin () {
+        abilityCatalog = AbilityCatalog.getInstance();
     }
 
     @Override
-    public void start(GameData gameData, World world) {
+    public void preStart(GameData gameData) {
         Ability ab = fireball();
-        abilityData.addAbility(ab);
+        abilityCatalog.addAbility(ab);
     }
     
-    private Ability fireball() {
-        float moveSpeed = 100;
-        String name = "fireball";
+    @Override
+    public void start(GameData gameData, World world) {
+        
+    }
+    
+    private void fireball() {
+        float moveSpeed = 300;
         float weight = 0;
-        float width = 10;
-        float height = 10;
+        float width = 30;
+        float height = 30;
         Dimension dimension = new Dimension(width, height, width/2); //TODO: Should match the sprites size.
         float x = 0;
         float y = 0;
@@ -63,15 +56,17 @@ public class AbilityPlugin implements IGamePluginService {
         float maxDamage = 20;
         EffectContainer effectContainer = new EffectContainer();
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        String imageURL = "Player/defaultPlayer.PNG";
-        Ability abi = new RangedAbility(moveSpeed, weight, damageRange, imageURL, dimension, position, CollisionType.CIRCLE, name, effectContainer);
+        String imageURL = "abilities/fireball.png";
+        Ability abi = new RangedAbility(moveSpeed, weight, damageRange, imageURL, dimension, position, CollisionType.CIRCLE, "whatever", effectContainer);
         
-        return abi;
+        abilityCatalog.addAbility(new Fireball(), abi);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
     
 }
