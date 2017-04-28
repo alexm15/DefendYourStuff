@@ -15,6 +15,7 @@ import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commoncharacter.Character;
@@ -26,24 +27,32 @@ import sdu.group8.commonenemy.IEnemyService;
 )
 public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService {
 
-    private Map<UUID, Character> enemies = new ConcurrentHashMap<>();
-
     @Override
     public void process(GameData gameData, World world) {
         
-        float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
-        
-        for (Character enemy : enemies.values()) {
+        float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2);
+
+        for (Entity entityEnemy : world.getEntities(MediumEnemy.class)) {
+            Character enemy = (Character) entityEnemy;
+            
             float horizontalPos = enemy.getX();
 
             if (enemy.getX() < basePosX) {
                 horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.getImage().setReversed(true);
             }
             else {
                 horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.getImage().setReversed(false);
             }
             
             enemy.setX(horizontalPos);
+            
+            if (!enemy.isEntityOnGround(enemy, gameData)) {
+
+            } else {
+                enemy.setEntityOnGround(enemy, gameData);
+            }
         }
     }
 
@@ -74,7 +83,6 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
         gameData.setPlayerGold(0);
         world.addEntity(enemy);
-        enemies.put(enemy.getID(), enemy);
     }
 
     @Override

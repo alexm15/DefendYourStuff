@@ -5,17 +5,19 @@
  */
 package sdu.group8.map.tiles;
 
+import sdu.group8.common.data.Image;
 import sdu.group8.common.entity.Tile;
 
 /**
  *
  * @author Martin
  */
-public class Tile_Dirt implements Tile{
+public class Tile_Dirt implements Tile {
+
+    private Image image = new Image("Tiles/tile_dirt.png", false);
 
     @Override
-    public String getImageURL() {
-        return "Tiles/tile_dirt.PNG";
+    public Image getImage() {
+        return image;
     }
-    
 }

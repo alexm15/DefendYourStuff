@@ -16,17 +16,46 @@ import sdu.group8.common.entity.MovingEntity;
  *
  * @author Martin
  */
-public class Ability extends MovingEntity{
+public class Ability extends MovingEntity {
     
     private DamageRange damageRange;
     private boolean isHit = false;
     private EffectContainer effects;
     private float angle;
+    private String name;
 
-    public Ability(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
-        super(moveSpeed, weight, imageURL, dimension, pos, collisionType, ab);
+    public Ability(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, String name, EffectContainer effectContainer) {
+        super(moveSpeed, weight, imageURL, dimension, pos, collisionType);
         this.effects = effectContainer;
         this.damageRange = damageRange;
+        this.name = name;
+    }
+    
+    public Ability(Ability ability) {
+        super(ability.getMoveSpeed(), ability.getWeight(), ability.getImage().getImageURL(), ability.getDimension(), ability.getPosition(), ability.getCollisionType());
+        this.effects = ability.getEffects();
+        this.damageRange = ability.getDamageRange();
+        this.name = ability.getName();
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public DamageRange getDamageRange() {
+        return damageRange;
+    }
+
+    public void setDamageRange(DamageRange damageRange) {
+        this.damageRange = damageRange;
+    }
+
+    public EffectContainer getEffects() {
+        return effects;
+    }
+
+    public void setEffects(EffectContainer effects) {
+        this.effects = effects;
     }
 
     public float getDamage() {
@@ -51,7 +80,7 @@ public class Ability extends MovingEntity{
 
     @Override
     public void collision(Entity otherEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        
     }
 
 }

@@ -17,7 +17,9 @@
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
-                        <publicPackage>sdu.group8.commonprojectile</publicPackage>
+                        <publicPackage>abilityTypes</publicPackage>
+                        <publicPackage>data</publicPackage>
+                        <publicPackage>sdu.group8.commonability</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>

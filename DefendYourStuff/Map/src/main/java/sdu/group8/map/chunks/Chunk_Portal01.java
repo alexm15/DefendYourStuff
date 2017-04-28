@@ -6,6 +6,7 @@
 package sdu.group8.map.chunks;
 
 import org.openide.util.Lookup;
+import sdu.group8.common.data.Image;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
@@ -33,27 +34,21 @@ public class Chunk_Portal01 extends Chunk {
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},
-        {d01, air, air, air, air, air},
-    };
+        {d01, air, air, air, air, air},};
 
-    public Chunk_Portal01(int tileOffsetX) {
-        super(tileOffsetX);
+    public Chunk_Portal01(float positionOffset) {
+        super(new Image("Chunks/chunk_portal01_bg01.png", false), new Image("defaultBackground.png", false), positionOffset);
         setTileMatrix(BG_PORTAL01);
     }
 
     @Override
     public void createEntities(World world) {
 
-        Position portal = new Position(((getDimension().getWidth() / 2) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
-        
+        Position portal = new Position(((getDimension().getWidth() / 2) + this.getPositionOffset()) * TILE_SIZE, TILE_SIZE);
+
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             //TODO: create portal
         }
-    }
-
-    @Override
-    public String getBackgroundImageURL() {
-        return "Chunks/chunk_bg_portal01.PNG";
     }
 
 }

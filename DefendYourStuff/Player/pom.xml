@@ -41,7 +41,7 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util-lookup</artifactId>
-            <version>RELEASE81</version>
+            <version>RELEASE82</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -59,6 +59,11 @@
             <artifactId>CommonCharacter</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonAbility</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
