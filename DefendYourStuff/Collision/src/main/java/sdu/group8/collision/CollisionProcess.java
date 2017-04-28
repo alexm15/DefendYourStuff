@@ -51,11 +51,7 @@ public class CollisionProcess implements IGamePostProcessingService {
             }
         }
     }
-
-    private <E extends Entity> void handleCollision(Character character, Collection<E> collidableEntities) {
-
-    }
-
+    
     private boolean boxCollision(Entity entity, Entity otherEntity) {
 
         Position posE1 = entity.getPosition();
@@ -90,12 +86,12 @@ public class CollisionProcess implements IGamePostProcessingService {
         // get position in world where each side of the rectangle is
         float rectangleLeft = boxPosition.getX() - boxInnerBoundaryX;
         float rectangleRight = boxPosition.getX() + boxInnerBoundaryX;
-        float rectangleTop = boxPosition.getY() - boxInnerBoundaryY;
-        float rectangleBottom = boxPosition.getY() + boxInnerBoundaryY;
+        float rectangleTop = boxPosition.getY() + boxInnerBoundaryY;
+        float rectangleBottom = boxPosition.getY() - boxInnerBoundaryY;
 
         // get side of the rectangle the circle is nearest
         float closestX = clamp(rectangleLeft, circlePosition.getX(), rectangleRight);
-        float closestY = clamp(rectangleTop, circlePosition.getX(), rectangleBottom);
+        float closestY = clamp(rectangleBottom, circlePosition.getY(), rectangleTop);
 
         // if circle is inside of the rectangle
         if (closestX == circlePosition.getX()) {
@@ -126,7 +122,7 @@ public class CollisionProcess implements IGamePostProcessingService {
     }
 
     // https://jsperf.com/math-clamp/9 - Best performance
-    private float clamp(float value, float min, float max) {
+    private float clamp(float min, float value, float max) {
         return Math.min(max, Math.max(min, value));
     }
 }

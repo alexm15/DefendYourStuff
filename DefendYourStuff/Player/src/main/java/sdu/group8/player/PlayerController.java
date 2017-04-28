@@ -5,19 +5,19 @@
  */
 package sdu.group8.player;
 
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
-import sdu.group8.common.collision.CollisionContainer;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
-import sdu.group8.common.entity.EntityType;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
+import sdu.group8.commonability.AbilitySPI;
 
 /**
  *
@@ -31,6 +31,7 @@ import sdu.group8.common.services.IGameProcessingService;
 public class PlayerController
         implements IGameProcessingService, IGamePluginService {
 
+    private Lookup lookup = Lookup.getDefault();
     private Player player;
     private float verticalVelocity;
     private float horizontalVelocity;
@@ -44,29 +45,31 @@ public class PlayerController
         //Handle gravity for player
         if (!player.isEntityOnGround(player, gameData)) {
             //player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
-            verticalVelocity -= gameData.getGRAVITY();
+            verticalVelocity -= gameData.getGRAVITY() * player.getWeight();
         } else {
-            player.setY(gameData.getGroundHeight());
+            player.setEntityOnGround(player, gameData);
             verticalVelocity = 0;
         }
         horizontalVelocity = 0;
 
         handleMouseInput(gameData);
 
-        handleKeyboardInput(gameData);
+        handleKeyboardInput(gameData, world);
         Position position = new Position(player.getX() + horizontalVelocity, player.getY() + verticalVelocity * gameData.getDelta());
         player.setPosition(position);
         gameData.setPlayerPosition(position);
 
     }
 
-    private void handleKeyboardInput(GameData gameData) {
+    private void handleKeyboardInput(GameData gameData, World world) {
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             horizontalVelocity += player.getMoveSpeed() * gameData.getDelta();
+            player.getImage().setReversed(true);
         }
 
         if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
             horizontalVelocity -= player.getMoveSpeed() * gameData.getDelta();
+            player.getImage().setReversed(false);
         }
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {
@@ -75,6 +78,12 @@ public class PlayerController
                 verticalVelocity += player.getVerticalForce();
             }
         }
+
+        if (gameData.getKeys().isKeyPressed(gameData.getKeys().SPACE)) {
+            AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
+            world.addEntity(abilityProvicer.createAbility(player, player.getAbilities().getAbilites().get(0), gameData));
+        }
+
     }
 
     private void handleMouseInput(GameData gameData) {
@@ -100,7 +109,7 @@ public class PlayerController
     public void start(GameData gameData, World world) {
         float health = 100;
         float moveSpeed = 200;
-        float weight = 10;
+        float weight = 1.25f;
         float width = 50;
         float height = 50;
         Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
@@ -111,8 +120,13 @@ public class PlayerController
         float minDamage = 0;
         float maxDamage = 0;
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
-        String imageURL = "Player/defaultPlayer.PNG";
-        player = new Player(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
+        String imageURL = "Enemy/dickbutt.gif";
+        Ability abil = null;
+        AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
+        //if(abilityProvicer!=null){
+        abil = abilityProvicer.getAbility("fireball");
+        //}
+        player = new Player(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX, abil);
         gameData.setPlayerGold(0);
         world.addEntity(player);
         gameData.setPlayerPosition(position);
