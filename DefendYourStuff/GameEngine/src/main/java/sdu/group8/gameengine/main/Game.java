@@ -110,6 +110,9 @@ public class Game
 
         assetManager.load("Tiles/tile_dirt.PNG", Texture.class);
         assetManager.load("Tiles/tile_woodenFence.PNG", Texture.class);
+        assetManager.load("Building/castle.png", Texture.class);
+        assetManager.load("Building/rubble.png", Texture.class);
+        
         assetManager.load("Tiles/tile_air.png", Texture.class);
     }
 

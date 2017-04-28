@@ -27,6 +27,17 @@ public interface Buildable {
     void createCastleBuilding(World world, Position position);
 
     /**
+     * Creates a castle building.
+     *
+     * @param world for adding the created entity to the game world.
+     * @param position buttom center point for buildings placement on the map.
+     * Meaning that buildings dimensions will be positive and negative x
+     * coordinates (in relation to this position point) for left and right side
+     * of rectangle that defines the building.
+     */
+    void createDestroyedCastleBuilding(World world, Position position);
+    
+    /**
      * Creates a Tower building.
      *
      * @param world for adding the created entity to the game world.
