@@ -30,13 +30,13 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     @Override
     public void process(GameData gameData, World world) {
         
-        float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
-        
+        float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2);
+        System.out.println("base: " + basePosX);
         for (Entity entityEnemy : world.getEntities(MediumEnemy.class)) {
             Character enemy = (Character) entityEnemy;
             
             float horizontalPos = enemy.getX();
-
+            System.out.println("X: " + enemy.getX());
             if (enemy.getX() < basePosX) {
                 horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
                 enemy.getImage().setReversed(true);
