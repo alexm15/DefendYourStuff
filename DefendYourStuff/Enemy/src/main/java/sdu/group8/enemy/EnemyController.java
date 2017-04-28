@@ -5,7 +5,6 @@
  */
 package sdu.group8.enemy;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,7 +15,6 @@ import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
-import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commoncharacter.Character;
@@ -35,12 +33,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         
         float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
         
-        ArrayList<Class> enemyTypes = new ArrayList<>();
-        enemyTypes.add(SmallEnemy.class);
-        enemyTypes.add(MediumEnemy.class);
-        for (Entity entity : world.getEntitiess(enemyTypes)) {
-            Character enemy = (Character)entity;
-            
+        for (Character enemy : enemies.values()) {
             float horizontalPos = enemy.getX();
 
             if (enemy.getX() < basePosX) {

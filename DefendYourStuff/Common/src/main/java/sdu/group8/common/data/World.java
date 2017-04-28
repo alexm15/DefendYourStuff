@@ -29,20 +29,7 @@ public class World {
         return entitíes.values();
     }
 
-    public <E extends Entity> Collection<Entity> getEntitiess(ArrayList<Class> entityTypes) {
-        Collection<Entity> r = new ArrayList<>();
-        for (Entity entity : getEntities()) {
-            for (Class<E> entityType : entityTypes) {
-                if (entityType.equals(entityType)) {
-                    r.add(entity);
-                }
-            }
-        }
-
-        return r;
-    }
-
-    public <E extends Entity> Collection<Entity> getEntitie(Class<E>... entityTypes) {
+    public <E extends Entity> Collection<Entity> getEntities(Class<E>... entityTypes) {
         Collection<Entity> r = new ArrayList<>();
         for (Entity entity : getEntities()) {
             for (Class<E> entityType : entityTypes) {
@@ -67,7 +54,7 @@ public class World {
     public void removeEntity(Entity entity) {
         entitíes.remove(entity.getID());
     }
-
+    
     public Entity getEntity(UUID entityID) {
         return entitíes.get(entityID);
     }
@@ -101,5 +88,6 @@ public class World {
         this.chunksRight.clear();
         this.chunkMiddle = null;
     }
-
+    
+    
 }
