@@ -96,9 +96,9 @@ public class Game
         }
 
         assetManager.load("Chunks/chunk_bg_base.PNG", Texture.class);
-        assetManager.load("Chunks/chunk_bg_forrest01.PNG", Texture.class);
+       assetManager.load("Chunks/chunk_bg_forrest01.PNG", Texture.class);
         assetManager.load("Chunks/chunk_bg_forrest02.PNG", Texture.class);
-        assetManager.load("Chunks/chunk_bg_grassland01.PNG", Texture.class);
+       assetManager.load("Chunks/chunk_bg_grassland01.PNG", Texture.class);
         assetManager.load("Chunks/chunk_bg_grassland02.PNG", Texture.class);
         assetManager.load("Chunks/chunk_bg_portal01.PNG", Texture.class);
 
