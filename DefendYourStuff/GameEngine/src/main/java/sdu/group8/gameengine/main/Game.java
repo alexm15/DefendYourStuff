@@ -260,12 +260,12 @@ public class Game
         int secondScrollSpeed = firstScrollSpeed / 4;
 
         if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
-            firstBackgroundImageScrollX -= firstScrollSpeed;
-            secondBackgroundImageScrollX -= secondScrollSpeed;
+            firstBackgroundImageScrollX = firstScrollSpeed;
+            secondBackgroundImageScrollX = secondScrollSpeed;
         }
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
-            firstBackgroundImageScrollX += firstScrollSpeed;
-            secondBackgroundImageScrollX += secondScrollSpeed;
+            firstBackgroundImageScrollX = firstScrollSpeed;
+            secondBackgroundImageScrollX = secondScrollSpeed;
 
         }
     }
