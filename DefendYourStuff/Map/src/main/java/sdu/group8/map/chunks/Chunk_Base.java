@@ -6,6 +6,7 @@
 package sdu.group8.map.chunks;
 
 import org.openide.util.Lookup;
+import sdu.group8.common.data.Image;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
@@ -23,7 +24,7 @@ public class Chunk_Base extends Chunk {
 
     private Tile air = new Tile_Air();
     private Tile d01 = new Tile_Dirt();
-    private Tile w01 = new Tile_WoodenFence();
+    private Tile w01 = new Tile_BrickWall();
 
     public final Tile[][] BG_BASE = new Tile[][]{
         {d01, w01, air, air, air, air},
@@ -40,17 +41,17 @@ public class Chunk_Base extends Chunk {
         {d01, w01, air, air, air, air}
     };
 
-    public Chunk_Base(int tileOffsetX) {
-        super(tileOffsetX);
+    public Chunk_Base(float positionOffset) {
+        super(new Image("defaultBackground.png", false), new Image("defaultBackground.png", false), positionOffset);
         setTileMatrix(BG_BASE);
     }
 
     @Override
     public void createEntities(World world) {
 
-        Position wallLeft = new Position(this.getTileOffsetX() * 100, 100);
-        Position wallRight = new Position((getDimension().getWidth() + this.getTileOffsetX()) * 100, 100);
-        Position CastleDoor = new Position(((getDimension().getWidth() / 2) + this.getTileOffsetX()) * 100, 100);
+        Position wallLeft = new Position(this.getPositionOffset() * this.TILE_SIZE, this.TILE_SIZE);
+        Position wallRight = new Position((getDimension().getWidth() + this.getPositionOffset()) * this.TILE_SIZE, this.TILE_SIZE);
+        Position CastleDoor = new Position(((getDimension().getWidth() / 2) + this.getPositionOffset()) * this.TILE_SIZE, this.TILE_SIZE);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createWallBuilding(world, wallLeft);
@@ -59,9 +60,5 @@ public class Chunk_Base extends Chunk {
         }
     }
 
-    @Override
-    public String getBackgroundImageURL() {
-        return "Chunks/chunk_bg_base.PNG";
-    }
 
 }

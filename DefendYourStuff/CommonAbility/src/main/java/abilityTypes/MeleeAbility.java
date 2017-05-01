@@ -18,8 +18,12 @@ import sdu.group8.common.entity.CollisionType;
  */
 public class MeleeAbility extends Ability {
 
-    public MeleeAbility(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, EffectContainer effectContainer, Ability... ab) {
-        super(moveSpeed, weight, damageRange, imageURL, dimension, pos, collisionType, effectContainer, ab);
+    public MeleeAbility(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, String name, EffectContainer effectContainer) {
+        super(moveSpeed, weight, damageRange, imageURL, dimension, pos, collisionType, name, effectContainer);
+    }
+    
+    public MeleeAbility(Ability ability) {
+        super(ability.getMoveSpeed(), ability.getWeight(), ability.getDamageRange(), ability.getImage().getImageURL(), ability.getDimension(), ability.getPosition(), ability.getCollisionType(), ability.getName(), ability.getEffects());
     }
     
 }

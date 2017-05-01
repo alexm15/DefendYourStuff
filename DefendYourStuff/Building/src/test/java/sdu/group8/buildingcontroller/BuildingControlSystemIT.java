@@ -76,7 +76,7 @@ public class BuildingControlSystemIT {
 
         for (Entity castle : world.getEntities(Castle.class)) {
             assertNotNull(castle);
-            assertEquals("Building/castle.png", castle.getImageURL());
+            assertEquals("Building/castle.png", castle.getImage().getImageURL());
             float xPos = 0;
             float yPos = 0;
             assertEquals(xPos, castle.getPosition().getX(), 0);
@@ -97,7 +97,7 @@ public class BuildingControlSystemIT {
         // TODO review the generated test code and remove the default call to fail.
         for (Entity rubble : world.getEntities(Rubble.class)) {
             assertNotNull(rubble);
-            assertEquals("Building/rubble.png", rubble.getImageURL());
+            assertEquals("Building/rubble.png", rubble.getImage().getImageURL());
             float xPos = 0;
             float yPos = 0;
             assertEquals(xPos, rubble.getPosition().getX(), 0);
@@ -126,7 +126,7 @@ public class BuildingControlSystemIT {
         for (Entity entity : world.getEntities(Castle.class)) {
             //Game Over image URL for destroyed building
             //Ensures call to createDestroyedBuilding
-            assertEquals("Game Over", entity.getImageURL());
+            assertEquals("Game Over", entity.getImage().getImageURL());
         }
 
     }

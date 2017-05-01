@@ -5,6 +5,7 @@
  */
 package sdu.group8.commonmap;
 
+import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 
 /**

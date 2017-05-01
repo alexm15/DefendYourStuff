@@ -22,22 +22,21 @@ public abstract class Entity {
     private UUID ID;
     private Dimension dimension;
     private Position pos;
-    private AbilityContainer abilities;
     private CollisionType collisionType;
-    private String imageURL;
+    private Image image;
 
-    public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        this.imageURL = imageURL;
+    public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType) {
+        this.image = new Image(imageURL, false);
         this.ID = UUID.randomUUID();
         this.dimension = dimension;
         this.pos = pos;
         this.collisionType = collisionType;
-        this.abilities = new AbilityContainer(ab);
     }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    
+    public Image getImage() {
+        return this.image;
     }
+    
     
     /**
      * Is used to finde out if the entity is on the ground OR under the ground.
@@ -47,7 +46,7 @@ public abstract class Entity {
      * false.
      */
     public boolean isEntityOnGround(Entity entity, GameData gameData) {
-        if (entity.getPosition().getY() <= gameData.getGroundHeight()) {
+        if (entity.getPosition().getY() - entity.getHeight() / 2 <= gameData.getGroundHeight()) {
             return true;
         }
         return false;
@@ -61,10 +60,6 @@ public abstract class Entity {
     public void setEntityOnGround(Entity entity, GameData gameData) {
         entity.setPosition(entity.getPosition().getX(), (gameData.getGroundHeight() + entity.getHeight() / 2));
 
-    }
-
-    public String getImageURL() {
-        return imageURL;
     }
     
     public UUID getID() {
@@ -129,10 +124,6 @@ public abstract class Entity {
 
     public Position getPosition() {
         return pos;
-    }
-
-    public ArrayList<Ability> getAbilities() {
-        return abilities.getAbilites();
     }
 
     public abstract void collision(Entity otherEntity);

@@ -40,12 +40,20 @@ public class EnemyController
 
             if (enemy.getX() < basePosX) {
                 horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.getImage().setReversed(true);
             }
             else {
                 horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.getImage().setReversed(false);
             }
 
             enemy.setX(horizontalPos);
+            
+            if (!enemy.isEntityOnGround(enemy, gameData)) {
+
+            } else {
+                enemy.setEntityOnGround(enemy, gameData);
+            }
         }
     }
 

@@ -10,5 +10,5 @@ package sdu.group8.common.entity;
  * @author Martin
  */
 public enum CollisionType {
-    BOX, CIRLCE;
+    BOX, CIRCLE;
 }
