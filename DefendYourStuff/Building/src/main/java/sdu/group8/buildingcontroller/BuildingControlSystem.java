@@ -111,7 +111,7 @@ public class BuildingControlSystem
     @Override
     public void createDestroyedCastleBuilding(World world, Position position) {
         Building destroyedCastle = new Castle(position);
-        destroyedCastle.setImageURL("Game Over");
+        //destroyedCastle.setImageURL("Game Over");
         world.addEntity(destroyedCastle);
     }
 
