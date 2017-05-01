@@ -67,7 +67,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>Enemy</artifactId>
+            <artifactId>Building</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -83,6 +83,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Ability</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Enemy</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

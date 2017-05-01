@@ -21,18 +21,20 @@ import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyService;
 
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class),
+    @ServiceProvider(service = IGameProcessingService.class)
+    ,
     @ServiceProvider(service = IGamePluginService.class)}
 )
-public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService {
+public class EnemyController
+        implements IGameProcessingService, IGamePluginService, IEnemyService {
 
     private Map<UUID, Character> enemies = new ConcurrentHashMap<>();
 
     @Override
     public void process(GameData gameData, World world) {
-        
+
         float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
-        
+
         for (Character enemy : enemies.values()) {
             float horizontalPos = enemy.getX();
 
@@ -44,7 +46,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
                 horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
                 enemy.getImage().setReversed(false);
             }
-            
+
             enemy.setX(horizontalPos);
             
             if (!enemy.isEntityOnGround(enemy, gameData)) {
