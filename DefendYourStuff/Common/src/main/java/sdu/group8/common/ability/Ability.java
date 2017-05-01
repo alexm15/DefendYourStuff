@@ -23,7 +23,8 @@ public class Ability extends MovingEntity {
     private EffectContainer effects;
     private float angle;
     private String name;
-
+    private Entity owner;
+    
     public Ability(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, String name, EffectContainer effectContainer) {
         super(moveSpeed, weight, imageURL, dimension, pos, collisionType);
         this.effects = effectContainer;
@@ -38,6 +39,14 @@ public class Ability extends MovingEntity {
         this.name = ability.getName();
     }
 
+    public Entity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Entity owner) {
+        this.owner = owner;
+    }
+    
     public String getName() {
         return name;
     }

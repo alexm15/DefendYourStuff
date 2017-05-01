@@ -27,18 +27,9 @@ import sdu.group8.commonability.services.AbilitySPI;
     @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = AbilitySPI.class)}
 )
-
-/**
- *
- * @author joach
- */
 public class AbilityController implements IGameProcessingService, AbilitySPI {
 
-    private AbilityCatalog abilityCatalog;
-
-    public AbilityController() {
-        this.abilityCatalog = AbilityCatalog.getInstance();
-    }
+    private AbilityCatalog abilityCatalog = AbilityCatalog.getInstance();
 
     @Override
     public void process(GameData gameData, World world) {
@@ -51,8 +42,13 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
                 if (ab.getWeight() != 0) {
                     verticalVelocity = ab.getPosition().getY() - (ab.getWeight() * gameData.getGRAVITY());
                 }
-                Position position = new Position(ability.getX() + horizontalVelocity, ability.getY() - verticalVelocity * gameData.getDelta());
-                ability.setPosition(position);
+                if(ab.getPosition().isDirectionLeft()) {
+                    ability.setX(ability.getX() - horizontalVelocity);
+                } else if(ab.getPosition().isDirectionRight()) {
+                    ability.setX(ability.getX() + horizontalVelocity);
+                }
+                ability.setY(ability.getY() - verticalVelocity * gameData.getDelta());
+                
             }
         }
     }
@@ -81,32 +77,33 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
         float x = caller.getX();
         float y = caller.getY();
         System.out.println("Y pos: " + ability.getY());
-        ability.setPosition(x, y);
+        ability.setPosition(new Position(x, y, caller.getPosition().isDirectionLeft(), caller.getPosition().isDirectionRight()));
+        ability.setOwner(caller);
         return ability;
     }
 
     @Override
-    public <A extends AbilityData> List getAbilities() {
+    public List<AbilityData> getAbilities() {
         return abilityCatalog.getAbilityKeyList();
     }
 
     @Override
-    public <A extends AbilityData> List getRangedAbilities() {
+    public List<AbilityData> getRangedAbilities() {
         return abilityCatalog.getAbilities(RangedAbility.class);
     }
 
     @Override
-    public <A extends AbilityData> List getMeleeAbilities() {
+    public List<AbilityData> getMeleeAbilities() {
         return abilityCatalog.getAbilities(MeleeAbility.class);
     }
 
     @Override
-    public <A extends AbilityData> List getPositioningAbilities() {
+    public List<AbilityData> getPositioningAbilities() {
         return abilityCatalog.getAbilities(PositioningAbility.class);
     }
 
     @Override
-    public <A extends AbilityData> List getSummoningAbilities() {
+    public List<AbilityData> getSummoningAbilities() {
         return abilityCatalog.getAbilities(SummoningAbility.class);
     }
 

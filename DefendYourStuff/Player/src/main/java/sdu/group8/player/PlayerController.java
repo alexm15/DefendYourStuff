@@ -109,7 +109,7 @@ public class PlayerController
     public void start(GameData gameData, World world) {
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
-        Position position = new Position(x, y); //TODO: Should be startposition.
+        Position position = new Position(x, y, true, false); //TODO: Should be startposition.
         AbilitySPI abilityProvider = lookup.lookup(AbilitySPI.class);
         AbilityData ab = abilityProvider.getRangedAbilities().get(0);
 

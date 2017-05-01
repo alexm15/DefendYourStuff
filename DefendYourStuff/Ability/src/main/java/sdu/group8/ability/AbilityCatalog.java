@@ -46,7 +46,7 @@ public class AbilityCatalog {
         return r;
     }
 
-    public <A extends AbilityData> List<AbilityData> getAbilities(Class... abilityTypes) {
+    public List<AbilityData> getAbilities(Class... abilityTypes) {
         List<AbilityData> r = new ArrayList<>();
         for (AbilityData key : getAbilityKeys()) {
             for (Class abilityType : abilityTypes) {

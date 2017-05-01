@@ -7,6 +7,8 @@ package sdu.group8.ability;
 import sdu.group8.commonabilitytypes.RangedAbility;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.openide.util.lookup.ServiceProvider;
+import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.EffectContainer;
 import sdu.group8.common.data.DamageRange;
@@ -19,10 +21,10 @@ import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.commonability.abilities.Fireball;
 
-/**
- *
- * @author joach
- */
+@ServiceProviders(value = {
+    @ServiceProvider(service = IPreStartPluginService.class),
+    @ServiceProvider(service = IGamePluginService.class)}
+)
 public class AbilityPlugin implements IGamePluginService, IPreStartPluginService {
     
    private AbilityCatalog abilityCatalog; 
@@ -49,7 +51,7 @@ public class AbilityPlugin implements IGamePluginService, IPreStartPluginService
         Dimension dimension = new Dimension(width, height, width/2); //TODO: Should match the sprites size.
         float x = 0;
         float y = 0;
-        Position position = new Position(x, y); //TODO: Should be startposition.
+        Position position = new Position(x, y, false, false); //TODO: Should be startposition.
         float AOE = 0;
         float minDamage = 10;
         float maxDamage = 20;

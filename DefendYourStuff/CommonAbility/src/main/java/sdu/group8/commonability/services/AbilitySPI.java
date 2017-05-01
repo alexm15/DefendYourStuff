@@ -14,39 +14,45 @@ public interface AbilitySPI {
 
     /**
      * Creates a new Ability and returns it to the caller
+     *
      * @param caller The entity who creates the ability
      * @param ab The ability to be created
      * @return a subtype of Ability
      */
     Ability useAbility(Entity caller, AbilityData abilityData);
-    
+
     /**
      * Creates a collection of Abilities
+     *
      * @return a collection of Abilities
      */
-    <A extends AbilityData> List<A> getAbilities();
+    List<AbilityData> getAbilities();
 
     /**
      * Creates a collection of ranged Abilities
+     *
      * @return a collection of ranged Abilities
      */
-    <A extends AbilityData> List<A> getRangedAbilities();
+    List<AbilityData> getRangedAbilities();
 
     /**
      * Creates a collection of melee Abilities
+     *
      * @return a collection of melee Abilities
      */
-    <A extends AbilityData> List<A> getMeleeAbilities();
-    
+    List<AbilityData> getMeleeAbilities();
+
     /**
      * Creates a collection of positioning Abilities
+     *
      * @return a collection of positioning Abilities
      */
-    <A extends AbilityData> List<A> getPositioningAbilities();
-    
+    List<AbilityData> getPositioningAbilities();
+
     /**
      * Creates a collection of summoning Abilities
+     *
      * @return a collection of summoning Abilities
      */
-    <A extends AbilityData> List<A> getSummoningAbilities();
+    List<AbilityData> getSummoningAbilities();
 }
