@@ -15,7 +15,6 @@
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
                         <publicPackage>sdu.group8.commonabilitytypes</publicPackage>
                     </publicPackages>
