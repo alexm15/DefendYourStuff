@@ -32,7 +32,7 @@ public abstract class Building extends Entity{
         this.abilities = new AbilityContainer(ab);
     }
 
-    public AbilityContainer getAbilities() {
+    public AbilityContainer getAbilityContainer() {
         return abilities;
     }
 

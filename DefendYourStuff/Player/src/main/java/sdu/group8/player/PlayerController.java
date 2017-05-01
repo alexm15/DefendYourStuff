@@ -5,6 +5,7 @@
  */
 package sdu.group8.player;
 
+import java.util.ArrayList;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
@@ -31,7 +32,7 @@ import sdu.group8.commonability.services.AbilitySPI;
 
 public class PlayerController
         implements IGameProcessingService, IGamePluginService {
-    
+
     private Lookup lookup = Lookup.getDefault();
     private Player player;
     private float verticalVelocity;
@@ -77,12 +78,12 @@ public class PlayerController
                 verticalVelocity += player.getVerticalForce();
             }
         }
-        
+
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().SPACE)) {
             AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
-            //world.addEntity(abilityProvicer.useAbility(player, player.getAbilities().getAbilites().get(0), gameData));
+            world.addEntity(abilityProvicer.useAbility(player, player.getAbilityContainer().getAbilites().get(0)));
         }
-        
+
     }
 
     private void handleMouseInput(GameData gameData) {
@@ -109,11 +110,13 @@ public class PlayerController
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
         Position position = new Position(x, y); //TODO: Should be startposition.
-        AbilityData ab = null;
-        
+        AbilitySPI abilityProvider = lookup.lookup(AbilitySPI.class);
+        AbilityData ab = abilityProvider.getRangedAbilities().get(0);
+
         player = new Player(position, ab);
         gameData.setPlayerGold(0);
         world.addEntity(player);
+
         gameData.setPlayerPosition(position);
     }
 

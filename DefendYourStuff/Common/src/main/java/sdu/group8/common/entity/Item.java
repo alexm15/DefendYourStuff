@@ -28,7 +28,7 @@ public class Item extends Entity{
         this.abilities = new AbilityContainer(ab);
     }
 
-    public AbilityContainer getAbilities() {
+    public AbilityContainer getAbilityContainer() {
         return abilities;
     }
 

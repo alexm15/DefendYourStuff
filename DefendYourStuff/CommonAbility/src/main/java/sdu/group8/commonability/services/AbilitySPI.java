@@ -1,6 +1,7 @@
 package sdu.group8.commonability.services;
 
 import java.util.Collection;
+import java.util.List;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
@@ -23,29 +24,29 @@ public interface AbilitySPI {
      * Creates a collection of Abilities
      * @return a collection of Abilities
      */
-    <A extends Ability> Collection getAbilities();
+    <A extends AbilityData> List<A> getAbilities();
 
     /**
      * Creates a collection of ranged Abilities
      * @return a collection of ranged Abilities
      */
-    <A extends Ability> Collection getRangedAbilities();
+    <A extends AbilityData> List<A> getRangedAbilities();
 
     /**
      * Creates a collection of melee Abilities
      * @return a collection of melee Abilities
      */
-    <A extends Ability> Collection getMeleeAbilities();
+    <A extends AbilityData> List<A> getMeleeAbilities();
     
     /**
      * Creates a collection of positioning Abilities
      * @return a collection of positioning Abilities
      */
-    <A extends Ability> Collection getPositioningAbilities();
+    <A extends AbilityData> List<A> getPositioningAbilities();
     
     /**
      * Creates a collection of summoning Abilities
      * @return a collection of summoning Abilities
      */
-    <A extends Ability> Collection getSummoningAbilities();
+    <A extends AbilityData> List<A> getSummoningAbilities();
 }

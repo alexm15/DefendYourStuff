@@ -10,6 +10,7 @@ import sdu.group8.commonabilitytypes.PositioningAbility;
 import sdu.group8.commonabilitytypes.RangedAbility;
 import sdu.group8.commonabilitytypes.SummoningAbility;
 import java.util.Collection;
+import java.util.List;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
@@ -22,12 +23,10 @@ import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.common.weapon.Weapon;
 import sdu.group8.commonability.services.AbilitySPI;
 
-
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = AbilitySPI.class)}
 )
-
 
 /**
  *
@@ -35,25 +34,25 @@ import sdu.group8.commonability.services.AbilitySPI;
  */
 public class AbilityController implements IGameProcessingService, AbilitySPI {
 
-    private AbilityCatalog abilityCatalog; 
-    
+    private AbilityCatalog abilityCatalog;
+
     public AbilityController() {
         this.abilityCatalog = AbilityCatalog.getInstance();
     }
-    
+
     @Override
     public void process(GameData gameData, World world) {
         for (Entity ability : world.getEntities(RangedAbility.class)) {
-            if(!ability.isEntityOnGround(ability, gameData)) {
+            if (!ability.isEntityOnGround(ability, gameData)) {
                 Ability ab = (Ability) ability;
                 float horizontalVelocity = 0;
                 float verticalVelocity = 0;
                 horizontalVelocity = ab.getMoveSpeed() * gameData.getDelta();
                 if (ab.getWeight() != 0) {
-                    verticalVelocity = ab.getPosition().getY()-(ab.getWeight()*gameData.getGRAVITY());
+                    verticalVelocity = ab.getPosition().getY() - (ab.getWeight() * gameData.getGRAVITY());
                 }
                 Position position = new Position(ability.getX() + horizontalVelocity, ability.getY() - verticalVelocity * gameData.getDelta());
-                ability.setPosition(position);   
+                ability.setPosition(position);
             }
         }
     }
@@ -63,14 +62,14 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
 //        //return abilityCatalog.getAbility(name);
 //        return fireball();
 //    }
-    
+
     @Override
     public Ability useAbility(Entity caller, AbilityData abilityData) {
         Ability ability;
         Ability ab = abilityCatalog.getAbility(abilityData);
-        if(ab instanceof RangedAbility) {
+        if (ab instanceof RangedAbility) {
             ability = new RangedAbility(ab);
-        } else if (ab instanceof MeleeAbility ) {
+        } else if (ab instanceof MeleeAbility) {
             ability = new MeleeAbility(ab);
         } else if (ab instanceof PositioningAbility) {
             ability = new PositioningAbility(ab);
@@ -87,28 +86,28 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     }
 
     @Override
-    public <A extends Ability> Collection getAbilities() {
-        return abilityCatalog.getAbilities();
+    public <A extends AbilityData> List getAbilities() {
+        return abilityCatalog.getAbilityKeyList();
     }
 
     @Override
-    public <A extends Ability> Collection getRangedAbilities() {
+    public <A extends AbilityData> List getRangedAbilities() {
         return abilityCatalog.getAbilities(RangedAbility.class);
     }
 
     @Override
-    public <A extends Ability> Collection getMeleeAbilities() {
+    public <A extends AbilityData> List getMeleeAbilities() {
         return abilityCatalog.getAbilities(MeleeAbility.class);
     }
 
     @Override
-    public <A extends Ability> Collection getPositioningAbilities() {
+    public <A extends AbilityData> List getPositioningAbilities() {
         return abilityCatalog.getAbilities(PositioningAbility.class);
     }
 
     @Override
-    public <A extends Ability> Collection getSummoningAbilities() {
+    public <A extends AbilityData> List getSummoningAbilities() {
         return abilityCatalog.getAbilities(SummoningAbility.class);
     }
-    
+
 }
