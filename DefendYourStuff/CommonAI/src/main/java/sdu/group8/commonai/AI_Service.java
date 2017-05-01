@@ -5,6 +5,7 @@
  */
 package sdu.group8.commonai;
 
+import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.commoncharacter.Character;
 
@@ -13,5 +14,5 @@ import sdu.group8.commoncharacter.Character;
  * @author Alexander
  */
 public interface AI_Service {
-    void assignAttackAndDodgeEnemyAI(World world, Character enemy);
+    void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData);
 }

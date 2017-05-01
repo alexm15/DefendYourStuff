@@ -31,6 +31,8 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     @Override
     public void process(GameData gameData, World world) {
         
+        
+        
         float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
         
         for (Character enemy : enemies.values()) {
