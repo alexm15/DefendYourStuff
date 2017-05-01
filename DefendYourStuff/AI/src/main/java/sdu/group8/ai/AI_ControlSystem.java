@@ -5,6 +5,8 @@
  */
 package sdu.group8.ai;
 
+import org.openide.util.lookup.ServiceProvider;
+import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
@@ -17,6 +19,9 @@ import sdu.group8.commonenemy.IEnemyAction;
  *
  * @author Alexander
  */
+@ServiceProviders(value = {
+    @ServiceProvider(service = AI_Service.class)}
+)
 public class AI_ControlSystem
         implements AI_Service {
 
