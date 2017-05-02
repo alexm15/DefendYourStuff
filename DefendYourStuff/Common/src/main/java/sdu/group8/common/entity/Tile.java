@@ -5,12 +5,14 @@
  */
 package sdu.group8.common.entity;
 
+import sdu.group8.common.data.Image;
+
 /**
  *
  * @author Martin
  */
 public interface Tile{
     
-    String getImageURL();
+    Image getImage();
     
 }

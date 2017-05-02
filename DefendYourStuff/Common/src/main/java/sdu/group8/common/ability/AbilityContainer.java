@@ -26,4 +26,8 @@ public class AbilityContainer {
         return abilites;
     }
     
+    public void addAbility(Ability ab) {
+        abilites.add(ab);
+    }
+    
 }

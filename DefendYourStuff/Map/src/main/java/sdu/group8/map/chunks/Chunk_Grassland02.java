@@ -6,6 +6,7 @@
 package sdu.group8.map.chunks;
 
 import org.openide.util.Lookup;
+import sdu.group8.common.data.Image;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
@@ -33,29 +34,23 @@ public class Chunk_Grassland02 extends Chunk {
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},
         {d01, air, air, air, air, air},
-        {d01, air, air, air, air, air},
-    };
+        {d01, air, air, air, air, air},};
 
-    public Chunk_Grassland02(int tileOffsetX) {
-        super(tileOffsetX);
+    public Chunk_Grassland02(float positionOffset) {
+        super(new Image("Chunks/chunk_grassland01_bg01.png", false), new Image("defaultBackground.png", false), positionOffset);
         setTileMatrix(BG_GRASSLAND02);
     }
 
     @Override
     public void createEntities(World world) {
 
-        Position rubble1 = new Position(((getDimension().getWidth() / 4) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
-        Position rubble2 = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getTileOffsetX()) * TILE_SIZE, TILE_SIZE);
+        Position rubble1 = new Position(((getDimension().getWidth() / 4) + this.getPositionOffset()) * TILE_SIZE, TILE_SIZE);
+        Position rubble2 = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getPositionOffset()) * TILE_SIZE, TILE_SIZE);
 
         for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
             buildable.createRubbleBuilding(world, rubble1);
             buildable.createRubbleBuilding(world, rubble2);
         }
-    }
-
-    @Override
-    public String getBackgroundImageURL() {
-        return "Chunks/chunk_bg_grassland02.PNG";
     }
 
 }

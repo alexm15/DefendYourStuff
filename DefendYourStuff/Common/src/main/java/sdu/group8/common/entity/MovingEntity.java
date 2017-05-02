@@ -20,8 +20,8 @@ public abstract class MovingEntity extends Entity {
     private float moveSpeed;
     private float weight;
     
-    public MovingEntity(float moveSpeed, float weight, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(imageURL, dimension, pos, collisionType, ab);
+    public MovingEntity(float moveSpeed, float weight, String imageURL, Dimension dimension, Position pos, CollisionType collisionType) {
+        super(imageURL, dimension, pos, collisionType);
         this.moveSpeed = moveSpeed;
         this.weight = weight;
     }

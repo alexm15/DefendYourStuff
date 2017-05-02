@@ -29,17 +29,27 @@ public class World {
         return entitíes.values();
     }
 
-    public <E extends Entity> Collection<Entity> getEntities(Class<E>... entityTypes) {
+    public Collection<Entity> getEntities(Class... entityTypes) {
         Collection<Entity> r = new ArrayList<>();
         for (Entity entity : getEntities()) {
-            for (Class<E> entityType : entityTypes) {
-                if (entityType.equals(entityType)) {
+            for (Class entityType : entityTypes) {
+                if (entityType.equals(entity.getClass())) {
                     r.add(entity);
                 }
             }
         }
 
         return r;
+    }
+    
+        public void removeEntities(Class... entityTypes) {
+        for (Entity entity : getEntities()) {
+            for (Class entityType : entityTypes) {
+                if (entityType.equals(entity.getClass())) {
+                    removeEntity(entity);
+                }
+            }
+        }
     }
 
     public void addEntity(Entity entity) {
