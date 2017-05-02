@@ -28,41 +28,30 @@ import sdu.group8.commonenemy.IEnemyService;
 public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService {
 
     private Map<UUID, Character> enemies = new ConcurrentHashMap<>();
-    private float demoMove = 0;
-    private boolean demoGoLeft = true;
 
     @Override
     public void process(GameData gameData, World world) {
+        
+        float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
+        
         for (Character enemy : enemies.values()) {
+            float horizontalPos = enemy.getX();
 
-            demoMove = enemy.getX();
-
-            if (demoMove < -300) {
-                demoGoLeft = false;
+            if (enemy.getX() < basePosX) {
+                horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
             }
-            if (demoMove > 0) {
-                demoGoLeft = true;
+            else {
+                horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
             }
-
-            if (demoGoLeft) {
-                demoMove -= enemy.getMoveSpeed() * gameData.getDelta();
-            } else {
-                demoMove += enemy.getMoveSpeed() * gameData.getDelta();
-            }
-
-            enemy.setX(demoMove);
-
-            if (!enemy.isEntityOnGround(enemy, gameData)) {
-
-            } else {
-                enemy.setEntityOnGround(enemy, gameData);
-            }
+            
+            enemy.setX(horizontalPos);
         }
     }
 
     @Override
     public void start(GameData gameData, World world) {
-        createMediumEnemy(world, gameData);
+        createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
+        createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
     }
 
     @Override
@@ -71,7 +60,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     }
 
     @Override
-    public void createMediumEnemy(World world, GameData gameData) {
+    public void createMediumEnemy(World world, GameData gameData, Position position) {
         MediumEnemy enemy;
         float health = 100;
         float moveSpeed = 200;
@@ -89,6 +78,12 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         gameData.setPlayerGold(0);
         world.addEntity(enemy);
         enemies.put(enemy.getID(), enemy);
+    }
+
+    @Override
+    public void removeAllEnemies(World world) {
+        //TODO: implement this method
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

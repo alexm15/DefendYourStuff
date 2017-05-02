@@ -16,8 +16,10 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.weapon.Weapon;
+import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonplayer.IPlayer;
+import sdu.group8.commonplayer.IPlayerAction;
 
 /**
  *
@@ -70,7 +72,9 @@ public class Player extends Character implements IPlayer {
 
     @Override
     public void collision(Entity otherEntity) {
-        // TODO: create actions
+        if (otherEntity instanceof IPlayerAction) {
+            ((IPlayerAction) otherEntity).playerAction((Entity) this);
+        }
     }
 
 }
