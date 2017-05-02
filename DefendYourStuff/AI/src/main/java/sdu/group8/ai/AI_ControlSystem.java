@@ -39,7 +39,7 @@ public class AI_ControlSystem
         if (enemy.getX() < targetX) {
             horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
         }
-        else {
+        else if (enemy.getX() > targetX) {
             horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
         }
         enemy.setX(horizontalPos);
@@ -47,7 +47,7 @@ public class AI_ControlSystem
 
     private Entity getClosesTarget(Character enemy, World world) {
 
-        Entity closestTarget = null;
+        Entity closestTarget = enemy;
         float shortestdist = Float.MAX_VALUE; //FIXME: if you know a better value!
         float enemyX = enemy.getX();
         for (Entity entity : world.getEntities()) {

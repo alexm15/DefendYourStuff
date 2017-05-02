@@ -8,6 +8,7 @@ package sdu.group8.enemy;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.Dimension;
@@ -18,6 +19,7 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
+import sdu.group8.commonai.AI_Service;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyService;
 
@@ -29,29 +31,21 @@ import sdu.group8.commonenemy.IEnemyService;
 public class EnemyController
         implements IGameProcessingService, IGamePluginService, IEnemyService {
 
+    private AI_Service aiService;
+
     @Override
     public void process(GameData gameData, World world) {
-
+        aiService = Lookup.getDefault().lookup(AI_Service.class);
         float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
 
         for (Entity enemyEntity : world.getEntities(MediumEnemy.class)) {
             Character enemy = (Character) enemyEntity;
-            float horizontalPos = enemy.getX();
-
-            if (enemy.getX() < basePosX) {
-                horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
-                enemy.getImage().setReversed(true);
-            }
-            else {
-                horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
-                enemy.getImage().setReversed(false);
-            }
-
-            enemy.setX(horizontalPos);
+            aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
             
             if (!enemy.isEntityOnGround(enemy, gameData)) {
 
-            } else {
+            }
+            else {
                 enemy.setEntityOnGround(enemy, gameData);
             }
         }
@@ -72,7 +66,7 @@ public class EnemyController
     public void createMediumEnemy(World world, GameData gameData, Position position) {
         MediumEnemy enemy;
         float health = 100;
-        float moveSpeed = 200;
+        float moveSpeed = 100;
         float weight = 10;
         float width = 50;
         float height = 50;
