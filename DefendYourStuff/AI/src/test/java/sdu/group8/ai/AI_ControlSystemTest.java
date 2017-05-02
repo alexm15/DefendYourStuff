@@ -47,13 +47,14 @@ public class AI_ControlSystemTest {
     @Before
     public void setUp() {
         aiControl = new AI_ControlSystem();
-        someEnemy = new Character(0, 0, 0, null, null, new Position(0, 0), CollisionType.CIRLCE, new Ability[0]) {
+        someEnemy = new Character(0, 0, 0, null, null, new Position(0, 0), CollisionType.CIRCLE, new Ability[0]) {
             @Override
             public void collision(Entity otherEntity) {
             }
         }; 
         someEnemy.setMoveSpeed(10);
-        dummyAttackable = new DummyAttackable("", null, new Position(10, 0), CollisionType.CIRLCE, new Ability[0]);
+        //dummyAttackable = new DummyAttackable("", null, new Position(10, 0), CollisionType.CIRCLE, new Ability[0]);
+        dummyAttackable = new DummyAttackable(0, null, new Position(10, 0));
         world = new World();
         gameData = new GameData();
         gameData.setDelta(0.5f);
@@ -90,7 +91,8 @@ public class AI_ControlSystemTest {
     @Test
     public void testNewEnemyIsCloser() {
         world.addEntity(dummyAttackable);
-        DummyAttackable newDummy = new DummyAttackable("", null, new Position(-9, 0), CollisionType.CIRLCE, new Ability[0]);
+        //DummyAttackable newDummy = new DummyAttackable("", null, new Position(-9, 0), CollisionType.CIRCLE, new Ability[0]);
+        DummyAttackable newDummy = new DummyAttackable(0, null, new Position(-9, 0));
         world.addEntity(newDummy);
         
         float initialNewDummyDist = Math.abs(newDummy.getX()-someEnemy.getX());

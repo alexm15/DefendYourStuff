@@ -12,17 +12,21 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonenemy.IEnemyAction;
+import sdu.group8.commoncharacter.Character;
 
 /**
  *
  * @author Alexander
  */
-public class DummyAttackable extends Entity implements IEnemyAction
+public class DummyAttackable extends Character implements IEnemyAction
 {
 
-    public DummyAttackable(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(imageURL, dimension, pos, collisionType, ab);
+    public DummyAttackable(float moveSpeed, Dimension dimension, Position pos) {
+        super(moveSpeed, 1f, 500, "", dimension, pos, CollisionType.BOX, new Ability[1]);
     }
+
+
+
 
     @Override
     public void collision(Entity otherEntity) {
