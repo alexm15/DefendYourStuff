@@ -14,7 +14,7 @@ import sdu.group8.common.entity.Building;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.commonability.abilities.Fireball;
+import sdu.group8.commonability.abilities.FireballData;
 import sdu.group8.commonbuilding.services.IDefBuilding;
 
 /**
@@ -24,7 +24,7 @@ import sdu.group8.commonbuilding.services.IDefBuilding;
 public class Castle extends Building implements IDefBuilding {
 
     public Castle(Position pos) {
-        super("Building/castle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, true, 0, 100, new Fireball());
+        super("Building/castle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, true, 0, 100, new FireballData());
 
     }
 

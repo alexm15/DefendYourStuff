@@ -18,6 +18,11 @@ public class Direction {
         this.isLeft = isLeft;
         this.isRight = !isLeft;
     }
+    
+    public Direction(Direction direction) {
+        this.isLeft = direction.isLeft;
+        this.isRight = direction.isRight;
+    }
 
     public boolean isIsLeft() {
         return isLeft;

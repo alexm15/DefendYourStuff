@@ -12,7 +12,7 @@ import sdu.group8.common.entity.Building;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.commonability.abilities.Fireball;
+import sdu.group8.commonability.abilities.FireballData;
 import sdu.group8.commonbuilding.services.IBuildingService;
 
 /**
@@ -28,7 +28,7 @@ public class Rubble
                 new Dimension(35, 20, 0),
                 pos, CollisionType.BOX,
                 BuildingType.DEFENCE,
-                false, 1, 1, new Fireball());
+                false, 1, 1, new FireballData());
     }
 
     @Override

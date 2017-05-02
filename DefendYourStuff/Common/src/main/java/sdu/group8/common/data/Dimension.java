@@ -20,6 +20,12 @@ public class Dimension {
         this.radius = radius;
     }
 
+    public Dimension(Dimension dimension) {
+        this.width = dimension.getWidth();
+        this.height = dimension.getHeight();
+        this.radius = dimension.getRadius();
+    }
+
     public float getWidth() {
         return width;
     }

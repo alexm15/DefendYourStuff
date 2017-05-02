@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.ability;
+package sdu.group8.ability.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;

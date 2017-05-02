@@ -26,20 +26,20 @@ public abstract class Entity {
     private Direction direction;
     private Image image;
 
-    public Entity(String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType) {
+    public Entity(String imageURL, Dimension dimension, Direction direction, Position position, CollisionType collisionType) {
         this.image = new Image(imageURL, false);
         this.ID = UUID.randomUUID();
-        this.dimension = dimension;
-        this.pos = pos;
+        this.dimension = new Dimension(dimension);
+        this.pos = new Position(position);
         this.collisionType = collisionType;
-        this.direction = direction;
+        this.direction = new Direction(direction);
     }
 
-    public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType) {
+    public Entity(String imageURL, Dimension dimension, Position position, CollisionType collisionType) {
         this.image = new Image(imageURL, false);
         this.ID = UUID.randomUUID();
-        this.dimension = dimension;
-        this.pos = pos;
+        this.dimension = new Dimension(dimension);
+        this.pos = new Position(position);
         this.collisionType = collisionType;
         this.direction = new Direction(true);
     }

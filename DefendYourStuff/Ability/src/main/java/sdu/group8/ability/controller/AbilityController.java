@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.ability;
+package sdu.group8.ability.controller;
 
 import sdu.group8.commonabilitytypes.MeleeAbility;
 import sdu.group8.commonabilitytypes.PositioningAbility;
@@ -15,6 +15,7 @@ import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
@@ -34,8 +35,8 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity ability : world.getEntities(RangedAbility.class)) {
-            if(!ability.isEntityOnGround(ability, gameData)) {
-                
+            if (!ability.isEntityOnGround(ability, gameData)) {
+
                 Ability ab = (Ability) ability;
                 float horizontalVelocity = 0;
                 float verticalVelocity = 0;
@@ -43,13 +44,13 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
                 if (ab.getWeight() != 0) {
                     verticalVelocity = ab.getPosition().getY() - (ab.getWeight() * gameData.getGRAVITY());
                 }
-                if(ab.getDirection().isIsLeft()) {
+                if (ab.getDirection().isIsLeft()) {
                     ability.setX(ability.getX() - horizontalVelocity);
-                } else if(ab.getDirection().isIsRight()) {
+                } else if (ab.getDirection().isIsRight()) {
                     ability.setX(ability.getX() + horizontalVelocity);
                 }
                 ability.setY(ability.getY() - verticalVelocity * gameData.getDelta());
-                
+
             }
         }
     }
@@ -77,11 +78,7 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
         }
         float x = caller.getX();
         float y = caller.getY();
-        if (caller.getDirection().isIsLeft()) {
-            ability.setDirection(true);
-        } else {
-            ability.setDirection(false);
-        }
+        ability.setDirection(new Direction(caller.getDirection()));
         System.out.println("Y pos: " + ability.getY());
         ability.setPosition(new Position(x, y));
         ability.setOwner(caller);
