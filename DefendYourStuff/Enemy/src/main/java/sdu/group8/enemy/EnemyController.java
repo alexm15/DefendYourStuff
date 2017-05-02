@@ -70,7 +70,6 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
         float x = 0;
         float y = gameData.getTILE_SIZE();
-        Position position = new Position(x, y); //TODO: Should be startposition.
         Direction direction = new Direction(true);
 
         String imageURL = "Enemy/dickbutt.gif";
