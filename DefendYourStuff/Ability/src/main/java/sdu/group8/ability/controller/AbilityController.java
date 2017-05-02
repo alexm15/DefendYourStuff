@@ -35,9 +35,12 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity ability : world.getEntities(RangedAbility.class)) {
-            if (!ability.isEntityOnGround(ability, gameData)) {
+            Ability ab = (Ability) ability;
+            if (ab.getExpiration() <= 0) {
+                world.removeEntity(ability);
+            } else if (!ab.isEntityOnGround(ab, gameData)) {
 
-                Ability ab = (Ability) ability;
+                ab.updateExpiration(gameData.getDelta());
                 float horizontalVelocity = 0;
                 float verticalVelocity = 0;
                 horizontalVelocity = ab.getMoveSpeed() * gameData.getDelta();
@@ -50,16 +53,9 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
                     ability.setX(ability.getX() + horizontalVelocity);
                 }
                 ability.setY(ability.getY() - verticalVelocity * gameData.getDelta());
-
             }
         }
     }
-//
-//    @Override
-//    public Ability getAbility(String name) {
-//        //return abilityCatalog.getAbility(name);
-//        return fireball();
-//    }
 
     @Override
     public Ability useAbility(Entity caller, AbilityData abilityData) {

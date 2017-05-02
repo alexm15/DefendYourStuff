@@ -24,19 +24,30 @@ public class Ability extends MovingEntity {
     private EffectContainer effects;
     private float angle;
     private Entity owner;
+    private float expiration = 1;
     
-    public Ability(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer) {
+    public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer) {
         super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);
         this.effects = effectContainer;
         this.damageRange = damageRange;
+        this.expiration = expiration;
     }
     
     public Ability(Ability ability) {
         super(ability.getMoveSpeed(), ability.getWeight(), ability.getImage().getImageURL(), ability.getDimension(), ability.getDirection(), ability.getPosition(), ability.getCollisionType());
         this.effects = ability.getEffects();
         this.damageRange = ability.getDamageRange();
+        this.expiration = ability.getExpiration();
     }
 
+    public float getExpiration() {
+        return expiration;
+    }
+
+    public void updateExpiration(float deltaTime) {
+        this.expiration -= deltaTime;
+    }
+    
     public Entity getOwner() {
         return owner;
     }

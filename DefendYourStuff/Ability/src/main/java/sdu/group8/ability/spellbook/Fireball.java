@@ -20,7 +20,7 @@ import sdu.group8.commonabilitytypes.RangedAbility;
 public class Fireball extends RangedAbility {
     
     public Fireball() {
-        super(300f, 0f, new DamageRange(10,20), "abilities/fireball.png", new Dimension(30,30,15), new Direction(true), new Position(0,0), CollisionType.CIRCLE, new EffectContainer());
+        super(1f, 450f, 0f, new DamageRange(10,20), "abilities/fireball.png", new Dimension(30,30,15), new Direction(true), new Position(0,0), CollisionType.CIRCLE, new EffectContainer());
     }
     
 }
