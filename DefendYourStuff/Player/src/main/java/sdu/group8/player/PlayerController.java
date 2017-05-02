@@ -5,18 +5,13 @@
  */
 package sdu.group8.player;
 
-import java.util.ArrayList;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
-import sdu.group8.common.data.DamageRange;
-import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonability.services.AbilitySPI;
@@ -29,7 +24,6 @@ import sdu.group8.commonability.services.AbilitySPI;
     @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class)}
 )
-
 public class PlayerController
         implements IGameProcessingService, IGamePluginService {
 
@@ -60,16 +54,17 @@ public class PlayerController
         Position position = new Position(player.getX() + horizontalVelocity, player.getY() + verticalVelocity * gameData.getDelta());
         player.setPosition(position);
         gameData.setPlayerPosition(position);
-
     }
 
     private void handleKeyboardInput(GameData gameData, World world) {
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             horizontalVelocity += player.getMoveSpeed() * gameData.getDelta();
+            player.setDirection(false);
         }
 
         if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
             horizontalVelocity -= player.getMoveSpeed() * gameData.getDelta();
+            player.setDirection(true);
         }
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {
@@ -109,7 +104,8 @@ public class PlayerController
     public void start(GameData gameData, World world) {
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
-        Position position = new Position(x, y, true, false); //TODO: Should be startposition.
+        Position position = new Position(x, y); //TODO: Should be startposition.
+        
         AbilitySPI abilityProvider = lookup.lookup(AbilitySPI.class);
         AbilityData ab = abilityProvider.getRangedAbilities().get(0);
 

@@ -5,14 +5,13 @@
  */
 package sdu.group8.ability;
 import sdu.group8.commonabilitytypes.RangedAbility;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.EffectContainer;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
@@ -51,14 +50,15 @@ public class AbilityPlugin implements IGamePluginService, IPreStartPluginService
         Dimension dimension = new Dimension(width, height, width/2); //TODO: Should match the sprites size.
         float x = 0;
         float y = 0;
-        Position position = new Position(x, y, false, false); //TODO: Should be startposition.
+        Position position = new Position(x, y); //TODO: Should be startposition.
+        Direction direction = new Direction(false);
         float AOE = 0;
         float minDamage = 10;
         float maxDamage = 20;
         EffectContainer effectContainer = new EffectContainer();
         DamageRange damageRange = new DamageRange(minDamage, maxDamage);
         String imageURL = "abilities/fireball.png";
-        Ability abi = new RangedAbility(moveSpeed, weight, damageRange, imageURL, dimension, position, CollisionType.CIRCLE, "whatever", effectContainer);
+        Ability abi = new RangedAbility(moveSpeed, weight, damageRange, imageURL, dimension, direction, position, CollisionType.CIRCLE, effectContainer);
         
         abilityCatalog.addAbility(new Fireball(), abi);
     }

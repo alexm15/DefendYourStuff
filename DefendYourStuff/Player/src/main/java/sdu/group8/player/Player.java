@@ -11,6 +11,7 @@ import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
@@ -29,7 +30,7 @@ public class Player extends Character implements IPlayer {
     private final float JUMP_FORCE = 350;
 
     public Player(Position position, AbilityData... ab) {
-        super(200, 1.25f, 100, "Player/defaultPlayer.PNG", new Dimension(50, 50, 25), position, CollisionType.BOX, ab);
+        super(200, 1.25f, 100, "Player/defaultPlayer.PNG", new Dimension(50, 50, 25), new Direction(true), position, CollisionType.BOX, ab);
     }
 
     /**

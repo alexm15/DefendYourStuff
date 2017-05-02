@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
@@ -81,9 +82,10 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         float x = 0;
         float y = gameData.getTILE_SIZE();
         Position position = new Position(x, y); //TODO: Should be startposition.
+        Direction direction = new Direction(true);
 
         String imageURL = "Enemy/dickbutt.gif";
-        enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
+        enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX);
         gameData.setPlayerGold(0);
         world.addEntity(enemy);
         enemies.put(enemy.getID(), enemy);

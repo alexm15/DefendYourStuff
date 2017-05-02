@@ -24,6 +24,16 @@ public abstract class Entity {
     private Position pos;
     private CollisionType collisionType;
     private String imageURL;
+    private Direction direction;
+
+    public Entity(String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType) {
+        this.imageURL = imageURL;
+        this.ID = UUID.randomUUID();
+        this.dimension = dimension;
+        this.pos = pos;
+        this.collisionType = collisionType;
+        this.direction = direction;
+    }
 
     public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType) {
         this.imageURL = imageURL;
@@ -31,12 +41,33 @@ public abstract class Entity {
         this.dimension = dimension;
         this.pos = pos;
         this.collisionType = collisionType;
+        this.direction = new Direction(true);
+    }
+
+    public Position getPos() {
+        return pos;
+    }
+
+    public void setPos(Position pos) {
+        this.pos = pos;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(boolean isLeft) {
+        this.direction.setIsLeft(isLeft);
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
-    
+
     /**
      * Is used to finde out if the entity is on the ground OR under the ground.
      *
@@ -64,7 +95,7 @@ public abstract class Entity {
     public String getImageURL() {
         return imageURL;
     }
-    
+
     public UUID getID() {
         return ID;
     }
@@ -88,7 +119,7 @@ public abstract class Entity {
     public void setHeight(float height) {
         this.dimension.setHeight(height);
     }
-    
+
     public void setY(float y) {
         pos.setY(y);
     }
@@ -100,7 +131,7 @@ public abstract class Entity {
     public float getY() {
         return pos.getY();
     }
-    
+
     public float getX() {
         return pos.getX();
     }

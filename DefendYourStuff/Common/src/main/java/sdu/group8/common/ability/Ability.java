@@ -8,6 +8,7 @@ package sdu.group8.common.ability;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.entity.MovingEntity;
@@ -22,21 +23,18 @@ public class Ability extends MovingEntity {
     private boolean isHit = false;
     private EffectContainer effects;
     private float angle;
-    private String name;
     private Entity owner;
     
-    public Ability(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, String name, EffectContainer effectContainer) {
-        super(moveSpeed, weight, imageURL, dimension, pos, collisionType);
+    public Ability(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer) {
+        super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);
         this.effects = effectContainer;
         this.damageRange = damageRange;
-        this.name = name;
     }
     
     public Ability(Ability ability) {
-        super(ability.getMoveSpeed(), ability.getWeight(), ability.getImageURL(), ability.getDimension(), ability.getPosition(), ability.getCollisionType());
+        super(ability.getMoveSpeed(), ability.getWeight(), ability.getImageURL(), ability.getDimension(), ability.getDirection(), ability.getPosition(), ability.getCollisionType());
         this.effects = ability.getEffects();
         this.damageRange = ability.getDamageRange();
-        this.name = ability.getName();
     }
 
     public Entity getOwner() {
@@ -45,10 +43,6 @@ public class Ability extends MovingEntity {
 
     public void setOwner(Entity owner) {
         this.owner = owner;
-    }
-    
-    public String getName() {
-        return name;
     }
     
     public DamageRange getDamageRange() {
