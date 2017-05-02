@@ -75,6 +75,7 @@
         <module>Interacter</module>
         <module>Ability</module>
         <module>CommonMap</module>
+        <module>Building</module>
         <module>Enemy</module>
         <module>CommonAbilityTypes</module>
         <module>CommonAbility</module>

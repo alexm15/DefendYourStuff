@@ -60,11 +60,13 @@ public class PlayerController
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             horizontalVelocity += player.getMoveSpeed() * gameData.getDelta();
             player.setDirection(false);
+            player.getImage().setReversed(true);
         }
 
         if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
             horizontalVelocity -= player.getMoveSpeed() * gameData.getDelta();
             player.setDirection(true);
+            player.getImage().setReversed(false);
         }
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().W)) {

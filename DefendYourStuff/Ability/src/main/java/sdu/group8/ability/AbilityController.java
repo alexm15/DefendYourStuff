@@ -34,7 +34,8 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity ability : world.getEntities(RangedAbility.class)) {
-            if (!ability.isEntityOnGround(ability, gameData)) {
+            if(!ability.isEntityOnGround(ability, gameData)) {
+                
                 Ability ab = (Ability) ability;
                 float horizontalVelocity = 0;
                 float verticalVelocity = 0;

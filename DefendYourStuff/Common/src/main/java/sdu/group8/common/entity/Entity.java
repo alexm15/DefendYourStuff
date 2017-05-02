@@ -34,9 +34,10 @@ public abstract class Entity {
         this.collisionType = collisionType;
         this.direction = direction;
     }
+    private Image image;
 
     public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType) {
-        this.imageURL = imageURL;
+        this.image = new Image(imageURL, false);
         this.ID = UUID.randomUUID();
         this.dimension = dimension;
         this.pos = pos;
@@ -63,9 +64,9 @@ public abstract class Entity {
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    
+    public Image getImage() {
+        return this.image;
     }
 
     /**
@@ -90,10 +91,6 @@ public abstract class Entity {
     public void setEntityOnGround(Entity entity, GameData gameData) {
         entity.setPosition(entity.getPosition().getX(), (gameData.getGroundHeight() + entity.getHeight() / 2));
 
-    }
-
-    public String getImageURL() {
-        return imageURL;
     }
 
     public UUID getID() {

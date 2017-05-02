@@ -16,35 +16,45 @@ import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyService;
 
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class),
+    @ServiceProvider(service = IGameProcessingService.class)
+    ,
     @ServiceProvider(service = IGamePluginService.class)}
 )
-public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService {
-
-    private Map<UUID, Character> enemies = new ConcurrentHashMap<>();
+public class EnemyController
+        implements IGameProcessingService, IGamePluginService, IEnemyService {
 
     @Override
     public void process(GameData gameData, World world) {
-        
+
         float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
-        
-        for (Character enemy : enemies.values()) {
+
+        for (Entity enemyEntity : world.getEntities(MediumEnemy.class)) {
+            Character enemy = (Character) enemyEntity;
             float horizontalPos = enemy.getX();
 
             if (enemy.getX() < basePosX) {
                 horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.getImage().setReversed(true);
             }
             else {
                 horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.getImage().setReversed(false);
             }
-            
+
             enemy.setX(horizontalPos);
+            
+            if (!enemy.isEntityOnGround(enemy, gameData)) {
+
+            } else {
+                enemy.setEntityOnGround(enemy, gameData);
+            }
         }
     }
 
@@ -76,13 +86,11 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX);
         gameData.setPlayerGold(0);
         world.addEntity(enemy);
-        enemies.put(enemy.getID(), enemy);
     }
 
     @Override
     public void removeAllEnemies(World world) {
-        //TODO: implement this method
-        throw new UnsupportedOperationException("Not supported yet.");
+        world.removeEntities(MediumEnemy.class);
     }
 
 }

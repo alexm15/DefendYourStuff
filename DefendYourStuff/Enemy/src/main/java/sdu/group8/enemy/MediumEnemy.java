@@ -27,6 +27,7 @@ public class MediumEnemy extends Character implements IEnemy, IPlayerAction{
         super(moveSpeed, weight, health, imageURL, dimension, direction, pos, collisionType, ab);
     }
     
+    
     @Override
     public void collision(Entity otherEntity) {
         if(otherEntity instanceof IEnemyAction) {
