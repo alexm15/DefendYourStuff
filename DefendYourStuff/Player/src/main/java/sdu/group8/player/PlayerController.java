@@ -81,7 +81,6 @@ public class PlayerController
             float aimX = player.getAimPoint().getX();
             float aimY = player.getAimPoint().getY();
             world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getAbilityContainer().getAbilites().get(0)));
-            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getAbilityContainer().getAbilites().get(1)));
         }
 
     }
