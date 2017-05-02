@@ -23,18 +23,17 @@ public abstract class Entity {
     private Dimension dimension;
     private Position pos;
     private CollisionType collisionType;
-    private String imageURL;
     private Direction direction;
+    private Image image;
 
     public Entity(String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType) {
-        this.imageURL = imageURL;
+        this.image = new Image(imageURL, false);
         this.ID = UUID.randomUUID();
         this.dimension = dimension;
         this.pos = pos;
         this.collisionType = collisionType;
         this.direction = direction;
     }
-    private Image image;
 
     public Entity(String imageURL, Dimension dimension, Position pos, CollisionType collisionType) {
         this.image = new Image(imageURL, false);
@@ -64,7 +63,7 @@ public abstract class Entity {
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
-    
+
     public Image getImage() {
         return this.image;
     }

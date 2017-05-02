@@ -23,8 +23,7 @@ import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyService;
 
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class)
-    ,
+    @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class)}
 )
 public class EnemyController
@@ -41,15 +40,16 @@ public class EnemyController
 
             if (enemy.getX() < basePosX) {
                 horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.setDirection(true);
                 enemy.getImage().setReversed(true);
-            }
-            else {
+            } else {
                 horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.setDirection(false);
                 enemy.getImage().setReversed(false);
             }
 
             enemy.setX(horizontalPos);
-            
+
             if (!enemy.isEntityOnGround(enemy, gameData)) {
 
             } else {

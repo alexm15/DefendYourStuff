@@ -32,7 +32,7 @@ public class Player extends Character implements IPlayer {
     private final float JUMP_FORCE = 350;
 
     public Player(Position position, AbilityData... ab) {
-        super(200, 1.25f, 100, "Player/defaultPlayer.PNG", new Dimension(50, 50, 25), new Direction(true), position, CollisionType.BOX, ab);
+        super(200, 1.25f, 100, "Player/defaultPlayer.png", new Dimension(50, 50, 25), new Direction(true), position, CollisionType.BOX, ab);
     }
 
     /**

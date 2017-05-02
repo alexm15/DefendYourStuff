@@ -77,9 +77,13 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
         }
         float x = caller.getX();
         float y = caller.getY();
+        if (caller.getDirection().isIsLeft()) {
+            ability.setDirection(true);
+        } else {
+            ability.setDirection(false);
+        }
         System.out.println("Y pos: " + ability.getY());
         ability.setPosition(new Position(x, y));
-        ability.setDirection(caller.getDirection());
         ability.setOwner(caller);
         return ability;
     }
