@@ -36,11 +36,11 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     public void process(GameData gameData, World world) {
         for (Entity ability : world.getEntities(RangedAbility.class)) {
             Ability ab = (Ability) ability;
+            ab.updateExpiration(gameData.getDelta());
             if (ab.getExpiration() <= 0) {
                 world.removeEntity(ability);
             } else if (!ab.isEntityOnGround(ab, gameData)) {
-
-                ab.updateExpiration(gameData.getDelta());
+                
                 float horizontalVelocity = 0;
                 float verticalVelocity = 0;
                 horizontalVelocity = ab.getMoveSpeed() * gameData.getDelta();
@@ -58,7 +58,7 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     }
 
     @Override
-    public Ability useAbility(Entity caller, AbilityData abilityData) {
+    public Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData) {
         Ability ability;
         Ability ab = abilityCatalog.getAbility(abilityData);
         if (ab instanceof RangedAbility) {
@@ -72,8 +72,16 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
         } else {
             ability = new Ability(ab);
         }
-        float x = caller.getX();
-        float y = caller.getY();
+        float x;
+        float y;
+        if (abilityData.isAimable()) {
+            x = aimX;
+            y = aimY; 
+        } else {
+            x = caller.getX();
+            y = caller.getY();
+        }
+        
         ability.setDirection(new Direction(caller.getDirection()));
         System.out.println("Y pos: " + ability.getY());
         ability.setPosition(new Position(x, y));
@@ -104,6 +112,12 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     @Override
     public List<AbilityData> getSummoningAbilities() {
         return abilityCatalog.getAbilities(SummoningAbility.class);
+    }
+
+    @Override
+    public Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon) {
+        //TODO: implement this method
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

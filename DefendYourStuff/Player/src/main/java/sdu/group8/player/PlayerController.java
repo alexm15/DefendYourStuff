@@ -78,7 +78,10 @@ public class PlayerController
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().SPACE)) {
             AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
-            world.addEntity(abilityProvicer.useAbility(player, player.getAbilityContainer().getAbilites().get(0)));
+            float aimX = player.getAimPoint().getX();
+            float aimY = player.getAimPoint().getY();
+            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getAbilityContainer().getAbilites().get(0)));
+            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getAbilityContainer().getAbilites().get(1)));
         }
 
     }
