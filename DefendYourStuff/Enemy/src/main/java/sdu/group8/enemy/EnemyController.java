@@ -32,21 +32,20 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
     @Override
     public void process(GameData gameData, World world) {
-        
+
         float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
-        
+
         for (Character enemy : enemies.values()) {
             float horizontalPos = enemy.getX();
 
             if (enemy.getX() < basePosX) {
                 horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
-            }
-            else {
+            } else {
                 horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
             }
-            
             enemy.setX(horizontalPos);
         }
+        deathProcess(gameData, world);
     }
 
     @Override
@@ -59,22 +58,16 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     public void stop(GameData gameData, World world) {
 
     }
-    
-    
+
     @Override
     public void deathProcess(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Character.class)) {
             Character enemy = (Character) entity;
-            if (enemy.getHealth() == 0) {
-                System.out.println("$$$");
-                if(enemy.getClass().equals(MediumEnemy.class)){
+            if (enemy.getClass().equals(MediumEnemy.class)) {
+                if (enemy.getHealth() == 0) {
                     gameData.addPlayerGold(100);
                     world.removeEntity(enemy);
                 }
-//                if(enemyType.getClass().equals(SmallEnemy.class)){
-//                    gameData.addPlayerGold(50);
-//                    world.removeEntity(enemy);
-//                }              
             }
         }
     }
@@ -103,5 +96,4 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         //TODO: implement this method
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }
