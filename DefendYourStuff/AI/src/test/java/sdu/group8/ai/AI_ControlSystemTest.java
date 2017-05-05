@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;
@@ -118,6 +119,7 @@ public class AI_ControlSystemTest {
     }
     
     @Test
+    @Ignore
     public void testRangedAI_EnemyMovesAwayFromEntity(){
         dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true) ,new Position(5, 0));
         world.addEntity(dummyAttackable);
@@ -133,8 +135,18 @@ public class AI_ControlSystemTest {
         assertTrue(updatedEnemyToEntityDistance >  initialEnemyToEntityDistance);
     }
     
+    
     @Test 
+    @Ignore
     public void testEnemyShootsAtTarget() {
+        dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true), new Position(10, 0));
+        int shootingDistance = 10;
+        
+        aiControl.rangedAI(someEnemy, world, gameData, shootingDistance);
+        float distanceToPlayer = Math.abs(dummyAttackable.getX()-someEnemy.getX());
+        assertTrue(distanceToPlayer <= shootingDistance);
+        
+        assertFalse(world.getEntities(Ability.class).isEmpty());
         
     }
     

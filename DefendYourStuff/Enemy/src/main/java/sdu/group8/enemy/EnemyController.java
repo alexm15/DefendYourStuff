@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
+import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.GameData;
@@ -20,6 +21,7 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
+import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonai.AI_Service;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyService;
@@ -40,8 +42,8 @@ public class EnemyController
 
         for (Entity enemyEntity : world.getEntities(MediumEnemy.class)) {
             Character enemy = (Character) enemyEntity;
-            aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
-
+            //aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
+            aiService.rangedAI(enemy, world, gameData, 350);
             if (!enemy.isEntityOnGround(enemy, gameData)) {
 
             }
@@ -76,7 +78,11 @@ public class EnemyController
         Direction direction = new Direction(true);
 
         String imageURL = "Enemy/dickbutt.gif";
-        enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX);
+        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
+        AbilityData ab = abilityProvider.getRangedAbilities().get(0);
+
+        
+        enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX, ab);
         gameData.setPlayerGold(0);
         world.addEntity(enemy);
     }

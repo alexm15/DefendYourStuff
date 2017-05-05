@@ -15,4 +15,5 @@ import sdu.group8.commoncharacter.Character;
  */
 public interface AI_Service {
     void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData);
+    void rangedAI(Character enemy, World world, GameData gameData, int minDistanceToTarget);
 }

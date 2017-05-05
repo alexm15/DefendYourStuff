@@ -5,12 +5,14 @@
  */
 package sdu.group8.ai;
 
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
+import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonai.AI_Service;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyAction;
@@ -34,20 +36,31 @@ public class AI_ControlSystem
         moveEnemyToTarget(enemy, closestTarget, gameData);
     }
 
-    
-    
+    @Override
     public void rangedAI(Character enemy, World world, GameData gameData, int minDistanceToTarget) {
         Entity closestTarget = getClosesTarget(enemy, world);
+
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minDistanceToTarget && !closestTarget.equals(enemy);
-        
-        if(tooCloseToTarget) {
-            increaseDistance(enemy, closestTarget, gameData);
+        //shoot
+
+        if ((int) distanceToEntity(enemy, closestTarget) == minDistanceToTarget) {
+            setDirection(enemy, closestTarget);
+            useAbility(enemy, world);
         }
-        
-        
-        
-        
-        
+        else {
+
+            if (tooCloseToTarget) {
+                
+                increaseDistance(enemy, closestTarget, gameData);
+                setDirection(enemy, closestTarget);
+                useAbility(enemy, world);
+            
+            }
+            else {
+                moveEnemyToTarget(enemy, closestTarget, gameData);
+            }
+
+        }
     }
 
     private void moveEnemyToTarget(Character enemy, Entity target, GameData gameData) {
@@ -64,14 +77,16 @@ public class AI_ControlSystem
         }
         enemy.setX(horizontalPos);
     }
-    
+
     /**
      * Gets the closes Entity that implements IEnemyAction.
-     * 
+     *
      * NB: if there is no closes entity then it returns it self!
-     * @param enemy 
-     * @param world 
-     * @return The closes enemy NB: if there is no closes entity then it returns the enemy itself!
+     *
+     * @param enemy
+     * @param world
+     * @return The closes enemy NB: if there is no closes entity then it returns
+     * the enemy itself!
      */
     private Entity getClosesTarget(Character enemy, World world) {
 
@@ -98,14 +113,34 @@ public class AI_ControlSystem
 
     private void increaseDistance(Character enemy, Entity closestTarget, GameData gameData) {
         float horizontalPos = enemy.getX();
-        
-         if (enemy.getX() > closestTarget.getX()) {
+
+        if (enemy.getX() > closestTarget.getX()) {
             horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
+            enemy.setDirection(true);
         }
         else if (enemy.getX() < closestTarget.getX()) {
             horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
+            enemy.setDirection(false);
         }
         enemy.setX(horizontalPos);
+    }
+
+    private void useAbility(Character enemy, World world) {
+        System.out.println("shooting");
+        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
+        world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
+        
+    }
+
+    private void setDirection(Character enemy, Entity closestTarget) {
+        if (enemy.getX() < closestTarget.getX()) {
+
+            enemy.setDirection(true);
+        }
+        else if (enemy.getX() > closestTarget.getX()) {
+
+            enemy.setDirection(false);
+        }
     }
 
 }
