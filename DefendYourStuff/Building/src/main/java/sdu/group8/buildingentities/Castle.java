@@ -6,6 +6,7 @@
 package sdu.group8.buildingentities;
 
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
@@ -13,21 +14,17 @@ import sdu.group8.common.entity.Building;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
+import sdu.group8.commonability.abilities.FireballData;
 import sdu.group8.commonbuilding.services.IDefBuilding;
 
 /**
  *
  * @author Alexander
  */
-public class Castle
-        extends Building
-        implements IDefBuilding {
+public class Castle extends Building implements IDefBuilding {
 
     public Castle(Position pos) {
-        super("Building/castle.png", 
-                new Dimension(200, 100, 0), 
-                pos, CollisionType.BOX, BuildingType.DEFENCE, 
-                true, 0, 100, new Ability[1]);
+        super("Building/castle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, true, 0, 100, new FireballData());
 
     }
 

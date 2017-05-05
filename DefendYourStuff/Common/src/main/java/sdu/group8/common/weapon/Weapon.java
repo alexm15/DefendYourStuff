@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityContainer;
+import sdu.group8.common.ability.AbilityData;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Weapon {
     private float damageMultiplier;
     private float rangeMultiplier;
 
-    public Weapon(UUID ID, float damageMultiplier, float rangeMultiplier, Ability... ab) {
+    public Weapon(UUID ID, float damageMultiplier, float rangeMultiplier, AbilityData... ab) {
         this.ID = ID;
         this.abilities = new AbilityContainer(ab);
         this.damageMultiplier = damageMultiplier;
@@ -31,7 +32,7 @@ public class Weapon {
         return ID.toString();
     }
 
-    public ArrayList<Ability> getAbilities() {
+    public ArrayList<AbilityData> getAbilities() {
         return abilities.getAbilites();
     }
 

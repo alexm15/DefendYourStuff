@@ -26,6 +26,7 @@ import sdu.group8.common.entity.Tile;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
+import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.gameengine.managers.GameInputProcessor;
 
@@ -81,6 +82,10 @@ public class Game
     public Collection<? extends IMapUpdate> getIMapUpdate() {
         return lookup.lookupAll(IMapUpdate.class);
     }
+    
+    private Collection<? extends IPreStartPluginService> getPreGamePlugins() {
+        return lookup.lookupAll(IPreStartPluginService.class);
+    }
 
     @Override
     public void create() {
@@ -100,6 +105,10 @@ public class Game
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.RED);
+        
+        for (IPreStartPluginService preGamePlugin : getPreGamePlugins()) {
+            preGamePlugin.preStart(gameData);
+        }
 
         for (IGamePluginService gamePlugin : getGamePlugins()) {
             gamePlugin.start(gameData, world);
@@ -304,4 +313,6 @@ public class Game
         batch.draw(secondTex, CAM.position.x - CAM.viewportWidth / 2, 0, secondBackgroundImageScrollX, 0, gameData.getDisplayWidth(), gameData.getDisplayHeight());
         batch.draw(firstTex, CAM.position.x - CAM.viewportWidth / 2, 0, firstBackgroundImageScrollX, 0, gameData.getDisplayWidth(), gameData.getDisplayHeight());
     }
+
+    
 }

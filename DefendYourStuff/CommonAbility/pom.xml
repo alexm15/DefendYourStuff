@@ -15,11 +15,9 @@
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
-                        <publicPackage>abilityTypes</publicPackage>
-                        <publicPackage>data</publicPackage>
-                        <publicPackage>sdu.group8.commonability</publicPackage>
+                        <publicPackage>sdu.group8.commonability.abilities</publicPackage>
+                        <publicPackage>sdu.group8.commonability.services</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
@@ -43,9 +41,13 @@
             <artifactId>Common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonAbilityTypes</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <name>CommonAbility</name>
 </project>
