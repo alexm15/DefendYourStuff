@@ -56,9 +56,11 @@ public class AI_ControlSystem
 
         if (enemy.getX() < targetX) {
             horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
+            enemy.setDirection(true);
         }
         else if (enemy.getX() > targetX) {
             horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
+            enemy.setDirection(false);
         }
         enemy.setX(horizontalPos);
     }

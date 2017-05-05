@@ -41,20 +41,6 @@ public class EnemyController
         for (Entity enemyEntity : world.getEntities(MediumEnemy.class)) {
             Character enemy = (Character) enemyEntity;
             aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
-            
-            float horizontalPos = enemy.getX();
-
-            if (enemy.getX() < basePosX) {
-                horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
-                enemy.setDirection(true);
-                enemy.getImage().setReversed(true);
-            } else {
-                horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
-                enemy.setDirection(false);
-                enemy.getImage().setReversed(false);
-            }
-
-            enemy.setX(horizontalPos);
 
             if (!enemy.isEntityOnGround(enemy, gameData)) {
 

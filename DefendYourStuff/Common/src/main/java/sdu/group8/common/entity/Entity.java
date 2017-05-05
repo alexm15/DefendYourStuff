@@ -56,8 +56,15 @@ public abstract class Entity {
         return direction;
     }
 
+    /**
+     * Sets which direction the entity is pointing and reversing it's image
+     * if nessesary (Left = true), (Right = false). Image's direction should as standard
+     * point to the right.
+     * @param isLeft
+     */
     public void setDirection(boolean isLeft) {
         this.direction.setIsLeft(isLeft);
+        this.getImage().setReversed(isLeft);
     }
 
     public void setDirection(Direction direction) {
