@@ -28,8 +28,26 @@ public class AI_ControlSystem
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
         Position enemyPos = enemy.getPosition();
+
         Entity closestTarget = getClosesTarget(enemy, world);
+
         moveEnemyToTarget(enemy, closestTarget, gameData);
+    }
+
+    
+    
+    public void rangedAI(Character enemy, World world, GameData gameData, int minDistanceToTarget) {
+        Entity closestTarget = getClosesTarget(enemy, world);
+        boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minDistanceToTarget && !closestTarget.equals(enemy);
+        
+        if(tooCloseToTarget) {
+            increaseDistance(enemy, closestTarget, gameData);
+        }
+        
+        
+        
+        
+        
     }
 
     private void moveEnemyToTarget(Character enemy, Entity target, GameData gameData) {
@@ -44,12 +62,21 @@ public class AI_ControlSystem
         }
         enemy.setX(horizontalPos);
     }
-
+    
+    /**
+     * Gets the closes Entity that implements IEnemyAction.
+     * 
+     * NB: if there is no closes entity then it returns it self!
+     * @param enemy 
+     * @param world 
+     * @return The closes enemy NB: if there is no closes entity then it returns the enemy itself!
+     */
     private Entity getClosesTarget(Character enemy, World world) {
 
         Entity closestTarget = enemy;
         float shortestdist = Float.MAX_VALUE; //FIXME: if you know a better value!
         float enemyX = enemy.getX();
+
         for (Entity entity : world.getEntities()) {
             if (entity instanceof IEnemyAction) {
                 float currentEntityDist = Math.abs(enemyX - entity.getX());
@@ -61,6 +88,22 @@ public class AI_ControlSystem
 
         }
         return closestTarget;
+    }
+
+    private float distanceToEntity(Character enemy, Entity closestTarget) {
+        return Math.abs(enemy.getX() - closestTarget.getX());
+    }
+
+    private void increaseDistance(Character enemy, Entity closestTarget, GameData gameData) {
+        float horizontalPos = enemy.getX();
+        
+         if (enemy.getX() > closestTarget.getX()) {
+            horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
+        }
+        else if (enemy.getX() < closestTarget.getX()) {
+            horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
+        }
+        enemy.setX(horizontalPos);
     }
 
 }

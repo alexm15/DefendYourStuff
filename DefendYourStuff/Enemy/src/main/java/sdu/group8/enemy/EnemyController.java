@@ -12,6 +12,7 @@ import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
@@ -24,8 +25,7 @@ import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyService;
 
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class)
-    ,
+    @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class)}
 )
 public class EnemyController
@@ -42,6 +42,20 @@ public class EnemyController
             Character enemy = (Character) enemyEntity;
             aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
             
+            float horizontalPos = enemy.getX();
+
+            if (enemy.getX() < basePosX) {
+                horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.setDirection(true);
+                enemy.getImage().setReversed(true);
+            } else {
+                horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.setDirection(false);
+                enemy.getImage().setReversed(false);
+            }
+
+            enemy.setX(horizontalPos);
+
             if (!enemy.isEntityOnGround(enemy, gameData)) {
 
             }
@@ -73,9 +87,10 @@ public class EnemyController
         Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
         float x = 0;
         float y = gameData.getTILE_SIZE();
+        Direction direction = new Direction(true);
 
         String imageURL = "Enemy/dickbutt.gif";
-        enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, position, CollisionType.BOX);
+        enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX);
         gameData.setPlayerGold(0);
         world.addEntity(enemy);
     }

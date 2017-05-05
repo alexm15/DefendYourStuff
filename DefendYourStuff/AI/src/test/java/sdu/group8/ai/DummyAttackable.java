@@ -7,7 +7,9 @@
 package sdu.group8.ai;
 
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
@@ -21,9 +23,11 @@ import sdu.group8.commoncharacter.Character;
 public class DummyAttackable extends Character implements IEnemyAction
 {
 
-    public DummyAttackable(float moveSpeed, Dimension dimension, Position pos) {
-        super(moveSpeed, 1f, 500, "", dimension, pos, CollisionType.BOX, new Ability[1]);
+    public DummyAttackable(float moveSpeed, Dimension dimension, Direction direction, Position pos) {
+        super(moveSpeed, 1f, 500, "", dimension, direction, pos, CollisionType.BOX, new AbilityData[0]);
     }
+
+
 
 
 

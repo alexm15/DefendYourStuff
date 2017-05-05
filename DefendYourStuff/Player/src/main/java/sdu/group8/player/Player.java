@@ -5,14 +5,19 @@
  */
 package sdu.group8.player;
 
+import org.openide.util.Lookup;
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityData;
+import sdu.group8.common.data.DamageRange;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.weapon.Weapon;
 import sdu.group8.commonenemy.IEnemyAction;
+import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerAction;
 
@@ -26,8 +31,8 @@ public class Player extends Character implements IPlayer, IEnemyAction {
     private Position aimPoint;
     private final float JUMP_FORCE = 350;
 
-    public Player(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(moveSpeed, weight, health, imageURL, dimension, pos, collisionType, ab);
+    public Player(Position position, AbilityData... ab) {
+        super(200, 1.25f, 100, "Player/defaultPlayer.png", new Dimension(50, 50, 25), new Direction(true), position, CollisionType.BOX, ab);
     }
 
     /**

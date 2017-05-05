@@ -7,6 +7,7 @@ package sdu.group8.common.entity;
 
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 
 /**
@@ -20,8 +21,8 @@ public abstract class MovingEntity extends Entity {
     private float moveSpeed;
     private float weight;
     
-    public MovingEntity(float moveSpeed, float weight, String imageURL, Dimension dimension, Position pos, CollisionType collisionType) {
-        super(imageURL, dimension, pos, collisionType);
+    public MovingEntity(float moveSpeed, float weight, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType) {
+        super(imageURL, dimension, direction, pos, collisionType);
         this.moveSpeed = moveSpeed;
         this.weight = weight;
     }

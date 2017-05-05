@@ -12,6 +12,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityData;
+import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
@@ -47,14 +50,13 @@ public class AI_ControlSystemTest {
     @Before
     public void setUp() {
         aiControl = new AI_ControlSystem();
-        someEnemy = new Character(0, 0, 0, null, null, new Position(0, 0), CollisionType.CIRCLE, new Ability[0]) {
+        someEnemy = new Character(0, 0, 0, "", new Dimension(0, 0, 0), new Direction(true), new Position(0, 0), CollisionType.CIRCLE, new AbilityData[0]) {
             @Override
             public void collision(Entity otherEntity) {
             }
-        }; 
+        };
         someEnemy.setMoveSpeed(10);
         //dummyAttackable = new DummyAttackable("", null, new Position(10, 0), CollisionType.CIRCLE, new Ability[0]);
-        dummyAttackable = new DummyAttackable(0, null, new Position(10, 0));
         world = new World();
         gameData = new GameData();
         gameData.setDelta(0.5f);
@@ -72,6 +74,7 @@ public class AI_ControlSystemTest {
     
     @Test
     public void testEnemyMovesToClosestTargetLeftFromEnemy() {
+        dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true), new Position(10, 0));
         float previousX = someEnemy.getX();
         float dummyX = dummyAttackable.getX();
         float initialDistance = Math.abs(dummyX-previousX);
@@ -90,9 +93,13 @@ public class AI_ControlSystemTest {
     
     @Test
     public void testNewEnemyIsCloser() {
+        dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true) ,new Position(10, 0));
+        //dummyAttackable = new DummyAttackable(0, null, new Direction(true), new Position(10, 0));
         world.addEntity(dummyAttackable);
-        //DummyAttackable newDummy = new DummyAttackable("", null, new Position(-9, 0), CollisionType.CIRCLE, new Ability[0]);
-        DummyAttackable newDummy = new DummyAttackable(0, null, new Position(-9, 0));
+        
+        
+        
+        DummyAttackable newDummy = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true) ,new Position(-9, 0));
         world.addEntity(newDummy);
         
         float initialNewDummyDist = Math.abs(newDummy.getX()-someEnemy.getX());
@@ -107,6 +114,27 @@ public class AI_ControlSystemTest {
         System.out.println("new x value: "+ someEnemy.getX());
         assertTrue(updatedNewDummyDist < initialNewDummyDist);
         assertTrue(updatedOldDummyDist > initialOldDummyDist);
+        
+    }
+    
+    @Test
+    public void testRangedAI_EnemyMovesAwayFromEntity(){
+        dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true) ,new Position(5, 0));
+        world.addEntity(dummyAttackable);
+  
+        
+        float initialEnemyToEntityDistance = Math.abs(dummyAttackable.getX()-someEnemy.getX());
+        int minDistanceToTarget = 10;
+        aiControl.rangedAI(someEnemy, world, gameData, minDistanceToTarget);
+        
+        float updatedEnemyToEntityDistance = Math.abs(dummyAttackable.getX()-someEnemy.getX());        
+        
+                
+        assertTrue(updatedEnemyToEntityDistance >  initialEnemyToEntityDistance);
+    }
+    
+    @Test 
+    public void testEnemyShootsAtTarget() {
         
     }
     
