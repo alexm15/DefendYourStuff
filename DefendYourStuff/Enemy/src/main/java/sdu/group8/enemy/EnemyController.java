@@ -20,13 +20,12 @@ import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyService;
-import sdu.group8.commonenemy.IEnemy;
 
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class)}
 )
-public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService, IEnemy {
+public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService{
 
     private Map<UUID, Character> enemies = new ConcurrentHashMap<>();
 
@@ -59,7 +58,6 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
     }
 
-    @Override
     public void deathProcess(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Character.class)) {
             Character enemy = (Character) entity;
