@@ -69,11 +69,11 @@ public class AI_ControlSystem
 
         if (enemy.getX() < targetX) {
             horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
-            enemy.setDirection(true);
+            enemy.setDirection(false);
         }
         else if (enemy.getX() > targetX) {
             horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
-            enemy.setDirection(false);
+            enemy.setDirection(true);
         }
         enemy.setX(horizontalPos);
     }
@@ -116,11 +116,11 @@ public class AI_ControlSystem
 
         if (enemy.getX() > closestTarget.getX()) {
             horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
-            enemy.setDirection(true);
+            enemy.setDirection(false);
         }
         else if (enemy.getX() < closestTarget.getX()) {
             horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
-            enemy.setDirection(false);
+            enemy.setDirection(true);
         }
         enemy.setX(horizontalPos);
     }
@@ -135,11 +135,11 @@ public class AI_ControlSystem
     private void setDirection(Character enemy, Entity closestTarget) {
         if (enemy.getX() < closestTarget.getX()) {
 
-            enemy.setDirection(true);
+            enemy.setDirection(false);
         }
         else if (enemy.getX() > closestTarget.getX()) {
 
-            enemy.setDirection(false);
+            enemy.setDirection(true);
         }
     }
 
