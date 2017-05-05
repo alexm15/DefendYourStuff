@@ -8,6 +8,8 @@ package sdu.group8.ai;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
+import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
@@ -27,6 +29,9 @@ import sdu.group8.commonenemy.IEnemyAction;
 public class AI_ControlSystem
         implements AI_Service {
 
+    
+    private AbilityData enemyAbility;
+    
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
         Position enemyPos = enemy.getPosition();
@@ -38,6 +43,7 @@ public class AI_ControlSystem
 
     @Override
     public void rangedAI(Character enemy, World world, GameData gameData, int minDistanceToTarget) {
+        enemyAbility = enemy.getAbilityContainer().getAbilites().get(0);
         Entity closestTarget = getClosesTarget(enemy, world);
 
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minDistanceToTarget && !closestTarget.equals(enemy);
@@ -46,17 +52,15 @@ public class AI_ControlSystem
         if ((int) distanceToEntity(enemy, closestTarget) == minDistanceToTarget) {
             setDirection(enemy, closestTarget);
             useAbility(enemy, world);
-        }
-        else {
+        } else {
 
             if (tooCloseToTarget) {
-                
+
                 increaseDistance(enemy, closestTarget, gameData);
                 setDirection(enemy, closestTarget);
                 useAbility(enemy, world);
-            
-            }
-            else {
+
+            } else {
                 moveEnemyToTarget(enemy, closestTarget, gameData);
             }
 
@@ -70,8 +74,7 @@ public class AI_ControlSystem
         if (enemy.getX() < targetX) {
             horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
             enemy.setDirection(false);
-        }
-        else if (enemy.getX() > targetX) {
+        } else if (enemy.getX() > targetX) {
             horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
             enemy.setDirection(true);
         }
@@ -117,8 +120,7 @@ public class AI_ControlSystem
         if (enemy.getX() > closestTarget.getX()) {
             horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
             enemy.setDirection(false);
-        }
-        else if (enemy.getX() < closestTarget.getX()) {
+        } else if (enemy.getX() < closestTarget.getX()) {
             horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
             enemy.setDirection(true);
         }
@@ -126,18 +128,25 @@ public class AI_ControlSystem
     }
 
     private void useAbility(Character enemy, World world) {
-        System.out.println("shooting");
+    //cooldown
+
+        
+    if(enemyAbility.getCoolDown() <= 0){   
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
-        
+        enemyAbility.setCoolDown(10);
+    } else {
+       float cooldown = enemyAbility.getCoolDown();
+       cooldown--;
+       enemyAbility.setCoolDown(cooldown);
     }
-
+    }
+    
     private void setDirection(Character enemy, Entity closestTarget) {
         if (enemy.getX() < closestTarget.getX()) {
 
             enemy.setDirection(false);
-        }
-        else if (enemy.getX() > closestTarget.getX()) {
+        } else if (enemy.getX() > closestTarget.getX()) {
 
             enemy.setDirection(true);
         }

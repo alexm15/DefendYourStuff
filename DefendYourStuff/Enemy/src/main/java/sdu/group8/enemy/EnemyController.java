@@ -75,7 +75,7 @@ public class EnemyController
         Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
         float x = 0;
         float y = gameData.getTILE_SIZE();
-        Direction direction = new Direction(false);
+        Direction direction = new Direction(true);
 
         String imageURL = "Enemy/EnemyBow.png";
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
