@@ -39,7 +39,6 @@ public class EnemyController
     @Override
     public void process(GameData gameData, World world) {
         aiService = Lookup.getDefault().lookup(AI_Service.class);
-        float basePosX = (world.getChunkMiddle().getDimension().getWidth() / 2) * gameData.getTILE_SIZE();
 
         for (Entity enemyEntity : world.getEntities(MediumEnemy.class, BigMeleeEnemy.class)) {
             Character enemy = (Character) enemyEntity;
