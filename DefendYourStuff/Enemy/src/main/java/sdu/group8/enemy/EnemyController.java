@@ -27,8 +27,10 @@ import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyService;
 
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class),
-    @ServiceProvider(service = IGamePluginService.class),
+    @ServiceProvider(service = IGameProcessingService.class)
+    ,
+    @ServiceProvider(service = IGamePluginService.class)
+    ,
     @ServiceProvider(service = IEnemyService.class)}
 )
 public class EnemyController
@@ -42,18 +44,21 @@ public class EnemyController
 
         for (Entity enemyEntity : world.getEntities(MediumEnemy.class, BigMeleeEnemy.class)) {
             Character enemy = (Character) enemyEntity;
-            
+
             if (!enemy.isEntityOnGround(enemy, gameData)) {
 
-            }
-            else {
+            } else {
                 enemy.setEntityOnGround(enemy, gameData);
             }
-            
-            if(enemy instanceof MediumEnemy){
-            aiService.rangedAI(enemy, world, gameData, 350);
+
+            if (enemy instanceof MediumEnemy) {
+                aiService.rangedAI(enemy, world, gameData, 350);
             } else {
                 aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
+            }
+
+            if (enemy.getHealth() <= 0) {
+                world.removeEntity(enemy);
             }
         }
     }
@@ -88,13 +93,12 @@ public class EnemyController
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         AbilityData ab = abilityProvider.getRangedAbilities().get(0);
 
-        
         enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX, ab);
         world.addEntity(enemy);
     }
-    
+
     @Override
-    public void createBigEnemy(World world, GameData gameData, Position position){
+    public void createBigEnemy(World world, GameData gameData, Position position) {
         BigMeleeEnemy enemy;
         float health = 100;
         float moveSpeed = 150;
@@ -110,9 +114,8 @@ public class EnemyController
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
 //        AbilityData ab = abilityProvider.getMeleeAbilities().get(0); //TODO ADD abilities
 
-        
         enemy = new BigMeleeEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.CIRCLE);
-        world.addEntity(enemy);        
+        world.addEntity(enemy);
     }
 
     @Override
