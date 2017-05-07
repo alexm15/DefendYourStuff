@@ -45,15 +45,15 @@ public class AI_ControlSystem
         Entity closestTarget = getClosesTarget(enemy, world);
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minDistanceToTarget && !closestTarget.equals(enemy);
         //shoot
-        if ((int) distanceToEntity(enemy, closestTarget) == minDistanceToTarget) {
-            setDirection(enemy, closestTarget);
-            useAbility(enemy, world);
+        
+        float distanceToEntity = distanceToEntity(enemy, closestTarget);
+        if (minDistanceToTarget-1 < distanceToEntity && distanceToEntity < minDistanceToTarget  ) { //TODO lav en range
+            useAbility(enemy, world, closestTarget);
         } else {
 
             if (tooCloseToTarget) {
                 increaseDistance(enemy, closestTarget, gameData);
-                setDirection(enemy, closestTarget);
-                useAbility(enemy, world);
+                useAbility(enemy, world, closestTarget);
 
             } else {
                 moveEnemyToTarget(enemy, closestTarget, gameData);
@@ -122,14 +122,14 @@ public class AI_ControlSystem
         enemy.setX(horizontalPos);
     }
 
-    private void useAbility(Character enemy, World world) {
-    //cooldown
-
-        
+    private void useAbility(Character enemy, World world, Entity closestTarget) {
+    //cooldown   
     if(enemyAbility.getCoolDown() <= 0){   
+                   setDirection(enemy, closestTarget);
+     
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
-        enemyAbility.setCoolDown(10);
+        enemyAbility.setCoolDown(20);
     } else {
        float cooldown = enemyAbility.getCoolDown();
        cooldown--;
@@ -138,6 +138,7 @@ public class AI_ControlSystem
     }
     
     private void setDirection(Character enemy, Entity closestTarget) {
+        
         if (enemy.getX() < closestTarget.getX()) {
 
             enemy.setDirection(false);
