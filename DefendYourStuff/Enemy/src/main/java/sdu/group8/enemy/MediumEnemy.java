@@ -44,7 +44,6 @@ public class MediumEnemy extends Character implements IEnemy, IPlayerAction, IAb
 
     @Override
     public void abilityAction(Ability ab) {
-        //TODO implement metode: abilityAction
-        throw new UnsupportedOperationException("Methode: 'abilityAction' Not supported yet in class: 'MediumEnemy'");
+        this.reduceHealth(ab.getDamage());
     }
 }
