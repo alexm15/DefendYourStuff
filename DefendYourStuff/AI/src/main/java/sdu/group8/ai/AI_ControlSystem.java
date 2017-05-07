@@ -129,7 +129,6 @@ public class AI_ControlSystem
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         setDirection(enemy, closestTarget);
         world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
-        System.out.println("shottig");
         enemyAbility.setCoolDown(20);
     } else {
        float cooldown = enemyAbility.getCoolDown();
