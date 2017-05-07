@@ -130,6 +130,9 @@ public class Game
 
 
         assetManager.load("Enemy/EnemyBow.png", Texture.class);
+        assetManager.load("Enemy/EnemySword.png", Texture.class);
+        
+        
         assetManager.load("abilities/fireball.png", Texture.class);
 
         assetManager.load("Tiles/tile_dirt.png", Texture.class);

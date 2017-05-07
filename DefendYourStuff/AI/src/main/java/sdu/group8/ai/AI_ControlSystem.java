@@ -34,28 +34,23 @@ public class AI_ControlSystem
     
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
-        Position enemyPos = enemy.getPosition();
-
         Entity closestTarget = getClosesTarget(enemy, world);
-
         moveEnemyToTarget(enemy, closestTarget, gameData);
+//        useAbility(enemy, world);
     }
 
     @Override
     public void rangedAI(Character enemy, World world, GameData gameData, int minDistanceToTarget) {
         enemyAbility = enemy.getAbilityContainer().getAbilites().get(0);
         Entity closestTarget = getClosesTarget(enemy, world);
-
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minDistanceToTarget && !closestTarget.equals(enemy);
         //shoot
-
         if ((int) distanceToEntity(enemy, closestTarget) == minDistanceToTarget) {
             setDirection(enemy, closestTarget);
             useAbility(enemy, world);
         } else {
 
             if (tooCloseToTarget) {
-
                 increaseDistance(enemy, closestTarget, gameData);
                 setDirection(enemy, closestTarget);
                 useAbility(enemy, world);
