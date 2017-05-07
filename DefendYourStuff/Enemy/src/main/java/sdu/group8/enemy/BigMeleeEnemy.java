@@ -13,6 +13,7 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.services.IAbilityAction;
+import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonenemy.IEnemy;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonplayer.IPlayerAction;
@@ -21,7 +22,7 @@ import sdu.group8.commonplayer.IPlayerAction;
  *
  * @author karim møller
  */
-public class BigMeleeEnemy extends sdu.group8.commoncharacter.Character implements IEnemy, IPlayerAction, IAbilityAction{
+public class BigMeleeEnemy extends sdu.group8.commoncharacter.Character implements IEnemy, IPlayerAction, IAbilityAction, IBuildingAction {
 
     public BigMeleeEnemy(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
         super(moveSpeed, weight, health, imageURL, dimension, direction, pos, collisionType, ab);
@@ -43,6 +44,12 @@ public class BigMeleeEnemy extends sdu.group8.commoncharacter.Character implemen
     public void abilityAction(Ability ab) {
         
         this.reduceHealth(ab.getDamage());
+    }
+
+    @Override
+    public void execute() {
+        //TODO implement metode: execute
+        throw new UnsupportedOperationException("Methode: 'execute' Not supported yet in class: 'BigMeleeEnemy'");
     }
     
 }
