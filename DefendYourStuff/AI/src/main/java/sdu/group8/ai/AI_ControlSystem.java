@@ -124,11 +124,12 @@ public class AI_ControlSystem
 
     private void useAbility(Character enemy, World world, Entity closestTarget) {
     //cooldown   
-    if(enemyAbility.getCoolDown() <= 0){   
-                   setDirection(enemy, closestTarget);
-     
+    if(enemyAbility.getCoolDown() <= 0){
+        
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
+        setDirection(enemy, closestTarget);
         world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
+        System.out.println("shottig");
         enemyAbility.setCoolDown(20);
     } else {
        float cooldown = enemyAbility.getCoolDown();
