@@ -28,7 +28,8 @@ import sdu.group8.commonenemy.IEnemyService;
 
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
-    @ServiceProvider(service = IGamePluginService.class)}
+    @ServiceProvider(service = IGamePluginService.class),
+    @ServiceProvider(service = IEnemyService.class)}
 )
 public class EnemyController
         implements IGameProcessingService, IGamePluginService, IEnemyService {
@@ -42,13 +43,18 @@ public class EnemyController
 
         for (Entity enemyEntity : world.getEntities(MediumEnemy.class)) {
             Character enemy = (Character) enemyEntity;
-            //aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
-            aiService.rangedAI(enemy, world, gameData, 350);
+            
             if (!enemy.isEntityOnGround(enemy, gameData)) {
 
             }
             else {
                 enemy.setEntityOnGround(enemy, gameData);
+            }
+            
+            if(enemy instanceof MediumEnemy){
+            aiService.rangedAI(enemy, world, gameData, 350);
+            } else {
+                aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
             }
         }
     }
@@ -57,6 +63,8 @@ public class EnemyController
     public void start(GameData gameData, World world) {
         createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
         createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
+        createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
+        createBigEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
     }
 
     @Override
@@ -83,13 +91,34 @@ public class EnemyController
 
         
         enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX, ab);
-        gameData.setPlayerGold(0);
         world.addEntity(enemy);
+    }
+    
+    @Override
+    public void createBigEnemy(World world, GameData gameData, Position position){
+        BigMeleeEnemy enemy;
+        float health = 100;
+        float moveSpeed = 150;
+        float weight = 5;
+        float width = 25;
+        float height = 25;
+        Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
+        float x = 0;
+        float y = gameData.getTILE_SIZE();
+        Direction direction = new Direction(true);
+
+        String imageURL = "Enemy/EnemySword.png";
+        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
+//        AbilityData ab = abilityProvider.getMeleeAbilities().get(0); //TODO ADD abilities
+
+        
+        enemy = new BigMeleeEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.CIRCLE);
+        world.addEntity(enemy);        
     }
 
     @Override
     public void removeAllEnemies(World world) {
-        world.removeEntities(MediumEnemy.class);
+        world.removeEntities(MediumEnemy.class, BigMeleeEnemy.class);
     }
 
 }
