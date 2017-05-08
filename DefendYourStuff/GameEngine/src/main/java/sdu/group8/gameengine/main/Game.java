@@ -134,6 +134,7 @@ public class Game
         
         
         assetManager.load("abilities/fireball.png", Texture.class);
+        assetManager.load("abilities/slash.png", Texture.class);
 
         assetManager.load("Tiles/tile_dirt.png", Texture.class);
         assetManager.load("Tiles/tile_brickWall.png", Texture.class);

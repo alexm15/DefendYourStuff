@@ -40,7 +40,7 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
             if (ab.getExpiration() <= 0) {
                 world.removeEntity(ability);
             } else if (!ab.isEntityOnGround(ab, gameData)) {
-                
+
                 float horizontalVelocity = 0;
                 float verticalVelocity = 0;
                 horizontalVelocity = ab.getMoveSpeed() * gameData.getDelta();
@@ -55,10 +55,38 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
                 ability.setY(ability.getY() - verticalVelocity * gameData.getDelta());
             }
         }
+        for (Entity ability : world.getEntities(MeleeAbility.class)) {
+            Ability ab = (Ability) ability;
+            ab.updateExpiration(gameData.getDelta());
+            if (ab.getExpiration() <= 0) {
+                world.removeEntity(ability);
+            }
+
+        }
+
     }
 
     @Override
     public Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData) {
+        return createAbility(caller, aimX, aimY, abilityData, null);
+    }
+
+    @Override
+    public Ability useAbility(Entity caller, AbilityData abilityData) {
+        return createAbility(caller, 0, 0, abilityData, null);
+    }
+
+    @Override
+    public Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon) {
+        return createAbility(caller, aimX, aimY, abilityData, weapon);
+    }
+
+    @Override
+    public Ability useAbility(Entity caller, AbilityData abilityData, Weapon weapon) {
+        return createAbility(caller, 0, 0, abilityData, weapon);
+    }
+
+    private Ability createAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon) {
         Ability ability;
         Ability ab = abilityCatalog.getAbility(abilityData);
         if (ab instanceof RangedAbility) {
@@ -74,13 +102,22 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
         }
         float x;
         float y;
+        ability.setDirection(new Direction(caller.getDirection()));
         if (abilityData.isAimable()) {
             x = aimX;
-            y = aimY; 
+            y = aimY;
         } else {
-            x = caller.getX();
+            if (ability.getDirection().isIsLeft()) {
+                x = caller.getX() - caller.getWidth() / 2 - caller.getWidth() / 4;
+            } else {
+                x = caller.getX() + caller.getWidth() / 2 + caller.getWidth() / 4;
+            }
             y = caller.getY();
         }
+        if (weapon != null) {
+            //TODO add mothod to add multiplier to weapon
+        }
+        System.out.println("Y pos: " + ability.getY());
         
         ability.setDirection(new Direction(caller.getDirection()));
         ability.setPosition(new Position(x, y));
@@ -111,12 +148,6 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     @Override
     public List<AbilityData> getSummoningAbilities() {
         return abilityCatalog.getAbilities(SummoningAbility.class);
-    }
-
-    @Override
-    public Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon) {
-        //TODO: implement this method
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

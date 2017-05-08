@@ -67,8 +67,10 @@ public abstract class Entity {
         this.getImage().setReversed(isLeft);
     }
 
+    //Add image comment <3
     public void setDirection(Direction direction) {
         this.direction = direction;
+        this.getImage().setReversed(direction.isIsRight());
     }
 
     public Image getImage() {
