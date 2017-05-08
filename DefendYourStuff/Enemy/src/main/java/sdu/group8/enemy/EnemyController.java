@@ -54,7 +54,7 @@ public class EnemyController
             }
 
             if (enemy instanceof MediumEnemy) {
-                aiService.rangedAI(enemy, world, gameData, 350);
+                aiService.rangedAI(enemy, world, gameData, 250, 350);
             } else {
                 aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
             }
