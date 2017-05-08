@@ -26,8 +26,9 @@ import sdu.group8.commonenemy.IEnemyService;
     ,
     @ServiceProvider(service = IGamePluginService.class)}
 )
-public class EnemyController
-        implements IGameProcessingService, IGamePluginService, IEnemyService {
+public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService{
+
+    private Map<UUID, Character> enemies = new ConcurrentHashMap<>();
 
     @Override
     public void process(GameData gameData, World world) {
@@ -46,7 +47,6 @@ public class EnemyController
                 horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
                 enemy.getImage().setReversed(false);
             }
-
             enemy.setX(horizontalPos);
             
             if (!enemy.isEntityOnGround(enemy, gameData)) {
@@ -55,6 +55,7 @@ public class EnemyController
                 enemy.setEntityOnGround(enemy, gameData);
             }
         }
+        deathProcess(gameData, world);
     }
 
     @Override
@@ -66,6 +67,18 @@ public class EnemyController
     @Override
     public void stop(GameData gameData, World world) {
 
+    }
+
+    public void deathProcess(GameData gameData, World world) {
+        for (Entity entity : world.getEntities(Character.class)) {
+            Character enemy = (Character) entity;
+            if (enemy.getClass().equals(MediumEnemy.class)) {
+                if (enemy.getHealth() == 0) {
+                    gameData.addPlayerGold(100);
+                    world.removeEntity(enemy);
+                }
+            }
+        }
     }
 
     @Override
@@ -90,5 +103,4 @@ public class EnemyController
     public void removeAllEnemies(World world) {
         world.removeEntities(MediumEnemy.class);
     }
-
 }
