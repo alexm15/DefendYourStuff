@@ -18,21 +18,21 @@ import sdu.group8.common.entity.MovingEntity;
  * @author Martin
  */
 public class Ability extends MovingEntity {
-    
+
     private DamageRange damageRange;
     private boolean isHit = false;
     private EffectContainer effects;
     private float angle;
     private Entity owner;
     private float expiration = 1;
-    
+
     public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer) {
         super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);
         this.effects = effectContainer;
         this.damageRange = damageRange;
         this.expiration = expiration;
     }
-    
+
     public Ability(Ability ability) {
         super(ability.getMoveSpeed(), ability.getWeight(), ability.getImage().getImageURL(), ability.getDimension(), ability.getDirection(), ability.getPosition(), ability.getCollisionType());
         this.effects = ability.getEffects();
@@ -47,7 +47,7 @@ public class Ability extends MovingEntity {
     public void updateExpiration(float deltaTime) {
         this.expiration -= deltaTime;
     }
-    
+
     public Entity getOwner() {
         return owner;
     }
@@ -55,7 +55,7 @@ public class Ability extends MovingEntity {
     public void setOwner(Entity owner) {
         this.owner = owner;
     }
-    
+
     public DamageRange getDamageRange() {
         return damageRange;
     }
@@ -83,7 +83,7 @@ public class Ability extends MovingEntity {
     public void setIsHit(boolean isHit) {
         this.isHit = isHit;
     }
-    
+
     public float getAngle() {
         return angle;
     }
@@ -92,9 +92,15 @@ public class Ability extends MovingEntity {
         this.angle = angle;
     }
 
+    /**
+     * If the otherEntity implements IAbilityAction, call that action with a reference to this ability.
+     * @param otherEntity The other entity that this ability has collided with.
+     */
     @Override
     public void collision(Entity otherEntity) {
-        
+        if (otherEntity instanceof IAbilityAction) {
+            ((IAbilityAction) otherEntity).abilityAction(this);
+        }
     }
 
 }

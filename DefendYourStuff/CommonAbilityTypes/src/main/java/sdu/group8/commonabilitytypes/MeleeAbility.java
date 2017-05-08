@@ -7,6 +7,8 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
+import sdu.group8.common.entity.Entity;
+import sdu.group8.commonplayer.IPlayerAction;
 
 /**
  *
@@ -21,4 +23,5 @@ public class MeleeAbility extends Ability {
     public MeleeAbility(Ability ability) {
         super(ability.getExpiration(), ability.getMoveSpeed(), ability.getWeight(), ability.getDamageRange(), ability.getImage().getImageURL(), ability.getDimension(), ability.getDirection(), ability.getPosition(), ability.getCollisionType(), ability.getEffects());
     }
+    
 }
