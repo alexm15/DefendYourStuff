@@ -13,20 +13,21 @@ import sdu.group8.common.ability.Ability;
  * @author Martin
  */
 public class AbilityContainer {
-    private ArrayList<Ability> abilites;
+    private ArrayList<AbilityData> abilites;
     
-    public AbilityContainer(Ability... ab) {
-        abilites = new ArrayList<Ability>();
-        for(Ability ability : ab) {
+    public AbilityContainer(AbilityData... ab) {
+        abilites = new ArrayList<AbilityData>();
+        for(AbilityData ability : ab) {
             abilites.add(ability);
         }
     }
 
-    public ArrayList<Ability> getAbilites() {
+    public ArrayList<AbilityData> getAbilites() {
         return abilites;
     }
     
-    public void addAbility(Ability ab) {
+    
+    public void addAbility(AbilityData ab) {
         abilites.add(ab);
     }
     

@@ -10,12 +10,18 @@ package sdu.group8.common.data;
  * @author Martin
  */
 public class Position {
+
     private float x;
     private float y;
 
     public Position(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Position(Position position) {
+        this.x = position.getX();
+        this.y = position.getY();
     }
     
     public float getX() {
@@ -33,12 +39,12 @@ public class Position {
     public void setY(float y) {
         this.y = y;
     }
-    
+
     public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
-    
+
     @Override
     public String toString() {
         return "X: " + this.x + " Y: " + y;
