@@ -44,6 +44,10 @@ public class Ability extends MovingEntity {
         return expiration;
     }
 
+    public void setExpiration(float expiration) {
+        this.expiration = expiration;
+    }
+
     public void updateExpiration(float deltaTime) {
         this.expiration -= deltaTime;
     }
