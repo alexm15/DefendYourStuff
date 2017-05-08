@@ -23,9 +23,10 @@ import sdu.group8.commonplayer.IPlayerAction;
  */
 public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
 
-    public BigMeleeEnemy(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
-        super(moveSpeed, weight, health, imageURL, dimension, direction, pos, collisionType, ab);
+    public BigMeleeEnemy(float reactionTime, float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
+        super(reactionTime, moveSpeed, weight, health, imageURL, dimension, direction, pos, collisionType, ab);
     }
+
 
     @Override
     public void collision(Entity otherEntity) {

@@ -86,6 +86,7 @@ public class EnemyController
         float weight = 10;
         float width = 50;
         float height = 50;
+        float reactionTime = 5;
         Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
         float x = 0;
         float y = gameData.getTILE_SIZE();
@@ -95,7 +96,7 @@ public class EnemyController
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         AbilityData ab = abilityProvider.getRangedAbilities().get(0);
 
-        enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX, ab);
+        enemy = new MediumEnemy(reactionTime, moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX, ab);
         world.addEntity(enemy);
     }
 
@@ -107,6 +108,7 @@ public class EnemyController
         float weight = 5;
         float width = 25;
         float height = 25;
+        float reactionTime = 5;
         Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
         float x = 0;
         float y = gameData.getTILE_SIZE();
@@ -116,7 +118,7 @@ public class EnemyController
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
 //        AbilityData ab = abilityProvider.getMeleeAbilities().get(0); //TODO ADD abilities
 
-        enemy = new BigMeleeEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.CIRCLE);
+        enemy = new BigMeleeEnemy( reactionTime,moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.CIRCLE);
         world.addEntity(enemy);
     }
 
