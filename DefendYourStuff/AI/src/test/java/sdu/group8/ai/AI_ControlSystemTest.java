@@ -75,7 +75,7 @@ public class AI_ControlSystemTest {
     
     @Test
     public void testEnemyMovesToClosestTargetLeftFromEnemy() {
-        dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true), new Position(10, 0));
+        dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true), new Position(100, 0));
         float previousX = someEnemy.getX();
         float dummyX = dummyAttackable.getX();
         float initialDistance = Math.abs(dummyX-previousX);
@@ -94,13 +94,13 @@ public class AI_ControlSystemTest {
     
     @Test
     public void testNewEnemyIsCloser() {
-        dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true) ,new Position(10, 0));
+        dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true) ,new Position(100, 0));
         //dummyAttackable = new DummyAttackable(0, null, new Direction(true), new Position(10, 0));
         world.addEntity(dummyAttackable);
         
         
         
-        DummyAttackable newDummy = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true) ,new Position(-9, 0));
+        DummyAttackable newDummy = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true) ,new Position(-90, 0));
         world.addEntity(newDummy);
         
         float initialNewDummyDist = Math.abs(newDummy.getX()-someEnemy.getX());
@@ -139,7 +139,7 @@ public class AI_ControlSystemTest {
     @Test 
     @Ignore
     public void testEnemyShootsAtTarget() {
-        dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true), new Position(10, 0));
+        dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true), new Position(100, 0));
         int minShootDistance = 10;
         
         aiControl.rangedAI(someEnemy, world, gameData, minShootDistance, 15);

@@ -34,7 +34,10 @@ public class AI_ControlSystem
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
         Entity closestTarget = getClosesTarget(enemy, world);
-        moveEnemyToTarget(enemy, closestTarget, gameData);
+        if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth()/2) {
+            moveEnemyToTarget(enemy, closestTarget, gameData);
+        }
+        
 //        useAbility(enemy, world);
     }
 
