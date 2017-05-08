@@ -21,7 +21,7 @@ public class Direction {
     
     public Direction(Direction direction) {
         this.isLeft = direction.isLeft;
-        this.isRight = direction.isRight;
+        this.isRight = !isLeft;
     }
 
     public boolean isIsLeft() {

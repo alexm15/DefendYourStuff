@@ -78,9 +78,17 @@ public class PlayerController
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().SPACE)) {
             AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
-            float aimX = player.getAimPoint().getX();
-            float aimY = player.getAimPoint().getY();
+            float aimX = 0;
+            float aimY = 0;
+            try {
+                aimX = player.getAimPoint().getX();
+                aimY = player.getAimPoint().getY();
+            } catch (NullPointerException e) {
+                System.out.println("Mouse not in screen");
+                e.printStackTrace();
+            }
             world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getAbilityContainer().getAbilites().get(0)));
+            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getAbilityContainer().getAbilites().get(1)));
         }
 
     }
@@ -112,8 +120,9 @@ public class PlayerController
         
         AbilitySPI abilityProvider = lookup.lookup(AbilitySPI.class);
         AbilityData ab = abilityProvider.getRangedAbilities().get(0);
+        AbilityData abi = abilityProvider.getMeleeAbilities().get(0);
 
-        player = new Player(position, ab);
+        player = new Player(position, ab, abi);
         gameData.setPlayerGold(0);
         world.addEntity(player);
 

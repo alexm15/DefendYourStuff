@@ -33,6 +33,12 @@ public interface AbilitySPI {
      * @return
      */
     Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon);
+    
+    
+    Ability useAbility(Entity caller, AbilityData abilityData, Weapon weapon);
+    
+    
+    Ability useAbility(Entity caller, AbilityData abilityData);
 
     /**
      * Creates a collection of Abilities
