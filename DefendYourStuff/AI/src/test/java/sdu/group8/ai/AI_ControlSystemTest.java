@@ -126,8 +126,8 @@ public class AI_ControlSystemTest {
   
         
         float initialEnemyToEntityDistance = Math.abs(dummyAttackable.getX()-someEnemy.getX());
-        int minDistanceToTarget = 10;
-        aiControl.rangedAI(someEnemy, world, gameData, minDistanceToTarget);
+        int minShootDistance = 10;
+        aiControl.rangedAI(someEnemy, world, gameData, minShootDistance, 15);
         
         float updatedEnemyToEntityDistance = Math.abs(dummyAttackable.getX()-someEnemy.getX());        
         
@@ -140,11 +140,11 @@ public class AI_ControlSystemTest {
     @Ignore
     public void testEnemyShootsAtTarget() {
         dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true), new Position(10, 0));
-        int shootingDistance = 10;
+        int minShootDistance = 10;
         
-        aiControl.rangedAI(someEnemy, world, gameData, shootingDistance);
+        aiControl.rangedAI(someEnemy, world, gameData, minShootDistance, 15);
         float distanceToPlayer = Math.abs(dummyAttackable.getX()-someEnemy.getX());
-        assertTrue(distanceToPlayer <= shootingDistance);
+        assertTrue(distanceToPlayer <= minShootDistance);
         
         assertFalse(world.getEntities(Ability.class).isEmpty());
         
