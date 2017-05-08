@@ -5,6 +5,8 @@
  */
 package sdu.group8.enemy;
 
+import sdu.group8.enemies.MediumEnemy;
+import sdu.group8.enemies.BigMeleeEnemy;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.enemy;
+package sdu.group8.enemies;
 
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
@@ -14,7 +14,6 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.services.IAbilityAction;
 import sdu.group8.commonbuilding.services.IBuildingAction;
-import sdu.group8.commonenemy.IEnemy;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonplayer.IPlayerAction;
 
@@ -22,7 +21,7 @@ import sdu.group8.commonplayer.IPlayerAction;
  *
  * @author karim møller
  */
-public class BigMeleeEnemy extends sdu.group8.commoncharacter.Character implements IEnemy, IPlayerAction, IAbilityAction, IBuildingAction {
+public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
 
     public BigMeleeEnemy(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
         super(moveSpeed, weight, health, imageURL, dimension, direction, pos, collisionType, ab);
