@@ -18,6 +18,7 @@ import sdu.group8.common.entity.CollisionType;
 public abstract class Enemy extends sdu.group8.commoncharacter.Character {
     
     private float reactionTime;
+    private float reactionTimer;
     
     public Enemy(float reactionTime,float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
         super(moveSpeed, weight, health, imageURL, dimension, direction, pos, collisionType, ab);
@@ -28,7 +29,10 @@ public abstract class Enemy extends sdu.group8.commoncharacter.Character {
         return reactionTime;
     }
 
-    public void setReactionTime(float reactionTime) {
-        this.reactionTime = reactionTime;
-    }
+   public void resetReactiontime(){
+       this.reactionTimer = reactionTime;
+   }
+   public void reduceReactiontime(float i){
+       this.reactionTimer =- i;
+   }
 }
