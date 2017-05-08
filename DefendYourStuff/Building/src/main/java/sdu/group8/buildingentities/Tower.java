@@ -5,7 +5,7 @@
  */
 package sdu.group8.buildingentities;
 
-import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
@@ -23,11 +23,8 @@ public class Tower
         extends Building
         implements IDefBuilding {
 
-    public Tower(String imageURL, Dimension dimension, Position pos, 
-            CollisionType collisionType, BuildingType buildingType, boolean isAttackable, 
-            int upgradeLevel, float health, Ability... ab) {
-        super(imageURL, dimension, pos, collisionType, 
-                buildingType, isAttackable, upgradeLevel, health, ab);
+    public Tower(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
+        super(imageURL, dimension, pos, collisionType, buildingType, isAttackable, upgradeLevel, health, ab);
     }
 
     @Override

@@ -6,7 +6,9 @@
 package sdu.group8.enemy;
 
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
@@ -21,8 +23,8 @@ import sdu.group8.commonplayer.IPlayerAction;
  */
 public class MediumEnemy extends Character implements IPlayerAction{
     
-    public MediumEnemy(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, Ability... ab) {
-        super(moveSpeed, weight, health, imageURL, dimension, pos, collisionType, ab);
+    public MediumEnemy(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
+        super(moveSpeed, weight, health, imageURL, dimension, direction, pos, collisionType, ab);
     }
     
     

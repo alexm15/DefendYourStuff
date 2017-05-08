@@ -8,6 +8,7 @@ package sdu.group8.common.ability;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.Direction;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.entity.MovingEntity;
@@ -17,31 +18,48 @@ import sdu.group8.common.entity.MovingEntity;
  * @author Martin
  */
 public class Ability extends MovingEntity {
-    
+
     private DamageRange damageRange;
     private boolean isHit = false;
     private EffectContainer effects;
     private float angle;
-    private String name;
+    private Entity owner;
+    private float expiration = 1;
 
-    public Ability(float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Position pos, CollisionType collisionType, String name, EffectContainer effectContainer) {
-        super(moveSpeed, weight, imageURL, dimension, pos, collisionType);
+    public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer) {
+        super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);
         this.effects = effectContainer;
         this.damageRange = damageRange;
-        this.name = name;
-    }
-    
-    public Ability(Ability ability) {
-        super(ability.getMoveSpeed(), ability.getWeight(), ability.getImage().getImageURL(), ability.getDimension(), ability.getPosition(), ability.getCollisionType());
-        this.effects = ability.getEffects();
-        this.damageRange = ability.getDamageRange();
-        this.name = ability.getName();
+        this.expiration = expiration;
     }
 
-    public String getName() {
-        return name;
+    public Ability(Ability ability) {
+        super(ability.getMoveSpeed(), ability.getWeight(), ability.getImage().getImageURL(), ability.getDimension(), ability.getDirection(), ability.getPosition(), ability.getCollisionType());
+        this.effects = ability.getEffects();
+        this.damageRange = ability.getDamageRange();
+        this.expiration = ability.getExpiration();
     }
-    
+
+    public float getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(float expiration) {
+        this.expiration = expiration;
+    }
+
+    public void updateExpiration(float deltaTime) {
+        this.expiration -= deltaTime;
+    }
+
+    public Entity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Entity owner) {
+        this.owner = owner;
+    }
+
     public DamageRange getDamageRange() {
         return damageRange;
     }
@@ -69,7 +87,7 @@ public class Ability extends MovingEntity {
     public void setIsHit(boolean isHit) {
         this.isHit = isHit;
     }
-    
+
     public float getAngle() {
         return angle;
     }
@@ -78,9 +96,15 @@ public class Ability extends MovingEntity {
         this.angle = angle;
     }
 
+    /**
+     * If the otherEntity implements IAbilityAction, call that action with a reference to this ability.
+     * @param otherEntity The other entity that this ability has collided with.
+     */
     @Override
     public void collision(Entity otherEntity) {
-        
+        if (otherEntity instanceof IAbilityAction) {
+            ((IAbilityAction) otherEntity).abilityAction(this);
+        }
     }
 
 }

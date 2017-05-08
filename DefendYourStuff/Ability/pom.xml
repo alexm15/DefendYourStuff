@@ -39,15 +39,20 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId>
+            <version>RELEASE82</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CommonAbility</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util-lookup</artifactId>
-            <version>RELEASE82</version>
-            <type>jar</type>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonAbilityTypes</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <properties>
