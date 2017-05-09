@@ -19,12 +19,12 @@ import sdu.group8.common.ability.AbilityContainer;
  */
 public abstract class Entity {
 
-    private UUID ID;
-    private Dimension dimension;
-    private Position pos;
-    private CollisionType collisionType;
-    private Direction direction;
-    private Image image;
+    protected UUID ID;
+    protected Dimension dimension;
+    protected Position pos;
+    protected CollisionType collisionType;
+    protected Direction direction;
+    protected Image image;
 
     public Entity(String imageURL, Dimension dimension, Direction direction, Position position, CollisionType collisionType) {
         this.image = new Image(imageURL, false);

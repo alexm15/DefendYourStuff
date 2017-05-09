@@ -16,13 +16,26 @@ import sdu.group8.common.data.Position;
  *
  * @author Martin
  */
-public abstract class Building extends Entity{
-    private BuildingType buildingType;
-    private boolean isAttackable;
-    private AbilityContainer abilities;
-    private int upgradeLevel;
-    private HealthSystem health;
+public abstract class Building extends Entity {
 
+    protected BuildingType buildingType;
+    protected boolean isAttackable;
+    protected AbilityContainer abilities;
+    protected int upgradeLevel;
+    protected HealthSystem health;
+
+    /**
+     * Position.x should be half of dimension width, but the Position.y should be at the bottom of the dimension
+     * @param imageURL
+     * @param dimension
+     * @param pos Position containing float x and y of the building
+     * @param collisionType
+     * @param buildingType
+     * @param isAttackable
+     * @param upgradeLevel
+     * @param health
+     * @param ab 
+     */
     public Building(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
         super(imageURL, dimension, pos, collisionType);
         this.buildingType = buildingType;
@@ -30,6 +43,7 @@ public abstract class Building extends Entity{
         this.upgradeLevel = upgradeLevel;
         this.health = new HealthSystem(health);
         this.abilities = new AbilityContainer(ab);
+        this.pos.setY(this.getY() + this.dimension.getHeight() / 2);
     }
 
     public AbilityContainer getAbilityContainer() {
@@ -63,11 +77,11 @@ public abstract class Building extends Entity{
     public float getHealth() {
         return health.getHealth();
     }
-    
+
     public void increaseHealth(float health) {
         this.health.increaseHealth(health);
     }
-    
+
     public void reduceHealth(float dmg) {
         this.health.reduceHealth(dmg);
     }

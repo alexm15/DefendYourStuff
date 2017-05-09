@@ -21,8 +21,8 @@ import sdu.group8.common.entity.MovingEntity;
  */
 public abstract class Character extends MovingEntity{
     
-    private HealthSystem health;
-    private AbilityContainer abilities;
+    protected HealthSystem health;
+    protected AbilityContainer abilities;
     
 
     public Character(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {

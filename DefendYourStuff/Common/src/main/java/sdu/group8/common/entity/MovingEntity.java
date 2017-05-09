@@ -16,10 +16,10 @@ import sdu.group8.common.data.Position;
  */
 public abstract class MovingEntity extends Entity {
 
-    private float dx;
-    private float dy;
-    private float moveSpeed;
-    private float weight;
+    protected float dx;
+    protected float dy;
+    protected float moveSpeed;
+    protected float weight;
     
     public MovingEntity(float moveSpeed, float weight, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType) {
         super(imageURL, dimension, direction, pos, collisionType);
