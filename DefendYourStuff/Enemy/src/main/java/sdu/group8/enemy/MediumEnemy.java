@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.enemies;
+package sdu.group8.enemy;
 
 import sdu.group8.commonenemy.Enemy;
 import sdu.group8.common.ability.Ability;
@@ -20,25 +20,28 @@ import sdu.group8.commonplayer.IPlayerAction;
 
 /**
  *
- * @author karim møller
+ * @author Martin
  */
-public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
+public class MediumEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
 
-    public BigMeleeEnemy(float reactionTime, float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
+    public MediumEnemy(float reactionTime, float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
         super(reactionTime, moveSpeed, weight, health, imageURL, dimension, direction, pos, collisionType, ab);
     }
-
-
+    
+  
+    
+    
     @Override
     public void collision(Entity otherEntity) {
-   if(otherEntity instanceof IEnemyAction) {
+        if(otherEntity instanceof IEnemyAction) {
             ((IEnemyAction) otherEntity).enemyAction((Entity)this);
         }
     }
 
     @Override
     public void playerAction(Entity player) {
-        //TODO implement metode: playerAction
+        //TODO: create ability in world
+        
     }
 
     @Override
@@ -49,7 +52,6 @@ public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityActio
     @Override
     public void execute() {
         //TODO implement metode: execute
-        throw new UnsupportedOperationException("Methode: 'execute' Not supported yet in class: 'BigMeleeEnemy'");
+        throw new UnsupportedOperationException("Methode: 'execute' Not supported yet in class: 'MediumEnemy'");
     }
-    
 }
