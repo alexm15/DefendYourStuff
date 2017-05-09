@@ -12,7 +12,6 @@ import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.commonenemy.IEnemy;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonplayer.IPlayerAction;
