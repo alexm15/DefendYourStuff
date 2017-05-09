@@ -9,7 +9,6 @@ import sdu.group8.commonabilitytypes.MeleeAbility;
 import sdu.group8.commonabilitytypes.PositioningAbility;
 import sdu.group8.commonabilitytypes.RangedAbility;
 import sdu.group8.commonabilitytypes.SummoningAbility;
-import java.util.Collection;
 import java.util.List;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
@@ -115,9 +114,12 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
             y = caller.getY();
         }
         if (weapon != null) {
-            //TODO add mothod to add multiplier to weapon
+            ab.getDamageRange().setMaxDamage(ab.getDamageRange().getMaxDamage()*weapon.getDamageMultiplier());
+            ab.getDamageRange().setMinDamage(ab.getDamageRange().getMinDamage()*weapon.getDamageMultiplier());
         }
         System.out.println("Y pos: " + ability.getY());
+        
+        ability.setDirection(new Direction(caller.getDirection()));
         ability.setPosition(new Position(x, y));
         ability.setOwner(caller);
         return ability;

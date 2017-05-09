@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 OpenIDE-Module-Localizing-Bundle: sdu/group8/enemy/Bundle.properties
 OpenIDE-Module-Specification-Version: 1.0.0
 OpenIDE-Module-Implementation-Version: 1.0.0-20170509
-OpenIDE-Module-Build-Version: 201705091341
+OpenIDE-Module-Build-Version: 201705091443
 OpenIDE-Module: sdu.group8.Enemy
 OpenIDE-Module-Public-Packages: -
 OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1
@@ -13,5 +13,6 @@ OpenIDE-Module-Long-Description: <undefined>
 OpenIDE-Module-Module-Dependencies: org.netbeans.api.annotations.commo
  n/1 > 1.27.1, sdu.group8.CommonEnemy > 1.0.0, sdu.group8.Common > 1.0
  .0, sdu.group8.CommonCharacter > 1.0.0, org.openide.util.lookup > 8.3
- 3.1, sdu.group8.CommonPlayer > 1.0.0
+ 3.1, sdu.group8.CommonPlayer > 1.0.0, sdu.group8.CommonAI > 1.0.0, sd
+ u.group8.CommonAbility > 1.0.0, sdu.group8.CommonBuilding > 1.0.0
 
