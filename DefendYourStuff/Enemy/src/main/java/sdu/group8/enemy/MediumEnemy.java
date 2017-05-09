@@ -25,7 +25,7 @@ import sdu.group8.commonplayer.IPlayerAction;
 public class MediumEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
 
     public MediumEnemy(Position position, AbilityData... abilities) {
-        super(5, 100, 10, 100, "Enemy/EnemyBow.png", new Dimension(50, 50, 50/2), 
+        super(0, 100, 10, 100, "Enemy/EnemyBow.png", new Dimension(50, 50, 50/2), 
                 new Direction(true), position, CollisionType.BOX, abilities);
     }
     
