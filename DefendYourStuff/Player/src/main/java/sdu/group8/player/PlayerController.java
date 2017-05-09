@@ -127,13 +127,11 @@ public class PlayerController
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
         Position position = new Position(x, y); //TODO: Should be startposition.
-        
-        AbilitySPI abilityProvider = lookup.lookup(AbilitySPI.class);
-        AbilityData ab = abilityProvider.getRangedAbilities().get(0);
-        AbilityData abi = abilityProvider.getMeleeAbilities().get(0);
 
-        player = new Player(position, ab, abi);
+        player = new Player(position);
         gameData.setPlayerGold(0);
+        IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
+        player.setWeapon(weaponProvider.createRanged());
         world.addEntity(player);
 
         gameData.setPlayerPosition(position);
