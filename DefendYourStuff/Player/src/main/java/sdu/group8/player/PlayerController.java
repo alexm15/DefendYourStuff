@@ -15,6 +15,7 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonability.services.AbilitySPI;
+import sdu.group8.commonweapon.services.IWeaponService;
 
 /**
  *
@@ -57,6 +58,16 @@ public class PlayerController
     }
 
     private void handleKeyboardInput(GameData gameData, World world) {
+        if (gameData.getKeys().isKeyDown(gameData.getKeys().NUM_1)) {
+            IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
+            player.setWeapon(weaponProvider.createMelee());
+        }
+        
+        if (gameData.getKeys().isKeyDown(gameData.getKeys().NUM_2)) {
+            IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
+            player.setWeapon(weaponProvider.createRanged());
+        }
+        
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             horizontalVelocity += player.getMoveSpeed() * gameData.getDelta();
             player.setDirection(false);
@@ -87,8 +98,7 @@ public class PlayerController
                 System.out.println("Mouse not in screen");
                 e.printStackTrace();
             }
-            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getAbilityContainer().getAbilites().get(0)));
-            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getAbilityContainer().getAbilites().get(1)));
+            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getWeapon().getAbilities().get(0)));
         }
 
     }
