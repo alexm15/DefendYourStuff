@@ -19,12 +19,12 @@ import sdu.group8.common.entity.MovingEntity;
  */
 public class Ability extends MovingEntity {
 
-    private DamageRange damageRange;
-    private boolean isHit = false;
-    private EffectContainer effects;
-    private float angle;
-    private Entity owner;
-    private float expiration = 1;
+    protected DamageRange damageRange;
+    protected boolean isHit = false;
+    protected EffectContainer effects;
+    protected float angle;
+    protected Entity owner;
+    protected float expiration = 1;
 
     public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer) {
         super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);

@@ -5,9 +5,6 @@
  */
 package sdu.group8.daynight;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicBoolean;
 import org.openide.util.Lookup;
 import sdu.group8.commonenemy.IEnemyService;
 import org.openide.util.lookup.ServiceProvider;
@@ -25,7 +22,7 @@ import sdu.group8.common.services.IGameProcessingService;
 public class DayNightController implements IGameProcessingService {
 
     private Lookup lookup = Lookup.getDefault();
-    private final float COUNTDOWNTIME = 120;
+    private final float COUNTDOWNTIME = 10;
     private float countdown = COUNTDOWNTIME;
 
     @Override
