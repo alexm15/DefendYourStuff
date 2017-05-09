@@ -24,8 +24,8 @@ import sdu.group8.commonplayer.IPlayerAction;
  */
 public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
 
-    public BigMeleeEnemy(Position pos, AbilityData... ab) {
-        super(5, 150, 5, 100, "Enemy/EnemySword.png", new Dimension(25, 25, 25/2), new Direction(true), pos, CollisionType.BOX, ab);
+    public BigMeleeEnemy(Position pos, AbilityData... abilities) {
+        super(5, 150, 5, 100, "Enemy/EnemySword.png", new Dimension(25, 25, 25/2), new Direction(true), pos, CollisionType.BOX, abilities);
     }
 
 
