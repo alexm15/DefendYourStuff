@@ -40,13 +40,9 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         aiService = Lookup.getDefault().lookup(AI_Service.class);
 
         for (Entity enemyEntity : world.getEntities(MediumEnemy.class, BigMeleeEnemy.class)) {
-            Character enemy = (Character) enemyEntity;
+            Enemy enemy = (Enemy) enemyEntity;
 
-            if (!enemy.isEntityOnGround(enemy, gameData)) {
-
-            } else {
-                enemy.setEntityOnGround(enemy, gameData);
-            }
+            enemy.setEntityOnGround(enemyEntity, gameData);
 
             if (enemy instanceof MediumEnemy) {
                 aiService.rangedAI(enemy, world, gameData, 250, 350);
