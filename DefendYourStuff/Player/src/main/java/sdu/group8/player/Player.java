@@ -12,6 +12,7 @@ import sdu.group8.common.data.DamageRange;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
+import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
@@ -75,6 +76,11 @@ public class Player extends Character implements IPlayer {
         if (otherEntity instanceof IPlayerAction) {
             ((IPlayerAction) otherEntity).playerAction((Entity) this);
         }
+    }
+
+    @Override
+    public HealthSystem getHealthSystem() {
+        return getHealth();
     }
 
 }

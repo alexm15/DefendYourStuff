@@ -74,7 +74,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         for (Entity entity : world.getEntities(Character.class)) {
             Character enemy = (Character) entity;
             if (enemy.getClass().equals(MediumEnemy.class)) {
-                if (enemy.getHealth() == 0) {
+                if (enemy.getCurrentHealth() == 0) {
                     gameData.addPlayerGold(100);
                     world.removeEntity(enemy);
                 }

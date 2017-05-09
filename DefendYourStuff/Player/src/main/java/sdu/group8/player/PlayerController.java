@@ -35,7 +35,7 @@ public class PlayerController
     @Override
     public void process(GameData gameData, World world) {
 
-        if (player.getHealth() == 0) {
+        if (player.getCurrentHealth() == 0) {
             //TODO: remove player from world. Set isGameOver in gameData.           
         }
         //Handle gravity for player

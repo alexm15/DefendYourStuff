@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
-import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Image;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
@@ -28,7 +28,9 @@ import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.commonmap.IMapUpdate;
+import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.gameengine.managers.GameInputProcessor;
+import sdu.group8.commoncharacter.Character;
 
 /**
  *
@@ -67,6 +69,8 @@ public class Game
     private int firstBackgroundImageScrollX = 0;
     private int secondBackgroundImageScrollX = 0;
 
+    private float FONT_SCALE = 1.5f;
+
     public Collection<? extends IGameProcessingService> getGameProcesses() {
         return lookup.lookupAll(IGameProcessingService.class);
     }
@@ -82,7 +86,7 @@ public class Game
     public Collection<? extends IMapUpdate> getIMapUpdate() {
         return lookup.lookupAll(IMapUpdate.class);
     }
-    
+
     private Collection<? extends IPreStartPluginService> getPreGamePlugins() {
         return lookup.lookupAll(IPreStartPluginService.class);
     }
@@ -105,7 +109,7 @@ public class Game
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.RED);
-        
+
         for (IPreStartPluginService preGamePlugin : getPreGamePlugins()) {
             preGamePlugin.preStart(gameData);
         }
@@ -136,7 +140,7 @@ public class Game
         assetManager.load("Tiles/tile_dirt.png", Texture.class);
         assetManager.load("Tiles/tile_brickWall.png", Texture.class);
         assetManager.load("Tiles/tile_air.png", Texture.class);
-      
+
         assetManager.load("Building/castle.png", Texture.class);
         assetManager.load("Building/rubble.png", Texture.class);
 
@@ -199,10 +203,10 @@ public class Game
     private void draw() {
         batch.begin();
 
-        //drawTextureFromAsset(secondBackgroundImage, CAM.position.x - CAM.viewportWidth / 2, gameData.getTILE_SIZE()); // Draw second background for the world;
         drawBackgroundImageForWorld(); //Draw backgrounds for the world;
         drawMap(); // Draw chunks
         drawEntities(); // Draw entities
+        drawHUD();
 
         batch.end();
     }
@@ -316,5 +320,35 @@ public class Game
         batch.draw(firstTex, CAM.position.x - CAM.viewportWidth / 2, 0, firstBackgroundImageScrollX, 0, gameData.getDisplayWidth(), gameData.getDisplayHeight());
     }
 
-    
+    private void drawHUD() {
+        HealthSystem healthSystem = null;
+        for (Entity entity : world.getEntities()) {
+            if (entity instanceof IPlayer) {
+                healthSystem = ((IPlayer) entity).getHealthSystem();
+            }
+        }
+        //TODO: catch nullPointError
+        
+        float screenH = CAM.viewportHeight;
+        float screenW = CAM.viewportWidth;
+        float posX = CAM.position.x - screenW / 2;
+        float posOffsetX = 30;
+        float posOffsetY = 25;
+        
+        drawPlayerHealth(healthSystem, posX + posOffsetX, screenH - posOffsetY);
+        drawPlayerGold(posX + posOffsetX, screenH - posOffsetY * 2);
+    }
+
+    private void drawPlayerHealth(HealthSystem healthSystem, float posX, float posY) {
+        font.setColor(Color.BLACK);
+        font.setScale(FONT_SCALE);
+        font.draw(batch, "Health: " + healthSystem.getHealth() + " / " + healthSystem.getMaxHealth(), posX, posY);
+    }
+
+    private void drawPlayerGold(float posX, float posY) {
+        font.setColor(Color.BLACK);
+        font.setScale(FONT_SCALE);
+        font.draw(batch, "Gold: " + gameData.getPlayerGold(), posX, posY);
+    }
+
 }
