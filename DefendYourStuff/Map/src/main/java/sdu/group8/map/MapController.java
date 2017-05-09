@@ -33,7 +33,7 @@ public class MapController implements IGamePluginService, IMapUpdate {
     @Override
     public void start(GameData gameData, World world) {
         Chunk chunkMiddle = new Chunk_Base(0);
-        chunkMiddle.createEntities(world);
+        addToWorld(world, chunkMiddle, false);
         world.addChunkRight(chunkMiddle);
         world.setChunksMiddle(chunkMiddle);
 
@@ -55,7 +55,6 @@ public class MapController implements IGamePluginService, IMapUpdate {
         Chunk lastChunk = startChunk;
         for (int i = 0; i < portalOffset; i++) {
             lastChunk = generateChunk(lastChunk, addToLeftSide);
-            lastChunk.createEntities(world);
             addToWorld(world, lastChunk, addToLeftSide);
         }
         addToWorld(world, generatePortalChunk(lastChunk, addToLeftSide), addToLeftSide);
@@ -70,11 +69,11 @@ public class MapController implements IGamePluginService, IMapUpdate {
     public void update(World world, boolean addToLeftSide) {
         Chunk lastChunk = getLastChunk(world, addToLeftSide);
         Chunk newChunk = generateChunk(lastChunk, addToLeftSide);
-        newChunk.createEntities(world);
         addToWorld(world, newChunk, addToLeftSide);
     }
 
     private void addToWorld(World world, Chunk chunk, boolean addToLeftSide) {
+        chunk.createEntities(world);
         if (addToLeftSide) {
             world.addChunkLeft(chunk);
         } else {

@@ -7,10 +7,7 @@ package sdu.group8.buildingcontroller;
 
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.buildingentities.Castle;
-import sdu.group8.buildingentities.Rubble;
-import sdu.group8.buildingentities.Tower;
-import sdu.group8.buildingentities.Wall;
+import sdu.group8.buildingentities.*;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
@@ -25,10 +22,8 @@ import sdu.group8.commonbuilding.services.Buildable;
  * @author Alexander
  */
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class)
-    ,
-    @ServiceProvider(service = IGamePluginService.class)
-    ,
+    @ServiceProvider(service = IGameProcessingService.class),
+    @ServiceProvider(service = IGamePluginService.class),
     @ServiceProvider(service = Buildable.class)}
 )
 public class BuildingControlSystem
@@ -86,6 +81,12 @@ public class BuildingControlSystem
     }
 
     @Override
+    public void createPortalBuilding(World world, Position position) {
+        Building portal = new Portal(position);
+        world.addEntity(portal);
+    }
+
+    @Override
     public void createRubbleBuilding(World world, Position position) {
         Building rubble = new Rubble(position);
         world.addEntity(rubble);
@@ -134,10 +135,15 @@ public class BuildingControlSystem
             }
         }
     }
-    
-    
 
     private void portalProcess(GameData gameData, World world) {
+        for (Entity entity : world.getEntities(Portal.class)) {
+            Building portal = (Building) entity;
+            if (portal.getHealth() == 0) {
+                createRubbleBuilding(world, portal.getPosition());
+                world.removeEntity(portal);
+            }
+        }
     }
 
     /**
