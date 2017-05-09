@@ -18,6 +18,7 @@ import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonai.AI_Service;
 import sdu.group8.commoncharacter.Character;
+import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyAction;
 
 /**
