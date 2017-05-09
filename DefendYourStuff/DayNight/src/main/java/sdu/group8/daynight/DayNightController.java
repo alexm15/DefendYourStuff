@@ -5,9 +5,6 @@
  */
 package sdu.group8.daynight;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicBoolean;
 import org.openide.util.Lookup;
 import sdu.group8.commonenemy.IEnemyService;
 import org.openide.util.lookup.ServiceProvider;
