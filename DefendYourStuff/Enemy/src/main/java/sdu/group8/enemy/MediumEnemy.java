@@ -22,9 +22,7 @@ import sdu.group8.commonplayer.IPlayerAction;
  *
  * @author Martin
  */
-public class MediumEnemy
-        extends Enemy
-        implements IPlayerAction, IAbilityAction, IBuildingAction {
+public class MediumEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
 
     public MediumEnemy(Position position, AbilityData... abilities) {
         super(0, 100, 10, 100, "Enemy/EnemyBow.png", new Dimension(50, 50, 50 / 2),

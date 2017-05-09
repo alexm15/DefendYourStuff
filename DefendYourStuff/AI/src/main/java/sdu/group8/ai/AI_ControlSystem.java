@@ -9,7 +9,6 @@ import java.util.Random;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
@@ -48,14 +47,14 @@ public class AI_ControlSystem implements AI_Service {
         enemyAbility = enemy.getAbilityContainer().getAbilites().get(0);
         Entity closestTarget = getClosesTarget(enemy, world);
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
-        //shoot
-        if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance) && enemyAbility.getCoolDown() <= 0) { //TODO lav en range
-            useAbility(enemy, world, closestTarget);
-        }
-        else {
-            float cooldown = enemyAbility.getCoolDown();
-            enemyAbility.setCoolDown(cooldown -= gameData.getDelta());
+        enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne()-gameData.getDelta());
 
+        //shoot
+        if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance) && enemy.getAbilityContainer().getCooldownOne() <= 0) { //TODO lav en range
+            useAbility(enemy, world, closestTarget);
+            enemy.getAbilityContainer().setCooldownOne(enemyAbility.getCoolDown());
+        } else {
+            
             if (tooCloseToTarget) {
                 increaseDistance(enemy, closestTarget, gameData);
                 useAbility(enemy, world, closestTarget);
@@ -79,14 +78,12 @@ public class AI_ControlSystem implements AI_Service {
             if (enemy.getX() < targetX) {
                 horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
                 enemy.setDirection(false);
-            }
-            else if (enemy.getX() > targetX) {
+            } else if (enemy.getX() > targetX) {
                 horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
                 enemy.setDirection(true);
             }
             enemy.setX(horizontalPos);
-        }
-        else {
+        } else {
             enemy.reduceReactiontime(1);
         }
 
@@ -131,8 +128,7 @@ public class AI_ControlSystem implements AI_Service {
         if (enemy.getX() > closestTarget.getX()) {
             horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
             enemy.setDirection(false);
-        }
-        else if (enemy.getX() < closestTarget.getX()) {
+        } else if (enemy.getX() < closestTarget.getX()) {
             horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
             enemy.setDirection(true);
         }
@@ -153,8 +149,7 @@ public class AI_ControlSystem implements AI_Service {
         if (enemy.getX() < closestTarget.getX()) {
 
             enemy.setDirection(false);
-        }
-        else if (enemy.getX() > closestTarget.getX()) {
+        } else if (enemy.getX() > closestTarget.getX()) {
 
             enemy.setDirection(true);
         }
