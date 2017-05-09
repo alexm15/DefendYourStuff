@@ -12,6 +12,7 @@ import sdu.group8.common.data.DamageRange;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
+import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
@@ -25,7 +26,7 @@ import sdu.group8.commonplayer.IPlayerAction;
  *
  * @author joach
  */
-public class Player extends Character implements IPlayer {
+public class Player extends Character implements IPlayer, IEnemyAction {
 
     private Weapon weapon;
     private Position aimPoint;
@@ -75,6 +76,17 @@ public class Player extends Character implements IPlayer {
         if (otherEntity instanceof IPlayerAction) {
             ((IPlayerAction) otherEntity).playerAction((Entity) this);
         }
+    }
+
+    
+    @Override
+    public void enemyAction(Entity enemy) {
+        //TODO: implement enemy action for player
+    }
+    
+    @Override
+    public HealthSystem getHealthSystem() {
+        return this.health;
     }
 
 }
