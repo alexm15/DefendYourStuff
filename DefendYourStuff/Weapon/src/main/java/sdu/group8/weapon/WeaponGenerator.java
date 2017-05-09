@@ -45,7 +45,7 @@ public class WeaponGenerator implements IWeaponService {
      */
     @Override
     public Weapon createRanged() {
-        AbilityData[] abilityList = new AbilityData[1];
+        AbilityData[] abilityList = new AbilityData[4];
         AbilitySPI abilityProvider = lookup.lookup(AbilitySPI.class);
         AbilityData ab = abilityProvider.getRangedAbilities().get(0);
         abilityList[0] = ab;
@@ -60,7 +60,7 @@ public class WeaponGenerator implements IWeaponService {
      */
     @Override
     public Weapon createMelee() {
-        AbilityData[] abilityList = new AbilityData[1];
+        AbilityData[] abilityList = new AbilityData[4];
         AbilitySPI abilityProvider = lookup.lookup(AbilitySPI.class);
         AbilityData ab = abilityProvider.getMeleeAbilities().get(0);
         abilityList[0] = ab;

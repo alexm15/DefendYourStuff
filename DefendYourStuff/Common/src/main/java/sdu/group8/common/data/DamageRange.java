@@ -5,6 +5,8 @@
  */
 package sdu.group8.common.data;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  *
  * @author Martin
@@ -19,7 +21,24 @@ public class DamageRange {
     }
     
     public float getDamage() {
-        //TODO: implement random damage range
-        throw new NoSuchMethodError();
+        return (float) ThreadLocalRandom.current().nextDouble(minDamage, maxDamage);
     }
+
+    public float getMinDamage() {
+        return minDamage;
+    }
+
+    public void setMinDamage(float minDamage) {
+        this.minDamage = minDamage;
+    }
+
+    public float getMaxDamage() {
+        return maxDamage;
+    }
+
+    public void setMaxDamage(float maxDamage) {
+        this.maxDamage = maxDamage;
+    }
+    
+    
 }

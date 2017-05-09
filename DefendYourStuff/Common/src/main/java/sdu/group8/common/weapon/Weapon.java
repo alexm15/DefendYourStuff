@@ -34,6 +34,22 @@ public class Weapon {
     public ArrayList<AbilityData> getAbilities() {
         return abilities.getAbilites();
     }
+    
+    public AbilityData getAbilityOne() {
+        return abilities.getAbilites().get(0);
+    }
+    
+    public AbilityData getAbilityTwo() {
+        return abilities.getAbilites().get(1);
+    }
+    
+    public AbilityData getAbilityThree() {
+        return abilities.getAbilites().get(2);
+    }
+    
+    public AbilityData getAbilityFour() {
+        return abilities.getAbilites().get(3);
+    }
 
     public float getDamageMultiplier() {
         return damageMultiplier;
