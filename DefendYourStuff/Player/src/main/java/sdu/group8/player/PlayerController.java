@@ -98,7 +98,7 @@ public class PlayerController
                 System.out.println("Mouse not in screen");
                 e.printStackTrace();
             }
-            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getWeapon().getAbilities().get(0)));
+            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getWeapon().getAbilityOne()));
         }
 
     }
