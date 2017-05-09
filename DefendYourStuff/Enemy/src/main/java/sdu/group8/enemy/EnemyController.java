@@ -88,24 +88,13 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
     @Override
     public void createMediumEnemy(World world, GameData gameData, Position position) {
-        MediumEnemy enemy;
-        float health = 100;
-        float moveSpeed = 100;
-        float weight = 10;
-        float width = 50;
-        float height = 50;
-        float reactionTime = 5;
-        Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
-        float x = 0;
-        float y = gameData.getTILE_SIZE();
-        Direction direction = new Direction(true);
-
-        String imageURL = "Enemy/EnemyBow.png";
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         AbilityData ab = abilityProvider.getRangedAbilities().get(0);
-
-        enemy = new MediumEnemy(reactionTime, moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX, ab);
-        world.addEntity(enemy);
+        MediumEnemy mediumEnemy = new MediumEnemy(position);
+        
+        mediumEnemy.getAbilityContainer().addAbility(ab);
+                
+        world.addEntity(mediumEnemy);
     }
 
     @Override
