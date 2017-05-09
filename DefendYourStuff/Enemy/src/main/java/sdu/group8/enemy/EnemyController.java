@@ -24,6 +24,7 @@ import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonai.AI_Service;
 import sdu.group8.commoncharacter.Character;
+import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyService;
 
 @ServiceProviders(value = {
@@ -34,9 +35,7 @@ import sdu.group8.commonenemy.IEnemyService;
     @ServiceProvider(service = IEnemyService.class)}
 )
 public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService{
-
-    private Map<UUID, Character> enemies = new ConcurrentHashMap<>();
-
+    
     private AI_Service aiService;
 
     @Override
@@ -79,7 +78,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     }
 
     public void deathProcess(GameData gameData, World world) {
-        for (Entity entity : world.getEntities(Character.class)) {
+        for (Entity entity : world.getEntities(Enemy.class)) {
             Character enemy = (Character) entity;
             if (enemy.getClass().equals(MediumEnemy.class)) {
                 if (enemy.getHealth() == 0) {
