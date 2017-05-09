@@ -81,6 +81,7 @@
         <module>CommonAI</module>
         <module>CommonAbilityTypes</module>
         <module>CommonAbility</module>
+        <module>Weapon</module>
     </modules>
 
     <properties>
