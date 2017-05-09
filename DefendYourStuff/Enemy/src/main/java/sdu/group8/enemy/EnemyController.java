@@ -99,23 +99,11 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
     @Override
     public void createBigEnemy(World world, GameData gameData, Position position) {
-        BigMeleeEnemy enemy;
-        float health = 100;
-        float moveSpeed = 150;
-        float weight = 5;
-        float width = 25;
-        float height = 25;
-        float reactionTime = 5;
-        Dimension dimension = new Dimension(width, height, width / 2); //TODO: Should match the sprites size.
-        float x = 0;
-        float y = gameData.getTILE_SIZE();
-        Direction direction = new Direction(true);
-
-        String imageURL = "Enemy/EnemySword.png";
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-//        AbilityData ab = abilityProvider.getMeleeAbilities().get(0); //TODO ADD abilities
+//        AbilityData ab = abilityProvider.getMeleeAbilities().get(0); 
+        //TODO ADD abilities to BigMeleeEnemy
 
-        enemy = new BigMeleeEnemy( reactionTime,moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.CIRCLE);
+        BigMeleeEnemy enemy = new BigMeleeEnemy(position);
         world.addEntity(enemy);
     }
 
