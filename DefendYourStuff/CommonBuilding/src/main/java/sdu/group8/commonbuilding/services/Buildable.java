@@ -7,7 +7,6 @@ package sdu.group8.commonbuilding.services;
 
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.Building;
 
 /**
  *
@@ -36,7 +35,7 @@ public interface Buildable {
      * of rectangle that defines the building.
      */
     void createDestroyedCastleBuilding(World world, Position position);
-    
+
     /**
      * Creates a Tower building.
      *
@@ -102,4 +101,15 @@ public interface Buildable {
      * of rectangle that defines the building.
      */
     void createRubbleBuilding(World world, Position position);
+
+    /**
+     * Creates a rubble building.
+     *
+     * @param world for adding the created entity to the game world.
+     * @param position buttom center point for buildings placement on the map.
+     * Meaning that buildings dimensions will be positive and negative x
+     * coordinates (in relation to this position point) for left and right side
+     * of rectangle that defines the building.
+     */
+    void createPortalBuilding(World world, Position position);
 }
