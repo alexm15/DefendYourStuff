@@ -7,7 +7,6 @@ package sdu.group8.common.weapon;
 
 import java.util.ArrayList;
 import java.util.UUID;
-import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityContainer;
 import sdu.group8.common.ability.AbilityData;
 
@@ -21,8 +20,8 @@ public class Weapon {
     private float damageMultiplier;
     private float rangeMultiplier;
 
-    public Weapon(UUID ID, float damageMultiplier, float rangeMultiplier, AbilityData... ab) {
-        this.ID = ID;
+    public Weapon(float damageMultiplier, float rangeMultiplier, AbilityData... ab) {
+        this.ID = UUID.randomUUID();
         this.abilities = new AbilityContainer(ab);
         this.damageMultiplier = damageMultiplier;
         this.rangeMultiplier = rangeMultiplier;
