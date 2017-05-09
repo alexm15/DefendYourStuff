@@ -5,6 +5,7 @@
  */
 package sdu.group8.enemies;
 
+import sdu.group8.commonenemy.Enemy;
 import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;

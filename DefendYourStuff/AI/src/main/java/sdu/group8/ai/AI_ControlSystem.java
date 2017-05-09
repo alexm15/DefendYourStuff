@@ -5,6 +5,7 @@
  */
 package sdu.group8.ai;
 
+import java.util.Random;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
@@ -65,9 +66,10 @@ public class AI_ControlSystem
     }
 
     private void moveEnemyToTarget(Character enemy, Entity target, GameData gameData) {
+        Random random = new Random();
         float targetX = target.getX();
         float horizontalPos = enemy.getX();
-
+        
         if (enemy.getX() < targetX) {
             horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
             enemy.setDirection(false);

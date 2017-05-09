@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.enemies;
+package sdu.group8.commonenemy;
 
 import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;
@@ -25,8 +25,8 @@ public abstract class Enemy extends sdu.group8.commoncharacter.Character {
         this.reactionTime = reactionTime;
     }
     
-    public float getReactionTime() {
-        return reactionTime;
+    public float getReactionTimer() {
+        return reactionTimer;
     }
 
    public void resetReactiontime(){
