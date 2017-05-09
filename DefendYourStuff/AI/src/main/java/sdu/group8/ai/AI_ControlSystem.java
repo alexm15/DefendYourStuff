@@ -36,10 +36,10 @@ public class AI_ControlSystem
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
         Entity closestTarget = getClosesTarget(enemy, world);
-        if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth()/2) {
+        if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
             moveEnemyToTarget(enemy, closestTarget, gameData);
         }
-        
+
 //        useAbility(enemy, world);
     }
 
@@ -70,16 +70,23 @@ public class AI_ControlSystem
         Random random = new Random();
         float targetX = target.getX();
         float horizontalPos = enemy.getX();
-        
-        if (enemy.getX() < targetX) {
-            horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
-            enemy.setDirection(false);
+        if (enemy.getReactionTimer() == 0) {
+            if (random.nextInt(10) == 5) {
+                enemy.resetReactiontime();
+            }
+            if (enemy.getX() < targetX) {
+                horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.setDirection(false);
+            }
+            else if (enemy.getX() > targetX) {
+                horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
+                enemy.setDirection(true);
+            }
+            enemy.setX(horizontalPos);
+        } else {
+            enemy.reduceReactiontime(1);
         }
-        else if (enemy.getX() > targetX) {
-            horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
-            enemy.setDirection(true);
-        }
-        enemy.setX(horizontalPos);
+
     }
 
     /**
