@@ -25,7 +25,7 @@ import sdu.group8.common.services.IGameProcessingService;
 public class DayNightController implements IGameProcessingService {
 
     private Lookup lookup = Lookup.getDefault();
-    private final float COUNTDOWNTIME = 120;
+    private final float COUNTDOWNTIME = 10;
     private float countdown = COUNTDOWNTIME;
 
     @Override
