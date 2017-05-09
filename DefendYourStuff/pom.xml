@@ -82,6 +82,7 @@
         <module>CommonAbilityTypes</module>
         <module>CommonAbility</module>
         <module>Weapon</module>
+        <module>DayNight</module>
     </modules>
 
     <properties>
