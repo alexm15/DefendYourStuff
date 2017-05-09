@@ -21,8 +21,8 @@ import sdu.group8.common.entity.MovingEntity;
  */
 public abstract class Character extends MovingEntity{
     
-    private HealthSystem health;
-    private AbilityContainer abilities;
+    protected HealthSystem health;
+    protected AbilityContainer abilities;
     protected float reactionTime;
     protected float reactionTimer;
     
@@ -37,8 +37,12 @@ public abstract class Character extends MovingEntity{
         return abilities;
     }
     
-    public float getHealth() {
-        return health.getHealth();
+    protected HealthSystem getHealth() {
+        return this.health;
+    }
+    
+    public float getCurrentHealth() {
+        return this.health.getHealth();
     }
     
     public void reduceHealth(float health) {

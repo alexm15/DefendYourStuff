@@ -12,6 +12,7 @@ import sdu.group8.common.data.DamageRange;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
+import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
@@ -81,6 +82,11 @@ public class Player extends Character implements IPlayer, IEnemyAction {
     @Override
     public void enemyAction(Entity enemy) {
         //TODO: implement enemy action for player
+    }
+    
+    @Override
+    public HealthSystem getHealthSystem() {
+        return this.health;
     }
 
 }

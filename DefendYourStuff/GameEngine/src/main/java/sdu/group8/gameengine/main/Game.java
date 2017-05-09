@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
-import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Image;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
@@ -28,6 +28,7 @@ import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.commonmap.IMapUpdate;
+import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.gameengine.managers.GameInputProcessor;
 
 /**
@@ -66,6 +67,8 @@ public class Game
     private Image secondBackgroundImage = new Image("World/world_mountains01_bg.png", false); //TODO: Change to mountains image
     private int firstBackgroundImageScrollX = 0;
     private int secondBackgroundImageScrollX = 0;
+
+    private float FONT_SCALE = 1.5f;
 
     public Collection<? extends IGameProcessingService> getGameProcesses() {
         return lookup.lookupAll(IGameProcessingService.class);
@@ -202,10 +205,10 @@ public class Game
     private void draw() {
         batch.begin();
 
-        //drawTextureFromAsset(secondBackgroundImage, CAM.position.x - CAM.viewportWidth / 2, gameData.getTILE_SIZE()); // Draw second background for the world;
         drawBackgroundImageForWorld(); //Draw backgrounds for the world;
         drawMap(); // Draw chunks
         drawEntities(); // Draw entities
+        drawHUD();
 
         batch.end();
     }
@@ -317,6 +320,37 @@ public class Game
         secondTex.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         batch.draw(secondTex, CAM.position.x - CAM.viewportWidth / 2, 0, secondBackgroundImageScrollX, 0, gameData.getDisplayWidth(), gameData.getDisplayHeight());
         batch.draw(firstTex, CAM.position.x - CAM.viewportWidth / 2, 0, firstBackgroundImageScrollX, 0, gameData.getDisplayWidth(), gameData.getDisplayHeight());
+    }
+
+    private void drawHUD() {
+        HealthSystem healthSystem = null;
+        for (Entity entity : world.getEntities()) {
+            if (entity instanceof IPlayer) {
+                healthSystem = ((IPlayer) entity).getHealthSystem();
+            }
+        }
+        //TODO: catch nullPointError
+        
+        float screenHeight = CAM.viewportHeight;
+        float screenWidth = CAM.viewportWidth;
+        float posX = CAM.position.x - screenWidth / 2;
+        float posOffsetX = 30;
+        float posOffsetY = 25;
+        
+        drawPlayerHealth(healthSystem, posX + posOffsetX, screenHeight - posOffsetY);
+        drawPlayerGold(posX + posOffsetX, screenHeight - posOffsetY * 2);
+    }
+
+    private void drawPlayerHealth(HealthSystem healthSystem, float posX, float posY) {
+        font.setColor(Color.BLACK);
+        font.setScale(FONT_SCALE);
+        font.draw(batch, "Health: " + healthSystem.getHealth() + " / " + healthSystem.getMaxHealth(), posX, posY);
+    }
+
+    private void drawPlayerGold(float posX, float posY) {
+        font.setColor(Color.BLACK);
+        font.setScale(FONT_SCALE);
+        font.draw(batch, "Gold: " + gameData.getPlayerGold(), posX, posY);
     }
 
 }

@@ -50,7 +50,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
                 aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
             }
 
-            if (enemy.getHealth() <= 0) {
+            if (enemy.getCurrentHealth() <= 0) {
                 world.removeEntity(enemy);
             }
         }
@@ -74,7 +74,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
         for (Entity entity : world.getEntities(Enemy.class)) {
             Character enemy = (Character) entity;
             if (enemy.getClass().equals(MediumEnemy.class)) {
-                if (enemy.getHealth() == 0) {
+                if (enemy.getCurrentHealth() == 0) {
                     gameData.addPlayerGold(100);
                     world.removeEntity(enemy);
                 }

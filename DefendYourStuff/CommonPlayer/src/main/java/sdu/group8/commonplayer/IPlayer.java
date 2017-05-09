@@ -5,6 +5,7 @@
  */
 package sdu.group8.commonplayer;
 
+import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 
 /**
@@ -12,9 +13,17 @@ import sdu.group8.common.data.Position;
  * @author karim møller
  */
 public interface IPlayer {
-        /**
+
+    /**
      * gets the player movespeed.
+     *
      * @return player movespeed.
      */
     float getPlayerMoveSpeed();
+
+    /**
+     * Returns the reference to the player healthSystem
+     * @return HealthSystem
+     */
+    HealthSystem getHealthSystem();
 }
