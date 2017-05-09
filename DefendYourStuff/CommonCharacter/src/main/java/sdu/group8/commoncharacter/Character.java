@@ -21,8 +21,10 @@ import sdu.group8.common.entity.MovingEntity;
  */
 public abstract class Character extends MovingEntity{
     
-    private HealthSystem health;
-    private AbilityContainer abilities;
+    protected HealthSystem health;
+    protected AbilityContainer abilities;
+    protected float reactionTime;
+    protected float reactionTimer;
     
 
     public Character(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
@@ -49,6 +51,18 @@ public abstract class Character extends MovingEntity{
     
     public void increaseHealth(float health) {
         this.health.increaseHealth(health);
+    }
+
+    public float getReactionTimer() {
+        return reactionTimer;
+    }
+
+    public void reduceReactiontime(float i) {
+        this.reactionTimer = -i;
+    }
+
+    public void resetReactiontime() {
+        this.reactionTimer = reactionTime;
     }
 
 }

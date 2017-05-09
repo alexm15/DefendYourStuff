@@ -30,7 +30,6 @@ import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.gameengine.managers.GameInputProcessor;
-import sdu.group8.commoncharacter.Character;
 
 /**
  *
@@ -132,8 +131,11 @@ public class Game
 
         assetManager.load("Player/defaultPlayer.png", Texture.class);
 
-        assetManager.load("Enemy/dickbutt.gif", Texture.class);
 
+        assetManager.load("Enemy/EnemyBow.png", Texture.class);
+        assetManager.load("Enemy/EnemySword.png", Texture.class);
+        
+        
         assetManager.load("abilities/fireball.png", Texture.class);
         assetManager.load("abilities/slash.png", Texture.class);
 
@@ -329,14 +331,14 @@ public class Game
         }
         //TODO: catch nullPointError
         
-        float screenH = CAM.viewportHeight;
-        float screenW = CAM.viewportWidth;
-        float posX = CAM.position.x - screenW / 2;
+        float screenHeight = CAM.viewportHeight;
+        float screenWidth = CAM.viewportWidth;
+        float posX = CAM.position.x - screenWidth / 2;
         float posOffsetX = 30;
         float posOffsetY = 25;
         
-        drawPlayerHealth(healthSystem, posX + posOffsetX, screenH - posOffsetY);
-        drawPlayerGold(posX + posOffsetX, screenH - posOffsetY * 2);
+        drawPlayerHealth(healthSystem, posX + posOffsetX, screenHeight - posOffsetY);
+        drawPlayerGold(posX + posOffsetX, screenHeight - posOffsetY * 2);
     }
 
     private void drawPlayerHealth(HealthSystem healthSystem, float posX, float posY) {

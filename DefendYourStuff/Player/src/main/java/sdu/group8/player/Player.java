@@ -26,7 +26,7 @@ import sdu.group8.commonplayer.IPlayerAction;
  *
  * @author joach
  */
-public class Player extends Character implements IPlayer {
+public class Player extends Character implements IPlayer, IEnemyAction {
 
     private Weapon weapon;
     private Position aimPoint;
@@ -78,9 +78,15 @@ public class Player extends Character implements IPlayer {
         }
     }
 
+    
+    @Override
+    public void enemyAction(Entity enemy) {
+        //TODO: implement enemy action for player
+    }
+    
     @Override
     public HealthSystem getHealthSystem() {
-        return getHealth();
+        return this.health;
     }
 
 }
