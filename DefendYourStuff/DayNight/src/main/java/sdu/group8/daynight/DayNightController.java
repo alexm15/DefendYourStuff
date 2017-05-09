@@ -7,6 +7,7 @@ package sdu.group8.daynight;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.openide.util.Lookup;
 import sdu.group8.commonenemy.IEnemyService;
 import org.openide.util.lookup.ServiceProvider;
@@ -19,34 +20,28 @@ import sdu.group8.common.services.IGameProcessingService;
  *
  * @author Mads
  */
-
 @ServiceProvider(service = IGameProcessingService.class)
 
 public class DayNightController implements IGameProcessingService {
 
     private Lookup lookup = Lookup.getDefault();
-    private boolean spawnEnemy = false;
+    private final float COUNTDOWNTIME = 120;
+    private float countdown = COUNTDOWNTIME;
+
     @Override
     public void process(GameData gameData, World world) {
         IEnemyService enemyProvider = lookup.lookup(IEnemyService.class);
 
-        if (spawnEnemy) {
+        if (countdown <= 0) {
             enemyProvider.createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
             enemyProvider.createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-            spawnEnemy = false;
+            countdown = COUNTDOWNTIME;
         }
-
-        timer();
+        timer(gameData);
     }
 
-    private void timer() {
-        Timer dayNight = new Timer();
-        dayNight.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                spawnEnemy = true;
-            }
-        }, 120);
+    private void timer(GameData gameData) {
+        countdown -= gameData.getDelta();
     }
 
 }
