@@ -118,6 +118,8 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
             //TODO add mothod to add multiplier to weapon
         }
         System.out.println("Y pos: " + ability.getY());
+        
+        ability.setDirection(new Direction(caller.getDirection()));
         ability.setPosition(new Position(x, y));
         ability.setOwner(caller);
         return ability;

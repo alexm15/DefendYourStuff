@@ -20,26 +20,25 @@ import sdu.group8.commonplayer.IPlayerAction;
 
 /**
  *
- * @author Martin
+ * @author karim møller
  */
-public class MediumEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
+public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
 
-    public MediumEnemy(Position position, AbilityData... abilities) {
-        super(0, 100, 10, 100, "Enemy/EnemyBow.png", new Dimension(50, 50, 50 / 2),
-                new Direction(true), position, CollisionType.BOX, abilities);
+    public BigMeleeEnemy(Position pos, AbilityData... abilities) {
+        super(0, 150, 5, 100, "Enemy/EnemySword.png", new Dimension(25, 25, 25/2), new Direction(true), pos, CollisionType.BOX, abilities);
     }
+
 
     @Override
     public void collision(Entity otherEntity) {
-        if (otherEntity instanceof IEnemyAction) {
-            ((IEnemyAction) otherEntity).enemyAction((Entity) this);
+   if(otherEntity instanceof IEnemyAction) {
+            ((IEnemyAction) otherEntity).enemyAction((Entity)this);
         }
     }
 
     @Override
     public void playerAction(Entity player) {
-        //TODO: create ability in world
-
+        //TODO implement metode: playerAction
     }
 
     @Override
@@ -50,6 +49,7 @@ public class MediumEnemy extends Enemy implements IPlayerAction, IAbilityAction,
     @Override
     public void execute() {
         //TODO implement metode: execute
-        throw new UnsupportedOperationException("Methode: 'execute' Not supported yet in class: 'MediumEnemy'");
+        throw new UnsupportedOperationException("Methode: 'execute' Not supported yet in class: 'BigMeleeEnemy'");
     }
+    
 }

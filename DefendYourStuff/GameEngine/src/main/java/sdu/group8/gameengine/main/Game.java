@@ -82,7 +82,7 @@ public class Game
     public Collection<? extends IMapUpdate> getIMapUpdate() {
         return lookup.lookupAll(IMapUpdate.class);
     }
-    
+
     private Collection<? extends IPreStartPluginService> getPreGamePlugins() {
         return lookup.lookupAll(IPreStartPluginService.class);
     }
@@ -105,7 +105,7 @@ public class Game
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.RED);
-        
+
         for (IPreStartPluginService preGamePlugin : getPreGamePlugins()) {
             preGamePlugin.preStart(gameData);
         }
@@ -128,15 +128,18 @@ public class Game
 
         assetManager.load("Player/defaultPlayer.png", Texture.class);
 
-        assetManager.load("Enemy/dickbutt.gif", Texture.class);
 
+        assetManager.load("Enemy/EnemyBow.png", Texture.class);
+        assetManager.load("Enemy/EnemySword.png", Texture.class);
+        
+        
         assetManager.load("abilities/fireball.png", Texture.class);
         assetManager.load("abilities/slash.png", Texture.class);
 
         assetManager.load("Tiles/tile_dirt.png", Texture.class);
         assetManager.load("Tiles/tile_brickWall.png", Texture.class);
         assetManager.load("Tiles/tile_air.png", Texture.class);
-      
+
         assetManager.load("Building/castle.png", Texture.class);
         assetManager.load("Building/rubble.png", Texture.class);
 
@@ -316,5 +319,4 @@ public class Game
         batch.draw(firstTex, CAM.position.x - CAM.viewportWidth / 2, 0, firstBackgroundImageScrollX, 0, gameData.getDisplayWidth(), gameData.getDisplayHeight());
     }
 
-    
 }
