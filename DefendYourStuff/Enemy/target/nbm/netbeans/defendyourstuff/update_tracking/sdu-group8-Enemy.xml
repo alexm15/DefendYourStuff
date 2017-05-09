@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><module codename="sdu.group8.Enemy">
-    <module_version install_time="1494332276925" last="true" origin="installer" specification_version="1.0.0">
+    <module_version install_time="1494338739631" last="true" origin="installer" specification_version="1.0.0">
         <file crc="3134564886" name="config/Modules/sdu-group8-Enemy.xml"/>
-        <file crc="2078608771" name="modules/sdu-group8-Enemy.jar"/>
+        <file crc="2346364781" name="modules/sdu-group8-Enemy.jar"/>
     </module_version>
 </module>

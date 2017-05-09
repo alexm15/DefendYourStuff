@@ -90,33 +90,33 @@ public class EnemyControllerTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of deathProcess method, of class EnemyController.
-     */
-    @Test
-    @Ignore
-    public void testDeathProcess() {
-        System.out.println("deathProcess");
-        GameData gameData = new GameData();
-        World world = new World();
-        Dimension dim = new Dimension(1, 1, 0);
-        Position pos = new Position(0, 0);
-        Ability[] ab = new Ability[1];
-        System.out.println(gameData.getPlayerGold());
-        //world.addEntity(new MediumEnemy(0, 0, 10, "", dim, pos, CollisionType.CIRCLE, ab));  // Not correct method
-        EnemyController enemyCon = new EnemyController();
-        for (Entity e : world.getEntities()) {
-            if (e.getClass().equals(MediumEnemy.class)) {
-                MediumEnemy medEnemy = (MediumEnemy) e;
-                assertEquals(10, medEnemy.getHealth(), 0);
-                medEnemy.reduceHealth(1000);
-                assertEquals(0, medEnemy.getHealth(), 0);
-                enemyCon.deathProcess(gameData, world);
-                assertEquals(100, gameData.getPlayerGold());
-                System.out.println(gameData.getPlayerGold());
-            }
-        }
-    }
+//    /**
+//     * Test of deathProcess method, of class EnemyController.
+//     */
+//    @Test
+//    @Ignore
+//    public void testDeathProcess() {
+//        System.out.println("deathProcess");
+//        GameData gameData = new GameData();
+//        World world = new World();
+//        Dimension dim = new Dimension(1, 1, 0);
+//        Position pos = new Position(0, 0);
+//        Ability[] ab = new Ability[1];
+//        System.out.println(gameData.getPlayerGold());
+//        //world.addEntity(new MediumEnemy(0, 0, 10, "", dim, pos, CollisionType.CIRCLE, ab));  // Not correct method
+//        EnemyController enemyCon = new EnemyController();
+//        for (Entity e : world.getEntities()) {
+//            if (e.getClass().equals(MediumEnemy.class)) {
+//                MediumEnemy medEnemy = (MediumEnemy) e;
+//                assertEquals(10, medEnemy.getCurrentHealth(), 0);
+//                medEnemy.reduceHealth(1000);
+//                assertEquals(0, medEnemy.getCurrentHealth(), 0);
+//                enemyCon.deathProcess(gameData, world);
+//                assertEquals(100, gameData.getPlayerGold());
+//                System.out.println(gameData.getPlayerGold());
+//            }
+//        }
+//    }
 
     /**
      * Test of createMediumEnemy method, of class EnemyController.

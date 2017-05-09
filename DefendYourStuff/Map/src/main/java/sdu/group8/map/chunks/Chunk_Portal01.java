@@ -37,18 +37,15 @@ public class Chunk_Portal01 extends Chunk {
         {d01, air, air, air, air, air},};
 
     public Chunk_Portal01(float positionOffset) {
-        super(new Image("Chunks/chunk_portal01_bg01.png", false), new Image("defaultBackground.png", false), positionOffset);
+        super(new Image("defaultBackground.png", false), new Image("defaultBackground.png", false), positionOffset);
         setTileMatrix(BG_PORTAL01);
     }
 
     @Override
     public void createEntities(World world) {
+        Position portalPos = new Position(((getDimension().getWidth() / 2) + this.getPositionOffset()), TILE_SIZE);
 
-        Position portal = new Position(((getDimension().getWidth() / 2) + this.getPositionOffset()) * TILE_SIZE, TILE_SIZE);
-
-        for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
-            //TODO: create portal
-        }
+        lookup.lookup(Buildable.class).createPortalBuilding(world, portalPos);
     }
 
 }
