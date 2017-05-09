@@ -97,7 +97,6 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
         String imageURL = "Enemy/dickbutt.gif";
         enemy = new MediumEnemy(moveSpeed, weight, health, imageURL, dimension, direction, position, CollisionType.BOX);
-        gameData.setPlayerGold(0);
         world.addEntity(enemy);
     }
 

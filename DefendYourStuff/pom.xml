@@ -79,6 +79,7 @@
         <module>Enemy</module>
         <module>CommonAbilityTypes</module>
         <module>CommonAbility</module>
+        <module>DayNight</module>
     </modules>
 
     <properties>
