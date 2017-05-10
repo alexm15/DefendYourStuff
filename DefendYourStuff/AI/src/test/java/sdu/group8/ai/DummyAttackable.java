@@ -17,7 +17,8 @@ import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commoncharacter.Character;
 
 /**
- *
+ * Some dummy that implements IEnemyAction, for making it possible for Enemy 
+ * to locate targets. Only used for tests.
  * @author Alexander
  */
 public class DummyAttackable extends Character implements IEnemyAction
