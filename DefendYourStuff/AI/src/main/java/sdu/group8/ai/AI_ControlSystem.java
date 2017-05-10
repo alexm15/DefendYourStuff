@@ -39,7 +39,7 @@ public class AI_ControlSystem implements AI_Service {
             moveEnemyToTarget(enemy, closestTarget, gameData);
         }
 
-//        useAbility(enemy, world);
+        useAbility(enemy, world, closestTarget);
     }
 
     @Override
