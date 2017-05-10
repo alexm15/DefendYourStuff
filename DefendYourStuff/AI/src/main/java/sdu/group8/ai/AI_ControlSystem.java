@@ -56,8 +56,6 @@ public class AI_ControlSystem implements AI_Service {
 
             useAbility(enemy, world, closestTarget, gameData);
 
-
-
         } else {
 
             if (tooCloseToTarget) {
@@ -76,7 +74,7 @@ public class AI_ControlSystem implements AI_Service {
         Random random = new Random();
 
         float targetX = target.getX();
-
+        enemy.setIncombat(false);
         float horizontalPos = enemy.getX();
 
         if (enemy.getReactionTimer() == 0) {
@@ -150,16 +148,25 @@ public class AI_ControlSystem implements AI_Service {
 
     private void useAbility(Enemy enemy, World world, Entity closestTarget, GameData gameData) {
 
-        enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne() - gameData.getDelta());
+        if (enemy.isIncombat()) {
+            enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne() - gameData.getDelta());
 
-        if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
+            if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
 
-            AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-            setDirection(enemy, closestTarget);
-            world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
-            enemyAbility.setCoolDown(2);
-            enemy.getAbilityContainer().setCooldownOne(enemyAbility.getCoolDown());
+                useABility(enemy, closestTarget, world);
+                enemyAbility.setCoolDown(2);
+                enemy.getAbilityContainer().setCooldownOne(enemyAbility.getCoolDown());
+            }
+        } else {
+            useABility(enemy, closestTarget, world);
+            enemy.setIncombat(true);
         }
+    }
+
+    private void useABility(Enemy enemy, Entity closestTarget, World world) {
+        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
+        setDirection(enemy, closestTarget);
+        world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
     }
 
     private void setDirection(Enemy enemy, Entity closestTarget) {
