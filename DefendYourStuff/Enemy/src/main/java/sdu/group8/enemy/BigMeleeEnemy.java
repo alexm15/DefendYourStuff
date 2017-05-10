@@ -31,7 +31,7 @@ public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityActio
 
     @Override
     public void collision(Entity otherEntity) {
-   if(otherEntity instanceof IEnemyAction) {
+   if(otherEntity instanceof IEnemyAction ) {
             ((IEnemyAction) otherEntity).enemyAction((Entity)this);
         }
     }
@@ -43,6 +43,7 @@ public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityActio
 
     @Override
     public void abilityAction(Ability ab) {
+        if(!(ab.getOwner() instanceof Enemy))
         this.reduceHealth(ab.getDamage());
     }
 
