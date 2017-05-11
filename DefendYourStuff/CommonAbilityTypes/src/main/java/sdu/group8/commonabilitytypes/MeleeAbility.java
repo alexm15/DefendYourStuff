@@ -37,7 +37,7 @@ public class MeleeAbility extends Ability implements IPlayerAction, IEnemyAction
     }
 
     @Override
-    public void execute() {
+    public void buildingAction(Entity building) {
         setExpiration(0);
     }
     

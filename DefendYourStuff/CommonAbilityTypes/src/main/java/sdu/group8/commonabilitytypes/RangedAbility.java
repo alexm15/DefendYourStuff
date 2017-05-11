@@ -37,7 +37,7 @@ public class RangedAbility extends Ability implements IPlayerAction, IEnemyActio
     }
 
     @Override
-    public void execute() {
+    public void buildingAction(Entity building) {
         setExpiration(0);
     }
 }

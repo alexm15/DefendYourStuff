@@ -37,7 +37,9 @@ public class SummoningAbility extends Ability implements IPlayerAction, IEnemyAc
     }
 
     @Override
-    public void execute() {
+    public void buildingAction(Entity building) {
         setExpiration(0);
     }
+
+    
 }
