@@ -41,10 +41,9 @@ public class MediumEnemy
 
     @Override
     public void abilityAction(Ability ab) {
-        if (!(ab.getOwner() instanceof BigMeleeEnemy)) {
+        if (!(ab.getOwner() instanceof Enemy)) {
             this.reduceHealth(ab.getDamage());
         }
-
     }
 
     @Override

@@ -23,5 +23,8 @@ public abstract class Enemy extends sdu.group8.commoncharacter.Character {
         this.reactionTime = reactionTime;
         this.reactionTimer = reactionTime;
     }
+
+    
+    
     
 }
