@@ -18,7 +18,7 @@ import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonai.AI_Service;
 import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyAction;
-
+import sdu.group8.commoncharacter.Character;
 /**
  *
  * @author Alexander
@@ -32,7 +32,7 @@ public class AI_ControlSystem implements AI_Service {
     private AbilityData enemyAbility;
 
     @Override
-    public void assignAttackAndDodgeEnemyAI(Enemy enemy, World world, GameData gameData) {
+    public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
 
         Entity closestTarget = getClosesTarget(enemy, world);
         if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
@@ -43,7 +43,7 @@ public class AI_ControlSystem implements AI_Service {
     }
 
     @Override
-    public void rangedAI(Enemy enemy, World world, GameData gameData, int minShootDistance, int maxShootDistance) {
+    public void rangedAI(Character enemy, World world, GameData gameData, int minShootDistance, int maxShootDistance) {
 
         enemyAbility = enemy.getAbilityContainer().getAbilites().get(0);
 
@@ -70,7 +70,7 @@ public class AI_ControlSystem implements AI_Service {
         }
     }
 
-    private void moveEnemyToTarget(Enemy enemy, Entity target, GameData gameData) {
+    private void moveEnemyToTarget(Character enemy, Entity target, GameData gameData) {
         Random random = new Random();
 
         float targetX = target.getX();
@@ -108,7 +108,7 @@ public class AI_ControlSystem implements AI_Service {
      * @return The closes enemy NB: if there is no closes entity then it returns
      * the enemy itself!
      */
-    private Entity getClosesTarget(Enemy enemy, World world) {
+    private Entity getClosesTarget(Character enemy, World world) {
 
         Entity closestTarget = enemy;
         float shortestdist = Float.MAX_VALUE; //FIXME: if you know a better value!
@@ -127,11 +127,11 @@ public class AI_ControlSystem implements AI_Service {
         return closestTarget;
     }
 
-    private float distanceToEntity(Enemy enemy, Entity closestTarget) {
+    private float distanceToEntity(Character enemy, Entity closestTarget) {
         return Math.abs(enemy.getX() - closestTarget.getX());
     }
 
-    private void increaseDistance(Enemy enemy, Entity closestTarget, GameData gameData) {
+    private void increaseDistance(Character enemy, Entity closestTarget, GameData gameData) {
         float horizontalPos = enemy.getX();
 
         if (enemy.getX() > closestTarget.getX()) {
@@ -146,7 +146,7 @@ public class AI_ControlSystem implements AI_Service {
         enemy.setX(horizontalPos);
     }
 
-    private void useAbility(Enemy enemy, World world, Entity closestTarget, GameData gameData) {
+    private void useAbility(Character enemy, World world, Entity closestTarget, GameData gameData) {
 
         if (enemy.isIncombat()) {
             enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne() - gameData.getDelta());
@@ -163,13 +163,13 @@ public class AI_ControlSystem implements AI_Service {
         }
     }
 
-    private void useABility(Enemy enemy, Entity closestTarget, World world) {
+    private void useABility(Character enemy, Entity closestTarget, World world) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         setDirection(enemy, closestTarget);
         world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
     }
 
-    private void setDirection(Enemy enemy, Entity closestTarget) {
+    private void setDirection(Character enemy, Entity closestTarget) {
 
         if (enemy.getX() < closestTarget.getX()) {
 
@@ -180,7 +180,7 @@ public class AI_ControlSystem implements AI_Service {
         }
     }
 
-    private boolean withinShootingRange(Enemy enemy, Entity closestTarget, int minShootDistance, int maxShootDistance) {
+    private boolean withinShootingRange(Character enemy, Entity closestTarget, int minShootDistance, int maxShootDistance) {
 
         return distanceToEntity(enemy, closestTarget) > minShootDistance && distanceToEntity(enemy, closestTarget) < maxShootDistance;
     }
