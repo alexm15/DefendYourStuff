@@ -5,10 +5,12 @@
  */
 package sdu.group8.commonbuilding.services;
 
+import sdu.group8.common.entity.Entity;
+
 /**
  *
  * @author Alexander
  */
 public interface IBuildingAction {
-    void execute();
+    void buildingAction(Entity building);
 }
