@@ -19,6 +19,7 @@ import sdu.group8.commonai.AI_Service;
 import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commoncharacter.Character;
+
 /**
  *
  * @author Alexander
@@ -26,7 +27,8 @@ import sdu.group8.commoncharacter.Character;
 @ServiceProviders(value = {
     @ServiceProvider(service = AI_Service.class)}
 )
-public class AI_ControlSystem implements AI_Service {
+public class AI_ControlSystem
+        implements AI_Service {
 
     //FIXME: enemy needs to have specific cooldown for specific abilities.
     private AbilityData enemyAbility;
@@ -38,8 +40,10 @@ public class AI_ControlSystem implements AI_Service {
         if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
             moveEnemyToTarget(enemy, closestTarget, gameData);
         }
+        else {
+            useAbility(enemy, world, closestTarget, gameData);
+        }
 
-        useAbility(enemy, world, closestTarget, gameData);
     }
 
     @Override
@@ -56,7 +60,8 @@ public class AI_ControlSystem implements AI_Service {
 
             useAbility(enemy, world, closestTarget, gameData);
 
-        } else {
+        }
+        else {
 
             if (tooCloseToTarget) {
                 increaseDistance(enemy, closestTarget, gameData);
@@ -86,13 +91,15 @@ public class AI_ControlSystem implements AI_Service {
                 horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
                 enemy.setDirection(false);
 
-            } else if (enemy.getX() > targetX) {
+            }
+            else if (enemy.getX() > targetX) {
                 horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
                 enemy.setDirection(true);
             }
             enemy.setX(horizontalPos);
 
-        } else {
+        }
+        else {
             enemy.reduceReactiontime(1);
         }
 
@@ -138,7 +145,8 @@ public class AI_ControlSystem implements AI_Service {
             horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
             enemy.setDirection(false);
 
-        } else if (enemy.getX() < closestTarget.getX()) {
+        }
+        else if (enemy.getX() < closestTarget.getX()) {
             horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
             enemy.setDirection(true);
         }
@@ -157,7 +165,8 @@ public class AI_ControlSystem implements AI_Service {
                 enemyAbility.setCoolDown(2);
                 enemy.getAbilityContainer().setCooldownOne(enemyAbility.getCoolDown());
             }
-        } else {
+        }
+        else {
             useABility(enemy, closestTarget, world);
             enemy.setIncombat(true);
         }
@@ -174,15 +183,16 @@ public class AI_ControlSystem implements AI_Service {
         if (enemy.getX() < closestTarget.getX()) {
 
             enemy.setDirection(false);
-        } else if (enemy.getX() > closestTarget.getX()) {
+        }
+        else if (enemy.getX() > closestTarget.getX()) {
 
             enemy.setDirection(true);
         }
     }
 
     private boolean withinShootingRange(Character enemy, Entity closestTarget, int minShootDistance, int maxShootDistance) {
-
-        return distanceToEntity(enemy, closestTarget) > minShootDistance && distanceToEntity(enemy, closestTarget) < maxShootDistance;
+        return distanceToEntity(enemy, closestTarget) > minShootDistance && 
+                distanceToEntity(enemy, closestTarget) < maxShootDistance;
     }
 
 }
