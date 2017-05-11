@@ -52,6 +52,7 @@ public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbi
     public void abilityAction(Ability ab) {
         if (!(ab.getOwner() instanceof IPlayer)) {
             this.reduceHealth(ab.getDamage());
+            //TODO: Life display needs to be reduced
         }
         
     }
