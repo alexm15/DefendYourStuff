@@ -48,9 +48,8 @@ public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityActio
     }
 
     @Override
-    public void execute() {
-        //TODO implement metode: execute
-        throw new UnsupportedOperationException("Methode: 'execute' Not supported yet in class: 'BigMeleeEnemy'");
+    public void buildingAction(Entity building) {
     }
+
     
 }
