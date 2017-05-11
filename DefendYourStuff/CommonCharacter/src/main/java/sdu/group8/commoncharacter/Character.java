@@ -25,6 +25,7 @@ public abstract class Character extends MovingEntity{
     protected AbilityContainer abilities;
     protected float reactionTime;
     protected float reactionTimer;
+    protected boolean incombat;
     
 
     public Character(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
@@ -63,6 +64,14 @@ public abstract class Character extends MovingEntity{
 
     public void resetReactiontime() {
         this.reactionTimer = reactionTime;
+    }
+
+    public boolean isIncombat() {
+        return incombat;
+    }
+
+    public void setIncombat(boolean incombat) {
+        this.incombat = incombat;
     }
 
 }
