@@ -14,8 +14,9 @@ import sdu.group8.common.entity.Entity;
 import sdu.group8.common.entity.MovingEntity;
 
 /**
- *
- * @author Martin
+ * The ability entity that other entities in the game have and can 
+ * use.
+ * @author Group 8
  */
 public class Ability extends MovingEntity {
 
@@ -26,13 +27,36 @@ public class Ability extends MovingEntity {
     protected Entity owner;
     protected float expiration = 1;
 
+    /**
+     * Creates an ability entity in the game expirationTime cannot be negative.
+     * @param expiration when the ability is removed, cannot be negative value;
+     * @param moveSpeed the speed that the ability is travelling at in the game
+     * @param weight determines if the ability is affected by game gravity. 0 = 
+     * fly's straight, above 0 = flys in an arc.
+     * @param damageRange the specified damageRange for the ability
+     * @param imageURL the image for the ability.
+     * @param dimension the size of the ability. Must be the same as 
+     * image size.
+     * @param direction the direction that the ability is travelling 
+     * @param pos the position of the ability
+     * @param collisionType 
+     * @param effectContainer contains which effects the ability can affect
+     * other entities with.
+     */
     public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer) {
         super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);
         this.effects = effectContainer;
         this.damageRange = damageRange;
         this.expiration = expiration;
+        if (expiration < 0) {
+            throw new IllegalArgumentException("Expiration time cannot be negative");
+        }
     }
 
+    /**
+     * Creates an ability based on another ability in game.
+     * @param ability an existing ability
+     */
     public Ability(Ability ability) {
         super(ability.getMoveSpeed(), ability.getWeight(), ability.getImage().getImageURL(), ability.getDimension(), ability.getDirection(), ability.getPosition(), ability.getCollisionType());
         this.effects = ability.getEffects();
