@@ -1,53 +1,72 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.common.data;
 
 /**
- *
- * @author Martin
+ * Represents which direction the entity's image is facing and which 
+ * direction entity is moving.
+ * @author Group 8
  */
 public class Direction {
 
-    private boolean isLeft;
-    private boolean isRight;
+    private boolean left;
+    private boolean right;
 
+    /**
+     * Creates a direction that an entity is facing, left and right boolean 
+     * must have different values.
+     * @param isLeft entity is facing left if true.
+     */
     public Direction(boolean isLeft) {
-        this.isLeft = isLeft;
-        this.isRight = !isLeft;
+        this.left = isLeft;
+        this.right = !isLeft;
+        if (this.left == this.right) {
+            throw new IllegalArgumentException("Left and Right boolean cannot"
+                    + " have same value.");
+        }
     }
     
+    /**
+     * Creates a direction for an entity based on another entity's direction
+     * @param direction existing entity's direction.
+     */
     public Direction(Direction direction) {
-        this.isLeft = direction.isLeft;
-        this.isRight = !isLeft;
+        this.left = direction.left;
+        this.right = !left;
     }
 
-    public boolean isIsLeft() {
-        return isLeft;
+    public boolean isLeft() {
+        return left;
     }
 
     /**
-     * If isLeft is sat to true, isRight is sat to false.
-     * @param isLeft 
+     * If left is sat to true, right is sat to false. left and right boolean 
+     * must have different values.
+     * @param left 
      */
-    public void setIsLeft(boolean isLeft) {
-        this.isLeft = isLeft;
-        this.isRight = !isLeft;
+    public void setLeft(boolean left) {
+        this.left = left;
+        this.right = !left;
+        if (this.left == this.right) {
+            throw new IllegalArgumentException("Left and Right boolean cannot"
+                    + " have same value.");
+        }
     }
 
-    public boolean isIsRight() {
-        return isRight;
+    public boolean isRight() {
+        return right;
     }
     
     /**
-     * If isRight is sat to true, isLeft is sat to false.
-     * @param isRight 
+     * If right is sat to true, left is sat to false. left and right boolean 
+     * must have different values.
+     * @param right 
      */
-    public void setIsRight(boolean isRight) {
-        this.isRight = isRight;
-        this.isLeft = !isRight;
+    public void setRight(boolean right) {
+        this.right = right;
+        this.left = !right;
+        if (this.left == this.right) {
+            throw new IllegalArgumentException("Left and Right boolean cannot"
+                    + " have same value.");
+        }
     }
     
     
