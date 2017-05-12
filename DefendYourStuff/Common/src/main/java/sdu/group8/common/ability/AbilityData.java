@@ -17,6 +17,9 @@ public class AbilityData {
     private boolean aimable;
     
     public AbilityData(Class<? extends Ability> type, float coolDown, String name, boolean aimable) {
+        if (coolDown < 0) {
+            throw new IllegalArgumentException("Cooldown cannot be negative value");
+        }
         this.type = type;
         this.coolDown = coolDown;
         this.name = name;
@@ -24,6 +27,9 @@ public class AbilityData {
     }
 
     public void setCoolDown(float coolDown) {
+        if (coolDown < 0) {
+            throw new IllegalArgumentException("Cooldown cannot be negative value");
+        }
         this.coolDown = coolDown;
     }
 
