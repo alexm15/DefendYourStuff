@@ -158,13 +158,9 @@ public class Game
 
         // If asset manager is done loading assets.
         if (assetManager.update()) {
-            CAM.update();
-            batch.setProjectionMatrix(CAM.combined);
             gameData.setDelta(Gdx.graphics.getDeltaTime());
 
             update();
-
-            gameData.getKeys().update();
             draw();
         }
     }
@@ -180,6 +176,8 @@ public class Game
 
         updateCamera();
         checkMapBoundary();
+
+        gameData.getKeys().update(); // Should always be updated last.
     }
 
     /**
@@ -216,6 +214,7 @@ public class Game
     }
 
     private void draw() {
+        batch.setProjectionMatrix(CAM.combined);
         batch.begin();
 
         drawBackgroundImageForWorld();  // Draw backgrounds for the world;
@@ -303,9 +302,9 @@ public class Game
                 drawTextureFromAsset(entity.getImage(), entity.getX() - (entity.getWidth() / 2), entity.getY() - entity.getHeight() / 2);
             }
         }
-        
-        if(!movingEntities.isEmpty()) {
-            for(Entity entity : movingEntities) {
+
+        if (!movingEntities.isEmpty()) {
+            for (Entity entity : movingEntities) {
                 drawTextureFromAsset(entity.getImage(), entity.getX() - (entity.getWidth() / 2), entity.getY() - entity.getHeight() / 2);
             }
         }
@@ -318,7 +317,7 @@ public class Game
     private void updateCamera() {
         Vector3 camPos = CAM.position.cpy();
         CAM.position.set(gameData.getPlayerPosition().getX(), camPos.y, camPos.z);
-
+        CAM.update();
 //        float camPosX = camPos.x;
 //        float moveSpeed = 200;
 //
