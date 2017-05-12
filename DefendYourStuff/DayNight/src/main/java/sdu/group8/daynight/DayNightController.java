@@ -32,6 +32,8 @@ public class DayNightController implements IGameProcessingService {
         if (countdown <= 0) {
             enemyProvider.createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
             enemyProvider.createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
+            enemyProvider.createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
+            enemyProvider.createBigEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
             countdown = COUNTDOWNTIME;
         }
         timer(gameData);

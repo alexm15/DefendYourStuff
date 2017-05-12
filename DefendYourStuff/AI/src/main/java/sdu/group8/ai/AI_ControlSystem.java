@@ -27,7 +27,8 @@ import sdu.group8.commoncharacter.Character;
 @ServiceProviders(value = {
     @ServiceProvider(service = AI_Service.class)}
 )
-public class AI_ControlSystem implements AI_Service {
+public class AI_ControlSystem
+        implements AI_Service {
 
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
@@ -37,18 +38,18 @@ public class AI_ControlSystem implements AI_Service {
 
         if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
             moveEnemyToTarget(enemy, closestTarget, gameData);
-        }
+        } else {
+            if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
+                try {
+                    useAbility(enemy, world, closestTarget, enemy.getAbilityContainer().getAbilityOne());
+                    enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getAbilityOne().getCoolDown()); //FIXME refactor cooldown
 
-        if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
-            try {
-                useAbility(enemy, world, closestTarget, enemy.getAbilityContainer().getAbilityOne());
-                enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getAbilityOne().getCoolDown()); //FIXME refactor cooldown
-
-            } catch (IndexOutOfBoundsException e) {
-                System.err.println(e);
+                } catch (IndexOutOfBoundsException e) {
+                    System.err.println(e);
+                }
             }
-        }
 
+        }
     }
 
     @Override
@@ -193,8 +194,8 @@ public class AI_ControlSystem implements AI_Service {
     }
 
     private boolean withinShootingRange(Character enemy, Entity closestTarget, int minShootDistance, int maxShootDistance) {
-
-        return distanceToEntity(enemy, closestTarget) > minShootDistance && distanceToEntity(enemy, closestTarget) < maxShootDistance;
+        return distanceToEntity(enemy, closestTarget) > minShootDistance
+                && distanceToEntity(enemy, closestTarget) < maxShootDistance;
     }
 
 }

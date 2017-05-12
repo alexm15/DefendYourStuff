@@ -61,6 +61,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
     @Override
     public void start(GameData gameData, World world) {
+        //TODO: Needs to be remove because DayNight module spawns enemies instead.
         createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
         createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
         createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
@@ -90,9 +91,11 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
     @Override
     public void createBigEnemy(World world, GameData gameData, Position position) {
-//        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-//        AbilityData ab = abilityProvider.getMeleeAbilities().get(0); 
-        Enemy enemy = new BigMeleeEnemy(position);
+        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
+        AbilityData ab = abilityProvider.getMeleeAbilities().get(0); 
+        //TODO ADD abilities to BigMeleeEnemy
+
+        BigMeleeEnemy enemy = new BigMeleeEnemy(position, ab);
         world.addEntity(enemy);
     }
 
