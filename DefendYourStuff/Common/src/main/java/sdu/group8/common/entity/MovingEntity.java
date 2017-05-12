@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.common.entity;
 
-import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 
 /**
- *
- * @author Martin
+ * Represents all entities in the game with movable properties.
+ * @author Group 8
  */
 public abstract class MovingEntity extends Entity {
 
@@ -21,10 +15,23 @@ public abstract class MovingEntity extends Entity {
     protected float moveSpeed;
     protected float weight;
     
+    /**
+     * Creates a moving entity in the game. Is usually a subtype
+     * @param moveSpeed the entity's moveSpeed
+     * @param weight the entity's weight
+     * @param imageURL the entity's image
+     * @param dimension the entity's size
+     * @param direction the entity's direction
+     * @param pos the entity's position
+     * @param collisionType the collisionType of the entity
+     */
     public MovingEntity(float moveSpeed, float weight, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType) {
         super(imageURL, dimension, direction, pos, collisionType);
         this.moveSpeed = moveSpeed;
         this.weight = weight;
+        if (moveSpeed < 0) {
+            throw new IllegalArgumentException("moveSpeed cannot be negative");
+        }
     }
 
     public float getDx() {
@@ -43,7 +50,13 @@ public abstract class MovingEntity extends Entity {
         this.dy = dy;
     }
 
-    public void setDirection(float dx, float dy) {
+    /**
+     * Changes the vector direction of the entity for how fast the 
+     * entity is moving in a given direction.  
+     * @param dx the new vector for x position
+     * @param dy the new vector for y position
+     */
+    public void setVectorDirection(float dx, float dy) {
         this.dx = dx;
         this.dy = dy;
     }
@@ -52,8 +65,15 @@ public abstract class MovingEntity extends Entity {
         return moveSpeed;
     }
 
+    /**
+     * Changes the moveSpeed, cannot be negative.
+     * @param moveSpeed the new moveSpeed
+     */
     public void setMoveSpeed(float moveSpeed) {
         this.moveSpeed = moveSpeed;
+        if (moveSpeed < 0) {
+            throw new IllegalArgumentException("moveSpeed cannot be negative");
+        }
     }
 
     public float getWeight() {
