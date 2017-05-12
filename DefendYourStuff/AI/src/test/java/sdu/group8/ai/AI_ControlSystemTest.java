@@ -22,6 +22,7 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commoncharacter.Character;
+import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyAction;
 
 /**
@@ -31,7 +32,7 @@ import sdu.group8.commonenemy.IEnemyAction;
 public class AI_ControlSystemTest {
     
     private AI_ControlSystem aiControl;
-    private Character someEnemy; 
+    private Enemy someEnemy; 
     private World world;
     private GameData gameData;
     private DummyAttackable dummyAttackable;
@@ -51,9 +52,10 @@ public class AI_ControlSystemTest {
     @Before
     public void setUp() {
         aiControl = new AI_ControlSystem();
-        someEnemy = new Character(0, 0, 0, "", new Dimension(0, 0, 0), new Direction(true), new Position(0, 0), CollisionType.CIRCLE, new AbilityData[0]) {
+        someEnemy = new Enemy(0, 0, 0, 0, "", new Dimension(0, 0, 0), new Direction(true), new Position(0, 0), CollisionType.CIRCLE, new AbilityData[0]) {
             @Override
             public void collision(Entity otherEntity) {
+
             }
         };
         someEnemy.setMoveSpeed(10);

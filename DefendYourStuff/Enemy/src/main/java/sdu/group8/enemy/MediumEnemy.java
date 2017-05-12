@@ -44,7 +44,9 @@ public class MediumEnemy extends Enemy implements IPlayerAction, IAbilityAction,
 
     @Override
     public void abilityAction(Ability ab) {
-        this.reduceHealth(ab.getDamage());
+        if (!(ab.getOwner() instanceof Enemy)) {
+            this.reduceHealth(ab.getDamage());
+        }
     }
 
     @Override
