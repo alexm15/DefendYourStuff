@@ -8,12 +8,12 @@ package sdu.group8.common.entity;
 import sdu.group8.common.ability.AbilityContainer;
 import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;
-import sdu.group8.common.entity.Entity;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 
 /**
- *
+ * Represents the abstract building with the properties that all buildings
+ * needs in the game.
  * @author Martin
  */
 public abstract class Building extends Entity {
@@ -32,8 +32,8 @@ public abstract class Building extends Entity {
      * @param collisionType
      * @param buildingType
      * @param isAttackable
-     * @param upgradeLevel
-     * @param health
+     * @param upgradeLevel cannot be negative value.
+     * @param health cannot be negative value.
      * @param ab 
      */
     public Building(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
@@ -44,6 +44,9 @@ public abstract class Building extends Entity {
         this.health = new HealthSystem(health);
         this.abilities = new AbilityContainer(ab);
         this.pos.setY(this.getY() + this.dimension.getHeight() / 2);
+        if (upgradeLevel < 0) {
+            throw new IllegalArgumentException("UpgradeLvl cannot be negative");
+        }
     }
 
     public AbilityContainer getAbilityContainer() {
