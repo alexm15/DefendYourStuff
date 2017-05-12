@@ -31,8 +31,8 @@ import sdu.group8.commonenemy.IEnemyService;
     ,
     @ServiceProvider(service = IEnemyService.class)}
 )
-public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService{
-    
+public class EnemyController implements IGameProcessingService, IGamePluginService, IEnemyService {
+
     private AI_Service aiService;
 
     @Override
@@ -41,20 +41,22 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
         for (Entity enemyEntity : world.getEntities(MediumEnemy.class, BigMeleeEnemy.class)) {
             Enemy enemy = (Enemy) enemyEntity;
-
+            deathProcess(enemy, gameData, world);
             enemy.setEntityOnGround(enemyEntity, gameData);
 
-            if (enemy instanceof MediumEnemy) {
-                aiService.rangedAI(enemy, world, gameData, 250, 350);
-            } else {
-                aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
-            }
+            if (aiService != null) {
+                if (enemy instanceof MediumEnemy) {
+                    aiService.rangedAI(enemy, world, gameData, 250, 350);
+                } else {
+                    aiService.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
+                }
 
-            if (enemy.getCurrentHealth() <= 0) {
-                world.removeEntity(enemy);
+                if (enemy.getCurrentHealth() <= 0) {
+                    world.removeEntity(enemy);
+                }
             }
         }
-        deathProcess(gameData, world);
+
     }
 
     @Override
@@ -67,39 +69,30 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
     @Override
     public void stop(GameData gameData, World world) {
-
+        world.removeEntities(MediumEnemy.class, BigMeleeEnemy.class);
     }
 
-    public void deathProcess(GameData gameData, World world) {
-        for (Entity entity : world.getEntities(Enemy.class)) {
-            Character enemy = (Character) entity;
-            if (enemy.getClass().equals(MediumEnemy.class)) {
-                if (enemy.getCurrentHealth() == 0) {
-                    gameData.addPlayerGold(100);
-                    world.removeEntity(enemy);
-                }
-            }
+    public void deathProcess(Enemy enemy, GameData gameData, World world) {
+        if (enemy.getCurrentHealth() == 0) {
+            gameData.addPlayerGold(100);
+            world.removeEntity(enemy);
         }
+
     }
 
     @Override
     public void createMediumEnemy(World world, GameData gameData, Position position) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         AbilityData fireballAbility = abilityProvider.getRangedAbilities().get(0);
-        MediumEnemy mediumEnemy = new MediumEnemy(position, fireballAbility);
-        
-        
-                
+        Enemy mediumEnemy = new MediumEnemy(position, fireballAbility);
         world.addEntity(mediumEnemy);
     }
 
     @Override
     public void createBigEnemy(World world, GameData gameData, Position position) {
-        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
+//        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
 //        AbilityData ab = abilityProvider.getMeleeAbilities().get(0); 
-        //TODO ADD abilities to BigMeleeEnemy
-
-        BigMeleeEnemy enemy = new BigMeleeEnemy(position);
+        Enemy enemy = new BigMeleeEnemy(position);
         world.addEntity(enemy);
     }
 
