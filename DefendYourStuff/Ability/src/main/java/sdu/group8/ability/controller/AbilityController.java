@@ -116,6 +116,7 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
         if (weapon != null) {
             ab.getDamageRange().setMaxDamage(ab.getDamageRange().getMaxDamage()*weapon.getDamageMultiplier());
             ab.getDamageRange().setMinDamage(ab.getDamageRange().getMinDamage()*weapon.getDamageMultiplier());
+            ab.setMoveSpeed(ab.getMoveSpeed()*weapon.getRangeMultiplier());
         }
         System.out.println("Y pos: " + ability.getY());
         
