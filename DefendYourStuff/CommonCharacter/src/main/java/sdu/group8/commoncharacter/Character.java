@@ -77,5 +77,4 @@ public abstract class Character extends MovingEntity {
     public void resetReactiontime() {
         this.reactionTimer = reactionTime;
     }
-
 }

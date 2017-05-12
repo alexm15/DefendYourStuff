@@ -11,6 +11,7 @@ import sdu.group8.commonbuilding.data.Building;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
+import sdu.group8.commonbuilding.services.IBuildingAction;
 
 public class Portal extends Building {
 
@@ -20,6 +21,9 @@ public class Portal extends Building {
 
     @Override
     public void collision(Entity otherEntity) {
+        if (otherEntity instanceof IBuildingAction) {
+            ((IBuildingAction) otherEntity).buildingAction((Entity) this);
+        }
     }
 
 }

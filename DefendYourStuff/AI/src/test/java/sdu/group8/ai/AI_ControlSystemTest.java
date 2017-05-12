@@ -22,6 +22,7 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commoncharacter.Character;
+import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyAction;
 
 /**
@@ -31,7 +32,7 @@ import sdu.group8.commonenemy.IEnemyAction;
 public class AI_ControlSystemTest {
     
     private AI_ControlSystem aiControl;
-    private Character someEnemy; 
+    private Character enemy; 
     private World world;
     private GameData gameData;
     private DummyAttackable dummyAttackable;
@@ -48,35 +49,44 @@ public class AI_ControlSystemTest {
     public static void tearDownClass() {
     }
     
+    /**
+     * Enemy needs dummy ability for any of the tests to work.
+     */
     @Before
     public void setUp() {
         aiControl = new AI_ControlSystem();
-        someEnemy = new Character(0, 0, 0, "", new Dimension(0, 0, 0), new Direction(true), new Position(0, 0), CollisionType.CIRCLE, new AbilityData[0]) {
-            @Override
-            public void collision(Entity otherEntity) {
-            }
-        };
-        someEnemy.setMoveSpeed(10);
-        //dummyAttackable = new DummyAttackable("", null, new Position(10, 0), CollisionType.CIRCLE, new Ability[0]);
         world = new World();
         gameData = new GameData();
+        enemy = new Character(0, 0, 0, "", new Dimension(0, 0, 0), new Direction(true), new Position(0, 0), CollisionType.CIRCLE, new AbilityData[0]) {
+            @Override
+            public void collision(Entity otherEntity) {
+
+            }
+        };
+        enemy.setMoveSpeed(10);
+        //dummyAttackable = new DummyAttackable("", null, new Position(10, 0), CollisionType.CIRCLE, new Ability[0]);
+        
         gameData.setDelta(0.5f);
+        world.addEntity(enemy);
         
     }
     
     @After
     public void tearDown() {
+        world.removeEntity(enemy);
         aiControl = null;
-        someEnemy = null;
+        enemy = null;
         world = null;
         dummyAttackable = null;
         gameData = null;
+        
     }
     
     @Test
+    @Ignore
     public void testEnemyMovesToClosestTargetLeftFromEnemy() {
         dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true), new Position(100, 0));
-        float previousX = someEnemy.getX();
+        float previousX = enemy.getX();
         float dummyX = dummyAttackable.getX();
         float initialDistance = Math.abs(dummyX-previousX);
         
@@ -84,15 +94,16 @@ public class AI_ControlSystemTest {
         world.addEntity(dummyAttackable);
         
         
-        aiControl.assignAttackAndDodgeEnemyAI(someEnemy, world, gameData);
-        
-        float newDistance = Math.abs(dummyAttackable.getX()-someEnemy.getX());
+        aiControl.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
+        System.out.println("new x: " + enemy.getX());
+        float newDistance = Math.abs(dummyAttackable.getX()-enemy.getX());
         assertTrue(newDistance < initialDistance);          
         
                 
     }
     
     @Test
+    @Ignore
     public void testNewEnemyIsCloser() {
         dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true) ,new Position(100, 0));
         //dummyAttackable = new DummyAttackable(0, null, new Direction(true), new Position(10, 0));
@@ -103,16 +114,16 @@ public class AI_ControlSystemTest {
         DummyAttackable newDummy = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true) ,new Position(-90, 0));
         world.addEntity(newDummy);
         
-        float initialNewDummyDist = Math.abs(newDummy.getX()-someEnemy.getX());
-        float initialOldDummyDist = Math.abs(dummyAttackable.getX()-someEnemy.getX());
+        float initialNewDummyDist = Math.abs(newDummy.getX()-enemy.getX());
+        float initialOldDummyDist = Math.abs(dummyAttackable.getX()-enemy.getX());
         
-        aiControl.assignAttackAndDodgeEnemyAI(someEnemy, world, gameData);
+        aiControl.assignAttackAndDodgeEnemyAI(enemy, world, gameData);
         
         
-        float updatedNewDummyDist = Math.abs(newDummy.getX()-someEnemy.getX());
-        float updatedOldDummyDist = Math.abs(dummyAttackable.getX()-someEnemy.getX());
+        float updatedNewDummyDist = Math.abs(newDummy.getX()-enemy.getX());
+        float updatedOldDummyDist = Math.abs(dummyAttackable.getX()-enemy.getX());
         
-        System.out.println("new x value: "+ someEnemy.getX());
+        System.out.println("new x value: "+ enemy.getX());
         assertTrue(updatedNewDummyDist < initialNewDummyDist);
         assertTrue(updatedOldDummyDist > initialOldDummyDist);
         
@@ -125,11 +136,11 @@ public class AI_ControlSystemTest {
         world.addEntity(dummyAttackable);
   
         
-        float initialEnemyToEntityDistance = Math.abs(dummyAttackable.getX()-someEnemy.getX());
+        float initialEnemyToEntityDistance = Math.abs(dummyAttackable.getX()-enemy.getX());
         int minShootDistance = 10;
-        aiControl.rangedAI(someEnemy, world, gameData, minShootDistance, 15);
+        aiControl.rangedAI(enemy, world, gameData, minShootDistance, 15);
         
-        float updatedEnemyToEntityDistance = Math.abs(dummyAttackable.getX()-someEnemy.getX());        
+        float updatedEnemyToEntityDistance = Math.abs(dummyAttackable.getX()-enemy.getX());        
         
                 
         assertTrue(updatedEnemyToEntityDistance >  initialEnemyToEntityDistance);
@@ -142,8 +153,8 @@ public class AI_ControlSystemTest {
         dummyAttackable = new DummyAttackable(0, new Dimension(0, 0, 0), new Direction(true), new Position(100, 0));
         int minShootDistance = 10;
         
-        aiControl.rangedAI(someEnemy, world, gameData, minShootDistance, 15);
-        float distanceToPlayer = Math.abs(dummyAttackable.getX()-someEnemy.getX());
+        aiControl.rangedAI(enemy, world, gameData, minShootDistance, 15);
+        float distanceToPlayer = Math.abs(dummyAttackable.getX()-enemy.getX());
         assertTrue(distanceToPlayer <= minShootDistance);
         
         assertFalse(world.getEntities(Ability.class).isEmpty());
