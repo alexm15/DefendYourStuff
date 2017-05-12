@@ -46,9 +46,9 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
                 if (ab.getWeight() != 0) {
                     verticalVelocity = ab.getPosition().getY() - (ab.getWeight() * gameData.getGRAVITY());
                 }
-                if (ab.getDirection().isIsLeft()) {
+                if (ab.getDirection().isLeft()) {
                     ability.setX(ability.getX() - horizontalVelocity);
-                } else if (ab.getDirection().isIsRight()) {
+                } else if (ab.getDirection().isRight()) {
                     ability.setX(ability.getX() + horizontalVelocity);
                 }
                 ability.setY(ability.getY() - verticalVelocity * gameData.getDelta());
@@ -106,7 +106,7 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
             x = aimX;
             y = aimY;
         } else {
-            if (ability.getDirection().isIsLeft()) {
+            if (ability.getDirection().isLeft()) {
                 x = caller.getX() - caller.getWidth() / 2 - caller.getWidth() / 4;
             } else {
                 x = caller.getX() + caller.getWidth() / 2 + caller.getWidth() / 4;
