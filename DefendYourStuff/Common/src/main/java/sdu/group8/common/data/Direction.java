@@ -68,7 +68,4 @@ public class Direction {
                     + " have same value.");
         }
     }
-    
-    
-
 }
