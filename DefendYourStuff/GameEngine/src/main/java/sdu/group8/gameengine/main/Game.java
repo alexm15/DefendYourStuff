@@ -356,7 +356,10 @@ public class Game
         font.setScale(FONT_SCALE);
         font.draw(batch, "Gold: " + gameData.getPlayerGold(), posX, posY);
     }
-
+    /**
+     * Update centret ligger på C:/DefendYourStuffUpdates/netbeans_site/updates.xml
+     * skrives i Bundle.properties som file://C://DefendYourStuffUpdates//netbeans_site//updates.xml
+     */
     private final LookupListener lookupListener = new LookupListener() {
         @Override
         public void resultChanged(LookupEvent le) {
