@@ -43,7 +43,6 @@ public class AI_ControlSystem implements AI_Service {
     @Override
     public void rangedAI(Character enemy, World world, GameData gameData, int minShootDistance, int maxShootDistance) {
         enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne() - gameData.getDelta());
-        AbilityData enemyAbility = enemy.getAbilityContainer().getAbilites().get(0);
 
         Entity closestTarget = getClosesTarget(enemy, world);
 
@@ -52,13 +51,13 @@ public class AI_ControlSystem implements AI_Service {
         //shoot
         if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance)) { //TODO lav en range
 
-            useAbility(enemy, world, closestTarget, gameData, enemyAbility);
+            useAbilityOne(enemy, world, closestTarget);
 
         } else {
 
             if (tooCloseToTarget) {
                 increaseDistance(enemy, closestTarget, gameData);
-                useAbility(enemy, world, closestTarget, gameData, enemyAbility);
+                useAbilityOne(enemy, world, closestTarget);
 
             }
             if (distanceToEntity(enemy, closestTarget) > maxShootDistance) {
@@ -144,12 +143,12 @@ public class AI_ControlSystem implements AI_Service {
         enemy.setX(horizontalPos);
     }
 
-    private void useAbility(Character enemy, World world, Entity closestTarget, GameData gameData, AbilityData enemyAbility) {
+    private void useAbilityOne(Character enemy, World world, Entity closestTarget) {
         if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
             AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
             setDirection(enemy, closestTarget);
             world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
-            enemy.getAbilityContainer().setCooldownOne(enemyAbility.getCoolDown()); //TODO fix cooldown.
+            enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getAbilityOne().getCoolDown()); 
         }
     }
 
