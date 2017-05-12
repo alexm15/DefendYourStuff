@@ -37,6 +37,9 @@ public class EnemyTest {
     private GameData gameData;
     private World world;
     private Lookup lookup;
+    private AbilityPlugin abilityPlugin;
+    private EnemyController enemyController;
+    private AbilityController abilityController;
     
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -51,10 +54,10 @@ public class EnemyTest {
         lookup = Lookup.getDefault();
         gameData = new GameData();
         world = new World();
-        EnemyController enemyController = new EnemyController();
-        AbilityPlugin abilityPlugin = new AbilityPlugin();
+        enemyController = new EnemyController();
+        abilityPlugin = new AbilityPlugin();
         abilityPlugin.preStart(gameData);
-        AbilityController abilityController = new AbilityController();
+        abilityController = new AbilityController();
         gameData.setDisplayHeight(600);
         gameData.setDisplayWidth(800);
     }
@@ -64,6 +67,9 @@ public class EnemyTest {
         lookup = null;
         gameData = null;
         world = null;
+        enemyController = null;
+        abilityPlugin = null;
+        abilityController = null;
         
     }
     

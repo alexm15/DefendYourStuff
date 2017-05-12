@@ -18,9 +18,11 @@ import sdu.group8.ability.controller.AbilityController;
 import sdu.group8.ability.controller.AbilityPlugin;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.HealthSystem;
+import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonplayer.IPlayer;
+import sdu.group8.commonplayer.IPlayerService;
 import sdu.group8.player.PlayerController;
 import sdu.group8.player.Player;
 import sdu.group8.weapon.WeaponGenerator;
@@ -35,8 +37,10 @@ public class PlayerTest {
     private GameData gameData;
     private World world;
     private Lookup lookup;
-    private PlayerController playerController;
     private AbilityPlugin abilityPlugin;
+    private PlayerController playerController;
+    private AbilityController abilityController;
+    private WeaponGenerator weaponGenerator;
     
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -53,8 +57,8 @@ public class PlayerTest {
         world = new World();
         abilityPlugin = new AbilityPlugin();
         abilityPlugin.preStart(gameData);
-        AbilityController abilityController = new AbilityController();
-        WeaponGenerator weaponGenerator = new WeaponGenerator();
+        abilityController = new AbilityController();
+        weaponGenerator = new WeaponGenerator();
         gameData.setDisplayHeight(600);
         gameData.setDisplayWidth(800);
         playerController = new PlayerController();
@@ -67,15 +71,18 @@ public class PlayerTest {
         gameData = null;
         world = null;
         playerController = null;
-        
+        abilityPlugin = null;
+        abilityController = null;
+        weaponGenerator = null;
     }
     
     @Test
     public void testGetHealth() {
-        IPlayer playerService = lookup.lookup(IPlayer.class);
+        IPlayerService playerService = lookup.lookup(IPlayerService.class);
+        
         assertEquals(1, world.getEntities().size());
         
-        HealthSystem health = playerService.getHealthSystem();
+        HealthSystem health = playerService.getHealthSystem(world);
         
         for (Entity entity : world.getEntities(Player.class)) {
             Player player = (Player) entity;
@@ -85,10 +92,11 @@ public class PlayerTest {
     
     @Test
     public void testGetMovementSpeed() {
-        IPlayer playerService = lookup.lookup(IPlayer.class);
+        IPlayerService playerService = lookup.lookup(IPlayerService.class);
+        
         assertEquals(1, world.getEntities().size());
         
-        float movementSpeed = playerService.getPlayerMoveSpeed();
+        float movementSpeed = playerService.getPlayerMoveSpeed(world);
         
         for (Entity entity : world.getEntities(Player.class)) {
             Player player = (Player) entity;
