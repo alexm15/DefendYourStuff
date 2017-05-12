@@ -7,6 +7,8 @@ package sdu.group8.commonweapon.data;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import sdu.group8.common.data.World;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.data.AbilityContainer;
 import sdu.group8.commonability.data.AbilityData;
 
@@ -35,22 +37,14 @@ public class Weapon {
         return abilities.getAbilites();
     }
     
-    public AbilityData getAbilityOne() {
-        return abilities.getAbilites().get(0);
+    public AbilityContainer getAbilityContainer() {
+        return this.abilities;
     }
     
-    public AbilityData getAbilityTwo() {
-        return abilities.getAbilites().get(1);
+    public void useAbility(Entity owner, int AbilityContainerIndex, World world) {
+        this.abilities.useAbility(owner, AbilityContainerIndex, world);
     }
     
-    public AbilityData getAbilityThree() {
-        return abilities.getAbilites().get(2);
-    }
-    
-    public AbilityData getAbilityFour() {
-        return abilities.getAbilites().get(3);
-    }
-
     public float getDamageMultiplier() {
         return damageMultiplier;
     }

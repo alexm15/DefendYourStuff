@@ -7,6 +7,7 @@ package sdu.group8.commonability.data;
 
 import java.util.ArrayList;
 import org.openide.util.Lookup;
+import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.services.AbilitySPI;
 
@@ -40,8 +41,8 @@ public class AbilityContainer {
      * @param abilityIndex The index in the abilitycontainer, to get
      * the actual AbilityData used.
      */
-    public void useAbility(Entity owner, int abilityIndex) {
-        abilites.get(abilityIndex).useAbility(owner);
+    public void useAbility(Entity owner, int abilityIndex, World world) {
+        abilites.get(abilityIndex).useAbility(owner, world);
     }
 
     public AbilityData getAbility(int abilityContainerIndex) {

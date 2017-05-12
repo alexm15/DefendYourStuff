@@ -12,6 +12,7 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
+import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.MovingEntity;
 
@@ -42,8 +43,8 @@ public abstract class Character extends MovingEntity {
      * @param abilityContainerIndex The index in the abilitycontainer, to get
      * the actual AbilityData used.
      */
-    public void useAbility(int abilityContainerIndex) {
-        this.abilities.useAbility(this, abilityContainerIndex);
+    public void useAbility(int abilityContainerIndex, World world) {
+        this.abilities.useAbility(this, abilityContainerIndex, world);
     }
 
     public AbilityData getAbility(int abilityContainerIndex) {

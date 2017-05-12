@@ -5,8 +5,6 @@
  */
 package sdu.group8.buildingentities;
 
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.IAbilityAction;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
@@ -14,6 +12,8 @@ import sdu.group8.commonbuilding.data.Building;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
+import sdu.group8.commonability.data.Ability;
+import sdu.group8.commonability.services.IAbilityAction;
 import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonbuilding.services.IDefBuilding;
 import sdu.group8.commonenemy.IEnemyAction;
@@ -56,7 +56,5 @@ public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbi
         }
         
     }
-    
-    
 
 }

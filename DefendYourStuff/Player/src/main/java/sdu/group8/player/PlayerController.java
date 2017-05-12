@@ -25,10 +25,8 @@ import sdu.group8.commonweapon.services.IWeaponService;
     @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class)}
 )
-public class PlayerController
-        implements IGameProcessingService, IGamePluginService {
+public class PlayerController implements IGameProcessingService, IGamePluginService {
 
-    private Lookup lookup = Lookup.getDefault();
     private Player player;
     private float verticalVelocity;
     private float horizontalVelocity;
@@ -56,6 +54,7 @@ public class PlayerController
         player.setPosition(position);
         gameData.setPlayerPosition(position);
         
+        // Update cooldown for player's abilities.
         player.getAbilityContainer().updateCooldown(gameData.getDelta());
     }
 
@@ -90,7 +89,6 @@ public class PlayerController
         }
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().SPACE)) {
-            AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
             float aimX = 0;
             float aimY = 0;
             try {
@@ -100,7 +98,8 @@ public class PlayerController
                 System.out.println("Mouse not in screen");
                 e.printStackTrace();
             }
-            world.addEntity(abilityProvicer.useAbility(player, player.getWeapon().getAbilityOne(), aimX, aimY));
+            
+            player.getWeapon().useAbility(player, 0, world);
         }
 
     }

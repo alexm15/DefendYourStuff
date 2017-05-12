@@ -10,6 +10,7 @@ import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.commonability.data.AbilityData;
+import sdu.group8.commonability.data.Ability;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
@@ -31,17 +32,15 @@ public class AI_ControlSystem implements AI_Service {
 
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
-
-        enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne() - gameData.getDelta());
+        
         Entity closestTarget = getClosesTarget(enemy, world);
 
         if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
             moveEnemyToTarget(enemy, closestTarget, gameData);
         } else {
-            if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
+            if (enemy.getAbility(0).isOnCooldown()) {
                 try {
-                    useAbility(enemy, world, closestTarget, enemy.getAbilityContainer().getAbilityOne());
-                    enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getAbilityOne().getCoolDown()); //FIXME refactor cooldown
+                    useAbility(enemy, world, closestTarget, enemy.getAbility(0));
 
                 } catch (IndexOutOfBoundsException e) {
                     System.err.println(e);
@@ -53,8 +52,6 @@ public class AI_ControlSystem implements AI_Service {
 
     @Override
     public void rangedAI(Character enemy, World world, GameData gameData, int minShootDistance, int maxShootDistance) {
-        enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne() - gameData.getDelta());
-
         Entity closestTarget = getClosesTarget(enemy, world);
 
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
@@ -65,10 +62,9 @@ public class AI_ControlSystem implements AI_Service {
         //shoot
         if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance)) { //TODO lav en range
 
-            if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
+            if (enemy.getAbility(0).isOnCooldown()) {
                 try {
-                    useAbility(enemy, world, closestTarget, enemy.getAbilityContainer().getAbilityOne());
-                    enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getAbilityOne().getCoolDown()); //FIXME refactor cooldown
+                    useAbility(enemy, world, closestTarget, enemy.getAbility(0));
 
                 } catch (IndexOutOfBoundsException e) {
                     System.err.println(e);
@@ -80,10 +76,9 @@ public class AI_ControlSystem implements AI_Service {
             if (tooCloseToTarget) {
                 increaseDistance(enemy, closestTarget, gameData);
 
-                if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
+                if (enemy.getAbility(0).isOnCooldown()) {
                     try {
-                        useAbility(enemy, world, closestTarget, enemy.getAbilityContainer().getAbilityOne());
-                        enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getAbilityOne().getCoolDown()); //FIXME refactor cooldown
+                        useAbility(enemy, world, closestTarget, enemy.getAbility(0));
 
                     } catch (IndexOutOfBoundsException e) {
                         System.err.println(e);
@@ -175,13 +170,8 @@ public class AI_ControlSystem implements AI_Service {
     }
 
     private void useAbility(Character enemy, World world, Entity closestTarget, AbilityData abilityData) {
-        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-        if (abilityProvider != null) {
-            //TODO:
             setDirection(enemy, closestTarget);
-            world.addEntity(abilityProvider.useAbility(enemy, 0, 0, abilityData));
-
-        }
+            abilityData.useAbility(enemy, world);
     }
 
     private void setDirection(Character enemy, Entity closestTarget) {

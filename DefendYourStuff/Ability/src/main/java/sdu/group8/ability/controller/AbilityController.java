@@ -65,16 +65,16 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     }
 
     @Override
-    public Ability useAbility(Entity caller, AbilityData abilityData) {
-        return createAbility(caller, abilityData, 0, 0);
+    public void useAbility(Entity caller, AbilityData abilityData, World world) {
+        createAbility(caller, abilityData, 0, 0, world);
     }
     
     @Override
-    public Ability useAbility(Entity caller, AbilityData abilityData, float aimX, float aimY) {
-        return createAbility(caller, abilityData, aimX, aimY);
+    public void useAbility(Entity caller, AbilityData abilityData, float aimX, float aimY, World world) {
+        createAbility(caller, abilityData, aimX, aimY, world);
     }
 
-    private Ability createAbility(Entity caller, AbilityData abilityData, float aimX, float aimY) {
+    private void createAbility(Entity caller, AbilityData abilityData, float aimX, float aimY, World world) {
         Ability ability;
         Ability ab = abilityCatalog.getAbility(abilityData);
         if (ab instanceof RangedAbility) {
@@ -108,7 +108,8 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
         ability.setDirection(new Direction(caller.getDirection()));
         ability.setPosition(new Position(x, y));
         ability.setOwner(caller);
-        return ability;
+        
+        world.addEntity(ability);
     }
 
     @Override

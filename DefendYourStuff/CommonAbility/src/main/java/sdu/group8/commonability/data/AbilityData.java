@@ -6,6 +6,7 @@
 package sdu.group8.commonability.data;
 
 import org.openide.util.Lookup;
+import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.services.AbilitySPI;
 
@@ -89,9 +90,9 @@ public class AbilityData {
      * @param owner The Entity that owns the abilitycontainer which contains
      * this AbilityData
      */
-    public void useAbility(Entity owner) {
+    public void useAbility(Entity owner, World world) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-        abilityProvider.useAbility(owner, this);
+        abilityProvider.useAbility(owner, this, world);
         this.isActive = true;
     }
 
