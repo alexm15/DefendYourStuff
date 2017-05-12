@@ -17,10 +17,6 @@ import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonbuilding.services.Buildable;
 
-/**
- *
- * @author Alexander
- */
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class),

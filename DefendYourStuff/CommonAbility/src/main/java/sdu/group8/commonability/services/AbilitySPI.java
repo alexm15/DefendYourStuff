@@ -5,10 +5,6 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.data.AbilityData;
 
-/**
- *
- * @author joach
- */
 public interface AbilitySPI {
 
     /**

@@ -8,19 +8,13 @@ package sdu.group8.player;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
-import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonweapon.services.IWeaponService;
 
-/**
- *
- * @author joach
- */
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class)}

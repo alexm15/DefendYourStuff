@@ -9,11 +9,6 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.*;
 import java.util.UUID;
 
-
-/**
- *
- * @author Martin
- */
 public abstract class Entity {
 
     protected UUID ID;
@@ -67,7 +62,7 @@ public abstract class Entity {
     //Add image comment <3
     public void setDirection(Direction direction) {
         this.direction = direction;
-        this.getImage().setReversed(direction.isIsRight());
+        this.getImage().setReversed(direction.isRight());
     }
 
     public Image getImage() {

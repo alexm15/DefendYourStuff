@@ -1,7 +1,6 @@
 package sdu.group8.commonabilitydata.abilities;
 
 import sdu.group8.commonability.data.AbilityData;
-import sdu.group8.commonability.types.MeleeAbility;
 
 /**
  *
@@ -10,7 +9,7 @@ import sdu.group8.commonability.types.MeleeAbility;
 public class SlashData extends AbilityData {
     
     public SlashData() {
-        super(MeleeAbility.class, 10, "Slash", false);
+        super(10, "Slash", false);
     }
     
 }

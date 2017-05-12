@@ -19,10 +19,6 @@ import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerAction;
 
-/**
- *
- * @author joach
- */
 public class Player extends Character implements IPlayer, IEnemyAction, IBuildingAction {
 
     private Weapon weapon;

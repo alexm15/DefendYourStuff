@@ -16,19 +16,17 @@ import sdu.group8.commonability.services.AbilitySPI;
  */
 public class AbilityData {
 
-    private Class<? extends Ability> type;
     private float maxCooldown;
     private float currentCooldown;
-    private String name;
+    private String displayName;
     private boolean aimable;
     private boolean onCooldown = false;
     private boolean isActive = false;
 
-    public AbilityData(Class<? extends Ability> type, float maxCooldown, String name, boolean aimable) {
-        this.type = type;
+    public AbilityData(float maxCooldown, String displayName, boolean aimable) {
         this.maxCooldown = maxCooldown;
         this.currentCooldown = maxCooldown;
-        this.name = name;
+        this.displayName = displayName;
         this.aimable = aimable;
     }
 
@@ -42,10 +40,6 @@ public class AbilityData {
         if (currentCooldown > cooldown) {
             this.currentCooldown = cooldown;
         }
-    }
-
-    public Class<? extends Ability> getType() {
-        return type;
     }
 
     /**
@@ -68,7 +62,7 @@ public class AbilityData {
     }
 
     public String getName() {
-        return name;
+        return displayName;
     }
 
     public boolean isAimable() {

@@ -11,16 +11,17 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
-import sdu.group8.commonability.types.RangedAbility;
+import sdu.group8.common.entity.Entity;
+import sdu.group8.commonability.data.Ability;
 
 /**
  *
  * @author Martin
  */
-public class Fireball extends RangedAbility {
+public class Fireball extends Ability {
     
-    public Fireball() {
-        super(1f, 450f, 0f, new DamageRange(10,20), "abilities/fireball.png", new Dimension(30,30,15), new Direction(true), new Position(0,0), CollisionType.CIRCLE, new EffectContainer());
+    public Fireball(Entity owner, float x, float y, boolean directionLeft) {
+        super(1f, 450f, 0f, new DamageRange(10,20), "abilities/fireball.png", new Dimension(30,30,15), new Direction(directionLeft), new Position(x,y), CollisionType.CIRCLE, new EffectContainer(), owner);
     }
     
 }

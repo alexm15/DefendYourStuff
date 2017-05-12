@@ -6,7 +6,6 @@
 package sdu.group8.commonabilitydata.abilities;
 
 import sdu.group8.commonability.data.AbilityData;
-import sdu.group8.commonability.types.RangedAbility;
 
 /**
  *
@@ -15,7 +14,7 @@ import sdu.group8.commonability.types.RangedAbility;
 public class ArrowData extends AbilityData {
     
     public ArrowData() {
-        super(RangedAbility.class, 10, "Arrow", true);
+        super(10, "Arrow", true);
     }
     
 }

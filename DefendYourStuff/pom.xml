@@ -82,6 +82,7 @@
         <module>Weapon</module>
         <module>DayNight</module>
         <module>CommonAbilityData</module>
+        <module>Interacter</module>
     </modules>
 
     <properties>

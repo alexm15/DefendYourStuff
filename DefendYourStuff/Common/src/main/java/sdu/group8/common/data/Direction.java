@@ -5,10 +5,6 @@
  */
 package sdu.group8.common.data;
 
-/**
- *
- * @author Martin
- */
 public class Direction {
 
     private boolean isLeft;
@@ -24,7 +20,7 @@ public class Direction {
         this.isRight = !isLeft;
     }
 
-    public boolean isIsLeft() {
+    public boolean isLeft() {
         return isLeft;
     }
 
@@ -37,7 +33,7 @@ public class Direction {
         this.isRight = !isLeft;
     }
 
-    public boolean isIsRight() {
+    public boolean isRight() {
         return isRight;
     }
     

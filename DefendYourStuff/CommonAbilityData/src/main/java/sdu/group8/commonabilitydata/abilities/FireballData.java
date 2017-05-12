@@ -1,7 +1,6 @@
 package sdu.group8.commonabilitydata.abilities;
 
 import sdu.group8.commonability.data.AbilityData;
-import sdu.group8.commonability.types.RangedAbility;
 
 /**
  *
@@ -10,7 +9,7 @@ import sdu.group8.commonability.types.RangedAbility;
 public class FireballData extends AbilityData {
     
     public FireballData() {
-        super(RangedAbility.class, 10, "Fireball", false);
+        super(10, "Fireball", false);
     }
     
 }
