@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
+import org.openide.util.LookupEvent;
+import org.openide.util.LookupListener;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Image;
@@ -57,9 +59,12 @@ public class Game
     private final GameData gameData = new GameData();
     private World world = new World();
     private Lookup lookup = Lookup.getDefault();
+    private Lookup.Result<IGamePluginService> result;
+    private Lookup.Result<IPreStartPluginService> resultPre;
     private List<IGameProcessingService> gameProcesses = new ArrayList<>();
     private List<IGamePluginService> gamePlugins = new ArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
+    private List<IPreStartPluginService> preStartPlugins = new ArrayList<>();
     private static Game instance = null;
     private Collection<Entity> entities;
 
@@ -131,11 +136,9 @@ public class Game
 
         assetManager.load("Player/defaultPlayer.png", Texture.class);
 
-
         assetManager.load("Enemy/EnemyBow.png", Texture.class);
         assetManager.load("Enemy/EnemySword.png", Texture.class);
-        
-        
+
         assetManager.load("abilities/fireball.png", Texture.class);
         assetManager.load("abilities/slash.png", Texture.class);
 
@@ -331,13 +334,13 @@ public class Game
             }
         }
         //TODO: catch nullPointError
-        
+
         float screenHeight = CAM.viewportHeight;
         float screenWidth = CAM.viewportWidth;
         float posX = CAM.position.x - screenWidth / 2;
         float posOffsetX = 30;
         float posOffsetY = 25;
-        
+
         drawPlayerHealth(healthSystem, posX + posOffsetX, screenHeight - posOffsetY);
         drawPlayerGold(posX + posOffsetX, screenHeight - posOffsetY * 2);
     }
@@ -354,4 +357,46 @@ public class Game
         font.draw(batch, "Gold: " + gameData.getPlayerGold(), posX, posY);
     }
 
+    private final LookupListener lookupListener = new LookupListener() {
+        @Override
+        public void resultChanged(LookupEvent le) {
+
+            Collection<? extends IGamePluginService> updated = result.allInstances();
+
+            for (IGamePluginService us : updated) {
+                // Newly installed modules
+                if (!gamePlugins.contains(us)) {
+                    us.start(gameData, world);
+                    gamePlugins.add(us);
+                }
+            }
+
+            // Stop and remove module
+            for (IGamePluginService gs : gamePlugins) {
+                if (!updated.contains(gs)) {
+                    gs.stop(gameData, world);
+                    gamePlugins.remove(gs);
+                }
+            }
+        }
+
+    };
+
+        private final LookupListener lookupListenerPre = new LookupListener() {
+        @Override
+        public void resultChanged(LookupEvent le) {
+
+            Collection<? extends IPreStartPluginService> updatedPre = resultPre.allInstances();
+
+            for (IPreStartPluginService pre : updatedPre) {
+                // Newly installed modules
+                if (!preStartPlugins.contains(pre)) {
+                    pre.preStart(gameData);
+                    preStartPlugins.add(pre);
+                }
+            }
+
+        }
+
+    };
 }

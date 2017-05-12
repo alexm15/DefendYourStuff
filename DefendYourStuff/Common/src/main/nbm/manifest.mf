@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
+OpenIDE-Module-Install: sdu/group8/common/ability/Installer.class
 OpenIDE-Module-Localizing-Bundle: sdu/group8/common/data/Bundle.properties
 
