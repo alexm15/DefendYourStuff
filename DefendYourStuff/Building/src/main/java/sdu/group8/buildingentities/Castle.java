@@ -17,6 +17,7 @@ import sdu.group8.common.entity.Entity;
 import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonbuilding.services.IDefBuilding;
 import sdu.group8.commonenemy.IEnemyAction;
+import sdu.group8.commonplayer.IPlayer;
 
 /**
  *
@@ -49,7 +50,11 @@ public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbi
 
     @Override
     public void abilityAction(Ability ab) {
-        this.reduceHealth(ab.getDamage());
+        if (!(ab.getOwner() instanceof IPlayer)) {
+            this.reduceHealth(ab.getDamage());
+            //TODO: Life display needs to be reduced
+        }
+        
     }
     
     

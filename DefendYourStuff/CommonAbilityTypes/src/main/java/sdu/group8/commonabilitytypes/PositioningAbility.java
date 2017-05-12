@@ -10,6 +10,7 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonenemy.IEnemyAction;
+import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerAction;
 
 /**
@@ -38,7 +39,9 @@ public class PositioningAbility extends Ability implements IPlayerAction, IEnemy
 
     @Override
     public void buildingAction(Entity building) {
-        setExpiration(0);
+        if (!(this.getOwner() instanceof IPlayer)) {
+            setExpiration(0);
+        }
     }
 
 }
