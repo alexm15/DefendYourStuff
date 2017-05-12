@@ -31,8 +31,7 @@ public class AI_ControlSystem
         implements AI_Service {
 
     //FIXME: enemy needs to have specific cooldown for specific abilities.
-    private AbilityData enemyAbility;
-
+    //private AbilityData enemyAbility;
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
 
@@ -41,37 +40,28 @@ public class AI_ControlSystem
             moveEnemyToTarget(enemy, closestTarget, gameData);
         }
         else {
-            useAbility(enemy, world, closestTarget, gameData);
+            checkForCombat(enemy, world, closestTarget, gameData);
         }
 
     }
 
     @Override
     public void rangedAI(Character enemy, World world, GameData gameData, int minShootDistance, int maxShootDistance) {
-
-        enemyAbility = enemy.getAbilityContainer().getAbilites().get(0);
-
         Entity closestTarget = getClosesTarget(enemy, world);
-
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
 
         //shoot
         if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance)) { //TODO lav en range
-
-            useAbility(enemy, world, closestTarget, gameData);
-
+            checkForCombat(enemy, world, closestTarget, gameData);
         }
         else {
-
             if (tooCloseToTarget) {
                 increaseDistance(enemy, closestTarget, gameData);
-                useAbility(enemy, world, closestTarget, gameData);
-
+                checkForCombat(enemy, world, closestTarget, gameData);
             }
             if (distanceToEntity(enemy, closestTarget) > maxShootDistance) {
                 moveEnemyToTarget(enemy, closestTarget, gameData);
             }
-
         }
     }
 
@@ -154,28 +144,28 @@ public class AI_ControlSystem
         enemy.setX(horizontalPos);
     }
 
-    private void useAbility(Character enemy, World world, Entity closestTarget, GameData gameData) {
-
+    private void checkForCombat(Character enemy, World world, Entity closestTarget, GameData gameData) {
+        AbilityData enemyAbility = enemy.getAbilityContainer().getAbilites().get(0);
         if (enemy.isIncombat()) {
             enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne() - gameData.getDelta());
 
             if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
 
-                useABility(enemy, closestTarget, world);
+                useABility(enemy, closestTarget, world, enemyAbility);
                 enemyAbility.setCoolDown(2);
                 enemy.getAbilityContainer().setCooldownOne(enemyAbility.getCoolDown());
             }
         }
         else {
-            useABility(enemy, closestTarget, world);
+            useABility(enemy, closestTarget, world, enemyAbility);
             enemy.setIncombat(true);
         }
     }
 
-    private void useABility(Character enemy, Entity closestTarget, World world) {
+    private void useABility(Character enemy, Entity closestTarget, World world, AbilityData enemyAbility) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         setDirection(enemy, closestTarget);
-        world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
+        world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemyAbility));
     }
 
     private void setDirection(Character enemy, Entity closestTarget) {
@@ -191,8 +181,8 @@ public class AI_ControlSystem
     }
 
     private boolean withinShootingRange(Character enemy, Entity closestTarget, int minShootDistance, int maxShootDistance) {
-        return distanceToEntity(enemy, closestTarget) > minShootDistance && 
-                distanceToEntity(enemy, closestTarget) < maxShootDistance;
+        return distanceToEntity(enemy, closestTarget) > minShootDistance
+                && distanceToEntity(enemy, closestTarget) < maxShootDistance;
     }
 
 }
