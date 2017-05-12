@@ -31,13 +31,24 @@ public class AI_ControlSystem implements AI_Service {
 
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
+
         enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne() - gameData.getDelta());
         Entity closestTarget = getClosesTarget(enemy, world);
+
         if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
             moveEnemyToTarget(enemy, closestTarget, gameData);
         }
 
-//        useAbility(enemy, world);
+        if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
+            try {
+                useAbility(enemy, world, closestTarget, enemy.getAbilityContainer().getAbilityOne());
+                enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getAbilityOne().getCoolDown()); //FIXME refactor cooldown
+
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(e);
+            }
+        }
+
     }
 
     @Override
@@ -51,13 +62,30 @@ public class AI_ControlSystem implements AI_Service {
         //shoot
         if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance)) { //TODO lav en range
 
-            useAbilityOne(enemy, world, closestTarget);
+            if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
+                try {
+                    useAbility(enemy, world, closestTarget, enemy.getAbilityContainer().getAbilityOne());
+                    enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getAbilityOne().getCoolDown()); //FIXME refactor cooldown
+
+                } catch (IndexOutOfBoundsException e) {
+                    System.err.println(e);
+                }
+            }
 
         } else {
 
             if (tooCloseToTarget) {
                 increaseDistance(enemy, closestTarget, gameData);
-                useAbilityOne(enemy, world, closestTarget);
+
+                if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
+                    try {
+                        useAbility(enemy, world, closestTarget, enemy.getAbilityContainer().getAbilityOne());
+                        enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getAbilityOne().getCoolDown()); //FIXME refactor cooldown
+
+                    } catch (IndexOutOfBoundsException e) {
+                        System.err.println(e);
+                    }
+                }
 
             }
             if (distanceToEntity(enemy, closestTarget) > maxShootDistance) {
@@ -71,7 +99,7 @@ public class AI_ControlSystem implements AI_Service {
         Random random = new Random();
 
         float targetX = target.getX();
-        enemy.setIncombat(false);
+
         float horizontalPos = enemy.getX();
 
         if (enemy.getReactionTimer() == 0) {
@@ -143,15 +171,15 @@ public class AI_ControlSystem implements AI_Service {
         enemy.setX(horizontalPos);
     }
 
-    private void useAbilityOne(Character enemy, World world, Entity closestTarget) {
-        if (enemy.getAbilityContainer().getCooldownOne() <= 0) {
-            AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
+    private void useAbility(Character enemy, World world, Entity closestTarget, AbilityData abilityData) {
+        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
+        if (abilityProvider != null) {
+            //TODO:
             setDirection(enemy, closestTarget);
-            world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
-            enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getAbilityOne().getCoolDown()); 
+            world.addEntity(abilityProvider.useAbility(enemy, 0, 0, abilityData));
+
         }
     }
-
 
     private void setDirection(Character enemy, Entity closestTarget) {
 
