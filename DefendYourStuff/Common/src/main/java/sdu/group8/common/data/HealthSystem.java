@@ -47,6 +47,9 @@ public class HealthSystem {
      * @param dmgTaken the damage recieved by the other entity. 
      */
     public void reduceHealth(float dmgTaken) {
+        if (dmgTaken < 0) {
+            throw new IllegalArgumentException("Damage taken cannot be negative");
+        }
         this.health -= dmgTaken;
         if(this.health < 0) {
             this.health = 0;
@@ -59,6 +62,9 @@ public class HealthSystem {
      * @param health the value that the entity's health is increased by.
      */
     public void increaseHealth(float health) {
+        if (health < 0) {
+            throw new IllegalArgumentException("Health recieved cannot be negative");
+        }
         this.health += health;
         if (this.health > maxHealth) {
             this.health = maxHealth;
