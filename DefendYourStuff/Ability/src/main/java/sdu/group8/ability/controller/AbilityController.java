@@ -5,22 +5,21 @@
  */
 package sdu.group8.ability.controller;
 
-import sdu.group8.commonabilitytypes.MeleeAbility;
-import sdu.group8.commonabilitytypes.PositioningAbility;
-import sdu.group8.commonabilitytypes.RangedAbility;
-import sdu.group8.commonabilitytypes.SummoningAbility;
 import java.util.List;
+import sdu.group8.commonability.types.MeleeAbility;
+import sdu.group8.commonability.types.PositioningAbility;
+import sdu.group8.commonability.types.RangedAbility;
+import sdu.group8.commonability.types.SummoningAbility;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityData;
+import sdu.group8.commonability.data.Ability;
+import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGameProcessingService;
-import sdu.group8.common.weapon.Weapon;
 import sdu.group8.commonability.services.AbilitySPI;
 
 @ServiceProviders(value = {
@@ -66,26 +65,16 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     }
 
     @Override
-    public Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData) {
-        return createAbility(caller, aimX, aimY, abilityData, null);
-    }
-
-    @Override
     public Ability useAbility(Entity caller, AbilityData abilityData) {
-        return createAbility(caller, 0, 0, abilityData, null);
+        return createAbility(caller, abilityData, 0, 0);
     }
-
+    
     @Override
-    public Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon) {
-        return createAbility(caller, aimX, aimY, abilityData, weapon);
+    public Ability useAbility(Entity caller, AbilityData abilityData, float aimX, float aimY) {
+        return createAbility(caller, abilityData, aimX, aimY);
     }
 
-    @Override
-    public Ability useAbility(Entity caller, AbilityData abilityData, Weapon weapon) {
-        return createAbility(caller, 0, 0, abilityData, weapon);
-    }
-
-    private Ability createAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon) {
+    private Ability createAbility(Entity caller, AbilityData abilityData, float aimX, float aimY) {
         Ability ability;
         Ability ab = abilityCatalog.getAbility(abilityData);
         if (ab instanceof RangedAbility) {
@@ -113,11 +102,7 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
             }
             y = caller.getY();
         }
-        if (weapon != null) {
-            ab.getDamageRange().setMaxDamage(ab.getDamageRange().getMaxDamage()*weapon.getDamageMultiplier());
-            ab.getDamageRange().setMinDamage(ab.getDamageRange().getMinDamage()*weapon.getDamageMultiplier());
-            ab.setMoveSpeed(ab.getMoveSpeed()*weapon.getRangeMultiplier());
-        }
+
         System.out.println("Y pos: " + ability.getY());
         
         ability.setDirection(new Direction(caller.getDirection()));
@@ -128,27 +113,32 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
 
     @Override
     public List<AbilityData> getAbilities() {
-        return abilityCatalog.getAbilityKeyList();
+        //TODO: implement this method
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public List<AbilityData> getRangedAbilities() {
-        return abilityCatalog.getAbilities(RangedAbility.class);
+        //TODO: implement this method
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public List<AbilityData> getMeleeAbilities() {
-        return abilityCatalog.getAbilities(MeleeAbility.class);
+        //TODO: implement this method
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public List<AbilityData> getPositioningAbilities() {
-        return abilityCatalog.getAbilities(PositioningAbility.class);
+        //TODO: implement this method
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public List<AbilityData> getSummoningAbilities() {
-        return abilityCatalog.getAbilities(SummoningAbility.class);
+        //TODO: implement this method
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

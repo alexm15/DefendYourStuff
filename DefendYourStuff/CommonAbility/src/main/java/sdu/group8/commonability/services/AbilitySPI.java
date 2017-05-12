@@ -1,11 +1,9 @@
 package sdu.group8.commonability.services;
 
-import java.util.Collection;
 import java.util.List;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityData;
-import sdu.group8.common.weapon.Weapon;
+import sdu.group8.commonability.data.Ability;
+import sdu.group8.commonability.data.AbilityData;
 
 /**
  *
@@ -17,25 +15,11 @@ public interface AbilitySPI {
      * Creates a new Ability and returns it to the caller
      *
      * @param caller The entity who creates the ability
-     * @param aimX 
+     * @param aimX
      * @param aimY
      * @return a subtype of Ability
      */
-    Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData);
-
-    /**
-     * Creates a new Ability using weapon and returns it to the caller
-     *
-     * @param caller
-     * @param aimX
-     * @param aimY
-     * @param weapon
-     * @return
-     */
-    Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon);
-    
-    
-    Ability useAbility(Entity caller, AbilityData abilityData, Weapon weapon);
+    Ability useAbility(Entity caller, AbilityData abilityData, float aimX, float aimY);
     
     
     Ability useAbility(Entity caller, AbilityData abilityData);

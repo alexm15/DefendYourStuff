@@ -5,30 +5,23 @@
  */
 package sdu.group8.buildingentities;
 
-import sdu.group8.common.ability.Ability;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.entity.Building;
+import sdu.group8.commonbuilding.data.Building;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.commonability.abilities.FireballData;
+import sdu.group8.commonabilitydata.abilities.FireballData;
 import sdu.group8.commonbuilding.services.IBuildingService;
 
 /**
  *
  * @author Alexander
  */
-public class Rubble
-        extends Building
-        implements IBuildingService {
+public class Rubble extends Building implements IBuildingService {
 
     public Rubble(Position pos) {
-        super("Building/rubble.png",
-                new Dimension(35, 20, 0),
-                pos, CollisionType.BOX,
-                BuildingType.DEFENCE,
-                false, 1, 1, new FireballData());
+        super("Building/rubble.png", new Dimension(35, 20, 0), pos, CollisionType.BOX,  BuildingType.DEFENCE, false, 1, 1, new FireballData());
     }
 
     @Override

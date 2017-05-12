@@ -8,7 +8,7 @@ package sdu.group8.player;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.common.ability.AbilityData;
+import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
@@ -55,6 +55,8 @@ public class PlayerController
         Position position = new Position(player.getX() + horizontalVelocity, player.getY() + verticalVelocity * gameData.getDelta());
         player.setPosition(position);
         gameData.setPlayerPosition(position);
+        
+        player.getAbilityContainer().updateCooldown(gameData.getDelta());
     }
 
     private void handleKeyboardInput(GameData gameData, World world) {
@@ -98,7 +100,7 @@ public class PlayerController
                 System.out.println("Mouse not in screen");
                 e.printStackTrace();
             }
-            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getWeapon().getAbilityOne()));
+            world.addEntity(abilityProvicer.useAbility(player, player.getWeapon().getAbilityOne(), aimX, aimY));
         }
 
     }

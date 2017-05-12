@@ -9,9 +9,6 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.*;
 import java.util.UUID;
 
-import java.util.ArrayList;
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityContainer;
 
 /**
  *

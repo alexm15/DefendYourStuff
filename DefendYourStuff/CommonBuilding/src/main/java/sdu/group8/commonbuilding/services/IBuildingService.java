@@ -5,12 +5,6 @@
  */
 package sdu.group8.commonbuilding.services;
 
-import java.util.ArrayList;
-import java.util.UUID;
-import sdu.group8.common.data.World;
-import sdu.group8.common.entity.Building;
-import sdu.group8.common.weapon.Weapon;
-
 /**
  *
  * @author Martin

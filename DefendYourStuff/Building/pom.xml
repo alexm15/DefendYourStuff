@@ -75,6 +75,17 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>CommonAbility</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>sdu.group8</groupId>
+                    <artifactId>CommonAbilityTypes</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonAbilityData</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <properties>

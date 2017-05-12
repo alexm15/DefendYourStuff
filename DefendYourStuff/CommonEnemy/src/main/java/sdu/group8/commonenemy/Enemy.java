@@ -5,7 +5,7 @@
  */
 package sdu.group8.commonenemy;
 
-import sdu.group8.common.ability.AbilityData;
+import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;

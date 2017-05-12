@@ -9,7 +9,7 @@ import java.util.Random;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.common.ability.AbilityData;
+import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
@@ -29,8 +29,6 @@ import sdu.group8.commonenemy.IEnemyAction;
 )
 public class AI_ControlSystem implements AI_Service {
 
-    //FIXME: enemy needs to have specific cooldown for specific abilities.
-    private AbilityData enemyAbility;
 
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
@@ -49,15 +47,18 @@ public class AI_ControlSystem implements AI_Service {
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
         enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne()-gameData.getDelta());
 
+        
+        enemy.getAbility(0).reduceCooldown(gameData.getDelta());
+        
         //shoot
         if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance) && enemy.getAbilityContainer().getCooldownOne() <= 0) { //TODO lav en range
-            useAbility(enemy, world, closestTarget);
-            enemy.getAbilityContainer().setCooldownOne(enemyAbility.getCoolDown());
+            useAbility(enemy, closestTarget);
+            enemy.getAbilityContainer().setCooldownOne(enemyAbility.getCooldown());
         } else {
             
             if (tooCloseToTarget) {
                 increaseDistance(enemy, closestTarget, gameData);
-                useAbility(enemy, world, closestTarget);
+                useAbility(enemy, closestTarget);
 
             }
             if (distanceToEntity(enemy, closestTarget) > maxShootDistance) {
@@ -135,12 +136,11 @@ public class AI_ControlSystem implements AI_Service {
         enemy.setX(horizontalPos);
     }
 
-    private void useAbility(Character enemy, World world, Entity closestTarget) {
+    private void useAbility(Character enemy, Entity closestTarget) {
         //cooldown   
-        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         setDirection(enemy, closestTarget);
-        world.addEntity(abilityProvider.useAbility(enemy, 0, 0, enemy.getAbilityContainer().getAbilites().get(0)));
-        enemyAbility.setCoolDown(2);
+        enemy.useAbility(0);
+        enemyAbility.setCooldown(2);
 
     }
 

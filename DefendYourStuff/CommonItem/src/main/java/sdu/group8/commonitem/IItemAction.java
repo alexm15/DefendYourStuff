@@ -5,7 +5,7 @@
  */
 package sdu.group8.commonitem;
 
-import sdu.group8.common.entity.Item;
+import sdu.group8.commonitem.data.Item;
 
 /**
  *

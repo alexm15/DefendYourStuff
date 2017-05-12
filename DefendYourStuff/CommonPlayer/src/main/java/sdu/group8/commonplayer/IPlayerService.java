@@ -7,7 +7,7 @@ package sdu.group8.commonplayer;
 
 import sdu.group8.common.data.World;
 import sdu.group8.commoncharacter.Character;
-import sdu.group8.common.weapon.Weapon;
+import sdu.group8.commonweapon.data.Weapon;
 
 /**
  *

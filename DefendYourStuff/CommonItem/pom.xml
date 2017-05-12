@@ -18,6 +18,7 @@
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
                         <publicPackage>sdu.group8.commonitem</publicPackage>
+                        <publicPackage>sdu.group8.commonitem.data</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
@@ -40,6 +41,17 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>Common</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonAbility</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>sdu.group8</groupId>
+                    <artifactId>CommonAbilityTypes</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <properties>

@@ -5,13 +5,13 @@
  */
 package sdu.group8.ability.spellbook;
 
-import sdu.group8.common.ability.EffectContainer;
+import sdu.group8.commonability.data.EffectContainer;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
-import sdu.group8.commonabilitytypes.RangedAbility;
+import sdu.group8.commonability.types.RangedAbility;
 
 /**
  *
