@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
-OpenIDE-Module-Localizing-Bundle: sdu/group8/silentupdater/Bundle.properties
-
+OpenIDE-Module-Localizing-Bundle: sdu/group8/silentupdater/resources/Bundle.properties
+OpenIDE-Module-Install: sdu/group8/silentupdater/UpdateActivator.class
+OpenIDE-Module-Layer: sdu/group8/silentupdater/resources/Layer.xml
