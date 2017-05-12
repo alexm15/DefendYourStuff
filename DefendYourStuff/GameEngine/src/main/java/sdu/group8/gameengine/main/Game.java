@@ -31,7 +31,6 @@ import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.gameengine.managers.GameInputProcessor;
-import sdu.group8.commoncharacter.Character;
 
 /**
  *
