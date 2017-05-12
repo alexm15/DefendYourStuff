@@ -16,6 +16,7 @@ public abstract class Chunk {
     private float positionOffset;
     private Image firstBackgroundImage;
     private Image secondBackgroundImage;
+    private float backgroundScrollScale = 50;
     protected final int TILE_SIZE = 100;
 
     public Chunk(Image firstBackgroundImage, Image secondBackgroundImage, float positionOffset) {
@@ -57,6 +58,10 @@ public abstract class Chunk {
 
     public Image getSecondBackgroundImage() {
         return this.secondBackgroundImage;
+    }
+    
+    public float getBackgroundScrollScale() {
+        return this.backgroundScrollScale;
     }
 
 }
