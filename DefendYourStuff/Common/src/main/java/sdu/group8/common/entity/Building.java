@@ -38,15 +38,16 @@ public abstract class Building extends Entity {
      */
     public Building(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
         super(imageURL, dimension, pos, collisionType);
+        if (upgradeLevel < 0) {
+            throw new IllegalArgumentException("UpgradeLvl cannot be negative");
+        }
         this.buildingType = buildingType;
         this.isAttackable = isAttackable;
         this.upgradeLevel = upgradeLevel;
         this.health = new HealthSystem(health);
         this.abilities = new AbilityContainer(ab);
         this.pos.setY(this.getY() + this.dimension.getHeight() / 2);
-        if (upgradeLevel < 0) {
-            throw new IllegalArgumentException("UpgradeLvl cannot be negative");
-        }
+        
     }
 
     public AbilityContainer getAbilityContainer() {
@@ -74,6 +75,9 @@ public abstract class Building extends Entity {
     }
 
     public void setUpgradeLevel(int upgradeLevel) {
+        if (upgradeLevel < 0) {
+            throw new IllegalArgumentException("UpgradeLvl cannot be negative");
+        }
         this.upgradeLevel = upgradeLevel;
     }
 

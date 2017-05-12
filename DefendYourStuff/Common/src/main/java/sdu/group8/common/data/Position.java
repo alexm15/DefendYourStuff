@@ -18,11 +18,12 @@ public class Position {
      * value of 0 then this exception might have to be removed in the future
      */
     public Position(float x, float y) {
-        this.x = x;
-        this.y = y;
         if (y < 0) {
             throw new IllegalArgumentException("y cannot be negative");
         }
+        this.x = x;
+        this.y = y;
+        
     }
 
     /**

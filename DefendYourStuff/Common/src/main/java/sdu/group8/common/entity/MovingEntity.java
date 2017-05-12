@@ -27,11 +27,12 @@ public abstract class MovingEntity extends Entity {
      */
     public MovingEntity(float moveSpeed, float weight, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType) {
         super(imageURL, dimension, direction, pos, collisionType);
-        this.moveSpeed = moveSpeed;
-        this.weight = weight;
         if (moveSpeed < 0) {
             throw new IllegalArgumentException("moveSpeed cannot be negative");
         }
+        this.moveSpeed = moveSpeed;
+        this.weight = weight;
+        
     }
 
     public float getDx() {
@@ -70,10 +71,10 @@ public abstract class MovingEntity extends Entity {
      * @param moveSpeed the new moveSpeed
      */
     public void setMoveSpeed(float moveSpeed) {
-        this.moveSpeed = moveSpeed;
         if (moveSpeed < 0) {
             throw new IllegalArgumentException("moveSpeed cannot be negative");
         }
+        this.moveSpeed = moveSpeed;        
     }
 
     public float getWeight() {

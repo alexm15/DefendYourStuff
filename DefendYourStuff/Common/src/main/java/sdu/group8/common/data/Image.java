@@ -26,11 +26,12 @@ public class Image {
      * the original image file.
      */
     public Image(String imageURL, boolean reversed) {
-        this.imageURL = imageURL;
-        this.reversed = reversed;
-        if (imageURL.isEmpty()) {
+        if (imageURL.isEmpty())
             this.imageURL = "defaultImage.png";
-        }
+        else 
+            this.imageURL = imageURL;
+                
+        this.reversed = reversed;        
     }
 
     public String getImageURL() {
@@ -46,10 +47,11 @@ public class Image {
      * projects folder.  
      */
     public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-        if (imageURL.isEmpty()) {
+        if (imageURL.isEmpty())
             this.imageURL = "defaultImage.png";
-        }
+        else 
+            this.imageURL = imageURL;
+                
     }
 
     public boolean isReversed() {

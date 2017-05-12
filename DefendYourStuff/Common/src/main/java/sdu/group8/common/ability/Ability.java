@@ -45,12 +45,13 @@ public class Ability extends MovingEntity {
      */
     public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer) {
         super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);
-        this.effects = effectContainer;
-        this.damageRange = damageRange;
-        this.expiration = expiration;
         if (expiration < 0) {
             throw new IllegalArgumentException("Expiration time cannot be negative");
         }
+        this.effects = effectContainer;
+        this.damageRange = damageRange;
+        this.expiration = expiration;
+        
     }
 
     /**

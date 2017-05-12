@@ -7,8 +7,8 @@ package sdu.group8.common.data;
  */
 public class Direction {
 
-    private boolean left;
-    private boolean right;
+    private boolean left = true;
+    private boolean right = false;
 
     /**
      * Creates a direction that an entity is facing, left and right boolean 
@@ -16,12 +16,13 @@ public class Direction {
      * @param isLeft entity is facing left if true.
      */
     public Direction(boolean isLeft) {
-        this.left = isLeft;
-        this.right = !isLeft;
         if (this.left == this.right) {
             throw new IllegalArgumentException("Left and Right boolean cannot"
                     + " have same value.");
         }
+        this.left = isLeft;
+        this.right = !isLeft;
+        
     }
     
     /**
@@ -43,12 +44,12 @@ public class Direction {
      * @param left 
      */
     public void setLeft(boolean left) {
-        this.left = left;
-        this.right = !left;
         if (this.left == this.right) {
             throw new IllegalArgumentException("Left and Right boolean cannot"
                     + " have same value.");
         }
+        this.left = left;
+        this.right = !left;        
     }
 
     public boolean isRight() {
@@ -61,11 +62,11 @@ public class Direction {
      * @param right 
      */
     public void setRight(boolean right) {
-        this.right = right;
-        this.left = !right;
         if (this.left == this.right) {
             throw new IllegalArgumentException("Left and Right boolean cannot"
                     + " have same value.");
         }
+        this.right = right;
+        this.left = !right;        
     }
 }

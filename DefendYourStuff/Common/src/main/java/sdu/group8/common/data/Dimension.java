@@ -21,13 +21,13 @@ public class Dimension {
      * @param radius used for circle collision if needed.
      */
     public Dimension(float width, float height, float radius) {
-        this.width = width;
-        this.height = height;
-        this.radius = radius;
         if (width < 0 || height < 0) {
             throw new IllegalArgumentException("Dimensions width and height"
                     + " must be >= 0");
         }
+        this.width = width;
+        this.height = height;
+        this.radius = radius;   
     }
 
     /**
