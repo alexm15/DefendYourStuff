@@ -358,7 +358,7 @@ public class Game
     }
     /**
      * Update centret ligger på C:/DefendYourStuffUpdates/netbeans_site/updates.xml
-     * skrives i Bundle.properties som file://C://DefendYourStuffUpdates//netbeans_site//updates.xml
+     * skrives i Bundle.properties som file:///C://DefendYourStuffUpdates//netbeans_site//updates.xml
      */
     private final LookupListener lookupListener = new LookupListener() {
         @Override
