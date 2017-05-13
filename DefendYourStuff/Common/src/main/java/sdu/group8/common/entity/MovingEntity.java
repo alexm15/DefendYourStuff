@@ -24,6 +24,8 @@ public abstract class MovingEntity extends Entity {
         super(imageURL, dimension, direction, pos, collisionType);
         this.moveSpeed = moveSpeed;
         this.weight = weight;
+        this.dx = moveSpeed;
+        this.dy = 0;
     }
 
     public float getDx() {

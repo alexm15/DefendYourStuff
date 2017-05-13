@@ -22,8 +22,6 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commoncharacter.Character;
-import sdu.group8.commonenemy.Enemy;
-import sdu.group8.commonenemy.IEnemyAction;
 
 /**
  *

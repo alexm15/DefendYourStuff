@@ -6,7 +6,6 @@
 package sdu.group8.ai;
 
 import java.util.Random;
-import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.commonability.data.AbilityData;
@@ -14,9 +13,7 @@ import sdu.group8.commonability.data.Ability;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonai.AI_Service;
-import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commoncharacter.Character;
 
@@ -29,24 +26,20 @@ import sdu.group8.commoncharacter.Character;
 )
 public class AI_ControlSystem implements AI_Service {
 
-
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
-        
+
         Entity closestTarget = getClosesTarget(enemy, world);
 
         if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
             moveEnemyToTarget(enemy, closestTarget, gameData);
-        } else {
-            if (enemy.getAbility(0).isOnCooldown()) {
-                try {
-                    useAbility(enemy, world, closestTarget, enemy.getAbility(0));
+        } else if (enemy.getAbility(0).isOnCooldown()) {
+            try {
+                useAbility(enemy, world, closestTarget, enemy.getAbility(0));
 
-                } catch (IndexOutOfBoundsException e) {
-                    System.err.println(e);
-                }
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(e);
             }
-
         }
     }
 
@@ -56,9 +49,8 @@ public class AI_ControlSystem implements AI_Service {
 
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
 
-        
         enemy.getAbility(0).reduceCooldown(gameData.getDelta());
-        
+
         //shoot
         if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance)) { //TODO lav en range
 
@@ -170,8 +162,8 @@ public class AI_ControlSystem implements AI_Service {
     }
 
     private void useAbility(Character enemy, World world, Entity closestTarget, AbilityData abilityData) {
-            setDirection(enemy, closestTarget);
-            abilityData.useAbility(enemy, world);
+        setDirection(enemy, closestTarget);
+        abilityData.useAbility(enemy, world);
     }
 
     private void setDirection(Character enemy, Entity closestTarget) {

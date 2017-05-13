@@ -9,7 +9,7 @@ import sdu.group8.commonability.data.AbilityData;
 public class SlashData extends AbilityData {
     
     public SlashData() {
-        super(10, "Slash", false);
+        super(10, "Slash");
     }
     
 }

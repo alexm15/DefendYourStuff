@@ -44,6 +44,10 @@ public class AbilityContainer {
     public void useAbility(Entity owner, int abilityIndex, World world) {
         abilites.get(abilityIndex).useAbility(owner, world);
     }
+    
+    public void useAbility(Entity owner, int abilityIndex, float aimX, float aimY, World world) {
+        abilites.get(abilityIndex).useAbility(owner, aimX, aimY, world);
+    }
 
     public AbilityData getAbility(int abilityContainerIndex) {
         return this.abilites.get(abilityContainerIndex);

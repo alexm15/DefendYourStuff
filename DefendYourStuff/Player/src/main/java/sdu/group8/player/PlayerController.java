@@ -93,7 +93,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
                 e.printStackTrace();
             }
             
-            player.getWeapon().useAbility(player, 0, world);
+            player.getWeapon().useAbility(player, 0, aimX, aimY, world);
         }
 
     }

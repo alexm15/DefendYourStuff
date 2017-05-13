@@ -19,15 +19,13 @@ public class AbilityData {
     private float maxCooldown;
     private float currentCooldown;
     private String displayName;
-    private boolean aimable;
     private boolean onCooldown = false;
     private boolean isActive = false;
 
-    public AbilityData(float maxCooldown, String displayName, boolean aimable) {
+    public AbilityData(float maxCooldown, String displayName) {
         this.maxCooldown = maxCooldown;
         this.currentCooldown = maxCooldown;
         this.displayName = displayName;
-        this.aimable = aimable;
     }
 
     /**
@@ -65,10 +63,6 @@ public class AbilityData {
         return displayName;
     }
 
-    public boolean isAimable() {
-        return aimable;
-    }
-
     /**
      * Returns true if on cooldown, false if not.
      * @return boolean true if on cooldown, false if not.
@@ -87,6 +81,12 @@ public class AbilityData {
     public void useAbility(Entity owner, World world) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         abilityProvider.useAbility(owner, this, world);
+        this.isActive = true;
+    }
+
+    public void useAbility(Entity owner, float aimX, float aimY, World world) {
+        AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
+        abilityProvider.useAbility(owner, this, aimX, aimY, world);
         this.isActive = true;
     }
 

@@ -18,22 +18,44 @@ import sdu.group8.common.entity.MovingEntity;
  *
  * @author Martin
  */
-public class Ability extends MovingEntity {
+public abstract class Ability extends MovingEntity {
 
     protected DamageRange damageRange;
     protected boolean isHit = false;
     protected EffectContainer effects;
-    protected float angle;
+    protected float radians;
     protected Entity owner;
     protected float expiration = 1;
+    protected float verticalVelocity;
+    protected boolean aimable;
 
-    public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer, Entity owner) {
+    public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer, Entity owner, boolean aimable) {
         super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);
         this.effects = effectContainer;
         this.damageRange = damageRange;
         this.expiration = expiration;
         this.owner = owner;
-        this.angle = 0;
+        this.radians = 0;
+        this.verticalVelocity = 0;
+        this.aimable = aimable;
+    }
+
+    public abstract Ability getNewInstance(Entity owner, float x, float y, boolean directionLeft);
+    
+    public boolean isAimable() {
+        return aimable;
+    }
+
+    public void setAimable(boolean aimable) {
+        this.aimable = aimable;
+    }
+
+    public float getVerticalVelocity() {
+        return verticalVelocity;
+    }
+
+    public void setVerticalVelocity(float verticalVelocity) {
+        this.verticalVelocity = verticalVelocity;
     }
 
     public float getExpiration() {
@@ -84,12 +106,12 @@ public class Ability extends MovingEntity {
         this.isHit = isHit;
     }
 
-    public float getAngle() {
-        return angle;
+    public float getRadians() {
+        return radians;
     }
 
-    public void setAngle(float angle) {
-        this.angle = angle;
+    public void setRadians(float radians) {
+        this.radians = radians;
     }
 
     /**

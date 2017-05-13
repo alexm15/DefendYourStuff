@@ -41,8 +41,8 @@ public class World {
 
         return r;
     }
-    
-        public void removeEntities(Class... entityTypes) {
+
+    public void removeEntities(Class... entityTypes) {
         for (Entity entity : getEntities()) {
             for (Class entityType : entityTypes) {
                 if (entityType.equals(entity.getClass())) {
@@ -64,7 +64,7 @@ public class World {
     public void removeEntity(Entity entity) {
         entitíes.remove(entity.getID());
     }
-    
+
     public Entity getEntity(UUID entityID) {
         return entitíes.get(entityID);
     }
@@ -98,6 +98,5 @@ public class World {
         this.chunksRight.clear();
         this.chunkMiddle = null;
     }
-    
-    
+
 }

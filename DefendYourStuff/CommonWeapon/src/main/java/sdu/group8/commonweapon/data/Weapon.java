@@ -45,6 +45,10 @@ public class Weapon {
         this.abilities.useAbility(owner, AbilityContainerIndex, world);
     }
     
+    public void useAbility(Entity owner, int AbilityContainerIndex, float aimX, float aimY, World world) {
+        this.abilities.useAbility(owner, AbilityContainerIndex, aimX, aimY, world);
+    }
+    
     public float getDamageMultiplier() {
         return damageMultiplier;
     }
