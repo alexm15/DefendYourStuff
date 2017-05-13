@@ -10,6 +10,7 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonenemy.IEnemyAction;
+import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerAction;
 
 /**
@@ -26,7 +27,7 @@ public class SummoningAbility extends Ability implements IPlayerAction, IEnemyAc
         super(ability.getExpiration(), ability.getMoveSpeed(), ability.getWeight(), ability.getDamageRange(), ability.getImage().getImageURL(), ability.getDimension(), ability.getDirection(), ability.getPosition(), ability.getCollisionType(), ability.getEffects());
     }
     
-     @Override
+    @Override
     public void playerAction(Entity player) {
         setExpiration(0);
     }
@@ -37,7 +38,11 @@ public class SummoningAbility extends Ability implements IPlayerAction, IEnemyAc
     }
 
     @Override
-    public void execute() {
-        setExpiration(0);
+    public void buildingAction(Entity building) {
+        if (!(this.getOwner() instanceof IPlayer)) {
+            setExpiration(0);
+        }
     }
+
+    
 }

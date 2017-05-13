@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.enemy;
 
 import sdu.group8.commonenemy.Enemy;
@@ -22,7 +17,9 @@ import sdu.group8.commonplayer.IPlayerAction;
  *
  * @author Martin
  */
-public class MediumEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
+public class MediumEnemy
+        extends Enemy
+        implements IPlayerAction, IAbilityAction, IBuildingAction {
 
     public MediumEnemy(Position position, AbilityData... abilities) {
         super(0, 100, 10, 100, "Enemy/EnemyBow.png", new Dimension(50, 50, 50 / 2),
@@ -50,8 +47,7 @@ public class MediumEnemy extends Enemy implements IPlayerAction, IAbilityAction,
     }
 
     @Override
-    public void execute() {
-        //TODO implement metode: execute
-        throw new UnsupportedOperationException("Methode: 'execute' Not supported yet in class: 'MediumEnemy'");
+    public void buildingAction(Entity building) {
     }
+
 }

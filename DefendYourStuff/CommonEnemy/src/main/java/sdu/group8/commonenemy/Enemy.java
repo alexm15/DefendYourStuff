@@ -10,6 +10,7 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
+import sdu.group8.common.entity.Entity;
 
 /**
  *
@@ -23,8 +24,5 @@ public abstract class Enemy extends sdu.group8.commoncharacter.Character {
         this.reactionTime = reactionTime;
         this.reactionTimer = reactionTime;
     }
-
-    
-    
     
 }
