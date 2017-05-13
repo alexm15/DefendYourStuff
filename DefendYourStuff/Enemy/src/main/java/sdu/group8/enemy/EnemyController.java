@@ -39,7 +39,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     public void process(GameData gameData, World world) {
         aiService = Lookup.getDefault().lookup(AI_Service.class);
 
-        for (Entity enemyEntity : world.getEntities(MediumEnemy.class, BigMeleeEnemy.class)) {
+        for (Entity enemyEntity : world.getEntities(Enemy.class)) {
             Enemy enemy = (Enemy) enemyEntity;
             deathProcess(enemy, gameData, world);
             enemy.setEntityOnGround(enemyEntity, gameData);
@@ -70,7 +70,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntities(MediumEnemy.class, BigMeleeEnemy.class);
+        world.removeEntities(Enemy.class);
     }
 
     public void deathProcess(Enemy enemy, GameData gameData, World world) {
@@ -101,6 +101,6 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
     @Override
     public void removeAllEnemies(World world) {
-        world.removeEntities(MediumEnemy.class, BigMeleeEnemy.class);
+        world.removeEntities(Enemy.class);
     }
 }

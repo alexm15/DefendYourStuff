@@ -29,23 +29,35 @@ public class World {
         return entitíes.values();
     }
 
-    public Collection<Entity> getEntities(Class... entityTypes) {
+    
+    public <E extends Entity> Collection<Entity> getEntities(Class<E>... entityTypes) {
         Collection<Entity> r = new ArrayList<>();
-        for (Entity entity : getEntities()) {
-            for (Class entityType : entityTypes) {
-                if (entityType.equals(entity.getClass())) {
-                    r.add(entity);
+        for (Entity e : getEntities()) {
+            for (Class<E> entityType : entityTypes) {
+                if (entityType.isInstance(e)) {
+                    r.add(e);
                 }
             }
         }
-
         return r;
     }
     
-        public void removeEntities(Class... entityTypes) {
+    public <E extends Entity> Collection<Entity> getCastedEntities(Class<E>... entityTypes) {
+        Collection<Entity> r = new ArrayList<>();
+        for (Entity e : getEntities()) {
+            for (Class<E> entityType : entityTypes) {
+                if (entityType.isInstance(e)) {
+                    r.add(e);
+                }
+            }
+        }
+        return r;
+    }
+    
+    public <E extends Entity> void removeEntities (Class<E>... entityTypes) {
         for (Entity entity : getEntities()) {
-            for (Class entityType : entityTypes) {
-                if (entityType.equals(entity.getClass())) {
+            for (Class<E> entityType : entityTypes) {
+                if (entityType.isInstance(entity)) {
                     removeEntity(entity);
                 }
             }
