@@ -5,10 +5,7 @@
  */
 package sdu.group8.player;
 
-import org.openide.util.Lookup;
-import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
-import sdu.group8.common.data.DamageRange;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
@@ -32,7 +29,7 @@ public class Player extends Character implements IPlayer, IEnemyAction, IBuildin
     private Weapon weapon;
     private Position aimPoint;
     private final float JUMP_FORCE = 350;
-
+    
     public Player(Position position, AbilityData... ab) {
         super(200, 1.25f, 100, "Player/defaultPlayer.png", new Dimension(50, 50, 25), new Direction(true), position, CollisionType.BOX, ab);
     }

@@ -5,32 +5,26 @@
  */
 package sdu.group8.commonplayer;
 
+import sdu.group8.common.data.HealthSystem;
+import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.commoncharacter.Character;
-import sdu.group8.common.weapon.Weapon;
 
 /**
  *
- * @author Alexander
+ * @author karim møller
  */
 public interface IPlayerService {
-    /**
-     * Gets the player object. 
-     * @param <C> a subtype of Character
-     * @param world the collection of entities in which the player object is located.
-     * @return the player object
-     */
-    <C extends Character> C getPlayer(World world);
-    /**
-     * Gets the class of the player object. 
-     * @param <C> a subtype of Character
-     * @return the Player subclass of Character.
-     */
-    <C extends Character> C getPlayerClass();
-    /**
-     * Changes the players weapon.
-     * @param weapon the new weapon.
-     */
-    void setWeapon(Weapon weapon);
 
+    /**
+     * gets the player movespeed.
+     *
+     * @return player movespeed.
+     */
+    float getPlayerMoveSpeed(World world);
+
+    /**
+     * Returns the reference to the player healthSystem
+     * @return HealthSystem
+     */
+    HealthSystem getHealthSystem(World world);
 }
