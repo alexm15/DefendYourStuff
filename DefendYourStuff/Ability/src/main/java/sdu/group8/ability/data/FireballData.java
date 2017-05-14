@@ -1,4 +1,4 @@
-package sdu.group8.commonabilitydata.abilities;
+package sdu.group8.ability.data;
 
 import sdu.group8.commonability.data.AbilityData;
 

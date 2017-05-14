@@ -65,5 +65,4 @@ public class Weapon {
         this.rangeMultiplier = rangeMultiplier;
     }
     
-    
 }

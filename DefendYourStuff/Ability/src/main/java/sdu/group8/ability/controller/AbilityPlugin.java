@@ -1,13 +1,14 @@
 
 package sdu.group8.ability.controller;
 
+import sdu.group8.ability.data.SlashData;
+import sdu.group8.ability.data.FireballData;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IPreStartPluginService;
-import sdu.group8.commonabilitydata.abilities.*;
 import sdu.group8.ability.spellbook.*;
 
 @ServiceProviders(value = {

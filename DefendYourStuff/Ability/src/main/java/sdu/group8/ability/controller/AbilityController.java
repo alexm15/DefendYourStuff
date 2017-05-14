@@ -35,28 +35,26 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
                 if (ab.getExpiration() <= 0) {
                     world.removeEntity(ability);
                 } else if (!ab.isEntityOnGround(ability, gameData)) {
+                    float posX = ab.getX();
+                    float posY = ab.getY();
+                    float verticalVel = ab.getVerticalVelocity();
+                    float weight = ab.getWeight();
+                    float deltaTime = gameData.getDelta();
+                    float dx = ab.getDx();
+                    float dy = ab.getDy();
 
+                    verticalVel -= weight * gameData.getGRAVITY();
+                    posY += ((dy - verticalVel) * deltaTime);
+
+                    if (ab.getDirection().isLeft()) {
+                        posX -= (dx * deltaTime);
+                    } else {
+                        posX += (dx * deltaTime);
+                    }
+
+                    ab.setX(posX);
+                    ab.setY(posY);
                 }
-
-                float posX = ab.getX();
-                float posY = ab.getY();
-                float verticalVel = ab.getVerticalVelocity();
-                float weight = ab.getWeight();
-                float deltaTime = gameData.getDelta();
-                float dx = ab.getDx();
-                float dy = ab.getDy();
-
-                verticalVel -= weight * gameData.getGRAVITY();
-                posY += ((dy - verticalVel) * deltaTime);
-
-                if (ab.getDirection().isLeft()) {
-                    posX -= (dx * deltaTime);
-                } else {
-                    posX += (dx * deltaTime);
-                }
-
-                ab.setX(posX);
-                ab.setY(posY);
             }
         }
     }
@@ -72,8 +70,8 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     }
 
     private void createAbility(Entity owner, AbilityData abilityData, float aimX, float aimY, World world) {
-        
-        world.addEntity(abilityCatalog.getAbilityForType(abilityData).getNewInstance(owner, owner.getX(), owner.getY(), owner.getDirection().isLeft()));
+        Ability ab = abilityCatalog.getAbilityForType(abilityData).getNewInstance(owner, owner.getX(), owner.getY(), owner.getDirection().isLeft());
+        world.addEntity(ab);
 
     }
 
