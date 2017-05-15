@@ -100,11 +100,6 @@
             <artifactId>AI</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>TestModule</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -141,8 +136,8 @@
                                 <id>extra</id>
                                 <goals>
                                     <goal>autoupdate</goal>
-                                    <goal>webstart-app</goal>
-                                    <goal>build-installers</goal>
+<!--                                    <goal>webstart-app</goal>-->
+<!--                                    <goal>build-installers</goal>-->
                                 </goals>
                             </execution>
                         </executions>
