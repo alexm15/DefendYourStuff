@@ -16,7 +16,10 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.openide.util.Lookup;
+import org.openide.util.LookupEvent;
+import org.openide.util.LookupListener;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.GameState;
 import sdu.group8.common.data.HealthSystem;
@@ -34,7 +37,6 @@ import sdu.group8.commonbuilding.services.ICastle;
 import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonplayer.IPlayer;
-import sdu.group8.commonplayer.IPlayerService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
 
 /**
@@ -64,9 +66,12 @@ public class Game
     private World world = new World();
     private Lookup lookup = Lookup.getDefault();
     private List<IGameProcessingService> gameProcesses = new ArrayList<>();
-    private List<IGamePluginService> gamePlugins = new ArrayList<>();
+    private List<IGamePluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
+    private List<IPreStartPluginService> preStartPlugins = new CopyOnWriteArrayList<>();
     private static Game instance = null;
+    private Lookup.Result<IGamePluginService> result;
+    private Lookup.Result<IPreStartPluginService> resultPre;
 
     private Image firstBackgroundImage = new Image("World/world_hills01_bg.png", false);
     private Image secondBackgroundImage = new Image("World/world_mountains01_bg.png", false); //TODO: Change to mountains image
@@ -156,6 +161,27 @@ public class Game
         assetManager.load("Building/destroyedcastle.png", Texture.class);
         assetManager.load("Building/rubble.png", Texture.class);
         assetManager.load("Building/portal.png", Texture.class);
+        
+        resultPre = lookup.lookupResult(IPreStartPluginService.class);
+        resultPre.addLookupListener(lookupListenerPre);
+        resultPre.allItems();
+        
+        
+        
+        
+        for (IPreStartPluginService prePlugin : resultPre.allInstances()) {
+            prePlugin.preStart(gameData);
+            preStartPlugins.add(prePlugin);
+        }
+
+        result = lookup.lookupResult(IGamePluginService.class);
+        result.addLookupListener(lookupListener);
+        result.allItems();
+
+        for (IGamePluginService plugin : result.allInstances()) {
+            plugin.start(gameData, world);
+            gamePlugins.add(plugin);
+        }
 
     }
 
@@ -199,6 +225,56 @@ public class Game
             }
         }
     }
+    
+    private final LookupListener lookupListenerPre = new LookupListener() {
+        @Override
+        public void resultChanged(LookupEvent le) {
+
+            Collection<? extends IPreStartPluginService> updated = resultPre.allInstances();
+
+            for (IPreStartPluginService us : updated) {
+                // Newly installed modules
+                if (!preStartPlugins.contains(us)) {
+                    us.preStart(gameData);
+                    preStartPlugins.add(us);
+                }
+            }
+            
+            //TODO: Might need a stop method for unload of preStartPlugins.
+
+//            // Stop and remove module
+//            for (IGamePluginService gs : gamePlugins) {
+//                if (!updated.contains(gs)) {
+//                    gs.stop(gameData, world);
+//                    gamePlugins.remove(gs);
+//                }
+//            }
+        }
+    };
+    
+    private final LookupListener lookupListener = new LookupListener() {
+        @Override
+        public void resultChanged(LookupEvent le) {
+
+            Collection<? extends IGamePluginService> updated = result.allInstances();
+
+            for (IGamePluginService us : updated) {
+                // Newly installed modules
+                if (!gamePlugins.contains(us)) {
+                    us.start(gameData, world);
+                    gamePlugins.add(us);
+                }
+            }
+
+            // Stop and remove module
+            for (IGamePluginService gs : gamePlugins) {
+                if (!updated.contains(gs)) {
+                    gs.stop(gameData, world);
+                    gamePlugins.remove(gs);
+                }
+            }
+        }
+    };
 
     private void update() {
 
