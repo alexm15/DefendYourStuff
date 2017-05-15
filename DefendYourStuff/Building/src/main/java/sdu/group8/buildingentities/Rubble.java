@@ -15,6 +15,7 @@ import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.abilities.FireballData;
 import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonbuilding.services.IBuildingService;
+import sdu.group8.commonplayer.IPlayerAction;
 
 /**
  *
@@ -22,7 +23,7 @@ import sdu.group8.commonbuilding.services.IBuildingService;
  */
 public class Rubble
         extends Building
-        implements IBuildingService {
+        implements IBuildingService, IPlayerAction{
 
     public Rubble(Position pos) {
         super("Building/rubble.png",
@@ -41,6 +42,14 @@ public class Rubble
 
     @Override
     public void upgradeBuilding() {
+    }
+
+    /**
+     * Used for updating rubble to a specific building in later implementation
+     * @param player the player interacting with the building
+     */
+    @Override
+    public void playerAction(Entity player) {
     }
 
 }
