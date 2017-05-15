@@ -35,8 +35,7 @@ public class MediumEnemy
 
     @Override
     public void playerAction(Entity player) {
-        //TODO: create ability in world
-
+        //TODO: Enemy might in the future be pushed back when colliding with enemy.
     }
 
     @Override
@@ -48,6 +47,7 @@ public class MediumEnemy
 
     @Override
     public void buildingAction(Entity building) {
+        //TODO: Enemy might not be able to pass certain buildings such as walls
     }
 
 }

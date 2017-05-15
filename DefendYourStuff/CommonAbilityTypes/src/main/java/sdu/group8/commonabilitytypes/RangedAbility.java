@@ -9,6 +9,7 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonbuilding.services.IBuildingAction;
+import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerAction;
@@ -32,9 +33,16 @@ public class RangedAbility extends Ability implements IPlayerAction, IEnemyActio
         setExpiration(0);
     }
 
+    /**
+     * Makes ability sure ability only disapears if the ability was casted by
+     * another entity than of the enemy class.
+     * @param enemy the enemy that the ability has collided with.
+     */
     @Override
     public void enemyAction(Entity enemy) {
-        setExpiration(0);
+        if (!(this.getOwner() instanceof Enemy)) {
+            setExpiration(0);
+        }
     }
 
     @Override
