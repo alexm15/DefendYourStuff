@@ -78,10 +78,10 @@
         <module>Enemy</module>
         <module>AI</module>
         <module>CommonAI</module>
-        <module>CommonAbilityTypes</module>
         <module>CommonAbility</module>
         <module>Weapon</module>
         <module>DayNight</module>
+        <module>Interacter</module>
         <module>TestModule</module>
     </modules>
 

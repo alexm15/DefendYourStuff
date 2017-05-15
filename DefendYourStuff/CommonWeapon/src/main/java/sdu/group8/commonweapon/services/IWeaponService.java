@@ -6,7 +6,7 @@
 package sdu.group8.commonweapon.services;
 
 import java.util.ArrayList;
-import sdu.group8.common.weapon.Weapon;
+import sdu.group8.commonweapon.data.Weapon;
 
 /**
  *

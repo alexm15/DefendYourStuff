@@ -1,44 +1,24 @@
 package sdu.group8.commonability.services;
 
-import java.util.Collection;
 import java.util.List;
+import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityData;
-import sdu.group8.common.weapon.Weapon;
+import sdu.group8.commonability.data.AbilityData;
 
-/**
- *
- * @author joach
- */
 public interface AbilitySPI {
 
     /**
-     * Creates a new Ability and returns it to the caller
+     * Creates a new Ability and adds it to world
      *
      * @param caller The entity who creates the ability
-     * @param aimX 
-     * @param aimY
-     * @return a subtype of Ability
+     * @param aimX  The target x position
+     * @param aimY  The target y position
+     * @param world The instance of world from GameEngine.
      */
-    Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData);
-
-    /**
-     * Creates a new Ability using weapon and returns it to the caller
-     *
-     * @param caller
-     * @param aimX
-     * @param aimY
-     * @param weapon
-     * @return
-     */
-    Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon);
+    void useAbility(Entity caller, AbilityData abilityData, float aimX, float aimY, World world);
     
     
-    Ability useAbility(Entity caller, AbilityData abilityData, Weapon weapon);
-    
-    
-    Ability useAbility(Entity caller, AbilityData abilityData);
+    void useAbility(Entity caller, AbilityData abilityData, World world);
 
     /**
      * Creates a collection of Abilities

@@ -6,8 +6,8 @@
 
 package sdu.group8.ai;
 
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityData;
+import sdu.group8.commonability.data.Ability;
+import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;

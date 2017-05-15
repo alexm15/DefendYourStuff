@@ -1,14 +1,14 @@
 package sdu.group8.enemy;
 
 import sdu.group8.commonenemy.Enemy;
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityData;
+import sdu.group8.commonability.data.Ability;
+import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.common.ability.IAbilityAction;
+import sdu.group8.commonability.services.IAbilityAction;
 import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonplayer.IPlayerAction;

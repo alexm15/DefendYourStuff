@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.entity;
+package sdu.group8.commonitem.data;
 
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityContainer;
-import sdu.group8.common.ability.AbilityData;
+import sdu.group8.commonability.data.Ability;
+import sdu.group8.commonability.data.AbilityContainer;
+import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
+import sdu.group8.common.entity.CollisionType;
+import sdu.group8.common.entity.Entity;
+import sdu.group8.common.entity.QualityType;
 
 /**
  *

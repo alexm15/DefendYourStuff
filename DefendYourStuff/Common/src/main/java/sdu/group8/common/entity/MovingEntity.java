@@ -32,7 +32,8 @@ public abstract class MovingEntity extends Entity {
         }
         this.moveSpeed = moveSpeed;
         this.weight = weight;
-        
+        this.dx = moveSpeed;
+        this.dy = 0;
     }
 
     public float getDx() {

@@ -77,20 +77,6 @@ public class PlayerTest {
     }
     
     @Test
-    public void testGetHealth() {
-        IPlayerService playerService = lookup.lookup(IPlayerService.class);
-        
-        assertEquals(1, world.getEntities().size());
-        
-        HealthSystem health = playerService.getHealthSystem(world);
-        
-        for (Entity entity : world.getEntities(Player.class)) {
-            Player player = (Player) entity;
-            assertSame(player.getHealthSystem(), health);
-        }
-    }
-    
-    @Test
     public void testGetMovementSpeed() {
         IPlayerService playerService = lookup.lookup(IPlayerService.class);
         

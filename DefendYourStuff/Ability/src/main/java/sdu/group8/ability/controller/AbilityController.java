@@ -5,23 +5,17 @@
  */
 package sdu.group8.ability.controller;
 
-import sdu.group8.commonabilitytypes.MeleeAbility;
-import sdu.group8.commonabilitytypes.PositioningAbility;
-import sdu.group8.commonabilitytypes.RangedAbility;
-import sdu.group8.commonabilitytypes.SummoningAbility;
 import java.util.List;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityData;
-import sdu.group8.common.data.Direction;
+import sdu.group8.commonability.data.Ability;
+import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGameProcessingService;
-import sdu.group8.common.weapon.Weapon;
 import sdu.group8.commonability.services.AbilitySPI;
+import sdu.group8.ability.types.RangedAbility;
 
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
@@ -33,121 +27,77 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity ability : world.getEntities(RangedAbility.class)) {
-            Ability ab = (Ability) ability;
-            ab.updateExpiration(gameData.getDelta());
-            if (ab.getExpiration() <= 0) {
-                world.removeEntity(ability);
-            } else if (!ab.isEntityOnGround(ab, gameData)) {
 
-                float horizontalVelocity = 0;
-                float verticalVelocity = 0;
-                horizontalVelocity = ab.getMoveSpeed() * gameData.getDelta();
-                if (ab.getWeight() != 0) {
-                    verticalVelocity = ab.getPosition().getY() - (ab.getWeight() * gameData.getGRAVITY());
+        for (Entity ability : world.getEntities()) {
+            if (ability instanceof Ability) {
+                Ability ab = (Ability) ability;
+                ab.updateExpiration(gameData.getDelta());
+                if (ab.getExpiration() <= 0) {
+                    world.removeEntity(ability);
+                } else if (!ab.isEntityOnGround(ability, gameData)) {
+                    float posX = ab.getX();
+                    float posY = ab.getY();
+                    float verticalVel = ab.getVerticalVelocity();
+                    float weight = ab.getWeight();
+                    float deltaTime = gameData.getDelta();
+                    float dx = ab.getDx();
+                    float dy = ab.getDy();
+
+                    verticalVel -= weight * gameData.getGRAVITY();
+                    posY += ((dy - verticalVel) * deltaTime);
+
+                    if (ab.getDirection().isLeft()) {
+                        posX -= (dx * deltaTime);
+                    } else {
+                        posX += (dx * deltaTime);
+                    }
+
+                    ab.setX(posX);
+                    ab.setY(posY);
                 }
-                if (ab.getDirection().isLeft()) {
-                    ability.setX(ability.getX() - horizontalVelocity);
-                } else if (ab.getDirection().isRight()) {
-                    ability.setX(ability.getX() + horizontalVelocity);
-                }
-                ability.setY(ability.getY() - verticalVelocity * gameData.getDelta());
             }
         }
-        for (Entity ability : world.getEntities(MeleeAbility.class)) {
-            Ability ab = (Ability) ability;
-            ab.updateExpiration(gameData.getDelta());
-            if (ab.getExpiration() <= 0) {
-                world.removeEntity(ability);
-            }
-
-        }
-
     }
 
     @Override
-    public Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData) {
-        return createAbility(caller, aimX, aimY, abilityData, null);
+    public void useAbility(Entity owner, AbilityData abilityData, World world) {
+        createAbility(owner, abilityData, 0, 0, world);
     }
 
     @Override
-    public Ability useAbility(Entity caller, AbilityData abilityData) {
-        return createAbility(caller, 0, 0, abilityData, null);
+    public void useAbility(Entity owner, AbilityData abilityData, float aimX, float aimY, World world) {
+        createAbility(owner, abilityData, aimX, aimY, world);
     }
 
-    @Override
-    public Ability useAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon) {
-        return createAbility(caller, aimX, aimY, abilityData, weapon);
-    }
+    private void createAbility(Entity owner, AbilityData abilityData, float aimX, float aimY, World world) {
+        Ability ab = abilityCatalog.getAbilityForType(abilityData).getNewInstance(owner, owner.getX(), owner.getY(), owner.getDirection().isLeft());
+        world.addEntity(ab);
 
-    @Override
-    public Ability useAbility(Entity caller, AbilityData abilityData, Weapon weapon) {
-        return createAbility(caller, 0, 0, abilityData, weapon);
-    }
-
-    private Ability createAbility(Entity caller, float aimX, float aimY, AbilityData abilityData, Weapon weapon) {
-        Ability ability;
-        Ability ab = abilityCatalog.getAbility(abilityData);
-        if (ab instanceof RangedAbility) {
-            ability = new RangedAbility(ab);
-        } else if (ab instanceof MeleeAbility) {
-            ability = new MeleeAbility(ab);
-        } else if (ab instanceof PositioningAbility) {
-            ability = new PositioningAbility(ab);
-        } else if (ab instanceof SummoningAbility) {
-            ability = new SummoningAbility(ab);
-        } else {
-            ability = new Ability(ab);
-        }
-        float x;
-        float y;
-        ability.setDirection(new Direction(caller.getDirection()));
-        if (abilityData.isAimable()) {
-            x = aimX;
-            y = aimY;
-        } else {
-            if (ability.getDirection().isLeft()) {
-                x = caller.getX() - caller.getWidth() / 2 - caller.getWidth() / 4;
-            } else {
-                x = caller.getX() + caller.getWidth() / 2 + caller.getWidth() / 4;
-            }
-            y = caller.getY();
-        }
-        if (weapon != null) {
-            ab.getDamageRange().setMaxDamage(ab.getDamageRange().getMaxDamage()*weapon.getDamageMultiplier());
-            ab.getDamageRange().setMinDamage(ab.getDamageRange().getMinDamage()*weapon.getDamageMultiplier());
-            ab.setMoveSpeed(ab.getMoveSpeed()*weapon.getRangeMultiplier());
-        }
-        
-        ability.setDirection(new Direction(caller.getDirection()));
-        ability.setPosition(new Position(x, y));
-        ability.setOwner(caller);
-        return ability;
     }
 
     @Override
     public List<AbilityData> getAbilities() {
-        return abilityCatalog.getAbilityKeyList();
+        return abilityCatalog.getAllAbilityData();
     }
 
     @Override
     public List<AbilityData> getRangedAbilities() {
-        return abilityCatalog.getAbilities(RangedAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
     }
 
     @Override
     public List<AbilityData> getMeleeAbilities() {
-        return abilityCatalog.getAbilities(MeleeAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
     }
 
     @Override
     public List<AbilityData> getPositioningAbilities() {
-        return abilityCatalog.getAbilities(PositioningAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
     }
 
     @Override
     public List<AbilityData> getSummoningAbilities() {
-        return abilityCatalog.getAbilities(SummoningAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
     }
 
 }

@@ -16,8 +16,9 @@
                 <extensions>true</extensions>
                 <configuration>
                     <publicPackages>
-                        <publicPackage>sdu.group8.commonability.abilities</publicPackage>
+                        <publicPackage>sdu.group8.commonability.data</publicPackage>
                         <publicPackage>sdu.group8.commonability.services</publicPackage>
+                        <publicPackage>sdu.group8.commonability.types</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
@@ -42,9 +43,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CommonAbilityTypes</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId>
+            <version>RELEASE82</version>
         </dependency>
     </dependencies>
     <properties>

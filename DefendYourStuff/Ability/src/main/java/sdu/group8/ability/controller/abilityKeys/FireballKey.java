@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.common.ability;
+package sdu.group8.ability.controller.abilityKeys;
+
+import sdu.group8.commonability.data.AbilityKey;
 
 /**
  *
  * @author joach
  */
-public class Effect {
-    //ToDO Create Effects for abilities
+public class FireballKey extends AbilityKey {
+    
 }
