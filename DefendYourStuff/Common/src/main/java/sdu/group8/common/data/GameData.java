@@ -22,7 +22,7 @@ public class GameData {
     private final int TILE_SIZE = 100;
     private final float GRAVITY = 9.82f;
     private final GameKeys keys;
-
+    
     public GameData() {
         this.keys = new GameKeys();
     }

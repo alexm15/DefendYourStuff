@@ -11,12 +11,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
 import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.GameState;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Image;
 import sdu.group8.common.data.World;
@@ -28,7 +30,9 @@ import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.common.services.IPreStartPluginService;
+import sdu.group8.commonbuilding.services.ICastle;
 import sdu.group8.commonmap.IMapUpdate;
+import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
@@ -74,6 +78,8 @@ public class Game
     private float HUD_POS_OFFSET_X = 30f;
     private float HUD_POS_OFFSET_Y = 25f;
 
+    private GameState currentGameState;
+
     public Collection<? extends IGameProcessingService> getGameProcesses() {
         return lookup.lookupAll(IGameProcessingService.class);
     }
@@ -96,6 +102,8 @@ public class Game
 
     @Override
     public void create() {
+        currentGameState = GameState.PLAY;
+
         assetManager = new AssetManager();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -103,12 +111,11 @@ public class Game
         CAM = new OrthographicCamera();
         CAM.setToOrtho(false, 800, 600);
 
-        sr = new ShapeRenderer();
-
         Gdx.input.setInputProcessor(
                 new GameInputProcessor(gameData)
         );
 
+        sr = new ShapeRenderer();
         batch = new SpriteBatch();
         font = new BitmapFont();
 
@@ -131,6 +138,7 @@ public class Game
 
         assetManager.load("defaultImage.png", Texture.class);
         assetManager.load("defaultBackground.png", Texture.class);
+        assetManager.load("gameOverText.png", Texture.class);
 
         assetManager.load("Player/defaultPlayer.png", Texture.class);
 
@@ -167,7 +175,34 @@ public class Game
         }
     }
 
+    private void updateGameState() {
+        
+        
+        if (gameData.getKeys().isKeyDown(gameData.getKeys().ESCAPE)) {
+            if(currentGameState.equals(GameState.GAMEOVER)) {
+                currentGameState = GameState.PLAY;
+            } else {
+                currentGameState = GameState.GAMEOVER;
+            }
+        }
+        
+        for (Entity entity : world.getEntities()) {
+            if (entity instanceof ICastle) {
+                if (((ICastle) entity).getHealthSystem().getHealth() <= 0) {
+                    currentGameState = GameState.GAMEOVER;
+                }
+            } else if (entity instanceof IPlayer) {
+                Character player = (Character) entity;
+                if (player.getCurrentHealth() <= 0) {
+                    currentGameState = GameState.GAMEOVER;
+                }
+            }
+        }
+    }
+
     private void update() {
+
+        updateGameState();
 
         for (IGameProcessingService gameProcess : getGameProcesses()) {
             gameProcess.process(gameData, world);
@@ -176,12 +211,43 @@ public class Game
             postProcess.process(gameData, world);
         }
 
-        updateCamera();
-        checkMapBoundary();
-
-        gameData.getKeys().update(); // Should always be updated last.
+        if (currentGameState.equals(GameState.PLAY)) {
+            updateCamera();
+            checkMapBoundary();
+            gameData.getKeys().update(); // Should always be updated last.
+        } else {
+            gameData.getKeys().lockKeys();
+        }
     }
 
+    private void draw() {
+        batch.setProjectionMatrix(CAM.combined);
+        sr.setProjectionMatrix(CAM.combined);
+
+        batch.begin();
+
+        drawBackgroundImageForWorld();  // Draw backgrounds for the world;
+        drawMap();                      // Draw chunks
+        drawEntities();                 // Draw entities
+        drawHUD();
+        
+        if (currentGameState.equals(GameState.GAMEOVER)) {
+            drawGameOverScreen();
+        }
+        
+        batch.end();
+    }
+
+    private void drawGameOverScreen() {
+        
+        float posX = CAM.position.x - 500;
+        float posY = CAM.position.y - 50;
+        String texturePath = "gameOverText.png";
+        Image gameOver = new Image(texturePath, false);
+        
+        drawTextureFromAsset(gameOver, posX, posY);
+    }
+    
     /**
      * Update the map with a new chunk, if the camera is near the last chunk on
      * either side of the map.
@@ -215,19 +281,8 @@ public class Game
         }
     }
 
-    private void draw() {
-        batch.setProjectionMatrix(CAM.combined);
-        batch.begin();
-
-        drawBackgroundImageForWorld();  // Draw backgrounds for the world;
-        drawMap();                      // Draw chunks
-        drawEntities();                 // Draw entities
-        drawHUD();
-
-        batch.end();
-    }
-
     /**
+     *
      * Loops through all chunks in the world, and calls a render method for each
      * chunk.
      */
@@ -383,34 +438,78 @@ public class Game
      */
     private void drawHUD() {
         HealthSystem healthSystem = null;
-        try {
-            for (Entity entity : world.getEntities()) {
-                if (entity instanceof IPlayer) {
-                    healthSystem = ((IPlayer) entity).getHealthSystem();
-                }
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
-        //TODO: catch nullPointError
         float screenHeight = CAM.viewportHeight;
         float screenWidth = CAM.viewportWidth;
         float posX = CAM.position.x - screenWidth / 2;
 
-        drawPlayerHealth(healthSystem, posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y);
-        drawPlayerGold(posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y * 2);
+        try {
+            for (Entity entity : world.getEntities()) {
+                if (entity instanceof ICastle) {
+                    healthSystem = ((ICastle) entity).getHealthSystem();
+                }
+                if (entity instanceof Character) {
+                    drawHealthbarAtCharacter((Character) entity);
+                }
+            }
+
+            drawCastleHealth(healthSystem, posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y);
+            drawPlayerGold(posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y * 2);
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void drawPlayerHealth(HealthSystem healthSystem, float posX, float posY) {
+    private void drawCastleHealth(HealthSystem healthSystem, float posX, float posY) {
+        float currentHealth = healthSystem.getHealth();
+        float healthbarWidth = healthSystem.getMaxHealth();
+        float healthbarHeight = 10;
+        float barPosX = posX + healthbarWidth;
+        float barPosY = posY - healthbarHeight * 1.2f;
+
         font.setColor(Color.BLACK);
-        font.setScale(FONT_SCALE);
-        font.draw(batch, "Health: " + healthSystem.getHealth() + " / " + healthSystem.getMaxHealth(), posX, posY);
+        font.draw(batch, "Castle health: ", posX, posY);
+        drawHealthbar(barPosX, barPosY, healthbarWidth, healthbarHeight, currentHealth);
+    }
+
+    private void drawHealthbarAtCharacter(Character owner) {
+        float currentHealth = owner.getCurrentHealth() / 2;
+        float healthbarWidth = owner.getMaxHealth() / 2;
+        float healthbarHeight = 10;
+        float barPosX = owner.getX() - healthbarWidth / 2;
+        float barPosY = owner.getY() + (owner.getDimension().getHeight() / 2) + (healthbarHeight * 2);
+        drawHealthbar(barPosX, barPosY, healthbarWidth, healthbarHeight, currentHealth);
+    }
+
+    /**
+     * Draws a healthbar with black border and a filled red box as the current
+     * health.
+     *
+     * @param posX float of the position of the healthbar. Position x is at the
+     * left bottom corner.
+     * @param posY float of the position of the healthbar. Position y is at the
+     * left bottom corner.
+     * @param barWidth float width of the healthbar, based on max health.
+     * @param barHeigth float height of the healthbar.
+     * @param barFilledWidth float width of the healthbar, based on the current
+     * health.
+     */
+    private void drawHealthbar(float posX, float posY, float barWidth, float barHeigth, float barFilledWidth) {
+        batch.end();
+        sr.setColor(Color.RED);
+        sr.begin(ShapeType.Filled);
+        sr.box(posX, posY, 0, barFilledWidth, barHeigth, 0);
+        sr.end();
+
+        sr.setColor(Color.BLACK);
+        sr.begin(ShapeType.Line);
+        sr.box(posX, posY, 0, barWidth, barHeigth, 0);
+        sr.end();
+        batch.begin();
     }
 
     private void drawPlayerGold(float posX, float posY) {
         font.setColor(Color.BLACK);
-        font.setScale(FONT_SCALE);
         font.draw(batch, "Gold: " + gameData.getPlayerGold(), posX, posY);
     }
 

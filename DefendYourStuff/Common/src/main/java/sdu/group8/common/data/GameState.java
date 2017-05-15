@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.commonplayer;
+package sdu.group8.common.data;
 
-public interface IPlayer {
-    
+public enum GameState {
+    PLAY, GAMEOVER;
 }
