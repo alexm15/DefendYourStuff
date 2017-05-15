@@ -47,7 +47,8 @@ public class Chunk_Forest01 extends Chunk {
         Position farm = new Position(((getDimension().getWidth() / 4) + this.getPositionOffset()), TILE_SIZE);
         Position rubble = new Position(((getDimension().getWidth() - getDimension().getWidth() / 4) + this.getPositionOffset()), TILE_SIZE);
 
-        for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
+        Buildable buildable = lookup.lookup(Buildable.class);
+        if (buildable != null) {
             buildable.createRubbleBuilding(world, rubble);
             buildable.createFarmBuilding(world, farm);
         }
