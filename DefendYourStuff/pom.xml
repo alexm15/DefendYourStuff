@@ -81,7 +81,6 @@
         <module>CommonAbility</module>
         <module>Weapon</module>
         <module>DayNight</module>
-        <module>Interacter</module>
         <module>TestModule</module>
     </modules>
 
