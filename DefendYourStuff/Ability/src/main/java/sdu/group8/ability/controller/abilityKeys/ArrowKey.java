@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.ability.data;
+package sdu.group8.ability.controller.abilityKeys;
 
-import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.commonability.data.AbilityKey;
 
 /**
  *
- * @author Martin
+ * @author joach
  */
-public class ArrowData extends AbilityData {
-    
-    public ArrowData(AbilityKey key) {
-        super(10, "Arrow", key);
-    }
+public class ArrowKey extends AbilityKey {
     
 }
+

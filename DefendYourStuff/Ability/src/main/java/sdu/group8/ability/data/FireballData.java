@@ -1,6 +1,7 @@
 package sdu.group8.ability.data;
 
 import sdu.group8.commonability.data.AbilityData;
+import sdu.group8.commonability.data.AbilityKey;
 
 /**
  *
@@ -8,8 +9,8 @@ import sdu.group8.commonability.data.AbilityData;
  */
 public class FireballData extends AbilityData {
     
-    public FireballData() {
-        super(10, "Fireball");
+    public FireballData(AbilityKey key) {
+        super(10, "Fireball", key);
     }
     
 }

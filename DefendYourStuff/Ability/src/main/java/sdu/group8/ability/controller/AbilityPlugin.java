@@ -10,6 +10,7 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.ability.spellbook.*;
+import sdu.group8.commonability.data.AbilityKey;
 
 @ServiceProviders(value = {
     @ServiceProvider(service = IPreStartPluginService.class),
@@ -25,8 +26,8 @@ public class AbilityPlugin implements IGamePluginService, IPreStartPluginService
 
     @Override
     public void preStart(GameData gameData) {
-        abilityDataCatalog.addAbility(new FireballData(), new Fireball());
-        abilityDataCatalog.addAbility(new SlashData(), new Fireball());
+        abilityDataCatalog.addAbility(new FireballData(new AbilityKey()), new Fireball());
+        abilityDataCatalog.addAbility(new SlashData(new AbilityKey()), new Fireball());
     }
 
     @Override

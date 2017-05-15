@@ -16,18 +16,31 @@ import sdu.group8.commonability.services.AbilitySPI;
  */
 public class AbilityData {
 
+    private AbilityKey key;
     private float maxCooldown;
     private float currentCooldown;
     private String displayName;
     private boolean onCooldown = false;
     private boolean isActive = false;
 
-    public AbilityData(float maxCooldown, String displayName) {
+    public AbilityData(float maxCooldown, String displayName, AbilityKey key) {
         this.maxCooldown = maxCooldown;
         this.currentCooldown = maxCooldown;
         this.displayName = displayName;
+        this.key = key;
     }
 
+    public AbilityData(AbilityData abilityData, AbilityKey abilityKey) {
+        this.maxCooldown = abilityData.maxCooldown;
+        this.currentCooldown = abilityData.maxCooldown;
+        this.displayName = abilityData.displayName;
+        this.key = abilityKey;
+    }
+
+    public AbilityKey getKey() {
+        return key;
+    }   
+    
     /**
      * Sets the max cooldown of the abilityData. It does not update the cooldown.
      *

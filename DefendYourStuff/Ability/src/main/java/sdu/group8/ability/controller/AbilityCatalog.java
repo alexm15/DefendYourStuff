@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import sdu.group8.commonability.data.Ability;
 import sdu.group8.commonability.data.AbilityData;
+import sdu.group8.commonability.data.AbilityKey;
 
 public class AbilityCatalog {
 
-    private Map<AbilityData, Ability> abilities = new ConcurrentHashMap<>();
+    private Map<AbilityKey, Ability> abilities = new ConcurrentHashMap<>();
+    private Map<AbilityKey, AbilityData> abilityDataMap = new ConcurrentHashMap<>();
 
     private static AbilityCatalog instance = null;
 
@@ -25,36 +27,40 @@ public class AbilityCatalog {
 
     }
 
-    private Collection<AbilityData> getCatalogKeys() {
+    private Collection<AbilityKey> getCatalogKeys() {
         return abilities.keySet();
+    }
+    
+    private AbilityData getAbilityData(AbilityKey key) {
+        return abilityDataMap.get(key);
     }
 
     public List<AbilityData> getAllAbilityData() {
         List<AbilityData> r = new ArrayList<>();
-        for (AbilityData abilityData : getCatalogKeys()) {
-            r.add(abilityData);
+        for (AbilityKey abilityKey : getCatalogKeys()) {
+            r.add(new AbilityData(getAbilityData(abilityKey), abilityKey));
         }
         return r;
     }
 
-    public <A extends Ability> List<AbilityData> getAbilityDataForType(Class<A> type) {
-
+    public <A extends Ability> List<AbilityData> getAllAbilityDataForType(Class<A> type) {
         List<AbilityData> r = new ArrayList<>();
 
-        for (Map.Entry<AbilityData, Ability> entry : abilities.entrySet()) {
+        for (Map.Entry<AbilityKey, Ability> entry : abilities.entrySet()) {
             if (type.isInstance(entry.getValue())) {
-                r.add(entry.getKey());
+                r.add(new AbilityData(getAbilityData(entry.getKey()), entry.getKey()));
             }
         }
         return r;
     }
 
     public Ability getAbilityForType(AbilityData type) {
-        return abilities.get(type);
+        return abilities.get(type.getKey());
     }
 
     public void addAbility(AbilityData abilityData, Ability ability) {
-        abilities.put(abilityData, ability);
+        abilities.put(abilityData.getKey(), ability);
+        abilityDataMap.put(abilityData.getKey(), abilityData);
     }
 
 }

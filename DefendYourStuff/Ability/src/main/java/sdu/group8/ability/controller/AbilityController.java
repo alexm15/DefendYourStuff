@@ -82,22 +82,22 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
 
     @Override
     public List<AbilityData> getRangedAbilities() {
-        return abilityCatalog.getAbilityDataForType(RangedAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
     }
 
     @Override
     public List<AbilityData> getMeleeAbilities() {
-        return abilityCatalog.getAbilityDataForType(RangedAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
     }
 
     @Override
     public List<AbilityData> getPositioningAbilities() {
-        return abilityCatalog.getAbilityDataForType(RangedAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
     }
 
     @Override
     public List<AbilityData> getSummoningAbilities() {
-        return abilityCatalog.getAbilityDataForType(RangedAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
     }
 
 }
