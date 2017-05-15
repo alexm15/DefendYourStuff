@@ -46,7 +46,6 @@ public class AI_ControlSystem implements AI_Service {
     @Override
     public void rangedAI(Character enemy, World world, GameData gameData, int minShootDistance, int maxShootDistance) {
         Entity closestTarget = getClosesTarget(enemy, world);
-
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
 
         enemy.getAbility(0).reduceCooldown(gameData.getDelta());
@@ -81,7 +80,6 @@ public class AI_ControlSystem implements AI_Service {
             if (distanceToEntity(enemy, closestTarget) > maxShootDistance) {
                 moveEnemyToTarget(enemy, closestTarget, gameData);
             }
-
         }
     }
 

@@ -1,24 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.common.data;
 
 /**
  *
- * @author Martin
+ * Places the entity on a given position in the world map, y should be > 0.
+ * @author Group 8
  */
 public class Position {
 
     private float x;
     private float y;
 
+    /**
+     * Places the entity on a given position in the world map, y should be > 0.
+     * y restriction might be changed later.
+     * @param x
+     * @param y must be > 0, however if dungeons later on are added below y 
+     * value of 0 then this exception might have to be removed in the future
+     */
     public Position(float x, float y) {
+        if (y < 0) {
+            throw new IllegalArgumentException("y cannot be negative");
+        }
         this.x = x;
         this.y = y;
+        
     }
 
+    /**
+     * Places a entity on a position based on an existing entity's position.
+     * @param position existing entity's position object.
+     */
     public Position(Position position) {
         this.x = position.getX();
         this.y = position.getY();
@@ -40,6 +51,12 @@ public class Position {
         this.y = y;
     }
 
+    /**
+     * Sets the position of an entity on the world map, no restriction is present
+     * here. 
+     * @param x the new x position
+     * @param y the new y position
+     */
     public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;

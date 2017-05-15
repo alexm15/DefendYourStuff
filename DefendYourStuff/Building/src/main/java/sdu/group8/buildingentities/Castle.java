@@ -23,17 +23,10 @@ import sdu.group8.commonplayer.IPlayer;
  *
  * @author Alexander
  */
-public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbilityAction{
+public class Castle extends DefensiveBuilding {
 
     public Castle(Position pos) {
         super("Building/castle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, true, 0, 100);
-    }
-
-    @Override
-    public void collision(Entity otherEntity) {
-        if (otherEntity instanceof IBuildingAction) {
-            ((IBuildingAction) otherEntity).buildingAction((Entity) this);
-        }
     }
 
     @Override

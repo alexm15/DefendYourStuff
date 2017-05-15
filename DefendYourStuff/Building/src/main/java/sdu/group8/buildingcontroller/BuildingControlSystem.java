@@ -18,12 +18,13 @@ import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonbuilding.services.Buildable;
 
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class),
-    @ServiceProvider(service = IGamePluginService.class),
+    @ServiceProvider(service = IGameProcessingService.class)
+    ,
+    @ServiceProvider(service = IGamePluginService.class)
+    ,
     @ServiceProvider(service = Buildable.class)}
 )
-public class BuildingControlSystem
-        implements IGamePluginService, IGameProcessingService, Buildable {
+public class BuildingControlSystem implements IGamePluginService, IGameProcessingService, Buildable {
 
     @Override
     public void start(GameData gameData, World world) {
@@ -31,11 +32,13 @@ public class BuildingControlSystem
 
     @Override
     public void stop(GameData gameData, World world) {
+        for (Entity entity : world.getEntities(Building.class)) {
+            world.removeEntity(entity);
+        }
     }
 
     @Override
     public void process(GameData gameData, World world) {
-
         castleProcess(gameData, world);
         wallProcess(gameData, world);
         towerProcess(gameData, world);
@@ -91,15 +94,15 @@ public class BuildingControlSystem
     private void castleProcess(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Castle.class)) {
             Building castle = (Building) entity;
-            if (castle.getHealth() == 0) {
+            if (castle.getHealth() <= 0) {
                 //TODO: set gamestate to game over
                 System.out.println("Game Over");
-                createDestroyedCastleBuilding(world, castle.getPosition());
+                //Reduces y-position, since every entities y-position is calculated as y-position + half their height
+                Position position = new Position(castle.getPosition().getX(), castle.getPosition().getY() - castle.getHeight() / 2);
+                createDestroyedCastleBuilding(world, position);
                 world.removeEntity(castle);
             }
-            //TODO: Add castle operations
         }
-
     }
 
     private void shopProcess(GameData gameData, World world) {
@@ -107,8 +110,7 @@ public class BuildingControlSystem
 
     @Override
     public void createDestroyedCastleBuilding(World world, Position position) {
-        Building destroyedCastle = new Castle(position);
-        //destroyedCastle.setImageURL("Game Over");
+        Building destroyedCastle = new DestroyedCastle(position);
         world.addEntity(destroyedCastle);
     }
 
@@ -141,17 +143,4 @@ public class BuildingControlSystem
             }
         }
     }
-
-    /**
-     * Idea for design with as replacement of interface, so instead the
-     * interface buildable only contains this method and then the subclasses of
-     * Building is moved to CommonBuilding component.
-     */
-//    public Building createBuilding(Class<E> building, Position position) {
-//        if (building.equals(Castle.class)) {
-//            Building castle = new Castle(position);
-//            return castle;
-//        }
-//        return null;
-//    }
 }

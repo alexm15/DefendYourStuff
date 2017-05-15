@@ -30,6 +30,7 @@ import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.commonplayer.IPlayer;
+import sdu.group8.commonplayer.IPlayerService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
 
 /**
@@ -144,6 +145,7 @@ public class Game
         assetManager.load("Tiles/tile_air.png", Texture.class);
 
         assetManager.load("Building/castle.png", Texture.class);
+        assetManager.load("Building/destroyedcastle.png", Texture.class);
         assetManager.load("Building/rubble.png", Texture.class);
         assetManager.load("Building/portal.png", Texture.class);
 

@@ -55,7 +55,7 @@ public abstract class Entity {
      * @param isLeft
      */
     public void setDirection(boolean isLeft) {
-        this.direction.setIsLeft(isLeft);
+        this.direction.setLeft(isLeft);
         this.getImage().setReversed(isLeft);
     }
 

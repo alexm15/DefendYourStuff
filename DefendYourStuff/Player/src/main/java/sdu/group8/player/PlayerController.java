@@ -9,60 +9,68 @@ import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
+import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
+import sdu.group8.commonability.services.AbilitySPI;
+import sdu.group8.commonplayer.IPlayerService;
 import sdu.group8.commonweapon.services.IWeaponService;
 
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
-    @ServiceProvider(service = IGamePluginService.class)}
+    @ServiceProvider(service = IGamePluginService.class),
+    @ServiceProvider(service = IPlayerService.class)}
 )
-public class PlayerController implements IGameProcessingService, IGamePluginService {
+public class PlayerController implements IGameProcessingService, IGamePluginService, IPlayerService {
 
-    private Player player;
+    private Lookup lookup = Lookup.getDefault();
     private float verticalVelocity;
     private float horizontalVelocity;
 
     @Override
     public void process(GameData gameData, World world) {
+        for (Entity entity : world.getEntities(Player.class)) {
+            Player player = (Player) entity;
+            if (player.getCurrentHealth() == 0) {
+                //TODO: remove player from world. Set isGameOver in gameData.           
+            }
+            //Handle gravity for player
+            if (!player.isEntityOnGround(player, gameData)) {
+                //player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
+                verticalVelocity -= gameData.getGRAVITY() * player.getWeight();
+            } else {
+                player.setEntityOnGround(player, gameData);
+                verticalVelocity = 0;
+            }
+            horizontalVelocity = 0;
 
-        if (player.getCurrentHealth() == 0) {
-            //TODO: remove player from world. Set isGameOver in gameData.           
+            handleMouseInput(gameData, player);
+
+            handleKeyboardInput(gameData, world, player);
+            Position position = new Position(player.getX() + horizontalVelocity, player.getY() + verticalVelocity * gameData.getDelta());
+            player.setPosition(position);
+            gameData.setPlayerPosition(position);
+            
+            // Update cooldown for player's abilities.
+            player.getAbilityContainer().updateCooldown(gameData.getDelta());
         }
-        //Handle gravity for player
-        if (!player.isEntityOnGround(player, gameData)) {
-            //player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
-            verticalVelocity -= gameData.getGRAVITY() * player.getWeight();
-        } else {
-            player.setEntityOnGround(player, gameData);
-            verticalVelocity = 0;
-        }
-        horizontalVelocity = 0;
 
-        handleMouseInput(gameData);
-
-        handleKeyboardInput(gameData, world);
-        Position position = new Position(player.getX() + horizontalVelocity, player.getY() + verticalVelocity * gameData.getDelta());
-        player.setPosition(position);
-        gameData.setPlayerPosition(position);
-        
-        // Update cooldown for player's abilities.
-        player.getAbilityContainer().updateCooldown(gameData.getDelta());
     }
 
-    private void handleKeyboardInput(GameData gameData, World world) {
+    private void handleKeyboardInput(GameData gameData, World world, Player player) {
         if (gameData.getKeys().isKeyDown(gameData.getKeys().NUM_1)) {
             IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
             player.setWeapon(weaponProvider.createMelee());
         }
-        
+
         if (gameData.getKeys().isKeyDown(gameData.getKeys().NUM_2)) {
             IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
             player.setWeapon(weaponProvider.createRanged());
         }
-        
+
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             horizontalVelocity += player.getMoveSpeed() * gameData.getDelta();
             player.setDirection(false);
@@ -92,13 +100,13 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
                 System.out.println("Mouse not in screen");
                 e.printStackTrace();
             }
-            
+
             player.getWeapon().useAbility(player, 0, aimX, aimY, world);
         }
 
     }
 
-    private void handleMouseInput(GameData gameData) {
+    private void handleMouseInput(GameData gameData, Player player) {
         player.setAimPoint(gameData.getCursorPosition());
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().MOUSE_LEFT)) {
@@ -123,7 +131,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         float y = gameData.getDisplayHeight() / 2;
         Position position = new Position(x, y); //TODO: Should be startposition.
 
-        player = new Player(position);
+        Player player = new Player(position);
         gameData.setPlayerGold(0);
         IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
         player.setWeapon(weaponProvider.createRanged());
@@ -134,7 +142,19 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntity(player);
+        for (Entity player : world.getEntities(Player.class)) {
+            world.removeEntity(player);
+        }
+
+    }
+
+    @Override
+    public float getPlayerMoveSpeed(World world) {
+        Player player = null;
+        for (Entity entity : world.getEntities(Player.class)) {
+            player = (Player) entity;
+        }
+        return player.getMoveSpeed();
     }
 
 }
