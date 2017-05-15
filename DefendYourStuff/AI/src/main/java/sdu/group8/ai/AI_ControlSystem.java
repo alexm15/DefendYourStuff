@@ -29,14 +29,17 @@ import sdu.group8.commoncharacter.Character;
 public class AI_ControlSystem implements AI_Service, IGamePluginService {
     
     private Attack attack;
+    private AcquireTarget acquireTarget;
+    private MoveAway moveAway;
+    private MoveTo moveTo;
 
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
 
-        Entity closestTarget = getClosesTarget(enemy, world);
+        Entity closestTarget = acquireTarget.getClosesTarget(enemy, world);
 
         if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
-            moveEnemyToTarget(enemy, closestTarget, gameData);
+            moveTo.moveEnemyToTarget(enemy, closestTarget, gameData);
         } else if (enemy.getAbility(0).isOnCooldown()) {
             try {
                 attack.useAbility(enemy, world, closestTarget, enemy.getAbility(0));
@@ -48,7 +51,7 @@ public class AI_ControlSystem implements AI_Service, IGamePluginService {
 
     @Override
     public void rangedAI(Character enemy, World world, GameData gameData, int minShootDistance, int maxShootDistance) {
-        Entity closestTarget = getClosesTarget(enemy, world);
+        Entity closestTarget = acquireTarget.getClosesTarget(enemy, world);
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
         
         //shoot
@@ -63,7 +66,7 @@ public class AI_ControlSystem implements AI_Service, IGamePluginService {
             }
         } else {
             if (tooCloseToTarget) {
-                increaseDistance(enemy, closestTarget, gameData);
+                moveAway.increaseDistance(enemy, closestTarget, gameData);
                 if (!enemy.getAbility(0).isOnCooldown()) {
                     try {
                         attack.useAbility(enemy, world, closestTarget, enemy.getAbility(0));
@@ -73,87 +76,16 @@ public class AI_ControlSystem implements AI_Service, IGamePluginService {
                 }
             }
             if (distanceToEntity(enemy, closestTarget) > maxShootDistance) {
-                moveEnemyToTarget(enemy, closestTarget, gameData);
+                moveTo.moveEnemyToTarget(enemy, closestTarget, gameData);
             }
         }
     }
 
-    private void moveEnemyToTarget(Character enemy, Entity target, GameData gameData) {
-        Random random = new Random();
 
-        float targetX = target.getX();
-
-        float horizontalPos = enemy.getX();
-
-        if (enemy.getReactionTimer() == 0) {
-            if (random.nextInt(10) == 5) {
-                enemy.resetReactiontime();
-            }
-
-            if (enemy.getX() < targetX) {
-                horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
-                enemy.setDirection(false);
-
-            } else if (enemy.getX() > targetX) {
-                horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
-                enemy.setDirection(true);
-            }
-            enemy.setX(horizontalPos);
-
-        } else {
-            enemy.reduceReactiontime(1);
-        }
-
-    }
-
-    /**
-     * Gets the closes Entity that implements IEnemyAction.
-     *
-     * NB: if there is no closes entity then it returns it self!
-     *
-     * @param enemy
-     * @param world
-     * @return The closes enemy NB: if there is no closes entity then it returns
-     * the enemy itself!
-     */
-    private Entity getClosesTarget(Character enemy, World world) {
-
-        Entity closestTarget = enemy;
-        float shortestdist = Float.MAX_VALUE; //FIXME: if you know a better value!
-        float enemyX = enemy.getX();
-
-        for (Entity entity : world.getEntities()) {
-            if (entity instanceof IEnemyAction && !(entity instanceof Ability)) {
-                float currentEntityDist = Math.abs(enemyX - entity.getX());
-                if (currentEntityDist < shortestdist) {
-                    closestTarget = entity;
-                    shortestdist = currentEntityDist;
-                }
-            }
-
-        }
-        return closestTarget;
-    }
 
     private float distanceToEntity(Character enemy, Entity closestTarget) {
         return Math.abs(enemy.getX() - closestTarget.getX());
     }
-
-    private void increaseDistance(Character enemy, Entity closestTarget, GameData gameData) {
-        float horizontalPos = enemy.getX();
-
-        if (enemy.getX() > closestTarget.getX()) {
-            horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
-            enemy.setDirection(false);
-
-        } else if (enemy.getX() < closestTarget.getX()) {
-            horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
-            enemy.setDirection(true);
-        }
-
-        enemy.setX(horizontalPos);
-    }
-
 
     private boolean withinShootingRange(Character enemy, Entity closestTarget, int minShootDistance, int maxShootDistance) {
         return distanceToEntity(enemy, closestTarget) > minShootDistance
@@ -162,15 +94,18 @@ public class AI_ControlSystem implements AI_Service, IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        //TODO implement metode: start
         attack = new Attack();
-        System.out.println("sere");
+        acquireTarget = new AcquireTarget();
+        moveAway = new MoveAway();
+        moveTo = new MoveTo();
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        //TODO implement metode: stop
         attack = null;
+        acquireTarget = null;
+        moveAway = null;
+        moveTo = null;
     }
 
 }
