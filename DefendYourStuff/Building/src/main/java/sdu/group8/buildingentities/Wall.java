@@ -41,10 +41,12 @@ public class Wall
 
     @Override
     public void repair(GameData goldCost) {
+        throw new UnsupportedOperationException("Feature not implemented yet");
     }
 
     @Override
     public void upgradeBuilding() {
+        throw new UnsupportedOperationException("Feature not implemented yet");
     }
 
 }

@@ -45,6 +45,7 @@ public class Rubble
 
     @Override
     public void upgradeBuilding() {
+        throw new UnsupportedOperationException("Feature not implemented yet");
     }
 
     /**

@@ -38,10 +38,12 @@ public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbi
 
     @Override
     public void repair(GameData goldCost) {
+        throw new UnsupportedOperationException("Feature not implemented yet");
     }
 
     @Override
     public void upgradeBuilding() {
+        throw new UnsupportedOperationException("Feature not implemented yet");
     }
 
     @Override
