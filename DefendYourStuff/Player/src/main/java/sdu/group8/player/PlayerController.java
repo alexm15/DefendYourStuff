@@ -40,8 +40,10 @@ public class PlayerController
     public void process(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Player.class)) {
             Player player = (Player) entity;
-            if (player.getCurrentHealth() == 0) {
-            //TODO: remove player from world. Set isGameOver in gameData.           
+            if (player.getCurrentHealth() <= 0) {
+            //TODO: remove player from world. Set isGameOver in gameData.
+                System.out.println("Game Over");
+                world.removeEntity(player);
             }
             //Handle gravity for player
             if (!player.isEntityOnGround(player, gameData)) {
