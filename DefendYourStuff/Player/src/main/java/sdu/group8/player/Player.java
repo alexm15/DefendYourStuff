@@ -92,6 +92,7 @@ public class Player extends Character implements IPlayer, IEnemyAction, IBuildin
 
     @Override
     public void buildingAction(Entity building) {
+        //TODO: add interaction menu for player to interact with collided building.
     }
 
     @Override
