@@ -21,10 +21,4 @@ public interface IPlayerService {
      * @return player movespeed.
      */
     float getPlayerMoveSpeed(World world);
-
-    /**
-     * Returns the reference to the player healthSystem
-     * @return HealthSystem
-     */
-    HealthSystem getHealthSystem(World world);
 }

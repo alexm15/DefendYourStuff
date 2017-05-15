@@ -9,8 +9,8 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonbuilding.services.IBuildingAction;
+import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyAction;
-import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerAction;
 
 /**
@@ -39,10 +39,9 @@ public class MeleeAbility extends Ability implements IPlayerAction, IEnemyAction
 
     @Override
     public void buildingAction(Entity building) {
-        if (!(this.getOwner() instanceof IPlayer)) {
+        if (this.getOwner() instanceof Enemy) {
             setExpiration(0);
         }
-        
     }
     
 }

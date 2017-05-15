@@ -50,7 +50,6 @@ public class AbilityCatalog {
         List<AbilityData> r = new ArrayList<>();
         for (AbilityData key : getAbilityKeys()) {
             for (Class abilityType : abilityTypes) {
-                
                 //if (abilityType.equals(getAbility(key).getClass())) {
                 if (abilityType.equals(key.getType())) {
                     r.add(key);

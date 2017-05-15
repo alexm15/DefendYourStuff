@@ -16,9 +16,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class GameKeys {
 
+    private boolean isKeysLocked = false;
+
     /* use this for keycode reference: 
     https://libgdx.badlogicgames.com/nightlies/docs/api/constant-values.html
-    */    
+     */
     public final int UP = 19;    // Up arrow
     public final int DOWN = 20;  // down arrow
     public final int LEFT = 21;  // left arrow
@@ -38,7 +40,7 @@ public class GameKeys {
     public final int NUM_2 = 9;  // Numpad 2
     public final int NUM_3 = 10; // Numpad 3
     public final int NUM_4 = 11; // Numpad 4
-    
+
     public final int MOUSE_LEFT = 0;    // Mouse left button
     public final int MOUSE_RIGHT = 1;   // Mouse right button
     public final int MOUSE_MIDDEL = 2;  // Mouse Middel button
@@ -74,8 +76,7 @@ public class GameKeys {
         currentKeyStates.put(MOUSE_MIDDEL, false);
         currentKeyStates.put(MOUSE_FORWARD, false);
         currentKeyStates.put(MOUSE_BACK, false);
-        
-        
+
         update();
     }
 
@@ -85,14 +86,32 @@ public class GameKeys {
     }
 
     public boolean isKeyDown(int key) {
-        return currentKeyStates.get(key);
+        if (!isKeysLocked) {
+            return currentKeyStates.get(key);
+        }
+
+        return false;
     }
 
     public boolean isKeyPressed(int key) {
-        return currentKeyStates.get(key) && !previousKeyStates.get(key);
+        if (!isKeysLocked) {
+            return currentKeyStates.get(key) && !previousKeyStates.get(key);
+        }
+
+        return false;
     }
 
     public void setKey(int key, boolean state) {
-        currentKeyStates.put(key, state);
+        if (!isKeysLocked) {
+            currentKeyStates.put(key, state);
+        }
+    }
+
+    public void lockKeys() {
+        isKeysLocked = true;
+    }
+
+    public void unlockKeys() {
+        isKeysLocked = false;
     }
 }

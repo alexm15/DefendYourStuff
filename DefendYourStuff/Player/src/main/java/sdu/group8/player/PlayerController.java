@@ -8,7 +8,6 @@ package sdu.group8.player;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
@@ -29,8 +28,7 @@ import sdu.group8.commonweapon.services.IWeaponService;
     @ServiceProvider(service = IGamePluginService.class),
     @ServiceProvider(service = IPlayerService.class)}
 )
-public class PlayerController
-        implements IGameProcessingService, IGamePluginService, IPlayerService {
+public class PlayerController implements IGameProcessingService, IGamePluginService, IPlayerService {
 
     private Lookup lookup = Lookup.getDefault();
     private float verticalVelocity;
@@ -41,7 +39,7 @@ public class PlayerController
         for (Entity entity : world.getEntities(Player.class)) {
             Player player = (Player) entity;
             if (player.getCurrentHealth() == 0) {
-            //TODO: remove player from world. Set isGameOver in gameData.           
+                //TODO: remove player from world. Set isGameOver in gameData.           
             }
             //Handle gravity for player
             if (!player.isEntityOnGround(player, gameData)) {
@@ -60,7 +58,7 @@ public class PlayerController
             player.setPosition(position);
             gameData.setPlayerPosition(position);
         }
-        
+
     }
 
     private void handleKeyboardInput(GameData gameData, World world, Player player) {
@@ -68,12 +66,12 @@ public class PlayerController
             IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
             player.setWeapon(weaponProvider.createMelee());
         }
-        
+
         if (gameData.getKeys().isKeyDown(gameData.getKeys().NUM_2)) {
             IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
             player.setWeapon(weaponProvider.createRanged());
         }
-        
+
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             horizontalVelocity += player.getMoveSpeed() * gameData.getDelta();
             player.setDirection(false);
@@ -148,7 +146,7 @@ public class PlayerController
         for (Entity player : world.getEntities(Player.class)) {
             world.removeEntity(player);
         }
-        
+
     }
 
     @Override
@@ -158,15 +156,6 @@ public class PlayerController
             player = (Player) entity;
         }
         return player.getMoveSpeed();
-    }
-
-    @Override
-    public HealthSystem getHealthSystem(World world) {
-        Player player = null;
-        for (Entity entity : world.getEntities(Player.class)) {
-            player = (Player) entity;
-        }
-        return player.getHealthSystem();
     }
 
 }

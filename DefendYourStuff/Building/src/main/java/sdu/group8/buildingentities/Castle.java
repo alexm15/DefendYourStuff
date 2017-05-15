@@ -9,21 +9,23 @@ import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.IAbilityAction;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
+import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.Building;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonbuilding.services.IBuildingAction;
+import sdu.group8.commonbuilding.services.ICastle;
 import sdu.group8.commonbuilding.services.IDefBuilding;
+import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyAction;
-import sdu.group8.commonplayer.IPlayer;
 
 /**
  *
  * @author Alexander
  */
-public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbilityAction{
+public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbilityAction, ICastle{
 
     public Castle(Position pos) {
         super("Building/castle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, true, 0, 100);
@@ -50,11 +52,14 @@ public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbi
 
     @Override
     public void abilityAction(Ability ab) {
-        if (!(ab.getOwner() instanceof IPlayer)) {
+        if (ab.getOwner() instanceof Enemy) {
             this.reduceHealth(ab.getDamage());
-            //TODO: Life display needs to be reduced
         }
-        
+    }
+
+    @Override
+    public HealthSystem getHealthSystem() {
+        return this.health;
     }
     
     
