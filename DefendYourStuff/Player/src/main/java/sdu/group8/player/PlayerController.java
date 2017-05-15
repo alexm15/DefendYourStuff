@@ -8,7 +8,6 @@ package sdu.group8.player;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
@@ -32,7 +31,6 @@ import sdu.group8.commonweapon.services.IWeaponService;
 public class PlayerController
         implements IGameProcessingService, IGamePluginService, IPlayerService {
 
-    private Lookup lookup = Lookup.getDefault();
     private float verticalVelocity;
     private float horizontalVelocity;
 
@@ -66,11 +64,13 @@ public class PlayerController
     private void handleKeyboardInput(GameData gameData, World world, Player player) {
         if (gameData.getKeys().isKeyDown(gameData.getKeys().NUM_1)) {
             IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
+            if(weaponProvider != null)
             player.setWeapon(weaponProvider.createMelee());
         }
         
         if (gameData.getKeys().isKeyDown(gameData.getKeys().NUM_2)) {
             IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
+            if(weaponProvider != null)
             player.setWeapon(weaponProvider.createRanged());
         }
         
@@ -95,6 +95,7 @@ public class PlayerController
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().SPACE)) {
             AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
+            if(abilityProvicer != null){
             float aimX = 0;
             float aimY = 0;
             try {
@@ -104,7 +105,12 @@ public class PlayerController
                 System.out.println("Mouse not in screen");
                 e.printStackTrace();
             }
+            try{
             world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getWeapon().getAbilityOne()));
+            } catch(IndexOutOfBoundsException e){
+                System.err.println("Player does not have an ability asigned");
+            }
+            }
         }
 
     }
@@ -137,7 +143,11 @@ public class PlayerController
         Player player = new Player(position);
         gameData.setPlayerGold(0);
         IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
+        
+        if(weaponProvider != null){
         player.setWeapon(weaponProvider.createRanged());
+        }
+        
         world.addEntity(player);
 
         gameData.setPlayerPosition(position);
