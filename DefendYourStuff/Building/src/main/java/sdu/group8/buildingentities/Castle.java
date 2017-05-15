@@ -18,12 +18,13 @@ import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonbuilding.services.IDefBuilding;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonplayer.IPlayer;
+import sdu.group8.commonplayer.IPlayerAction;
 
 /**
  *
  * @author Alexander
  */
-public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbilityAction{
+public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbilityAction, IPlayerAction{
 
     public Castle(Position pos) {
         super("Building/castle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, true, 0, 100);
@@ -48,6 +49,7 @@ public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbi
 
     @Override
     public void enemyAction(Entity enemy) {
+        //TODO: Might alert player that this building is being attacked.
     }
 
     @Override
@@ -57,6 +59,11 @@ public class Castle extends Building implements IDefBuilding, IEnemyAction, IAbi
             //TODO: Life display needs to be reduced
         }
         
+    }
+
+    @Override
+    public void playerAction(Entity player) {
+        //TODO: Add interaction menu for player to perform actions on the building
     }
     
     
