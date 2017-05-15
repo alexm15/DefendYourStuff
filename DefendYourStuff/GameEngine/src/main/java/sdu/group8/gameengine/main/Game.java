@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
@@ -64,9 +65,9 @@ public class Game
     private Lookup.Result<IGamePluginService> result;
     private Lookup.Result<IPreStartPluginService> resultPre;
     private List<IGameProcessingService> gameProcesses = new ArrayList<>();
-    private List<IGamePluginService> gamePlugins = new ArrayList<>();
+    private List<IGamePluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
-    private List<IPreStartPluginService> preStartPlugins = new ArrayList<>();
+    private List<IPreStartPluginService> preStartPlugins = new CopyOnWriteArrayList<>();
     private static Game instance = null;
 
     private Image firstBackgroundImage = new Image("World/world_hills01_bg.png", false);
