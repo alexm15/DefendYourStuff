@@ -153,6 +153,7 @@ public class Game
         assetManager.load("Tiles/tile_air.png", Texture.class);
 
         assetManager.load("Building/castle.png", Texture.class);
+        assetManager.load("Building/destroyedcastle.png", Texture.class);
         assetManager.load("Building/rubble.png", Texture.class);
         assetManager.load("Building/portal.png", Texture.class);
 

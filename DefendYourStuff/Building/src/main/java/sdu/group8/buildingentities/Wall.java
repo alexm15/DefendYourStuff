@@ -7,44 +7,18 @@ package sdu.group8.buildingentities;
 
 import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.Dimension;
-import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.entity.Building;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
-import sdu.group8.common.entity.Entity;
-import sdu.group8.commonbuilding.services.IBuildingAction;
-import sdu.group8.commonbuilding.services.IDefBuilding;
 
 /**
  *
  * @author Alexander
  */
-public class Wall
-        extends Building
-        implements IDefBuilding {
+public class Wall extends DefensiveBuilding {
 
-    public Wall(String imageURL, Dimension dimension, Position pos, 
-            CollisionType collisionType, BuildingType buildingType, 
+    public Wall(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType,
             boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
-        
-        super(imageURL, dimension, pos, collisionType, 
-                buildingType, isAttackable, upgradeLevel, health, ab);
+        super(imageURL, dimension, pos, collisionType, buildingType, isAttackable, upgradeLevel, health, ab);
     }
-
-    @Override
-    public void collision(Entity otherEntity) {
-        if (otherEntity instanceof IBuildingAction) {
-            ((IBuildingAction) otherEntity).buildingAction((Entity) this);
-        }
-    }
-
-    @Override
-    public void repair(GameData goldCost) {
-    }
-
-    @Override
-    public void upgradeBuilding() {
-    }
-
 }
