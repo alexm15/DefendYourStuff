@@ -10,7 +10,7 @@ import sdu.group8.commonability.data.AbilityKey;
 public class SlashData extends AbilityData {
     
     public SlashData(AbilityKey key) {
-        super(10, "Slash", key);
+        super(2, "Slash", key);
     }
     
 }

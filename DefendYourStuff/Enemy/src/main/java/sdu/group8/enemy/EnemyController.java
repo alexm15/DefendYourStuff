@@ -41,6 +41,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
         for (Entity enemyEntity : world.getEntities(MediumEnemy.class, BigMeleeEnemy.class)) {
             Enemy enemy = (Enemy) enemyEntity;
+            enemy.getAbilityContainer().updateCooldown(gameData.getDelta());
             deathProcess(enemy, gameData, world);
             enemy.setEntityOnGround(enemyEntity, gameData);
 

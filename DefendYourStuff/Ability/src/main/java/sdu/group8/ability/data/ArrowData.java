@@ -15,7 +15,7 @@ import sdu.group8.commonability.data.AbilityKey;
 public class ArrowData extends AbilityData {
     
     public ArrowData(AbilityKey key) {
-        super(10, "Arrow", key);
+        super(2, "Arrow", key);
     }
     
 }
