@@ -53,12 +53,12 @@ public class Chunk_Base extends Chunk {
         Position wallRight = new Position((getDimension().getWidth() + this.getPositionOffset()), TILE_SIZE);
         Position CastleDoor = new Position(((getDimension().getWidth() / 2) + this.getPositionOffset()), TILE_SIZE);
 
-        for (Buildable buildable : lookup.lookupAll(Buildable.class)) {
+        Buildable buildable = lookup.lookup(Buildable.class);
+        if (buildable != null) {
             buildable.createWallBuilding(world, wallLeft);
             buildable.createCastleBuilding(world, CastleDoor);
             buildable.createWallBuilding(world, wallRight);
         }
     }
-
 
 }
