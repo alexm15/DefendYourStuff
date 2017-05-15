@@ -18,7 +18,8 @@ import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonplayer.IPlayerAction;
 
 /**
- * 
+ * Presents all defensive building of the game and the general operation performed
+ * on defensive buildings.
  * 
  */
 public class DefensiveBuilding extends Building implements IDefBuilding, IEnemyAction, IAbilityAction, IBuildingService, IPlayerAction {
@@ -58,6 +59,10 @@ public class DefensiveBuilding extends Building implements IDefBuilding, IEnemyA
         //TODO: Might alert player that this building is being attacked.        
     }
 
+    /**
+     * Used for updating rubble to a specific building in later implementation
+     * @param player the player interacting with the building
+     */
     @Override
     public void playerAction(Entity player) {
         //TODO: Add interaction menu for player to perform actions on the building
