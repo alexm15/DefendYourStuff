@@ -13,6 +13,7 @@ import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.abilities.FireballData;
+import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonbuilding.services.IBuildingService;
 
 /**
@@ -33,6 +34,9 @@ public class Rubble
 
     @Override
     public void collision(Entity otherEntity) {
+        if (otherEntity instanceof IBuildingAction) {
+            ((IBuildingAction) otherEntity).buildingAction((Entity) this);
+        }
     }
 
     @Override

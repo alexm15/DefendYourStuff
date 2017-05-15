@@ -72,7 +72,6 @@
         <module>CommonAlly</module>
         <module>CommonItem</module>
         <module>CommonCharacter</module>
-        <module>Interacter</module>
         <module>Ability</module>
         <module>CommonMap</module>
         <module>Building</module>
@@ -84,6 +83,7 @@
         <module>Weapon</module>
         <module>DayNight</module>
         <module>SilentUpdater</module>
+        <module>TestModule</module>
     </modules>
 
     <properties>

@@ -10,6 +10,7 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonenemy.IEnemyAction;
+import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerAction;
 
 /**
@@ -37,7 +38,9 @@ public class RangedAbility extends Ability implements IPlayerAction, IEnemyActio
     }
 
     @Override
-    public void execute() {
-        setExpiration(0);
+    public void buildingAction(Entity building) {
+        if (!(this.getOwner() instanceof IPlayer)) {
+            setExpiration(0);
+        }
     }
 }

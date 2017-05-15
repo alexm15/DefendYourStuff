@@ -24,6 +24,7 @@ import sdu.group8.common.data.Image;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Chunk;
 import sdu.group8.common.entity.Entity;
+import sdu.group8.common.entity.MovingEntity;
 import sdu.group8.common.entity.Tile;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGamePostProcessingService;
@@ -31,6 +32,7 @@ import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.commonplayer.IPlayer;
+import sdu.group8.commonplayer.IPlayerService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
 
 /**
@@ -66,7 +68,6 @@ public class Game
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private List<IPreStartPluginService> preStartPlugins = new ArrayList<>();
     private static Game instance = null;
-    private Collection<Entity> entities;
 
     private Image firstBackgroundImage = new Image("World/world_hills01_bg.png", false);
     private Image secondBackgroundImage = new Image("World/world_mountains01_bg.png", false); //TODO: Change to mountains image
@@ -74,6 +75,9 @@ public class Game
     private int secondBackgroundImageScrollX = 0;
 
     private float FONT_SCALE = 1.5f;
+
+    private float HUD_POS_OFFSET_X = 30f;
+    private float HUD_POS_OFFSET_Y = 25f;
 
     public Collection<? extends IGameProcessingService> getGameProcesses() {
         return lookup.lookupAll(IGameProcessingService.class);
@@ -112,7 +116,6 @@ public class Game
 
         batch = new SpriteBatch();
         font = new BitmapFont();
-        font.setColor(Color.RED);
 
         for (IPreStartPluginService preGamePlugin : getPreGamePlugins()) {
             preGamePlugin.preStart(gameData);
@@ -161,20 +164,14 @@ public class Game
 
         // If asset manager is done loading assets.
         if (assetManager.update()) {
-            CAM.update();
-            batch.setProjectionMatrix(CAM.combined);
             gameData.setDelta(Gdx.graphics.getDeltaTime());
 
             update();
-
-            gameData.getKeys().update();
             draw();
         }
     }
 
     private void update() {
-
-        updateCamera();
 
         for (IGameProcessingService gameProcess : getGameProcesses()) {
             gameProcess.process(gameData, world);
@@ -183,40 +180,61 @@ public class Game
             postProcess.process(gameData, world);
         }
 
+        updateCamera();
+        checkMapBoundary();
+
+        gameData.getKeys().update(); // Should always be updated last.
+    }
+
+    /**
+     * Update the map with a new chunk, if the camera is near the last chunk on
+     * either side of the map.
+     */
+    private void checkMapBoundary() {
         float camPositionX = CAM.position.x;
 
-        Chunk secondLastChunk = world.getChunksRight().get(world.getChunksRight().size() - 2);
-        float secondLastOffsetX = secondLastChunk.getPositionOffset();
+        // If the player is on the left side in the world.
+        if (camPositionX < 0) {
 
-        // Update Map if camera is near the end at the left side
-        if (camPositionX > secondLastOffsetX) {
-            for (IMapUpdate service : getIMapUpdate()) {
-                service.update(world, false);
+            Chunk secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 2);
+            float secondLastOffsetX = secondLastChunk.getPositionOffset();
+
+            // Update Map if camera is near the end at the right side
+            if (camPositionX < secondLastOffsetX) {
+                for (IMapUpdate service : getIMapUpdate()) {
+                    service.update(world, true);
+                }
             }
-        }
 
-        secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 2);
-        secondLastOffsetX = secondLastChunk.getPositionOffset();
+        } else {
+            Chunk secondLastChunk = world.getChunksRight().get(world.getChunksRight().size() - 2);
+            float secondLastOffsetX = secondLastChunk.getPositionOffset();
 
-        // Update Map if camera is near the end at the right side
-        if (camPositionX < secondLastOffsetX) {
-            for (IMapUpdate service : getIMapUpdate()) {
-                service.update(world, true);
+            // Update Map if camera is near the end at the left side
+            if (camPositionX > secondLastOffsetX) {
+                for (IMapUpdate service : getIMapUpdate()) {
+                    service.update(world, false);
+                }
             }
         }
     }
 
     private void draw() {
+        batch.setProjectionMatrix(CAM.combined);
         batch.begin();
 
-        drawBackgroundImageForWorld(); //Draw backgrounds for the world;
-        drawMap(); // Draw chunks
-        drawEntities(); // Draw entities
+        drawBackgroundImageForWorld();  // Draw backgrounds for the world;
+        drawMap();                      // Draw chunks
+        drawEntities();                 // Draw entities
         drawHUD();
 
         batch.end();
     }
 
+    /**
+     * Loops through all chunks in the world, and calls a render method for each
+     * chunk.
+     */
     private void drawMap() {
 
         for (Chunk chunk : world.getChunksRight()) {
@@ -228,6 +246,11 @@ public class Game
         }
     }
 
+    /**
+     * Handles rendering of a chunk and its tiles and background images.
+     *
+     * @param chunk The chunk to be handled.
+     */
     private void renderChunk(Chunk chunk) {
         float posX = 0;
         float posY = 0;
@@ -247,51 +270,73 @@ public class Game
         }
     }
 
+    /**
+     * Handles how the second background image for a chunk should be drawn.
+     *
+     * @param chunk The Chunk that contains the background image.
+     * @param positionOffset The position offset of the chunk in the game world.
+     * The offset start at pos(0,0) and is moved on the x-axis based on the
+     * amount of tiles until the current chunk.
+     */
     private void drawSecondBackgroundForChunk(Chunk chunk, float positionOffset) {
-        float scrollScale = 50;
+        float scrollScale = chunk.getBackgroundScrollScale();
         float startScrollPos = positionOffset - chunk.getDimension().getWidth();
         float endScrollPos = positionOffset + chunk.getDimension().getWidth() * 2;
-        float min = positionOffset - chunk.getDimension().getWidth() / scrollScale;
-        float max = positionOffset + (chunk.getDimension().getWidth() * 2) / scrollScale;
+        float minPosX = positionOffset - chunk.getDimension().getWidth() / scrollScale;
+        float maxPosX = positionOffset + (chunk.getDimension().getWidth() * 2) / scrollScale;
 
         float playerPosX = gameData.getPlayerPosition().getX();
-        float imagePosX = max;
+        float imagePosX = maxPosX;
 
         if (playerPosX < startScrollPos) {
-            imagePosX = max;
+            imagePosX = maxPosX;
         } else if (playerPosX > endScrollPos) {
-            imagePosX = min;
+            imagePosX = minPosX;
         } else {
-            imagePosX = max - Math.abs(startScrollPos - playerPosX) / scrollScale;
+            imagePosX = maxPosX - Math.abs(startScrollPos - playerPosX) / scrollScale;
         }
 
         drawTextureFromAsset(chunk.getSecondBackgroundImage(), imagePosX, chunk.getTILE_SIZE());
     }
 
     private void drawEntities() {
+        Collection<Entity> movingEntities = new ArrayList<>();
         for (Entity entity : world.getEntities()) {
-            drawTextureFromAsset(entity.getImage(), entity.getX() - (entity.getWidth() / 2), entity.getY() - entity.getHeight() / 2);
+            if (entity instanceof MovingEntity) {
+                movingEntities.add(entity);
+            } else {
+                drawTextureFromAsset(entity.getImage(), entity.getX() - (entity.getWidth() / 2), entity.getY() - entity.getHeight() / 2);
+            }
+        }
+
+        if (!movingEntities.isEmpty()) {
+            for (Entity entity : movingEntities) {
+                drawTextureFromAsset(entity.getImage(), entity.getX() - (entity.getWidth() / 2), entity.getY() - entity.getHeight() / 2);
+            }
         }
     }
 
+    /**
+     * Updates the camera position and how far the world's background images
+     * should scroll.
+     */
     private void updateCamera() {
         Vector3 camPos = CAM.position.cpy();
         CAM.position.set(gameData.getPlayerPosition().getX(), camPos.y, camPos.z);
         CAM.update();
+//        float camPosX = camPos.x;
+//        float moveSpeed = 200;
+//
+//        if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
+//            camPosX -= moveSpeed * gameData.getDelta();
+//        }
+//        if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
+//            camPosX += moveSpeed * gameData.getDelta();
+//        }
+//        CAM.translate(camPosX - camPos.x, 0);
+        firstBackgroundImageScrollX = (int) (camPos.x / 4);    // the first background image scrolls 1/4 the speed of the cam
+        secondBackgroundImageScrollX = firstBackgroundImageScrollX / 4;   // the second background image scrolls 1/4 of the first background image.
 
-        camPos = CAM.position.cpy();
-        int firstScrollSpeed = (int) (camPos.x / 4);
-        int secondScrollSpeed = firstScrollSpeed / 4;
-
-        if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
-            firstBackgroundImageScrollX = firstScrollSpeed;
-            secondBackgroundImageScrollX = secondScrollSpeed;
-        }
-        if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
-            firstBackgroundImageScrollX = firstScrollSpeed;
-            secondBackgroundImageScrollX = secondScrollSpeed;
-
-        }
     }
 
     @Override
@@ -310,6 +355,13 @@ public class Game
     public void dispose() {
     }
 
+    /**
+     * Handles rendering of a single texture.
+     *
+     * @param image Image object that contains a string to the correct path.
+     * @param x float position x of the image
+     * @param y float position y of the image
+     */
     private void drawTextureFromAsset(Image image, float x, float y) {
         Texture tex = assetManager.get(image.getImageURL(), Texture.class);
         Sprite sprite = new Sprite(tex);
@@ -317,6 +369,9 @@ public class Game
         batch.draw(sprite, x, y);
     }
 
+    /**
+     * Handles rendering of both scrollable background images for the world.
+     */
     private void drawBackgroundImageForWorld() {
         Texture firstTex = assetManager.get(firstBackgroundImage.getImageURL(), Texture.class);
         Texture secondTex = assetManager.get(secondBackgroundImage.getImageURL(), Texture.class);
@@ -326,23 +381,29 @@ public class Game
         batch.draw(firstTex, CAM.position.x - CAM.viewportWidth / 2, 0, firstBackgroundImageScrollX, 0, gameData.getDisplayWidth(), gameData.getDisplayHeight());
     }
 
+    /**
+     * Handles randering of the Heads Up Display (HUD) of the player. The HUD
+     * displayes the health and gold amount of the player.
+     */
     private void drawHUD() {
         HealthSystem healthSystem = null;
-        for (Entity entity : world.getEntities()) {
-            if (entity instanceof IPlayer) {
-                healthSystem = ((IPlayer) entity).getHealthSystem();
+        try {
+            for (Entity entity : world.getEntities()) {
+                if (entity instanceof IPlayer) {
+                    healthSystem = ((IPlayer) entity).getHealthSystem();
+                }
             }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
-        //TODO: catch nullPointError
 
+        //TODO: catch nullPointError
         float screenHeight = CAM.viewportHeight;
         float screenWidth = CAM.viewportWidth;
         float posX = CAM.position.x - screenWidth / 2;
-        float posOffsetX = 30;
-        float posOffsetY = 25;
 
-        drawPlayerHealth(healthSystem, posX + posOffsetX, screenHeight - posOffsetY);
-        drawPlayerGold(posX + posOffsetX, screenHeight - posOffsetY * 2);
+        drawPlayerHealth(healthSystem, posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y);
+        drawPlayerGold(posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y * 2);
     }
 
     private void drawPlayerHealth(HealthSystem healthSystem, float posX, float posY) {

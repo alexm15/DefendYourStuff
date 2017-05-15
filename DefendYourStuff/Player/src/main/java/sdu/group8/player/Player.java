@@ -5,10 +5,7 @@
  */
 package sdu.group8.player;
 
-import org.openide.util.Lookup;
-import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
-import sdu.group8.common.data.DamageRange;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
@@ -19,6 +16,7 @@ import sdu.group8.common.entity.Entity;
 import sdu.group8.common.weapon.Weapon;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonability.services.AbilitySPI;
+import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerAction;
 
@@ -26,12 +24,12 @@ import sdu.group8.commonplayer.IPlayerAction;
  *
  * @author joach
  */
-public class Player extends Character implements IPlayer, IEnemyAction {
+public class Player extends Character implements IPlayer, IEnemyAction, IBuildingAction {
 
     private Weapon weapon;
     private Position aimPoint;
     private final float JUMP_FORCE = 350;
-
+    
     public Player(Position position, AbilityData... ab) {
         super(200, 1.25f, 100, "Player/defaultPlayer.png", new Dimension(50, 50, 25), new Direction(true), position, CollisionType.BOX, ab);
     }
@@ -87,6 +85,10 @@ public class Player extends Character implements IPlayer, IEnemyAction {
     @Override
     public HealthSystem getHealthSystem() {
         return this.health;
+    }
+
+    @Override
+    public void buildingAction(Entity building) {
     }
 
 }

@@ -13,6 +13,7 @@ import sdu.group8.common.entity.Building;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
+import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonbuilding.services.IDefBuilding;
 
 /**
@@ -29,6 +30,9 @@ public class Tower
 
     @Override
     public void collision(Entity otherEntity) {
+        if (otherEntity instanceof IBuildingAction) {
+            ((IBuildingAction) otherEntity).buildingAction((Entity) this);
+        }
     }
 
     @Override

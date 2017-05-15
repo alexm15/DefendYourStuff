@@ -28,13 +28,17 @@ public class DayNightController implements IGameProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         IEnemyService enemyProvider = lookup.lookup(IEnemyService.class);
+        if (enemyProvider != null) {
 
-        if (countdown <= 0) {
-            enemyProvider.createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
-            enemyProvider.createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-            countdown = COUNTDOWNTIME;
+            if (countdown <= 0) {
+                enemyProvider.createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
+                enemyProvider.createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
+                enemyProvider.createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
+                enemyProvider.createBigEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
+                countdown = COUNTDOWNTIME;
+            }
+            timer(gameData);
         }
-        timer(gameData);
     }
 
     private void timer(GameData gameData) {
