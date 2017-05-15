@@ -83,7 +83,7 @@ public class EnemyTest {
         
         assertEquals(1, world.getEntities().size());
         for (Entity enemy : world.getEntities(Enemy.class)) {
-            assertEquals(enemy, testEnemy);
+            assertEquals(enemy.getClass(), testEnemy.getClass());
         }
         
         enemyProvider.removeAllEnemies(world);
@@ -100,7 +100,7 @@ public class EnemyTest {
         
         assertEquals(1, world.getEntities().size());
         for (Entity enemy : world.getEntities(Enemy.class)) {
-            assertEquals(enemy, testEnemy);
+            assertEquals(enemy.getClass(), testEnemy.getClass());
         }
         
         enemyProvider.removeAllEnemies(world);
