@@ -70,7 +70,11 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntities(MediumEnemy.class, BigMeleeEnemy.class);
+//        world.removeEntities(MediumEnemy.class, BigMeleeEnemy.class);
+        System.out.println("stop!");    
+    for (Entity entity : world.getEntities(Enemy.class)) {
+            world.removeEntity(entity);
+        }
     }
 
     public void deathProcess(Enemy enemy, GameData gameData, World world) {
@@ -92,7 +96,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     @Override
     public void createBigEnemy(World world, GameData gameData, Position position) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-        AbilityData ab = abilityProvider.getMeleeAbilities().get(0); 
+        AbilityData ab = abilityProvider.getMeleeAbilities().get(0);
         //TODO ADD abilities to BigMeleeEnemy
 
         BigMeleeEnemy enemy = new BigMeleeEnemy(position, ab);

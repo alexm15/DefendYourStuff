@@ -116,13 +116,23 @@ public class Game
 
         batch = new SpriteBatch();
         font = new BitmapFont();
-
-        for (IPreStartPluginService preGamePlugin : getPreGamePlugins()) {
-            preGamePlugin.preStart(gameData);
+        
+        resultPre = lookup.lookupResult(IPreStartPluginService.class);
+        resultPre.addLookupListener(lookupListenerPre);
+        resultPre.allItems();
+        
+        for (IPreStartPluginService prePlugin : resultPre.allInstances()) {
+            prePlugin.preStart(gameData);
+            preStartPlugins.add(prePlugin);
         }
 
-        for (IGamePluginService gamePlugin : getGamePlugins()) {
-            gamePlugin.start(gameData, world);
+        result = lookup.lookupResult(IGamePluginService.class);
+        result.addLookupListener(lookupListener);
+        result.allItems();
+
+        for (IGamePluginService plugin : result.allInstances()) {
+            plugin.start(gameData, world);
+            gamePlugins.add(plugin);
         }
 
         assetManager.load("Chunks/chunk_base_bg01.png", Texture.class);
