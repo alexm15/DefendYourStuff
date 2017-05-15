@@ -100,8 +100,9 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
             Building castle = (Building) entity;
             if (castle.getHealth() <= 0) {
                 System.out.println("Game Over");
-                Position Position = new Position(castle.getPosition().getX(), castle.getPosition().getY() - castle.getHeight() / 2);
-                createDestroyedCastleBuilding(world, Position);
+                //Reduces y-position, since every entities y-position is calculated as y-position + half their height
+                Position position = new Position(castle.getPosition().getX(), castle.getPosition().getY() - castle.getHeight() / 2);
+                createDestroyedCastleBuilding(world, position);
                 world.removeEntity(castle);
             }
         }

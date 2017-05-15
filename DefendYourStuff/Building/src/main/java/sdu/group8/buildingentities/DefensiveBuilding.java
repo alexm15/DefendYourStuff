@@ -37,7 +37,7 @@ public class DefensiveBuilding extends Building implements IDefBuilding, IEnemyA
             ((IBuildingAction) otherEntity).buildingAction((Entity) this);
         }
     }
-
+    
     @Override
     public void abilityAction(Ability ab) {
         if ((ab.getOwner() instanceof Enemy)) {

@@ -22,6 +22,11 @@ public class DestroyedCastle extends DefensiveBuilding {
         super("Building/destroyedcastle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, false, 0, 100);
     }
     
+    /**
+     * Can't be destroyed since its hp is reduced by 0
+     * Special case for DestroyedCastle
+     * @param ab 
+     */
     @Override
     public void abilityAction(Ability ab) {
         if ((ab.getOwner() instanceof Enemy)) {
