@@ -86,7 +86,7 @@ public class Player extends Character implements IAbilityAction, IPlayer, IEnemy
     @Override
     public void abilityAction(Ability ab) {
         if (!(ab.getOwner() instanceof Player) && (!(ab.getOwner() instanceof Building))) {
-            this.getHealthSystem().reduceHealth(ab.getDamage());
+            this.reduceHealth(ab.getDamage());
         }
     }
 
