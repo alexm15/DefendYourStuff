@@ -13,6 +13,7 @@ import sdu.group8.commonability.data.Ability;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
+import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.commonai.AI_Service;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commoncharacter.Character;
@@ -22,9 +23,12 @@ import sdu.group8.commoncharacter.Character;
  * @author Alexander
  */
 @ServiceProviders(value = {
-    @ServiceProvider(service = AI_Service.class)}
+    @ServiceProvider(service = AI_Service.class),
+@ServiceProvider(service = IGamePluginService.class)}
 )
-public class AI_ControlSystem implements AI_Service {
+public class AI_ControlSystem implements AI_Service, IGamePluginService {
+    
+    private Attack attack;
 
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
@@ -35,7 +39,7 @@ public class AI_ControlSystem implements AI_Service {
             moveEnemyToTarget(enemy, closestTarget, gameData);
         } else if (enemy.getAbility(0).isOnCooldown()) {
             try {
-                useAbility(enemy, world, closestTarget, enemy.getAbility(0));
+                attack.useAbility(enemy, world, closestTarget, enemy.getAbility(0));
             } catch (IndexOutOfBoundsException e) {
                 System.err.println(e);
             }
@@ -52,7 +56,7 @@ public class AI_ControlSystem implements AI_Service {
 
             if (!enemy.getAbility(0).isOnCooldown()) {
                 try {
-                    useAbility(enemy, world, closestTarget, enemy.getAbility(0));
+                    attack.useAbility(enemy, world, closestTarget, enemy.getAbility(0));
                 } catch (IndexOutOfBoundsException e) {
                     System.err.println(e);
                 }
@@ -62,7 +66,7 @@ public class AI_ControlSystem implements AI_Service {
                 increaseDistance(enemy, closestTarget, gameData);
                 if (!enemy.getAbility(0).isOnCooldown()) {
                     try {
-                        useAbility(enemy, world, closestTarget, enemy.getAbility(0));
+                        attack.useAbility(enemy, world, closestTarget, enemy.getAbility(0));
                     } catch (IndexOutOfBoundsException e) {
                         System.err.println(e);
                     }
@@ -150,25 +154,23 @@ public class AI_ControlSystem implements AI_Service {
         enemy.setX(horizontalPos);
     }
 
-    private void useAbility(Character enemy, World world, Entity closestTarget, AbilityData abilityData) {
-        setDirection(enemy, closestTarget);
-        abilityData.useAbility(enemy, world);
-    }
-
-    private void setDirection(Character enemy, Entity closestTarget) {
-
-        if (enemy.getX() < closestTarget.getX()) {
-
-            enemy.setDirection(false);
-        } else if (enemy.getX() > closestTarget.getX()) {
-
-            enemy.setDirection(true);
-        }
-    }
 
     private boolean withinShootingRange(Character enemy, Entity closestTarget, int minShootDistance, int maxShootDistance) {
         return distanceToEntity(enemy, closestTarget) > minShootDistance
                 && distanceToEntity(enemy, closestTarget) < maxShootDistance;
+    }
+
+    @Override
+    public void start(GameData gameData, World world) {
+        //TODO implement metode: start
+        attack = new Attack();
+        System.out.println("sere");
+    }
+
+    @Override
+    public void stop(GameData gameData, World world) {
+        //TODO implement metode: stop
+        attack = null;
     }
 
 }
