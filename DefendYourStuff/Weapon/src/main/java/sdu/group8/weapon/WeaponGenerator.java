@@ -5,7 +5,6 @@
  */
 package sdu.group8.weapon;
 
-import static java.util.Locale.lookup;
 import java.util.Random;
 import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.commonweapon.services.IWeaponService;
@@ -13,7 +12,6 @@ import sdu.group8.commonweapon.data.Weapon;
 import sdu.group8.commonability.services.AbilitySPI;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
-import org.openide.util.lookup.ServiceProviders;
 
 /**
  *

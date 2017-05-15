@@ -11,6 +11,7 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
+import sdu.group8.common.entity.Building;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonweapon.data.Weapon;
@@ -84,6 +85,14 @@ public class Player extends Character implements IPlayer, IEnemyAction, IBuildin
 
     @Override
     public void buildingAction(Entity building) {
+        //TODO: add interaction menu for player to interact with collided building.
+    }
+
+    @Override
+    public void abilityAction(Ability ab) {
+        if (!(ab.getOwner() instanceof Player) && (!(ab.getOwner() instanceof Building))) {
+            this.getHealthSystem().reduceHealth(ab.getDamage());
+        }
     }
 
 }

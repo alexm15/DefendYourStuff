@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.buildingentities;
 
 import sdu.group8.common.data.Dimension;
@@ -20,12 +15,14 @@ import sdu.group8.commonbuilding.services.IBuildingService;
 import sdu.group8.commonbuilding.services.IDefBuilding;
 import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyAction;
+import sdu.group8.commonplayer.IPlayerAction;
 
 /**
- *
- * @author joach
+ * Presents all defensive building of the game and the general operation performed
+ * on defensive buildings.
+ * 
  */
-public class DefensiveBuilding extends Building implements IDefBuilding, IEnemyAction, IAbilityAction, IBuildingService {
+public class DefensiveBuilding extends Building implements IDefBuilding, IEnemyAction, IAbilityAction, IBuildingService, IPlayerAction {
 
     public DefensiveBuilding(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
         super(imageURL, dimension, pos, collisionType, buildingType, isAttackable, upgradeLevel, health, ab);
@@ -47,17 +44,27 @@ public class DefensiveBuilding extends Building implements IDefBuilding, IEnemyA
 
     @Override
     public void repair(GameData goldCost) {
-        
+        throw new UnsupportedOperationException("Feature not implemented yet");
     }
 
     @Override
     public void upgradeBuilding() {
+        throw new UnsupportedOperationException("Feature not implemented yet");
 
     }
 
     @Override
     public void enemyAction(Entity enemy) {
-        
+        //TODO: Might alert player that this building is being attacked.        
+    }
+
+    /**
+     * Used for updating rubble to a specific building in later implementation
+     * @param player the player interacting with the building
+     */
+    @Override
+    public void playerAction(Entity player) {
+        //TODO: Add interaction menu for player to perform actions on the building
     }
     
 }

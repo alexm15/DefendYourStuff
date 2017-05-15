@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.buildingentities;
 
 import sdu.group8.common.data.Dimension;
@@ -13,6 +8,10 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonbuilding.services.IBuildingAction;
 
+/**
+ * Building used for later access to dungeons, and as spawn point for enemies 
+ * later on.
+ */
 public class Portal extends Building {
 
     public Portal(Position pos) {

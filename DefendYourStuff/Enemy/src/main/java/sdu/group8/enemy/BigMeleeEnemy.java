@@ -38,7 +38,7 @@ public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityActio
 
     @Override
     public void playerAction(Entity player) {
-        //TODO implement metode: playerAction
+        //TODO: Enemy might in the future be pushed back when colliding with enemy.
     }
 
     @Override
@@ -49,6 +49,7 @@ public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityActio
 
     @Override
     public void buildingAction(Entity building) {
+        //TODO: Enemy might not be able to pass certain buildings such as walls
     }
 
     
