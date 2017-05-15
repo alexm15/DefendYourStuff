@@ -60,7 +60,7 @@ public class AI_ControlSystem implements AI_Service {
         } else {
             if (tooCloseToTarget) {
                 increaseDistance(enemy, closestTarget, gameData);
-                if (enemy.getAbility(0).isOnCooldown()) {
+                if (!enemy.getAbility(0).isOnCooldown()) {
                     try {
                         useAbility(enemy, world, closestTarget, enemy.getAbility(0));
                     } catch (IndexOutOfBoundsException e) {

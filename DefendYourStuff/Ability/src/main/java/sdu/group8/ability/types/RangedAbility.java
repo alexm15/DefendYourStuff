@@ -13,12 +13,14 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.data.Ability;
 import sdu.group8.commonability.data.EffectContainer;
+import sdu.group8.commonenemy.Enemy;
+import sdu.group8.commonenemy.IEnemyAction;
 
 /**
  *
  * @author Martin
  */
-public class RangedAbility extends Ability{
+public class RangedAbility extends Ability implements IEnemyAction {
 
     public RangedAbility(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer, Entity owner, boolean aimable) {
         super(expiration, moveSpeed, weight, damageRange, imageURL, dimension, direction, pos, collisionType, effectContainer, owner, aimable);
@@ -28,6 +30,15 @@ public class RangedAbility extends Ability{
     public Ability getNewInstance(Entity owner, float x, float y, boolean directionLeft) {
         //TODO: implement this method
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void enemyAction(Entity enemy) {
+        if (this.owner instanceof Enemy) {
+            
+        } else {
+            this.setExpiration(0);
+        }
     }
 
     
