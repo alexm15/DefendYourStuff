@@ -38,12 +38,11 @@ public abstract class Ability extends MovingEntity {
      * fly's straight, above 0 = flys in an arc.
      * @param damageRange the specified damageRange for the ability
      * @param imageURL the image for the ability.
-     * @param dimension the size of the ability. Must be the same as * image
-     * size.
+     * @param dimension the size of the ability. Must be the same as image size.
      * @param direction the direction that the ability is travelling
      * @param pos the position of the ability
      * @param collisionType
-     * @param effectContainer contains which effects the ability can affect *
+     * @param effectContainer contains which effects the ability can affect
      * other entities with.
      */
     public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer, Entity owner, boolean aimable) {
