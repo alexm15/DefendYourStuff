@@ -5,29 +5,23 @@
  */
 package sdu.group8.player;
 
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityData;
-import sdu.group8.common.ability.IAbilityAction;
+import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
-import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.entity.Building;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.common.weapon.Weapon;
+import sdu.group8.commonability.data.Ability;
+import sdu.group8.commonability.services.IAbilityAction;
+import sdu.group8.commonbuilding.data.Building;
+import sdu.group8.commonweapon.data.Weapon;
 import sdu.group8.commonenemy.IEnemyAction;
-import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerAction;
 
-/**
- *
- * @author joach
- */
-public class Player extends Character implements IPlayer, IEnemyAction, IBuildingAction, IAbilityAction {
+public class Player extends Character implements IAbilityAction, IPlayer, IEnemyAction, IBuildingAction {
 
     private Weapon weapon;
     private Position aimPoint;
@@ -66,10 +60,9 @@ public class Player extends Character implements IPlayer, IEnemyAction, IBuildin
     public float getJUMP_FORCE() {
         return JUMP_FORCE;
     }
-
-    @Override
-    public float getPlayerMoveSpeed() {
-        return getMoveSpeed();
+    
+    public float getMovespeed() {
+        return this.moveSpeed;
     }
 
     @Override
@@ -84,11 +77,6 @@ public class Player extends Character implements IPlayer, IEnemyAction, IBuildin
     public void enemyAction(Entity enemy) {
         //TODO: implement enemy action for player
     }
-    
-    @Override
-    public HealthSystem getHealthSystem() {
-        return this.health;
-    }
 
     @Override
     public void buildingAction(Entity building) {
@@ -98,7 +86,7 @@ public class Player extends Character implements IPlayer, IEnemyAction, IBuildin
     @Override
     public void abilityAction(Ability ab) {
         if (!(ab.getOwner() instanceof Player) && (!(ab.getOwner() instanceof Building))) {
-            this.getHealthSystem().reduceHealth(ab.getDamage());
+            this.reduceHealth(ab.getDamage());
         }
     }
 

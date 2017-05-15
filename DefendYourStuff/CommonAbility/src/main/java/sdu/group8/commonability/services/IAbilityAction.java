@@ -1,6 +1,6 @@
-package sdu.group8.common.ability;
+package sdu.group8.commonability.services;
 
-import sdu.group8.common.ability.Ability;
+import sdu.group8.commonability.data.Ability;
 
 /**
  *

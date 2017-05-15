@@ -2,7 +2,7 @@ package sdu.group8.buildingentities;
 
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.entity.Building;
+import sdu.group8.commonbuilding.data.Building;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;

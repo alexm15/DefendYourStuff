@@ -9,11 +9,6 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.*;
 import java.util.UUID;
 
-
-/**
- *
- * @author Martin
- */
 public abstract class Entity {
 
     protected UUID ID;

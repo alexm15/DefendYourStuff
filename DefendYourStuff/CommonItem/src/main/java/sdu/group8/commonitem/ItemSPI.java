@@ -11,7 +11,7 @@ import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.common.entity.Item;
+import sdu.group8.commonitem.data.Item;
 
 /**
  *

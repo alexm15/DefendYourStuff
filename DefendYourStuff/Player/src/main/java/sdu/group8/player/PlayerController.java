@@ -8,29 +8,21 @@ package sdu.group8.player;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.common.ability.AbilityData;
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
-import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonplayer.IPlayerService;
 import sdu.group8.commonweapon.services.IWeaponService;
 
-/**
- *
- * @author joach
- */
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class),
     @ServiceProvider(service = IPlayerService.class)}
 )
-public class PlayerController
-        implements IGameProcessingService, IGamePluginService, IPlayerService {
+public class PlayerController implements IGameProcessingService, IGamePluginService, IPlayerService {
 
     private Lookup lookup = Lookup.getDefault();
     private float verticalVelocity;
@@ -42,7 +34,6 @@ public class PlayerController
             Player player = (Player) entity;
             if (player.getCurrentHealth() <= 0) {
             //TODO: remove player from world. Set isGameOver in gameData.
-                System.out.println("Game Over");
                 world.removeEntity(player);
             }
             //Handle gravity for player
@@ -61,8 +52,11 @@ public class PlayerController
             Position position = new Position(player.getX() + horizontalVelocity, player.getY() + verticalVelocity * gameData.getDelta());
             player.setPosition(position);
             gameData.setPlayerPosition(position);
+            
+            // Update cooldown for player's abilities.
+            player.getAbilityContainer().updateCooldown(gameData.getDelta());
         }
-        
+
     }
 
     private void handleKeyboardInput(GameData gameData, World world, Player player) {
@@ -70,12 +64,12 @@ public class PlayerController
             IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
             player.setWeapon(weaponProvider.createMelee());
         }
-        
+
         if (gameData.getKeys().isKeyDown(gameData.getKeys().NUM_2)) {
             IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
             player.setWeapon(weaponProvider.createRanged());
         }
-        
+
         if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
             horizontalVelocity += player.getMoveSpeed() * gameData.getDelta();
             player.setDirection(false);
@@ -96,7 +90,6 @@ public class PlayerController
         }
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().SPACE)) {
-            AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
             float aimX = 0;
             float aimY = 0;
             try {
@@ -106,7 +99,8 @@ public class PlayerController
                 System.out.println("Mouse not in screen");
                 e.printStackTrace();
             }
-            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getWeapon().getAbilityOne()));
+
+            player.getWeapon().useAbility(player, 0, aimX, aimY, world);
         }
 
     }
@@ -150,7 +144,7 @@ public class PlayerController
         for (Entity player : world.getEntities(Player.class)) {
             world.removeEntity(player);
         }
-        
+
     }
 
     @Override
@@ -160,15 +154,6 @@ public class PlayerController
             player = (Player) entity;
         }
         return player.getMoveSpeed();
-    }
-
-    @Override
-    public HealthSystem getHealthSystem(World world) {
-        Player player = null;
-        for (Entity entity : world.getEntities(Player.class)) {
-            player = (Player) entity;
-        }
-        return player.getHealthSystem();
     }
 
 }
