@@ -58,7 +58,11 @@ public abstract class Character extends MovingEntity {
     public float getCurrentHealth() {
         return this.health.getHealth();
     }
-
+    
+    public float getMaxHealth() {
+        return this.health.getMaxHealth();
+    }
+    
     public void reduceHealth(float health) {
         this.health.reduceHealth(health);
     }

@@ -9,7 +9,6 @@ import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Direction;
-import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
@@ -61,10 +60,9 @@ public class Player extends Character implements IAbilityAction, IPlayer, IEnemy
     public float getJUMP_FORCE() {
         return JUMP_FORCE;
     }
-
-    @Override
-    public float getPlayerMoveSpeed() {
-        return getMoveSpeed();
+    
+    public float getMovespeed() {
+        return this.moveSpeed;
     }
 
     @Override
@@ -79,11 +77,6 @@ public class Player extends Character implements IAbilityAction, IPlayer, IEnemy
     public void enemyAction(Entity enemy) {
         //TODO: implement enemy action for player
     }
-    
-    @Override
-    public HealthSystem getHealthSystem() {
-        return this.health;
-    }
 
     @Override
     public void buildingAction(Entity building) {
@@ -93,7 +86,7 @@ public class Player extends Character implements IAbilityAction, IPlayer, IEnemy
     @Override
     public void abilityAction(Ability ab) {
         if (!(ab.getOwner() instanceof Player) && (!(ab.getOwner() instanceof Building))) {
-            this.getHealthSystem().reduceHealth(ab.getDamage());
+            this.reduceHealth(ab.getDamage());
         }
     }
 
