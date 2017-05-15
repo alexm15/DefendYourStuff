@@ -28,7 +28,9 @@ public abstract class Building extends Entity {
     protected HealthSystem health;
 
     /**
-     * Position.x should be half of dimension width, but the Position.y should be at the bottom of the dimension
+     * Position.x should be half of dimension width, but the Position.y should
+     * be at the bottom of the dimension
+     *
      * @param imageURL
      * @param dimension
      * @param pos Position containing float x and y of the building
@@ -37,10 +39,15 @@ public abstract class Building extends Entity {
      * @param isAttackable
      * @param upgradeLevel
      * @param health
-     * @param ab 
+     * @param ab
+     * @param upgradeLevel cannot be negative value.
+     * @param health cannot be negative value.
      */
     public Building(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
         super(imageURL, dimension, pos, collisionType);
+        if (upgradeLevel < 0) {
+            throw new IllegalArgumentException("UpgradeLvl cannot be negative");
+        }
         this.buildingType = buildingType;
         this.isAttackable = isAttackable;
         this.upgradeLevel = upgradeLevel;

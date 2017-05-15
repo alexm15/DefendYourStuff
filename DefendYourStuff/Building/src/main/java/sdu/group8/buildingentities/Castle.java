@@ -1,6 +1,7 @@
 package sdu.group8.buildingentities;
 
 import sdu.group8.common.data.Dimension;
+import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;

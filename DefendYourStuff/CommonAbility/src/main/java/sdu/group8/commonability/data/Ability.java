@@ -25,12 +25,30 @@ public abstract class Ability extends MovingEntity {
     protected EffectContainer effects;
     protected float radians;
     protected Entity owner;
-    protected float expiration = 1;
+    protected float expiration;
     protected float verticalVelocity;
     protected boolean aimable;
 
+    /**
+     * - * Creates an ability entity in the game expirationTime cannot be
+     * negative. - * @param expiration when the ability is removed, cannot be
+     * negative value; - * @param moveSpeed the speed that the ability is
+     * travelling at in the game - * @param weight determines if the ability is
+     * affected by game gravity. 0 = - * fly's straight, above 0 = flys in an
+     * arc. - * @param damageRange the specified damageRange for the ability -
+     *
+     *
+     * @param imageURL the image for the ability. - * @param dimension the size
+     * of the ability. Must be the same as - * image size. - * @param direction
+     * the direction that the ability is travelling - * @param pos the position
+     * of the ability - * @param collisionType - * @param effectContainer
+     * contains which effects the ability can affect - * other entities with. -
+     */
     public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer, Entity owner, boolean aimable) {
         super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);
+        if (expiration < 0) {
+            throw new IllegalArgumentException("Expiration time cannot be negative");
+        }
         this.effects = effectContainer;
         this.damageRange = damageRange;
         this.expiration = expiration;
@@ -38,10 +56,11 @@ public abstract class Ability extends MovingEntity {
         this.radians = 0;
         this.verticalVelocity = 0;
         this.aimable = aimable;
+
     }
 
     public abstract Ability getNewInstance(Entity owner, float x, float y, boolean directionLeft);
-    
+
     public boolean isAimable() {
         return aimable;
     }
@@ -115,7 +134,9 @@ public abstract class Ability extends MovingEntity {
     }
 
     /**
-     * If the otherEntity implements IAbilityAction, call that action with a reference to this ability.
+     * If the otherEntity implements IAbilityAction, call that action with a
+     * reference to this ability.
+     *
      * @param otherEntity The other entity that this ability has collided with.
      */
     @Override
