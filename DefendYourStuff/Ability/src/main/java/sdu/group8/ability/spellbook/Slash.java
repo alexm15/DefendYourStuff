@@ -5,6 +5,7 @@
  */
 package sdu.group8.ability.spellbook;
 
+import sdu.group8.ability.types.MeleeAbility;
 import sdu.group8.commonability.data.EffectContainer;
 import sdu.group8.common.data.DamageRange;
 import sdu.group8.common.data.Dimension;
@@ -12,13 +13,12 @@ import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.commonability.data.Ability;
 
 /**
  *
  * @author Martin
  */
-public class Slash extends Ability {
+public class Slash extends MeleeAbility {
     
     public Slash() {
         super(0.25f, 0f, 0f, new DamageRange(10,20), "abilities/slash.png", new Dimension(25,50,25), new Direction(false), new Position(0,0), CollisionType.CIRCLE, new EffectContainer(), null, false);
@@ -30,6 +30,11 @@ public class Slash extends Ability {
 
     @Override
     public Slash getNewInstance(Entity owner, float x, float y, boolean directionLeft) {
+        if (directionLeft) {
+            x = x-owner.getWidth()/2;
+        } else {
+            x = x+owner.getWidth()/2;  
+        }
         return new Slash(owner, x, y, directionLeft);
     }
     

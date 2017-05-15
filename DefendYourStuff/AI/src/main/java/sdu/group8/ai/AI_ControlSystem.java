@@ -36,7 +36,6 @@ public class AI_ControlSystem implements AI_Service {
         } else if (enemy.getAbility(0).isOnCooldown()) {
             try {
                 useAbility(enemy, world, closestTarget, enemy.getAbility(0));
-
             } catch (IndexOutOfBoundsException e) {
                 System.err.println(e);
             }
@@ -47,35 +46,27 @@ public class AI_ControlSystem implements AI_Service {
     public void rangedAI(Character enemy, World world, GameData gameData, int minShootDistance, int maxShootDistance) {
         Entity closestTarget = getClosesTarget(enemy, world);
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
-
-        enemy.getAbility(0).reduceCooldown(gameData.getDelta());
-
+        
         //shoot
         if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance)) { //TODO lav en range
 
             if (!enemy.getAbility(0).isOnCooldown()) {
                 try {
                     useAbility(enemy, world, closestTarget, enemy.getAbility(0));
-
                 } catch (IndexOutOfBoundsException e) {
                     System.err.println(e);
                 }
             }
-
         } else {
-
             if (tooCloseToTarget) {
                 increaseDistance(enemy, closestTarget, gameData);
-
                 if (enemy.getAbility(0).isOnCooldown()) {
                     try {
                         useAbility(enemy, world, closestTarget, enemy.getAbility(0));
-
                     } catch (IndexOutOfBoundsException e) {
                         System.err.println(e);
                     }
                 }
-
             }
             if (distanceToEntity(enemy, closestTarget) > maxShootDistance) {
                 moveEnemyToTarget(enemy, closestTarget, gameData);
