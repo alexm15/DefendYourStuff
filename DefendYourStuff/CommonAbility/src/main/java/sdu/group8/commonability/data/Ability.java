@@ -30,19 +30,21 @@ public abstract class Ability extends MovingEntity {
     protected boolean aimable;
 
     /**
-     * - * Creates an ability entity in the game expirationTime cannot be
-     * negative. - * @param expiration when the ability is removed, cannot be
-     * negative value; - * @param moveSpeed the speed that the ability is
-     * travelling at in the game - * @param weight determines if the ability is
-     * affected by game gravity. 0 = - * fly's straight, above 0 = flys in an
-     * arc. - * @param damageRange the specified damageRange for the ability -
+     * Creates an ability entity in the game expirationTime cannot be negative.
      *
-     *
-     * @param imageURL the image for the ability. - * @param dimension the size
-     * of the ability. Must be the same as - * image size. - * @param direction
-     * the direction that the ability is travelling - * @param pos the position
-     * of the ability - * @param collisionType - * @param effectContainer
-     * contains which effects the ability can affect - * other entities with. -
+     * @param expiration when the ability is removed, cannot be negative value;
+     * @param moveSpeed the speed that the ability is travelling at in the game
+     * @param weight determines if the ability is affected by game gravity. 0 =
+     * fly's straight, above 0 = flys in an arc.
+     * @param damageRange the specified damageRange for the ability
+     * @param imageURL the image for the ability.
+     * @param dimension the size of the ability. Must be the same as * image
+     * size.
+     * @param direction the direction that the ability is travelling
+     * @param pos the position of the ability
+     * @param collisionType
+     * @param effectContainer contains which effects the ability can affect *
+     * other entities with.
      */
     public Ability(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer, Entity owner, boolean aimable) {
         super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);
