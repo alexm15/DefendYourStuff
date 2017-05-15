@@ -29,37 +29,30 @@ public class World {
         return entitíes.values();
     }
 
-    
-    public <E extends Entity> Collection<Entity> getEntities(Class<E>... entityTypes) {
+    public <E extends Entity> Collection<Entity> getEntities(Class<E> entityType) {
         Collection<Entity> r = new ArrayList<>();
         for (Entity e : getEntities()) {
-            for (Class<E> entityType : entityTypes) {
-                if (entityType.isInstance(e)) {
-                    r.add(e);
-                }
+            if (entityType.isInstance(e)) {
+                r.add(e);
             }
         }
         return r;
     }
-    
-    public <E extends Entity> Collection<E> getCastedEntities(Class<E>... entityTypes) {
+
+    public <E extends Entity> Collection<E> getCastedEntities(Class<E> entityType) {
         Collection<E> r = new ArrayList<>();
         for (Entity e : getEntities()) {
-            for (Class<E> entityType : entityTypes) {
-                if (entityType.isInstance(e)) {
-                    r.add((E)e);
-                }
+            if (entityType.isInstance(e)) {
+                r.add((E) e);
             }
         }
         return r;
     }
-    
-    public <E extends Entity> void removeEntities (Class<E>... entityTypes) {
+
+    public <E extends Entity> void removeEntities(Class<E> entityType) {
         for (Entity entity : getEntities()) {
-            for (Class<E> entityType : entityTypes) {
-                if (entityType.isInstance(entity)) {
-                    removeEntity(entity);
-                }
+            if (entityType.isInstance(entity)) {
+                removeEntity(entity);
             }
         }
     }
@@ -76,7 +69,7 @@ public class World {
     public void removeEntity(Entity entity) {
         entitíes.remove(entity.getID());
     }
-    
+
     public Entity getEntity(UUID entityID) {
         return entitíes.get(entityID);
     }
@@ -110,6 +103,5 @@ public class World {
         this.chunksRight.clear();
         this.chunkMiddle = null;
     }
-    
-    
+
 }
