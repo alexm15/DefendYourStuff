@@ -6,6 +6,7 @@
 package sdu.group8.buildingentities;
 
 import sdu.group8.common.ability.Ability;
+import sdu.group8.common.ability.IAbilityAction;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.Building;
@@ -35,7 +36,9 @@ public class Rubble
 
     @Override
     public void collision(Entity otherEntity) {
-        if (otherEntity instanceof IBuildingAction) {
+        boolean enemyCastedAbility = otherEntity instanceof Ability;
+        
+        if (otherEntity instanceof IBuildingAction && !enemyCastedAbility) {
             ((IBuildingAction) otherEntity).buildingAction((Entity) this);
         }
     }
