@@ -6,9 +6,6 @@ package sdu.group8.test.weapon;
  * and open the template in the editor.
  */
 
-import sdu.group8.test.enemy.*;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -20,16 +17,9 @@ import org.openide.util.Lookup;
 import sdu.group8.ability.controller.AbilityController;
 import sdu.group8.ability.controller.AbilityPlugin;
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.Entity;
-import sdu.group8.common.weapon.Weapon;
-import sdu.group8.commonenemy.Enemy;
-import sdu.group8.commonenemy.IEnemyService;
+import sdu.group8.commonweapon.data.Weapon;
 import sdu.group8.commonweapon.services.IWeaponService;
-import sdu.group8.enemy.BigMeleeEnemy;
-import sdu.group8.enemy.EnemyController;
-import sdu.group8.enemy.MediumEnemy;
 
 /**
  *

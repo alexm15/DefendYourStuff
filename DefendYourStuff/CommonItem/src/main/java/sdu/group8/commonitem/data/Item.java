@@ -10,7 +10,6 @@ import sdu.group8.commonability.data.AbilityContainer;
 import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.collision.CollisionContainer;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.entity.QualityType;

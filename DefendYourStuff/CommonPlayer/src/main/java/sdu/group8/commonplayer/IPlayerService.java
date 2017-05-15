@@ -5,16 +5,8 @@
  */
 package sdu.group8.commonplayer;
 
-import sdu.group8.common.data.HealthSystem;
-import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.commoncharacter.Character;
-import sdu.group8.commonweapon.data.Weapon;
 
-/**
- *
- * @author karim møller
- */
 public interface IPlayerService {
 
     /**
@@ -23,10 +15,4 @@ public interface IPlayerService {
      * @return player movespeed.
      */
     float getPlayerMoveSpeed(World world);
-
-    /**
-     * Returns the reference to the player healthSystem
-     * @return HealthSystem
-     */
-    HealthSystem getHealthSystem(World world);
 }
