@@ -57,16 +57,16 @@ public class SilentUpdaterTest extends NbTestCase {
         waitForUpdate(processors, plugins);
         
         //Asserts: Player loaded.
-        assertEquals("One processor", 1, processors.size());
-        assertEquals("One plugin", 1, plugins.size());
+        assertEquals("Five processors", 5, processors.size());
+        assertEquals("Five plugins", 5, plugins.size());
         
         //Test: Unload Player with the update center.
         copy(get(REMOVE_PLAYER_UPDATES_FILE), get(UPDATES_FILE), REPLACE_EXISTING);
         waitForUpdate(processors, plugins);
         
         //Asserts: Player unloaded.
-        assertEquals("No processors", 0, processors.size());
-        assertEquals("No plugins", 0, plugins.size());
+        assertEquals("Four processors", 4, processors.size());
+        assertEquals("Four plugins", 4, plugins.size());
     }
     
     private void waitForUpdate(List<IGameProcessingService> processors, List<IGamePluginService> plugins) throws InterruptedException {
