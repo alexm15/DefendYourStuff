@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.commonbuilding.services;
+package sdu.group8.commonability.data;
 
 /**
  *
- * @author Martin
+ * @author joach
  */
-public interface IBuildingService {
-     
-    void upgradeBuilding();
-    
+public class Effect {
+    //ToDO Create Effects for abilities
 }

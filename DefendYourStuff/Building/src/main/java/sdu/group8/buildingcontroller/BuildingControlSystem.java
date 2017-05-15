@@ -11,16 +11,12 @@ import sdu.group8.buildingentities.*;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.Building;
+import sdu.group8.commonbuilding.data.Building;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonbuilding.services.Buildable;
 
-/**
- *
- * @author Alexander
- */
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class)
     ,

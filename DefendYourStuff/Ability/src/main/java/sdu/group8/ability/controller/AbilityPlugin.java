@@ -1,18 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sdu.group8.ability.controller;
 
+import sdu.group8.ability.data.SlashData;
+import sdu.group8.ability.data.FireballData;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IPreStartPluginService;
-import sdu.group8.commonability.abilities.*;
 import sdu.group8.ability.spellbook.*;
+import sdu.group8.commonability.data.AbilityKey;
 
 @ServiceProviders(value = {
     @ServiceProvider(service = IPreStartPluginService.class),
@@ -20,17 +18,16 @@ import sdu.group8.ability.spellbook.*;
 )
 public class AbilityPlugin implements IGamePluginService, IPreStartPluginService {
 
-    private AbilityCatalog abilityCatalog;
+    private AbilityCatalog abilityDataCatalog;
 
     public AbilityPlugin() {
-        abilityCatalog = AbilityCatalog.getInstance();
+        abilityDataCatalog = AbilityCatalog.getInstance();
     }
 
     @Override
-    public void preStart(GameData gameData) {        
-        abilityCatalog.addAbility(new FireballData(), new Fireball());
-        //abilityCatalog.addAbility(new ArrowData(), new Arrow());
-        abilityCatalog.addAbility(new SlashData(), new Slash());
+    public void preStart(GameData gameData) {
+        abilityDataCatalog.addAbility(new FireballData(new AbilityKey()), new Fireball());
+        abilityDataCatalog.addAbility(new SlashData(new AbilityKey()), new Fireball());
     }
 
     @Override
@@ -40,7 +37,7 @@ public class AbilityPlugin implements IGamePluginService, IPreStartPluginService
 
     @Override
     public void stop(GameData gameData, World world) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
 }

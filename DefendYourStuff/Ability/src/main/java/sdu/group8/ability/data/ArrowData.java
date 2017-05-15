@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sdu.group8.commonability.abilities;
+package sdu.group8.ability.data;
 
-import sdu.group8.common.ability.AbilityData;
-import sdu.group8.commonabilitytypes.RangedAbility;
+import sdu.group8.commonability.data.AbilityData;
+import sdu.group8.commonability.data.AbilityKey;
 
 /**
  *
@@ -14,8 +14,8 @@ import sdu.group8.commonabilitytypes.RangedAbility;
  */
 public class ArrowData extends AbilityData {
     
-    public ArrowData() {
-        super(RangedAbility.class, 10, "Arrow", true);
+    public ArrowData(AbilityKey key) {
+        super(2, "Arrow", key);
     }
     
 }

@@ -6,7 +6,7 @@
 package sdu.group8.commonbuilding.services;
 
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.weapon.Weapon;
+import sdu.group8.commonweapon.data.Weapon;
 
 /**
  * IShop is used for communication between other entities and buildings implementing

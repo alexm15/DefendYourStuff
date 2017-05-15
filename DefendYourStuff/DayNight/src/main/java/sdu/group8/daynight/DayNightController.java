@@ -13,10 +13,6 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.services.IGameProcessingService;
 
-/**
- *
- * @author Mads
- */
 @ServiceProvider(service = IGameProcessingService.class)
 
 public class DayNightController implements IGameProcessingService {

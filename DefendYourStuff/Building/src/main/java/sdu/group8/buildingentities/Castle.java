@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.buildingentities;
 
 import sdu.group8.common.data.Dimension;
@@ -12,12 +7,16 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
+import sdu.group8.commonability.data.Ability;
+import sdu.group8.commonability.services.IAbilityAction;
+import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonbuilding.services.ICastle;
 
 /**
- *
- * @author Alexander
+ * Represents the main defensive building of the game. If the enemies destroys 
+ * this building, then the game will end.
  */
+public class Castle extends DefensiveBuilding implements IAbilityAction {
 public class Castle extends DefensiveBuilding implements ICastle {
 
     public Castle(Position pos) {

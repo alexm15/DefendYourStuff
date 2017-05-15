@@ -5,14 +5,8 @@
  */
 package sdu.group8.commonplayer;
 
-import sdu.group8.common.data.HealthSystem;
-import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 
-/**
- *
- * @author karim møller
- */
 public interface IPlayerService {
 
     /**

@@ -9,20 +9,14 @@ import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
-import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonplayer.IPlayerService;
 import sdu.group8.commonweapon.services.IWeaponService;
 
-/**
- *
- * @author joach
- */
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = IGamePluginService.class),
@@ -38,8 +32,9 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
     public void process(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Player.class)) {
             Player player = (Player) entity;
-            if (player.getCurrentHealth() == 0) {
-                //TODO: remove player from world. Set isGameOver in gameData.           
+            if (player.getCurrentHealth() <= 0) {
+            //TODO: remove player from world. Set isGameOver in gameData.
+                world.removeEntity(player);
             }
             //Handle gravity for player
             if (!player.isEntityOnGround(player, gameData)) {
@@ -57,6 +52,9 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             Position position = new Position(player.getX() + horizontalVelocity, player.getY() + verticalVelocity * gameData.getDelta());
             player.setPosition(position);
             gameData.setPlayerPosition(position);
+            
+            // Update cooldown for player's abilities.
+            player.getAbilityContainer().updateCooldown(gameData.getDelta());
         }
 
     }
@@ -92,7 +90,6 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
         }
 
         if (gameData.getKeys().isKeyPressed(gameData.getKeys().SPACE)) {
-            AbilitySPI abilityProvicer = Lookup.getDefault().lookup(AbilitySPI.class);
             float aimX = 0;
             float aimY = 0;
             try {
@@ -102,7 +99,8 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
                 System.out.println("Mouse not in screen");
                 e.printStackTrace();
             }
-            world.addEntity(abilityProvicer.useAbility(player, aimX, aimY, player.getWeapon().getAbilityOne()));
+
+            player.getWeapon().useAbility(player, 0, aimX, aimY, world);
         }
 
     }
