@@ -42,12 +42,12 @@ public class World {
         return r;
     }
     
-    public <E extends Entity> Collection<Entity> getCastedEntities(Class<E>... entityTypes) {
-        Collection<Entity> r = new ArrayList<>();
+    public <E extends Entity> Collection<E> getCastedEntities(Class<E>... entityTypes) {
+        Collection<E> r = new ArrayList<>();
         for (Entity e : getEntities()) {
             for (Class<E> entityType : entityTypes) {
                 if (entityType.isInstance(e)) {
-                    r.add(e);
+                    r.add((E)e);
                 }
             }
         }
