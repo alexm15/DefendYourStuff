@@ -57,7 +57,6 @@ public class AI_ControlSystem
         enemy.getAbilityContainer().setCooldownOne(enemy.getAbilityContainer().getCooldownOne() - gameData.getDelta());
 
         Entity closestTarget = getClosesTarget(enemy, world);
-
         boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
 
         //shoot
@@ -92,7 +91,6 @@ public class AI_ControlSystem
             if (distanceToEntity(enemy, closestTarget) > maxShootDistance) {
                 moveEnemyToTarget(enemy, closestTarget, gameData);
             }
-
         }
     }
 

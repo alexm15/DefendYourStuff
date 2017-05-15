@@ -95,7 +95,7 @@ public class BuildingControlSystem
     private void castleProcess(GameData gameData, World world) {
         for (Entity entity : world.getEntities(Castle.class)) {
             Building castle = (Building) entity;
-            if (castle.getHealth() == 0) {
+            if (castle.getHealth() <= 0) {
                 //TODO: set gamestate to game over
                 System.out.println("Game Over");
                 createDestroyedCastleBuilding(world, castle.getPosition());

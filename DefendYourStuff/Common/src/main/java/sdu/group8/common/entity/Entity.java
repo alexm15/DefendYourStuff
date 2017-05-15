@@ -9,9 +9,6 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.*;
 import java.util.UUID;
 
-import java.util.ArrayList;
-import sdu.group8.common.ability.Ability;
-import sdu.group8.common.ability.AbilityContainer;
 
 /**
  *
@@ -63,14 +60,14 @@ public abstract class Entity {
      * @param isLeft
      */
     public void setDirection(boolean isLeft) {
-        this.direction.setIsLeft(isLeft);
+        this.direction.setLeft(isLeft);
         this.getImage().setReversed(isLeft);
     }
 
     //Add image comment <3
     public void setDirection(Direction direction) {
         this.direction = direction;
-        this.getImage().setReversed(direction.isIsRight());
+        this.getImage().setReversed(direction.isRight());
     }
 
     public Image getImage() {
