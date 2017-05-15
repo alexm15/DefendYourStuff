@@ -15,7 +15,7 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonability.services.AbilitySPI;
-import sdu.group8.ability.types.RangedAbility;
+import sdu.group8.ability.types.*;
 
 @ServiceProviders(value = {
     @ServiceProvider(service = IGameProcessingService.class),
@@ -87,17 +87,17 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
 
     @Override
     public List<AbilityData> getMeleeAbilities() {
-        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(MeleeAbility.class);
     }
 
     @Override
     public List<AbilityData> getPositioningAbilities() {
-        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(PositioningAbility.class);
     }
 
     @Override
     public List<AbilityData> getSummoningAbilities() {
-        return abilityCatalog.getAllAbilityDataForType(RangedAbility.class);
+        return abilityCatalog.getAllAbilityDataForType(SummoningAbility.class);
     }
 
 }
