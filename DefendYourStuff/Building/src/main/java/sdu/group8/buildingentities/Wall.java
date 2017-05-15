@@ -5,7 +5,9 @@
  */
 package sdu.group8.buildingentities;
 
+import sdu.group8.common.ability.Ability;
 import sdu.group8.common.ability.AbilityData;
+import sdu.group8.common.ability.IAbilityAction;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
@@ -15,6 +17,9 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonbuilding.services.IDefBuilding;
+import sdu.group8.commonenemy.IEnemyAction;
+import sdu.group8.commonplayer.IPlayer;
+import sdu.group8.commonplayer.IPlayerAction;
 
 /**
  *
@@ -22,7 +27,7 @@ import sdu.group8.commonbuilding.services.IDefBuilding;
  */
 public class Wall
         extends Building
-        implements IDefBuilding {
+        implements IDefBuilding, IPlayerAction, IAbilityAction, IEnemyAction {
 
     public Wall(String imageURL, Dimension dimension, Position pos, 
             CollisionType collisionType, BuildingType buildingType, 
@@ -47,6 +52,24 @@ public class Wall
     @Override
     public void upgradeBuilding() {
         throw new UnsupportedOperationException("Feature not implemented yet");
+    }
+
+    @Override
+    public void playerAction(Entity player) {
+        //TODO: Add interaction menu for player to perform actions on the building
+    }
+
+    @Override
+    public void enemyAction(Entity enemy) {
+        //TODO: Might alert player that this building is being attacked.
+    }
+
+    @Override
+    public void abilityAction(Ability ab) {
+        if (!(ab.getOwner().equals(this) && (!(ab.getOwner() instanceof IPlayer)))) {
+            this.reduceHealth(ab.getDamage());
+        }
+        
     }
 
 }
