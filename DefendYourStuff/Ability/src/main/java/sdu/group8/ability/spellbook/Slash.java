@@ -14,18 +14,14 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 
-/**
- *
- * @author Martin
- */
 public class Slash extends MeleeAbility {
     
     public Slash() {
-        super(0.25f, 0f, 0f, new DamageRange(10,20), "abilities/slash.png", new Dimension(25,50,25), new Direction(false), new Position(0,0), CollisionType.CIRCLE, new EffectContainer(), null, false);
+        super(0.25f, 0f, 0f, new DamageRange(3,8), "abilities/slash.png", new Dimension(25,50,25), new Direction(false), new Position(0,0), CollisionType.CIRCLE, new EffectContainer(), null, false);
     }
     
     public Slash(Entity owner, float x, float y, boolean directionLeft) {
-        super(0.25f, 0f, 0f, new DamageRange(10,20), "abilities/slash.png", new Dimension(25,50,25), new Direction(directionLeft), new Position(x,y), CollisionType.CIRCLE, new EffectContainer(), owner, false);
+        super(0.25f, 0f, 0f, new DamageRange(3,8), "abilities/slash.png", new Dimension(25,50,25), new Direction(directionLeft), new Position(x,y), CollisionType.CIRCLE, new EffectContainer(), owner, false);
     }
 
     @Override

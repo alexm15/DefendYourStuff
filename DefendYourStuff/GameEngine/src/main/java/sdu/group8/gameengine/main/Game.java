@@ -176,16 +176,15 @@ public class Game
     }
 
     private void updateGameState() {
-        
-        
+
         if (gameData.getKeys().isKeyDown(gameData.getKeys().ESCAPE)) {
-            if(currentGameState.equals(GameState.GAMEOVER)) {
+            if (currentGameState.equals(GameState.GAMEOVER)) {
                 currentGameState = GameState.PLAY;
             } else {
                 currentGameState = GameState.GAMEOVER;
             }
         }
-        
+
         for (Entity entity : world.getEntities()) {
             if (entity instanceof ICastle) {
                 if (((ICastle) entity).getHealthSystem().getHealth() <= 0) {
@@ -230,24 +229,24 @@ public class Game
         drawMap();                      // Draw chunks
         drawEntities();                 // Draw entities
         drawHUD();
-        
+
         if (currentGameState.equals(GameState.GAMEOVER)) {
             drawGameOverScreen();
         }
-        
+
         batch.end();
     }
 
     private void drawGameOverScreen() {
-        
+
         float posX = CAM.position.x - 500;
         float posY = CAM.position.y - 50;
         String texturePath = "gameOverText.png";
         Image gameOver = new Image(texturePath, false);
-        
+
         drawTextureFromAsset(gameOver, posX, posY);
     }
-    
+
     /**
      * Update the map with a new chunk, if the camera is near the last chunk on
      * either side of the map.
@@ -462,23 +461,34 @@ public class Game
 
     private void drawCastleHealth(HealthSystem healthSystem, float posX, float posY) {
         float currentHealth = healthSystem.getHealth();
-        float healthbarWidth = healthSystem.getMaxHealth();
-        float healthbarHeight = 10;
+        float maxHealth = healthSystem.getMaxHealth();
+
+        float healthbarWidth = 200;
+        float healthbarHeight = 20;
+
+        float filledWidth = healthbarWidth * (currentHealth / maxHealth);
+
         float barPosX = posX + healthbarWidth;
         float barPosY = posY - healthbarHeight * 1.2f;
 
         font.setColor(Color.BLACK);
         font.draw(batch, "Castle health: ", posX, posY);
-        drawHealthbar(barPosX, barPosY, healthbarWidth, healthbarHeight, currentHealth);
+        drawHealthbar(barPosX, barPosY, healthbarWidth, healthbarHeight, filledWidth);
     }
 
     private void drawHealthbarAtCharacter(Character owner) {
-        float currentHealth = owner.getCurrentHealth() / 2;
-        float healthbarWidth = owner.getMaxHealth() / 2;
+        float currentHealth = owner.getCurrentHealth();
+        float maxHealth = owner.getMaxHealth();
+
+        float healthbarWidth = owner.getWidth();
         float healthbarHeight = 10;
+
+        float filledWidth = healthbarWidth * (currentHealth / maxHealth);
+
         float barPosX = owner.getX() - healthbarWidth / 2;
-        float barPosY = owner.getY() + (owner.getDimension().getHeight() / 2) + (healthbarHeight * 2);
-        drawHealthbar(barPosX, barPosY, healthbarWidth, healthbarHeight, currentHealth);
+        float barPosY = owner.getY() + (owner.getHeight() / 2) + (healthbarHeight * 2);
+
+        drawHealthbar(barPosX, barPosY, healthbarWidth, healthbarHeight, filledWidth);
     }
 
     /**
