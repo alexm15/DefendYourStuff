@@ -25,17 +25,22 @@ public class DayNightController implements IGameProcessingService {
     private final float BIG_ENEMY = 10; //enemy value
     private final float MEDIUM_ENEMY = 5; //enemy value
 
-    private float levelBase = 5; //amount of enemies that there is room for in world. should be incressed over time to add to player difficulty.
+    private float levelBase = 0; //amount of enemies that there is room for in world. should be incressed over time to add to player difficulty.
 
     private int amountOfEnemies = 2; //total mount of enemies we can spawn
 
     @Override
     public void process(GameData gameData, World world) {
         IEnemyService enemyProvider = lookup.lookup(IEnemyService.class);
-levelBase += gameData.getDelta();
+        levelBase += gameData.getDelta(); // to incresse the amount of enemies that thre is  spawned over time.
+
         if (countdown <= 0) {
+            // create an array where the amount of each enemy that should be spawned is where index 0 = big and index 1 = medium
             float[] spawnEnemies = whatToSpawn();
+
             System.out.println(Arrays.toString(spawnEnemies));
+
+            //spawning
             for (int j = 0; j < spawnEnemies[0]; j++) {
                 enemyProvider.createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
                 enemyProvider.createBigEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
@@ -47,7 +52,7 @@ levelBase += gameData.getDelta();
             }
 
             countdown = COUNTDOWNTIME;
-            
+
         }
         timer(gameData);
     }
@@ -64,7 +69,7 @@ levelBase += gameData.getDelta();
     }
 
     private float[] _whatToSpawn(float fill, float[] whatToSpawn) {
-        while (fill < (int)levelBase) {
+        while (fill < (int) levelBase) {
             if (fill + BIG_ENEMY <= levelBase) {
                 whatToSpawn[0]++;
                 fill += BIG_ENEMY;
@@ -75,7 +80,8 @@ levelBase += gameData.getDelta();
             } else {
                 break;
             }
-            System.out.println(fill);
+            System.out.println("lvl: " + levelBase);
+            System.out.println("fill: " + fill);
         }
         return whatToSpawn;
     }
