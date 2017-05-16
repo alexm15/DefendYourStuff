@@ -63,10 +63,10 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     @Override
     public void start(GameData gameData, World world) {
         //TODO: Needs to be remove because DayNight module spawns enemies instead.
-        createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
-        createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-        createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-        createBigEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
+//        createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
+//        createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
+//        createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
+//        createBigEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
     }
 
     @Override
