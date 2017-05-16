@@ -16,16 +16,16 @@ import sdu.group8.commoncharacter.Character;
  */
 public class Attack {
 
-    public void useAbility(Character enemy, World world, Entity closestTarget, AbilityData abilityData) {
-        setDirection(enemy, closestTarget);
-        abilityData.useAbility(enemy, world);
+    public void useAbility(Character character, World world, Entity closestTarget, AbilityData abilityData) {
+        setDirection(character, closestTarget);
+        abilityData.useAbility(character, world);
     }
 
-    private void setDirection(Character enemy, Entity closestTarget) {
-        if (enemy.getX() < closestTarget.getX()) {
-            enemy.setDirection(false);
-        } else if (enemy.getX() > closestTarget.getX()) {
-            enemy.setDirection(true);
+    private void setDirection(Character character, Entity closestTarget) {
+        if (character.getX() < closestTarget.getX()) {
+            character.setDirection(false);
+        } else if (character.getX() > closestTarget.getX()) {
+            character.setDirection(true);
         }
     }
     

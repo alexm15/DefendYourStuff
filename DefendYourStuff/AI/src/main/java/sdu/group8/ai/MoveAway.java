@@ -15,16 +15,16 @@ import sdu.group8.commoncharacter.Character;
  */
 public class MoveAway {
 
-    public void increaseDistance(Character enemy, Entity closestTarget, GameData gameData) {
-        float horizontalPos = enemy.getX();
-        if (enemy.getX() > closestTarget.getX()) {
-            horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
-            enemy.setDirection(false);
-        } else if (enemy.getX() < closestTarget.getX()) {
-            horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
-            enemy.setDirection(true);
+    public void increaseDistance(Character character, Entity closestTarget, GameData gameData) {
+        float horizontalPos = character.getX();
+        if (character.getX() > closestTarget.getX()) {
+            horizontalPos += character.getMoveSpeed() * gameData.getDelta();
+            character.setDirection(false);
+        } else if (character.getX() < closestTarget.getX()) {
+            horizontalPos -= character.getMoveSpeed() * gameData.getDelta();
+            character.setDirection(true);
         }
-        enemy.setX(horizontalPos);
+        character.setX(horizontalPos);
     }
     
 }

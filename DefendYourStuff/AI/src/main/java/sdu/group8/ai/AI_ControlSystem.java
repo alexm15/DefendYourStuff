@@ -5,17 +5,13 @@
  */
 package sdu.group8.ai;
 
-import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
-import sdu.group8.commonability.data.AbilityData;
-import sdu.group8.commonability.data.Ability;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.commonai.AI_Service;
-import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commoncharacter.Character;
 
 /**

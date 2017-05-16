@@ -16,24 +16,24 @@ import sdu.group8.commoncharacter.Character;
  */
 public class MoveTo {
 
-    public void moveEnemyToTarget(Character enemy, Entity target, GameData gameData) {
+    public void moveEnemyToTarget(Character character, Entity target, GameData gameData) {
         Random random = new Random();
         float targetX = target.getX();
-        float horizontalPos = enemy.getX();
-        if (enemy.getReactionTimer() == 0) {
+        float horizontalPos = character.getX();
+        if (character.getReactionTimer() == 0) {
             if (random.nextInt(10) == 5) {
-                enemy.resetReactiontime();
+                character.resetReactiontime();
             }
-            if (enemy.getX() < targetX) {
-                horizontalPos += enemy.getMoveSpeed() * gameData.getDelta();
-                enemy.setDirection(false);
-            } else if (enemy.getX() > targetX) {
-                horizontalPos -= enemy.getMoveSpeed() * gameData.getDelta();
-                enemy.setDirection(true);
+            if (character.getX() < targetX) {
+                horizontalPos += character.getMoveSpeed() * gameData.getDelta();
+                character.setDirection(false);
+            } else if (character.getX() > targetX) {
+                horizontalPos -= character.getMoveSpeed() * gameData.getDelta();
+                character.setDirection(true);
             }
-            enemy.setX(horizontalPos);
+            character.setX(horizontalPos);
         } else {
-            enemy.reduceReactiontime(1);
+            character.reduceReactiontime(1);
         }
     }
     
