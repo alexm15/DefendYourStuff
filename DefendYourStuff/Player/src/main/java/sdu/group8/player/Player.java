@@ -28,7 +28,7 @@ public class Player extends Character implements IAbilityAction, IPlayer, IEnemy
     private final float JUMP_FORCE = 350;
     
     public Player(Position position, AbilityData... ab) {
-        super(200, 1.25f, 100, "Player/defaultPlayer.png", new Dimension(50, 50, 25), new Direction(true), position, CollisionType.BOX, ab);
+        super(200, 1.25f, 1000, "Player/defaultPlayer.png", new Dimension(50, 50, 25), new Direction(true), position, CollisionType.BOX, ab);
     }
 
     /**
