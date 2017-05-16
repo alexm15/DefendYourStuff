@@ -88,8 +88,8 @@ public class MapController implements IGamePluginService, IMapUpdate {
         } else {
             lastChunk = world.getChunksRight().get(world.getChunksRight().size() - 1);
         }
+        
         return lastChunk;
-
     }
 
     /**

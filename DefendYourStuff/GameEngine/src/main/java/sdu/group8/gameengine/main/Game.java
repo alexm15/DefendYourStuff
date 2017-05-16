@@ -253,31 +253,36 @@ public class Game
      */
     private void checkMapBoundary() {
         float camPositionX = CAM.position.x;
+        
+        try {
+            // If the player is on the left side in the world.
+            if (camPositionX < 0) {
 
-        // If the player is on the left side in the world.
-        if (camPositionX < 0) {
+                Chunk secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 2);
+                float secondLastOffsetX = secondLastChunk.getPositionOffset();
 
-            Chunk secondLastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 2);
-            float secondLastOffsetX = secondLastChunk.getPositionOffset();
+                // Update Map if camera is near the end at the right side
+                if (camPositionX < secondLastOffsetX) {
+                    for (IMapUpdate service : getIMapUpdate()) {
+                        service.update(world, true);
+                    }
+                }
 
-            // Update Map if camera is near the end at the right side
-            if (camPositionX < secondLastOffsetX) {
-                for (IMapUpdate service : getIMapUpdate()) {
-                    service.update(world, true);
+            } else {
+                Chunk secondLastChunk = world.getChunksRight().get(world.getChunksRight().size() - 2);
+                float secondLastOffsetX = secondLastChunk.getPositionOffset();
+
+                // Update Map if camera is near the end at the left side
+                if (camPositionX > secondLastOffsetX) {
+                    for (IMapUpdate service : getIMapUpdate()) {
+                        service.update(world, false);
+                    }
                 }
             }
-
-        } else {
-            Chunk secondLastChunk = world.getChunksRight().get(world.getChunksRight().size() - 2);
-            float secondLastOffsetX = secondLastChunk.getPositionOffset();
-
-            // Update Map if camera is near the end at the left side
-            if (camPositionX > secondLastOffsetX) {
-                for (IMapUpdate service : getIMapUpdate()) {
-                    service.update(world, false);
-                }
-            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
+
     }
 
     /**
@@ -286,13 +291,17 @@ public class Game
      * chunk.
      */
     private void drawMap() {
+        try {
+            for (Chunk chunk : world.getChunksRight()) {
+                renderChunk(chunk);
+            }
 
-        for (Chunk chunk : world.getChunksRight()) {
-            renderChunk(chunk);
-        }
-
-        for (Chunk chunk : world.getChunksLeft()) {
-            renderChunk(chunk);
+            for (Chunk chunk : world.getChunksLeft()) {
+                renderChunk(chunk);
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Can't load chunks");
+            e.printStackTrace();
         }
     }
 
