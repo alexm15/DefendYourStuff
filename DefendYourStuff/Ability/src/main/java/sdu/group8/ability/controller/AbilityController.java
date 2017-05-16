@@ -18,8 +18,7 @@ import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.ability.types.*;
 
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class)
-    ,
+    @ServiceProvider(service = IGameProcessingService.class),
     @ServiceProvider(service = AbilitySPI.class)}
 )
 public class AbilityController implements IGameProcessingService, AbilitySPI {
@@ -68,7 +67,21 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     }
 
     private void createAbility(Entity owner, AbilityData abilityData, float aimX, float aimY, World world) {
-        Ability ab = abilityCatalog.getAbilityForType(abilityData).getNewInstance(owner, owner.getX(), owner.getY(), owner.getDirection().isLeft());
+        float x = owner.getX();
+        float y = owner.getY();
+        boolean directionLeft = owner.getDirection().isLeft();
+
+        Ability ab = abilityCatalog.getAbilityForType(abilityData).getNewInstance(owner, x, y, directionLeft);
+
+        float offset = (owner.getWidth() / 2) + (ab.getWidth() / 2);
+        if (directionLeft) {
+            x -= offset;
+        } else {
+            x += offset;
+        }
+        
+        ab.setX(x);
+        
         world.addEntity(ab);
 
     }

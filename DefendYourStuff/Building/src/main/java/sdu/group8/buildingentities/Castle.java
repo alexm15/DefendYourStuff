@@ -17,7 +17,7 @@ import sdu.group8.commonbuilding.services.ICastle;
 public class Castle extends DefensiveBuilding implements IAbilityAction, ICastle {
 
     public Castle(Position pos) {
-        super("Building/castle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, true, 0, 10000);
+        super("Building/castle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, true, 0, 100);
     }
 
     @Override

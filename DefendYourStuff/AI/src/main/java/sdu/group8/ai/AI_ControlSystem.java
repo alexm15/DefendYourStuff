@@ -33,7 +33,7 @@ public class AI_ControlSystem implements AI_Service {
 
         if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
             moveEnemyToTarget(enemy, closestTarget, gameData);
-        } else if (enemy.getAbility(0).isOnCooldown()) {
+        } else if (!enemy.getAbility(0).isOnCooldown()) {
             try {
                 useAbility(enemy, world, closestTarget, enemy.getAbility(0));
             } catch (IndexOutOfBoundsException e) {
