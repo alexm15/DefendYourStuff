@@ -47,7 +47,7 @@ public class RangedAbility extends Ability implements IEnemyAction, IPlayerActio
 
     @Override
     public void playerAction(Entity player) {
-        if (this.owner instanceof IPlayer) {
+        if ((this.owner instanceof IPlayer)||(this.owner instanceof Building)) {
             
         } else {
             this.setExpiration(0);
@@ -56,7 +56,7 @@ public class RangedAbility extends Ability implements IEnemyAction, IPlayerActio
 
     @Override
     public void buildingAction(Entity building) {
-        if (this.owner instanceof Building) {
+        if ((this.owner instanceof Building)||(this.owner instanceof IPlayer)){
             
         } else {
             this.setExpiration(0);

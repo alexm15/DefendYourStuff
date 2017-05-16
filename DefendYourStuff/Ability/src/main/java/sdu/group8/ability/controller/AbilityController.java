@@ -18,7 +18,8 @@ import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.ability.types.*;
 
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class),
+    @ServiceProvider(service = IGameProcessingService.class)
+    ,
     @ServiceProvider(service = AbilitySPI.class)}
 )
 public class AbilityController implements IGameProcessingService, AbilitySPI {
@@ -28,33 +29,30 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     @Override
     public void process(GameData gameData, World world) {
 
-        for (Entity ability : world.getEntities()) {
-            if (ability instanceof Ability) {
-                Ability ab = (Ability) ability;
-                ab.updateExpiration(gameData.getDelta());
-                if (ab.getExpiration() <= 0) {
-                    world.removeEntity(ability);
-                } else if (!ab.isEntityOnGround(ability, gameData)) {
-                    float posX = ab.getX();
-                    float posY = ab.getY();
-                    float verticalVel = ab.getVerticalVelocity();
-                    float weight = ab.getWeight();
-                    float deltaTime = gameData.getDelta();
-                    float dx = ab.getDx();
-                    float dy = ab.getDy();
+        for (Ability ability : world.getCastedEntities(Ability.class)) {
+            ability.updateExpiration(gameData.getDelta());
+            if (ability.getExpiration() <= 0) {
+                world.removeEntity(ability);
+            } else if (!ability.isEntityOnGround(ability, gameData)) {
+                float posX = ability.getX();
+                float posY = ability.getY();
+                float verticalVel = ability.getVerticalVelocity();
+                float weight = ability.getWeight();
+                float deltaTime = gameData.getDelta();
+                float dx = ability.getDx();
+                float dy = ability.getDy();
 
-                    verticalVel -= weight * gameData.getGRAVITY();
-                    posY += ((dy - verticalVel) * deltaTime);
+                verticalVel -= weight * gameData.getGRAVITY();
+                posY += ((dy - verticalVel) * deltaTime);
 
-                    if (ab.getDirection().isLeft()) {
-                        posX -= (dx * deltaTime);
-                    } else {
-                        posX += (dx * deltaTime);
-                    }
-
-                    ab.setX(posX);
-                    ab.setY(posY);
+                if (ability.getDirection().isLeft()) {
+                    posX -= (dx * deltaTime);
+                } else {
+                    posX += (dx * deltaTime);
                 }
+
+                ability.setX(posX);
+                ability.setY(posY);
             }
         }
     }
