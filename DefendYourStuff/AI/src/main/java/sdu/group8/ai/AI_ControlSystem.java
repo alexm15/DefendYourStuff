@@ -40,7 +40,7 @@ public class AI_ControlSystem implements AI_Service, IGamePluginService {
 
         if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
             moveTo.moveEnemyToTarget(enemy, closestTarget, gameData);
-        } else if (enemy.getAbility(0).isOnCooldown()) {
+        } else if (!enemy.getAbility(0).isOnCooldown()) {
             try {
                 attack.useAbility(enemy, world, closestTarget, enemy.getAbility(0));
             } catch (IndexOutOfBoundsException e) {

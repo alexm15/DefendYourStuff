@@ -28,33 +28,30 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     @Override
     public void process(GameData gameData, World world) {
 
-        for (Entity ability : world.getEntities()) {
-            if (ability instanceof Ability) {
-                Ability ab = (Ability) ability;
-                ab.updateExpiration(gameData.getDelta());
-                if (ab.getExpiration() <= 0) {
-                    world.removeEntity(ability);
-                } else if (!ab.isEntityOnGround(ability, gameData)) {
-                    float posX = ab.getX();
-                    float posY = ab.getY();
-                    float verticalVel = ab.getVerticalVelocity();
-                    float weight = ab.getWeight();
-                    float deltaTime = gameData.getDelta();
-                    float dx = ab.getDx();
-                    float dy = ab.getDy();
+        for (Ability ability : world.getCastedEntities(Ability.class)) {
+            ability.updateExpiration(gameData.getDelta());
+            if (ability.getExpiration() <= 0) {
+                world.removeEntity(ability);
+            } else if (!ability.isEntityOnGround(ability, gameData)) {
+                float posX = ability.getX();
+                float posY = ability.getY();
+                float verticalVel = ability.getVerticalVelocity();
+                float weight = ability.getWeight();
+                float deltaTime = gameData.getDelta();
+                float dx = ability.getDx();
+                float dy = ability.getDy();
 
-                    verticalVel -= weight * gameData.getGRAVITY();
-                    posY += ((dy - verticalVel) * deltaTime);
+                verticalVel -= weight * gameData.getGRAVITY();
+                posY += ((dy - verticalVel) * deltaTime);
 
-                    if (ab.getDirection().isLeft()) {
-                        posX -= (dx * deltaTime);
-                    } else {
-                        posX += (dx * deltaTime);
-                    }
-
-                    ab.setX(posX);
-                    ab.setY(posY);
+                if (ability.getDirection().isLeft()) {
+                    posX -= (dx * deltaTime);
+                } else {
+                    posX += (dx * deltaTime);
                 }
+
+                ability.setX(posX);
+                ability.setY(posY);
             }
         }
     }
@@ -70,7 +67,21 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
     }
 
     private void createAbility(Entity owner, AbilityData abilityData, float aimX, float aimY, World world) {
-        Ability ab = abilityCatalog.getAbilityForType(abilityData).getNewInstance(owner, owner.getX(), owner.getY(), owner.getDirection().isLeft());
+        float x = owner.getX();
+        float y = owner.getY();
+        boolean directionLeft = owner.getDirection().isLeft();
+
+        Ability ab = abilityCatalog.getAbilityForType(abilityData).getNewInstance(owner, x, y, directionLeft);
+
+        float offset = (owner.getWidth() / 2) + (ab.getWidth() / 2);
+        if (directionLeft) {
+            x -= offset;
+        } else {
+            x += offset;
+        }
+        
+        ab.setX(x);
+        
         world.addEntity(ab);
 
     }

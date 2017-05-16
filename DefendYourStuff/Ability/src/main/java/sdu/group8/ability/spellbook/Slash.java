@@ -30,11 +30,6 @@ public class Slash extends MeleeAbility {
 
     @Override
     public Slash getNewInstance(Entity owner, float x, float y, boolean directionLeft) {
-        if (directionLeft) {
-            x = x-owner.getWidth()/2;
-        } else {
-            x = x+owner.getWidth()/2;  
-        }
         return new Slash(owner, x, y, directionLeft);
     }
     
