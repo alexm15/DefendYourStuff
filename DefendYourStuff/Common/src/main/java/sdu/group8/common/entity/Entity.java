@@ -19,7 +19,7 @@ public abstract class Entity {
     protected Image image;
 
     public Entity(String imageURL, Dimension dimension, Direction direction, Position position, CollisionType collisionType) {
-        this.image = new Image(imageURL, false);
+        this.image = new Image(imageURL, direction.isLeft());
         this.ID = UUID.randomUUID();
         this.dimension = new Dimension(dimension);
         this.pos = new Position(position);
@@ -28,12 +28,12 @@ public abstract class Entity {
     }
 
     public Entity(String imageURL, Dimension dimension, Position position, CollisionType collisionType) {
-        this.image = new Image(imageURL, false);
         this.ID = UUID.randomUUID();
         this.dimension = new Dimension(dimension);
         this.pos = new Position(position);
         this.collisionType = collisionType;
         this.direction = new Direction(true);
+        this.image = new Image(imageURL, this.direction.isLeft());
     }
 
     public Position getPos() {

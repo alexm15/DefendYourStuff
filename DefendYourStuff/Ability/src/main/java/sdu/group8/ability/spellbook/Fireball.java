@@ -13,7 +13,6 @@ import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.commonability.data.Ability;
 
 public class Fireball extends RangedAbility {
 
