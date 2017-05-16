@@ -105,8 +105,11 @@ public class AbilityData {
 
     public void useAbility(Entity owner, float aimX, float aimY, World world) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-        abilityProvider.useAbility(owner, this, aimX, aimY, world);
-        this.isActive = true;
+        if (abilityProvider != null) {
+            abilityProvider.useAbility(owner, this, aimX, aimY, world);
+            this.isActive = true;
+        }
+        
     }
 
 }
