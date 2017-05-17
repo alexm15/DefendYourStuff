@@ -17,7 +17,7 @@ import sdu.group8.common.services.IGameProcessingService;
 @ServiceProvider(service = IGameProcessingService.class)
 
 public class DayNightController implements IGameProcessingService {
-//invariant: vi tager den største indtil der ikke er plads så tager vi den næst største
+//invariant: vi tager et par a bigEnemy og MediumEnemy indtil der ikke er plads til en big enemy så tager den medium enemy 
 
     private Lookup lookup = Lookup.getDefault();
     private final float COUNTDOWNTIME = 10;
@@ -43,10 +43,10 @@ public class DayNightController implements IGameProcessingService {
             //spawning
             for (int j = 0; j < spawnEnemies[0]; j++) {
                 enemyProvider.createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-                enemyProvider.createBigEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
+                enemyProvider.createBigEnemy(world, gameData, new Position(-600, gameData.getTILE_SIZE()));
             }
             for (int i = 0; i < spawnEnemies[1]; i++) {
-                enemyProvider.createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
+                enemyProvider.createMediumEnemy(world, gameData, new Position(-600, gameData.getTILE_SIZE()));
                 enemyProvider.createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
 
             }
