@@ -17,8 +17,10 @@ import sdu.group8.common.services.IGameProcessingService;
 @ServiceProvider(service = IGameProcessingService.class)
 
 public class DayNightController implements IGameProcessingService {
-//invariant: vi tager et par a bigEnemy og MediumEnemy indtil der ikke er plads til en big enemy så tager den medium enemy 
 
+ //invariant: vi tager et par a bigEnemy og MediumEnemy indtil der ikke er plads til en big enemy så tager den medium enemy 
+// koden er sand så længe at enemiesene vægt går op i hinanden 
+    // for at bevise det skal vi vise vores nytte og agumentere for hvorfor det er sådan(se alexsanders billede).
     private Lookup lookup = Lookup.getDefault();
     private final float COUNTDOWNTIME = 10;
     private float countdown = COUNTDOWNTIME;
@@ -32,6 +34,7 @@ public class DayNightController implements IGameProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         IEnemyService enemyProvider = lookup.lookup(IEnemyService.class);
+        
         levelBase += gameData.getDelta(); // to incresse the amount of enemies that thre is  spawned over time.
 
         if (countdown <= 0) {
