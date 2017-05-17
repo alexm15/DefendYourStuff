@@ -20,7 +20,7 @@ public class DayNightController implements IGameProcessingService {
 
  //invariant: vi tager et par a bigEnemy og MediumEnemy indtil der ikke er plads til en big enemy så tager den medium enemy 
 // koden er sand så længe at enemiesene vægt går op i hinanden 
-    // for at bevise det skal vi vise vores nytte og agumentere for hvorfor det er sådan(se alexsanders billede).
+    // for at bevise det skal vi vise vores nytte og agumentere for hvorfor det er sådan(se alexsanders billede https://www.messenger.com/t/1091498974312548 ).
     private Lookup lookup = Lookup.getDefault();
     private final float COUNTDOWNTIME = 10;
     private float countdown = COUNTDOWNTIME;
