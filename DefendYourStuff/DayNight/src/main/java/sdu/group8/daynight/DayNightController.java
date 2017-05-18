@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.daynight;
 
-import java.util.Arrays;
+import java.util.Random;
 import org.openide.util.Lookup;
 import sdu.group8.commonenemy.IEnemyService;
 import org.openide.util.lookup.ServiceProvider;
@@ -82,11 +77,15 @@ public class DayNightController
     }
 
     private void spawnMediumEnemy(IEnemyService spawner, World world, GameData gameData) {
-        spawner.createMediumEnemy(world, gameData, new Position(-600, gameData.getGroundHeight()));
-        spawner.createMediumEnemy(world, gameData, new Position(1600, gameData.getGroundHeight()));
+        spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(1600, 2000), gameData.getGroundHeight()));
+        spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(-600, -1200), gameData.getGroundHeight()));
     }
 
     private float randomIntRange(int min, int max) {
-        return 0;
+        Random random = new Random();
+        if (min < 0 || max < 0) {
+            return (random.nextInt(Math.abs(max - min))+ Math.abs(min) + 1) * -1;
+        }
+        return random.nextInt(max - min)+ min + 1;
     }
 }
