@@ -14,21 +14,18 @@ import sdu.group8.common.services.IGameProcessingService;
 public class DayNightController
         implements IGameProcessingService {
 
-    //invariant: vi tager et par a bigEnemy og MediumEnemy indtil der ikke er plads til en big enemy så tager den medium enemy 
-// koden er sand så længe at enemiesene vægt går op i hinanden 
-    // for at bevise det skal vi vise vores nytte og agumentere for hvorfor det er sådan(se alexsanders billede https://www.messenger.com/t/1091498974312548 ).
     private Lookup lookup = Lookup.getDefault();
     private float countdown = 0;
     private final float BIG_ENEMY_COST = 10; //enemy value
     private final float MEDIUM_ENEMY_COST = 5; //enemy value
 
-    private float enemyCapacityInWorld = 0; //amount of enemies that there is room for in world. should be incressed over time to add to player difficulty.
+    private float enemyCapacityInWorld = 0; //should be incressed over time to add difficulty.
 
     @Override
     public void process(GameData gameData, World world) {
         IEnemyService enemyProvider = lookup.lookup(IEnemyService.class);
 
-        enemyCapacityInWorld += gameData.getDelta(); // to incresse the amount of enemies that thre is  spawned over time.
+        enemyCapacityInWorld += gameData.getDelta(); // to incresse the capacity of enemies in world.  
 
         if (countdown <= 0) {
             greedyEnemySpawner(enemyCapacityInWorld, enemyProvider, world, gameData);
