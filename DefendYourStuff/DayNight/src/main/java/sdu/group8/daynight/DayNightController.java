@@ -94,6 +94,13 @@ public class DayNightController implements IGameProcessingService {
         spawnMediumEnemy(spawner, world, gameData);
     }
 
+    /**
+     * Spawns 2 medium enemies one on each side of position 0.
+     *
+     * @param spawner Interface for spawning enemies.
+     * @param world the world where enemies will be addet.
+     * @param gameData
+     */
     private void spawnBigEnemy(IEnemyService spawner, World world, GameData gameData) {
         if (spawner != null) {
             spawner.createBigEnemy(world, gameData, new Position(randomIntRange(1600, 3200), gameData.getGroundHeight()));
@@ -101,6 +108,13 @@ public class DayNightController implements IGameProcessingService {
         }
     }
 
+    /**
+     * Spawns 2 medium enemies one on each side of position 0.
+     *
+     * @param spawner Interface for spawning enemies.
+     * @param world the world where enemies will be addet.
+     * @param gameData
+     */
     private void spawnMediumEnemy(IEnemyService spawner, World world, GameData gameData) {
         if (spawner != null) {
             spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(1600, 3200), gameData.getGroundHeight()));
@@ -108,7 +122,15 @@ public class DayNightController implements IGameProcessingService {
         }
     }
 
-    private float randomIntRange(int min, int max) {
+    /**
+     * Returns a random int in range and it retuns negativ numbers if input is
+     * negativ.
+     *
+     * @param min Minimun int.
+     * @param max Maximun int.
+     * @return an int between min and max.
+     */
+    private int randomIntRange(int min, int max) {
         Random random = new Random();
         if (min < 0 || max < 0) {
             return (random.nextInt(Math.abs(max - min)) + Math.abs(min) + 1) * -1;
