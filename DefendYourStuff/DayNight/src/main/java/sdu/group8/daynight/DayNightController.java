@@ -29,7 +29,7 @@ public class DayNightController implements IGameProcessingService {
 
     private float levelBase = 0; //amount of enemies that there is room for in world. should be incressed over time to add to player difficulty.
 
-    private int amountOfEnemies = 2; //total mount of enemies we can spawn
+    private final int AMOUNT_OF_DIFFERENT_ENEMIES = 2; //total mount of different that enemies we can spawn
 
     @Override
     public void process(GameData gameData, World world) {
@@ -65,26 +65,26 @@ public class DayNightController implements IGameProcessingService {
     }
 
     private float[] whatToSpawn() {
-        float k = 0;
-        float[] enemies = new float[amountOfEnemies];
+        float counter = 0;
+        float[] enemies = new float[AMOUNT_OF_DIFFERENT_ENEMIES];
 
-        return _whatToSpawn(k, enemies);
+        return _whatToSpawn(counter, enemies);
     }
 
-    private float[] _whatToSpawn(float fill, float[] whatToSpawn) {
-        while (fill < (int) levelBase) {
-            if (fill + BIG_ENEMY <= levelBase) {
+    private float[] _whatToSpawn(float counter, float[] whatToSpawn) {
+        while (counter < (int) levelBase) {
+            if (counter + BIG_ENEMY <= levelBase) {
                 whatToSpawn[0]++;
-                fill += BIG_ENEMY;
+                counter += BIG_ENEMY;
             }
-            if (fill + MEDIUM_ENEMY <= levelBase) {
+            if (counter + MEDIUM_ENEMY <= levelBase) {
                 whatToSpawn[1]++;
-                fill += MEDIUM_ENEMY;
+                counter += MEDIUM_ENEMY;
             } else {
                 break;
             }
             System.out.println("lvl: " + levelBase);
-            System.out.println("fill: " + fill);
+            System.out.println("fill: " + counter);
         }
         return whatToSpawn;
     }
