@@ -76,12 +76,15 @@ public class DayNightController implements IGameProcessingService {
      */
     private void greedyEnemySpawner(float enemyCap, IEnemyService spawner, World world, GameData gameData) {
         while (enemyCap >= MEDIUM_ENEMY_COST) {
+            
             if (enemyCap >= MEDIUM_ENEMY_COST + BIG_ENEMY_COST) {
                 spawnBigAndMediumEnemy(spawner, world, gameData);
                 enemyCap -= MEDIUM_ENEMY_COST + BIG_ENEMY_COST;
+                
             } else if (enemyCap >= BIG_ENEMY_COST) {
                 spawnBigEnemy(spawner, world, gameData);
                 enemyCap -= BIG_ENEMY_COST;
+                
             } else {
                 spawnMediumEnemy(spawner, world, gameData);
                 enemyCap -= MEDIUM_ENEMY_COST;
