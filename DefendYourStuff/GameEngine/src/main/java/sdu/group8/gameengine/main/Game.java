@@ -165,24 +165,10 @@ public class Game
         resultPre = lookup.lookupResult(IPreStartPluginService.class);
         resultPre.addLookupListener(lookupListenerPre);
         resultPre.allItems();
-        
-        
-        
-        
-        for (IPreStartPluginService prePlugin : resultPre.allInstances()) {
-            prePlugin.preStart(gameData);
-            preStartPlugins.add(prePlugin);
-        }
 
         result = lookup.lookupResult(IGamePluginService.class);
         result.addLookupListener(lookupListener);
         result.allItems();
-
-        for (IGamePluginService plugin : result.allInstances()) {
-            plugin.start(gameData, world);
-            gamePlugins.add(plugin);
-        }
-
     }
 
     @Override
@@ -238,16 +224,6 @@ public class Game
                     preStartPlugins.add(us);
                 }
             }
-            
-            //TODO: Might need a stop method for unload of preStartPlugins.
-
-//            // Stop and remove module
-//            for (IGamePluginService gs : gamePlugins) {
-//                if (!updated.contains(gs)) {
-//                    gs.stop(gameData, world);
-//                    gamePlugins.remove(gs);
-//                }
-//            }
         }
     };
     
