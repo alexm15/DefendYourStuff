@@ -16,20 +16,18 @@ import sdu.group8.common.services.IGameProcessingService;
 
 @ServiceProvider(service = IGameProcessingService.class)
 
-public class DayNightController implements IGameProcessingService {
+public class DayNightController
+        implements IGameProcessingService {
 
     //invariant: vi tager et par a bigEnemy og MediumEnemy indtil der ikke er plads til en big enemy så tager den medium enemy 
 // koden er sand så længe at enemiesene vægt går op i hinanden 
     // for at bevise det skal vi vise vores nytte og agumentere for hvorfor det er sådan(se alexsanders billede https://www.messenger.com/t/1091498974312548 ).
     private Lookup lookup = Lookup.getDefault();
-    private final float COUNTDOWNTIME = 10;
-    private float countdown = COUNTDOWNTIME;
-    private final float BIG_ENEMY = 10; //enemy value
-    private final float MEDIUM_ENEMY = 5; //enemy value
+    private float countdown = 0;
+    private final float BIG_ENEMY_COST = 10; //enemy value
+    private final float MEDIUM_ENEMY_COST = 5; //enemy value
 
     private float enemyCapacityInWorld = 0; //amount of enemies that there is room for in world. should be incressed over time to add to player difficulty.
-
-    private final int AMOUNT_OF_DIFFERENT_ENEMIES = 2; //total mount of different that enemies we can spawn
 
     @Override
     public void process(GameData gameData, World world) {
@@ -38,74 +36,38 @@ public class DayNightController implements IGameProcessingService {
         enemyCapacityInWorld += gameData.getDelta(); // to incresse the amount of enemies that thre is  spawned over time.
 
         if (countdown <= 0) {
-            
             greedyEnemySpawner(enemyCapacityInWorld, enemyProvider, world, gameData);
-            
-            // create an array where the amount of each enemy that should be spawned is where index 0 = big and index 1 = medium
-//            float[] spawnEnemies = whatToSpawn();
-//
-//            System.out.println(Arrays.toString(spawnEnemies));
-
-//            //spawning
-//            for (int j = 0; j < spawnEnemies[0]; j++) {
-//                enemyProvider.createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-//                enemyProvider.createBigEnemy(world, gameData, new Position(-600, gameData.getTILE_SIZE()));
-//            }
-//            for (int i = 0; i < spawnEnemies[1]; i++) {
-//                enemyProvider.createMediumEnemy(world, gameData, new Position(-600, gameData.getTILE_SIZE()));
-//                enemyProvider.createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-//
-//            }
-
-            countdown = COUNTDOWNTIME;
-
+            countdown = resetTimer();
         }
-        timer(gameData);
+        runTimer(gameData);
     }
 
-    private void timer(GameData gameData) {
+    private float resetTimer() {
+        final float COUNTDOWNTIME = 10;
+        return COUNTDOWNTIME;
+    }
+
+    private void runTimer(GameData gameData) {
         countdown -= gameData.getDelta();
     }
 
     private void greedyEnemySpawner(float enemyCap, IEnemyService spawner, World world, GameData gameData) {
-        System.out.println("spawning " + enemyCap );
-        while (enemyCap <= 5) {
-            if (enemyCap >= 15) {
+        while (enemyCap >= MEDIUM_ENEMY_COST) {
+            if (enemyCap >= MEDIUM_ENEMY_COST + BIG_ENEMY_COST) {
                 spawnBigAndMediumEnemy(spawner, world, gameData);
-                enemyCap -= 15;
-            } else if (enemyCap >= 10) {
+                enemyCap -= MEDIUM_ENEMY_COST + BIG_ENEMY_COST;
+            }
+            else if (enemyCap >= BIG_ENEMY_COST) {
                 spawnBigEnemy(spawner, world, gameData);
-                enemyCap -= 10;
-            } else {
+                enemyCap -= BIG_ENEMY_COST;
+            }
+            else {
                 spawnMediumEnemy(spawner, world, gameData);
-                enemyCap -= 5;
+                enemyCap -= MEDIUM_ENEMY_COST;
             }
         }
-    }
-
-    private float[] whatToSpawn() {
-        float counter = 0;
-        float[] enemies = new float[AMOUNT_OF_DIFFERENT_ENEMIES];
-
-        return _whatToSpawn(counter, enemies);
-    }
-
-    private float[] _whatToSpawn(float counter, float[] whatToSpawn) {
-        while (counter < (int) enemyCapacityInWorld) {
-            if (counter + BIG_ENEMY <= enemyCapacityInWorld) {
-                whatToSpawn[0]++;
-                counter += BIG_ENEMY;
-            }
-            if (counter + MEDIUM_ENEMY <= enemyCapacityInWorld) {
-                whatToSpawn[1]++;
-                counter += MEDIUM_ENEMY;
-            } else {
-                break;
-            }
-            System.out.println("lvl: " + enemyCapacityInWorld);
-            System.out.println("counter: " + counter);
-        }
-        return whatToSpawn;
+        System.out.println();
+        System.out.println();
     }
 
     private void spawnBigAndMediumEnemy(IEnemyService spawner, World world, GameData gameData) {
@@ -114,12 +76,17 @@ public class DayNightController implements IGameProcessingService {
     }
 
     private void spawnBigEnemy(IEnemyService spawner, World world, GameData gameData) {
-                spawner.createBigEnemy(world, gameData, new Position(1600, gameData.getGroundHeight()));
-                spawner.createBigEnemy(world, gameData, new Position(-600, gameData.getGroundHeight()));
+
+        spawner.createBigEnemy(world, gameData, new Position(randomIntRange(1600, 2000), gameData.getGroundHeight()));
+        spawner.createBigEnemy(world, gameData, new Position(randomIntRange(-600, -1200), gameData.getGroundHeight()));
     }
 
     private void spawnMediumEnemy(IEnemyService spawner, World world, GameData gameData) {
-                spawner.createMediumEnemy(world, gameData, new Position(-600, gameData.getGroundHeight()));
-                spawner.createMediumEnemy(world, gameData, new Position(1600, gameData.getGroundHeight()));;
+        spawner.createMediumEnemy(world, gameData, new Position(-600, gameData.getGroundHeight()));
+        spawner.createMediumEnemy(world, gameData, new Position(1600, gameData.getGroundHeight()));
+    }
+
+    private float randomIntRange(int min, int max) {
+        return 0;
     }
 }
