@@ -69,13 +69,13 @@ public class DayNightController
 
     private void spawnBigEnemy(IEnemyService spawner, World world, GameData gameData) {
 
-        spawner.createBigEnemy(world, gameData, new Position(randomIntRange(1600, 2000), gameData.getGroundHeight()));
-        spawner.createBigEnemy(world, gameData, new Position(randomIntRange(-600, -1200), gameData.getGroundHeight()));
+        spawner.createBigEnemy(world, gameData, new Position(randomIntRange(1600, 3200), gameData.getGroundHeight()));
+        spawner.createBigEnemy(world, gameData, new Position(randomIntRange(-600, -2000), gameData.getGroundHeight()));
     }
 
     private void spawnMediumEnemy(IEnemyService spawner, World world, GameData gameData) {
-        spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(1600, 2000), gameData.getGroundHeight()));
-        spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(-600, -1200), gameData.getGroundHeight()));
+        spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(1600, 3200), gameData.getGroundHeight()));
+        spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(-600, -2000), gameData.getGroundHeight()));
     }
 
     private float randomIntRange(int min, int max) {
