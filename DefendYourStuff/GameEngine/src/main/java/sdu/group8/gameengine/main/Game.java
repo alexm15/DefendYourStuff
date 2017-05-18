@@ -34,15 +34,13 @@ import sdu.group8.commonbuilding.services.ICastle;
 import sdu.group8.commonmap.IMapUpdate;
 import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonplayer.IPlayer;
-import sdu.group8.commonplayer.IPlayerService;
 import sdu.group8.gameengine.managers.GameInputProcessor;
 
 /**
  *
  * @author Group8
  */
-public class Game
-        implements ApplicationListener {
+public class Game implements ApplicationListener {
 
     public static Game getInstance() {
         if (instance == null) {
@@ -68,15 +66,14 @@ public class Game
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
     private static Game instance = null;
 
-    private Image firstBackgroundImage = new Image("World/world_hills01_bg.png", false);
-    private Image secondBackgroundImage = new Image("World/world_mountains01_bg.png", false); //TODO: Change to mountains image
+    private final Image firstBackgroundImage = new Image("World/world_hills01_bg.png", false);
+    private final Image secondBackgroundImage = new Image("World/world_mountains01_bg.png", false);
+    private final Image gameOverImage = new Image("gameOverText.png", false);
     private int firstBackgroundImageScrollX = 0;
     private int secondBackgroundImageScrollX = 0;
 
-    private float FONT_SCALE = 1.5f;
-
-    private float HUD_POS_OFFSET_X = 30f;
-    private float HUD_POS_OFFSET_Y = 25f;
+    private final float HUD_POS_OFFSET_X = 30f;
+    private final float HUD_POS_OFFSET_Y = 25f;
 
     private GameState currentGameState;
 
@@ -176,15 +173,6 @@ public class Game
     }
 
     private void updateGameState() {
-
-        if (gameData.getKeys().isKeyDown(gameData.getKeys().ESCAPE)) {
-            if (currentGameState.equals(GameState.GAMEOVER)) {
-                currentGameState = GameState.PLAY;
-            } else {
-                currentGameState = GameState.GAMEOVER;
-            }
-        }
-
         for (Entity entity : world.getEntities()) {
             if (entity instanceof ICastle) {
                 if (((ICastle) entity).getHealthSystem().getHealth() <= 0) {
@@ -238,13 +226,11 @@ public class Game
     }
 
     private void drawGameOverScreen() {
+        // placing the gameOverText in the middle of the screen.
+        float posX = CAM.position.x - 500; //500 is half the width of the image.
+        float posY = CAM.position.y - 50; //50 is half the height of the image.
 
-        float posX = CAM.position.x - 500;
-        float posY = CAM.position.y - 50;
-        String texturePath = "gameOverText.png";
-        Image gameOver = new Image(texturePath, false);
-
-        drawTextureFromAsset(gameOver, posX, posY);
+        drawTextureFromAsset(gameOverImage, posX, posY);
     }
 
     /**
