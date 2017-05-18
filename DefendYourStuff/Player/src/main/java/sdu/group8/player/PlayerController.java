@@ -97,7 +97,6 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
                 aimY = player.getAimPoint().getY();
             } catch (NullPointerException e) {
                 System.out.println("Mouse not in screen");
-                e.printStackTrace();
             }
 
             player.getWeapon().useAbility(player, 0, aimX, aimY, world);

@@ -243,7 +243,6 @@ public class Game
         float posY = CAM.position.y - 50;
         String texturePath = "gameOverText.png";
         Image gameOver = new Image(texturePath, false);
-
         drawTextureFromAsset(gameOver, posX, posY);
     }
 
