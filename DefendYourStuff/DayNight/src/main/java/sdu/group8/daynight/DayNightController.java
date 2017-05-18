@@ -98,8 +98,8 @@ public class DayNightController implements IGameProcessingService {
      * Spawns 2 medium enemies one on each side of position 0.
      *
      * @param spawner Interface for spawning enemies.
-     * @param world the world where enemies will be addet.
-     * @param gameData
+     * @param world the world where enemies will be added.
+     * @param gameData used to get the value for game's ground height.
      */
     private void spawnBigEnemy(IEnemyService spawner, World world, GameData gameData) {
         if (spawner != null) {
@@ -112,8 +112,8 @@ public class DayNightController implements IGameProcessingService {
      * Spawns 2 medium enemies one on each side of position 0.
      *
      * @param spawner Interface for spawning enemies.
-     * @param world the world where enemies will be addet.
-     * @param gameData
+     * @param world the world where enemies will be added.
+     * @param gameData used to get the value for game's ground height.
      */
     private void spawnMediumEnemy(IEnemyService spawner, World world, GameData gameData) {
         if (spawner != null) {
