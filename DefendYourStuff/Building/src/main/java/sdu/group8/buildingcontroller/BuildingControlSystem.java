@@ -96,7 +96,8 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
             Building castle = (Building) entity;
             if (castle.getHealth() <= 0) {
                 //TODO: set gamestate to game over
-                System.out.println("Game Over");
+                
+        System.out.println("Game Over End Gold: " + gameData.getPlayerGold());
                 //Reduces y-position, since every entities y-position is calculated as y-position + half their height
                 Position position = new Position(castle.getPosition().getX(), castle.getPosition().getY() - castle.getHeight() / 2);
                 createDestroyedCastleBuilding(world, position);
