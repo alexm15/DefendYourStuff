@@ -48,12 +48,10 @@ public class DayNightController
             if (enemyCap >= MEDIUM_ENEMY_COST + BIG_ENEMY_COST) {
                 spawnBigAndMediumEnemy(spawner, world, gameData);
                 enemyCap -= MEDIUM_ENEMY_COST + BIG_ENEMY_COST;
-            }
-            else if (enemyCap >= BIG_ENEMY_COST) {
+            } else if (enemyCap >= BIG_ENEMY_COST) {
                 spawnBigEnemy(spawner, world, gameData);
                 enemyCap -= BIG_ENEMY_COST;
-            }
-            else {
+            } else {
                 spawnMediumEnemy(spawner, world, gameData);
                 enemyCap -= MEDIUM_ENEMY_COST;
             }
@@ -68,21 +66,24 @@ public class DayNightController
     }
 
     private void spawnBigEnemy(IEnemyService spawner, World world, GameData gameData) {
-
-        spawner.createBigEnemy(world, gameData, new Position(randomIntRange(1600, 3200), gameData.getGroundHeight()));
-        spawner.createBigEnemy(world, gameData, new Position(randomIntRange(-600, -2000), gameData.getGroundHeight()));
+        if (spawner != null) {
+            spawner.createBigEnemy(world, gameData, new Position(randomIntRange(1600, 3200), gameData.getGroundHeight()));
+            spawner.createBigEnemy(world, gameData, new Position(randomIntRange(-600, -2000), gameData.getGroundHeight()));
+        }
     }
 
     private void spawnMediumEnemy(IEnemyService spawner, World world, GameData gameData) {
-        spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(1600, 3200), gameData.getGroundHeight()));
-        spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(-600, -2000), gameData.getGroundHeight()));
+        if (spawner != null) {
+            spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(1600, 3200), gameData.getGroundHeight()));
+            spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(-600, -2000), gameData.getGroundHeight()));
+        }
     }
 
     private float randomIntRange(int min, int max) {
         Random random = new Random();
         if (min < 0 || max < 0) {
-            return (random.nextInt(Math.abs(max - min))+ Math.abs(min) + 1) * -1;
+            return (random.nextInt(Math.abs(max - min)) + Math.abs(min) + 1) * -1;
         }
-        return random.nextInt(max - min)+ min + 1;
+        return random.nextInt(max - min) + min + 1;
     }
 }
