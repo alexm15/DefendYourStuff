@@ -68,8 +68,8 @@ public class DayNightController
     /**
      * Spawns 2 medium enemies one on each side of position 0.
      *
-     * @param spawner
-     * @param world
+     * @param spawner Interface for spawning enemies.
+     * @param world the world where enemies will be addet.
      * @param gameData
      */
     private void spawnBigEnemy(IEnemyService spawner, World world, GameData gameData) {
@@ -82,8 +82,8 @@ public class DayNightController
     /**
      * Spawns 2 medium enemies one on each side of position 0.
      *
-     * @param spawner
-     * @param world
+     * @param spawner Interface for spawning enemies.
+     * @param world the world where enemies will be addet.
      * @param gameData
      */
     private void spawnMediumEnemy(IEnemyService spawner, World world, GameData gameData) {
