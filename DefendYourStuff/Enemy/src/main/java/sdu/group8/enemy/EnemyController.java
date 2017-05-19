@@ -9,18 +9,14 @@ import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 import sdu.group8.commonability.data.AbilityData;
-import sdu.group8.common.data.Dimension;
-import sdu.group8.common.data.Direction;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IGameProcessingService;
 import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.commonai.AI_Service;
-import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.Enemy;
 import sdu.group8.commonenemy.IEnemyService;
 
@@ -61,13 +57,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     }
 
     @Override
-    public void start(GameData gameData, World world) {
-        //TODO: Needs to be remove because DayNight module spawns enemies instead.
-//        createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
-//        createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-//        createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-//        createBigEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
-    }
+    public void start(GameData gameData, World world) {}
 
     @Override
     public void stop(GameData gameData, World world) {
@@ -94,8 +84,7 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     public void createBigEnemy(World world, GameData gameData, Position position) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
         AbilityData ab = abilityProvider.getMeleeAbilities().get(0); 
-        //TODO ADD abilities to BigMeleeEnemy
-
+        
         BigMeleeEnemy enemy = new BigMeleeEnemy(position, ab);
         world.addEntity(enemy);
     }

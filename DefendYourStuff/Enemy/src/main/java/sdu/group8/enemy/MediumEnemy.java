@@ -13,10 +13,6 @@ import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonplayer.IPlayerAction;
 
-/**
- *
- * @author Martin
- */
 public class MediumEnemy
         extends Enemy
         implements IPlayerAction, IAbilityAction, IBuildingAction {

@@ -18,10 +18,6 @@ import sdu.group8.commonbuilding.services.IBuildingAction;
 import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonplayer.IPlayerAction;
 
-/**
- *
- * @author karim møller
- */
 public class BigMeleeEnemy extends Enemy implements IPlayerAction, IAbilityAction, IBuildingAction {
 
     public BigMeleeEnemy(Position pos, AbilityData... abilities) {
