@@ -20,14 +20,13 @@ import sdu.group8.map.chunks.Chunk_Grassland01;
 import sdu.group8.map.chunks.Chunk_Grassland02;
 import sdu.group8.map.chunks.Chunk_Portal01;
 
-/**
- *
- * @author Alexander
- */
+
 @ServiceProviders(value = {
-    @ServiceProvider(service = IMapUpdate.class),
+    @ServiceProvider(service = IMapUpdate.class)
+    ,
     @ServiceProvider(service = IGamePluginService.class)}
 )
+
 public class MapController implements IGamePluginService, IMapUpdate {
 
     @Override
@@ -46,10 +45,11 @@ public class MapController implements IGamePluginService, IMapUpdate {
 
     /**
      * Generate chunks until a portal should be generated
+     *
      * @param world
      * @param lastChunk
      * @param portalOffset
-     * @param addToLeftSide 
+     * @param addToLeftSide
      */
     private void generateChunksUntilPortal(World world, Chunk startChunk, int portalOffset, boolean addToLeftSide) {
         Chunk lastChunk = startChunk;
@@ -82,13 +82,13 @@ public class MapController implements IGamePluginService, IMapUpdate {
     }
 
     private Chunk getLastChunk(World world, boolean addToLeftSide) {
-        Chunk lastChunk = null;
+        Chunk lastChunk;
         if (addToLeftSide) {
             lastChunk = world.getChunksLeft().get(world.getChunksLeft().size() - 1);
         } else {
             lastChunk = world.getChunksRight().get(world.getChunksRight().size() - 1);
         }
-        
+
         return lastChunk;
     }
 
@@ -181,13 +181,13 @@ public class MapController implements IGamePluginService, IMapUpdate {
     Chunk generatePortalChunk(Chunk lastChunk, boolean addToLeftSide) {
         float positionOffset = lastChunk.getPositionOffset();
         Chunk portal = new Chunk_Portal01(positionOffset);
-        
+
         if (addToLeftSide) {
             portal.setPositionOffset(positionOffset - portal.getDimension().getWidth());
         } else {
             portal.setPositionOffset(positionOffset + lastChunk.getDimension().getWidth());
         }
-        
+
         return portal;
     }
 
