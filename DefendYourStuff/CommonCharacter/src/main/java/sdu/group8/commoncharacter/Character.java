@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sdu.group8.commoncharacter;
 
 import sdu.group8.commonability.data.Ability;
@@ -16,10 +12,7 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.MovingEntity;
 
-/**
- *
- * @author Martin
- */
+
 public abstract class Character extends MovingEntity {
 
     protected HealthSystem health;
