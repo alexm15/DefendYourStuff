@@ -2,7 +2,6 @@ package sdu.group8.buildingentities;
 
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.commonability.data.Ability;
 import sdu.group8.commonenemy.Enemy;
@@ -14,7 +13,7 @@ import sdu.group8.commonenemy.Enemy;
 public class DestroyedCastle extends DefensiveBuilding {
 
     public DestroyedCastle(Position pos) {
-        super("Building/destroyedcastle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, BuildingType.DEFENCE, false, 0, 100);
+        super("Building/destroyedcastle.png", new Dimension(200, 100, 0), pos, CollisionType.BOX, false, 0, 100);
     }
     
     /**

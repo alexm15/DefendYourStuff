@@ -11,20 +11,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import sdu.group8.buildingentities.Castle;
 import sdu.group8.buildingentities.DestroyedCastle;
-import sdu.group8.buildingentities.Rubble;
-import sdu.group8.commonability.data.Ability;
-import sdu.group8.commonability.data.Effect;
-import sdu.group8.commonability.data.EffectContainer;
-import sdu.group8.common.data.DamageRange;
-import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import sdu.group8.commonbuilding.data.Building;
-import sdu.group8.common.entity.BuildingType;
-import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 
 /**

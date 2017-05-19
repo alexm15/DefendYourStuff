@@ -220,6 +220,8 @@ public class Game implements ApplicationListener {
 
         if (currentGameState.equals(GameState.GAMEOVER)) {
             drawGameOverScreen();
+            
+
         }
 
         batch.end();
@@ -239,7 +241,7 @@ public class Game implements ApplicationListener {
      */
     private void checkMapBoundary() {
         float camPositionX = CAM.position.x;
-        
+
         try {
             // If the player is on the left side in the world.
             if (camPositionX < 0) {
@@ -450,7 +452,7 @@ public class Game implements ApplicationListener {
             drawPlayerGold(posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y * 2);
 
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            System.err.println("Castle not in map");
         }
     }
 

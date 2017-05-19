@@ -11,7 +11,6 @@ import sdu.group8.common.data.Dimension;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 
@@ -21,7 +20,7 @@ import sdu.group8.common.entity.Entity;
  */
 public abstract class Building extends Entity {
 
-    protected BuildingType buildingType;
+
     protected boolean isAttackable;
     protected AbilityContainer abilities;
     protected int upgradeLevel;
@@ -35,7 +34,6 @@ public abstract class Building extends Entity {
      * @param dimension
      * @param pos Position containing float x and y of the building
      * @param collisionType
-     * @param buildingType
      * @param isAttackable
      * @param upgradeLevel
      * @param health
@@ -43,12 +41,12 @@ public abstract class Building extends Entity {
      * @param upgradeLevel cannot be negative value.
      * @param health cannot be negative value.
      */
-    public Building(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
+    public Building(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
         super(imageURL, dimension, pos, collisionType);
         if (upgradeLevel < 0) {
             throw new IllegalArgumentException("UpgradeLvl cannot be negative");
         }
-        this.buildingType = buildingType;
+
         this.isAttackable = isAttackable;
         this.upgradeLevel = upgradeLevel;
         this.health = new HealthSystem(health);
@@ -58,14 +56,6 @@ public abstract class Building extends Entity {
 
     public AbilityContainer getAbilityContainer() {
         return abilities;
-    }
-
-    public BuildingType getBuildingType() {
-        return buildingType;
-    }
-
-    public void setBuildingType(BuildingType buildingType) {
-        this.buildingType = buildingType;
     }
 
     public boolean isAttackable() {

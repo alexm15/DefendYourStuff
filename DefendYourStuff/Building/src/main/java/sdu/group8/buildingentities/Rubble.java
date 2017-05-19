@@ -3,7 +3,6 @@ package sdu.group8.buildingentities;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.commonbuilding.data.Building;
-import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.data.Ability;
@@ -20,7 +19,7 @@ public class Rubble
         implements IBuildingService, IPlayerAction{
 
     public Rubble(Position pos) {
-        super("Building/rubble.png", new Dimension(35, 20, 0), pos, CollisionType.BOX,  BuildingType.DEFENCE, false, 1, 1);
+        super("Building/rubble.png", new Dimension(35, 20, 0), pos, CollisionType.BOX, false, 1, 1);
     }
 
     @Override
