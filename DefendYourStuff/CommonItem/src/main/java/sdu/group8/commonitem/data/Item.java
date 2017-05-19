@@ -41,7 +41,7 @@ public class Item extends Entity{
 
     @Override
     public void collision(Entity otherEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
     
 }

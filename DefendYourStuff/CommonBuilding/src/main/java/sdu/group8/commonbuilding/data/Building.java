@@ -1,25 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sdu.group8.commonbuilding.data;
 
 import sdu.group8.commonability.data.AbilityContainer;
 import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.Dimension;
-import sdu.group8.common.entity.Entity;
 import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 
-/**
- *
- * @author Martin
- */
 public abstract class Building extends Entity {
-
 
     protected boolean isAttackable;
     protected AbilityContainer abilities;
@@ -35,8 +25,6 @@ public abstract class Building extends Entity {
      * @param pos Position containing float x and y of the building
      * @param collisionType
      * @param isAttackable
-     * @param upgradeLevel
-     * @param health
      * @param ab
      * @param upgradeLevel cannot be negative value.
      * @param health cannot be negative value.
