@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sdu.group8.commonweapon.data;
 
 import java.util.ArrayList;
@@ -12,12 +8,9 @@ import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.data.AbilityContainer;
 import sdu.group8.commonability.data.AbilityData;
 
-/**
- *
- * @author Martin
- */
+
 public class Weapon {
-    private UUID ID;
+    private final UUID ID;
     private AbilityContainer abilities;
     private float damageMultiplier;
     private float rangeMultiplier;

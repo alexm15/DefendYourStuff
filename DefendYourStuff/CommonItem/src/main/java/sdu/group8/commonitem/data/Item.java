@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sdu.group8.commonitem.data;
 
 import sdu.group8.commonability.data.AbilityContainer;
@@ -12,10 +8,6 @@ import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 
-/**
- *
- * @author Martin
- */
 public class Item extends Entity{
     private float expirationTime;
 
