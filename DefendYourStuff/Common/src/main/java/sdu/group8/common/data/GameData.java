@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sdu.group8.common.data;
 
-/**
- *
- * @author Martin
- */
 public class GameData {
 
     private float delta;
@@ -51,52 +43,6 @@ public class GameData {
         return this.groundHeight;
     }
 
-    //TODO: Move to world or delete it
-//
-//    public int[] getWindowsY() {
-//        return windowsY;
-//    }
-//
-//    public void setWindowsY(int[] windowsY) {
-//        this.windowsY = windowsY;
-//    }
-//
-//    public ArrayList<Integer> getWindowsxRight() {
-//        return windowsxRight;
-//    }
-//
-//    public void setWindowsxRight(ArrayList<Integer> windowsxRight) {
-//        this.windowsxRight = windowsxRight;
-//    }
-//
-//    public ArrayList<Integer> getWindowsxLeft() {
-//        return windowsxLeft;
-//    }
-//
-//    public void setWindowsxLeft(ArrayList<Integer> windowsxLeft) {
-//        this.windowsxLeft = windowsxLeft;
-//    }
-//
-//    public ArrayList<Integer> getWindowsxMiddle() {
-//        return windowsxMiddle;
-//    }
-//
-//    public void setWindowsxMiddle(ArrayList<Integer> windowsxMiddle) {
-//        this.windowsxMiddle = windowsxMiddle;
-//    }
-//
-//    
-//    public ArrayList<BlockTypes[][]> getChunksMiddle() {
-//        return chunksMiddle;
-//    }
-//
-//    public ArrayList<BlockTypes[][]> getChunksLeft() {
-//        return chunksLeft;
-//    }
-//
-//    public ArrayList<BlockTypes[][]> getChunksRight() {
-//        return chunksRight;
-//    }
     public Position getCursorPosition() {
         return cursorPosition;
     }

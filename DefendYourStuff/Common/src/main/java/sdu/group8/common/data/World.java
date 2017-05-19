@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.common.data;
 
 import java.util.ArrayList;
@@ -13,18 +8,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.entity.Chunk;
 
-/**
- *
- * @author Martin
- */
 public class World {
 
     private Map<UUID, Entity> entitíes = new ConcurrentHashMap<>();
     private ArrayList<Chunk> chunksLeft = new ArrayList<>();
     private Chunk chunkMiddle = null;
     private ArrayList<Chunk> chunksRight = new ArrayList<>();
-
-    // For Entities
     public Collection<Entity> getEntities() {
         return entitíes.values();
     }
