@@ -30,7 +30,32 @@ public class Player extends Character implements IAbilityAction, IPlayer, IEnemy
     public Player(Position position, AbilityData... ab) {
         super(200, 1.25f, 1000, "Player/defaultPlayer.png", new Dimension(50, 50, 25), new Direction(true), position, CollisionType.BOX, ab);
     }
+    
+    @Override
+    public void collision(Entity otherEntity) {
+        if (otherEntity instanceof IPlayerAction) {
+            ((IPlayerAction) otherEntity).playerAction((Entity) this);
+        }
+    }
 
+    
+    @Override
+    public void enemyAction(Entity enemy) {
+        //TODO: implement enemy action for player
+    }
+
+    @Override
+    public void buildingAction(Entity building) {
+        //TODO: add interaction menu for player to interact with collided building.
+    }
+
+    @Override
+    public void abilityAction(Ability ab) {
+        if (!(ab.getOwner() instanceof Player) && (!(ab.getOwner() instanceof Building))) {
+            this.reduceHealth(ab.getDamage());
+        }
+    }
+    
     /**
      * Gets the player jump force.
      *
@@ -65,29 +90,6 @@ public class Player extends Character implements IAbilityAction, IPlayer, IEnemy
         return this.moveSpeed;
     }
 
-    @Override
-    public void collision(Entity otherEntity) {
-        if (otherEntity instanceof IPlayerAction) {
-            ((IPlayerAction) otherEntity).playerAction((Entity) this);
-        }
-    }
 
-    
-    @Override
-    public void enemyAction(Entity enemy) {
-        //TODO: implement enemy action for player
-    }
-
-    @Override
-    public void buildingAction(Entity building) {
-        //TODO: add interaction menu for player to interact with collided building.
-    }
-
-    @Override
-    public void abilityAction(Ability ab) {
-        if (!(ab.getOwner() instanceof Player) && (!(ab.getOwner() instanceof Building))) {
-            this.reduceHealth(ab.getDamage());
-        }
-    }
 
 }
