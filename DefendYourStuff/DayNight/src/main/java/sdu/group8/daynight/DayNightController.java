@@ -15,19 +15,24 @@ public class DayNightController implements IGameProcessingService {
 
     private Lookup lookup = Lookup.getDefault();
     private float countdown = 0;
-    
-    /** Enemy Cost value must be BIG_ENEMY_COST % MEDIUM_ENEMY_COST = 0 
-     for greedy algorithm to work correctly */
+
+    /**
+     * Enemy Cost value must be BIG_ENEMY_COST % MEDIUM_ENEMY_COST = 0 for
+     * greedy algorithm to work correctly
+     */
     private final float BIG_ENEMY_COST = 10;
-    
-    /** Enemy Cost value must be BIG_ENEMY_COST % MEDIUM_ENEMY_COST = 0 
-     for greedy algorithm to work correctly */
+
+    /**
+     * Enemy Cost value must be BIG_ENEMY_COST % MEDIUM_ENEMY_COST = 0 for
+     * greedy algorithm to work correctly
+     */
     private final float MEDIUM_ENEMY_COST = 5;
 
-    /** The total capacity of enemies there can be in the game world. 
-     * is increased over time, for a more difficult game.
+    /**
+     * The total capacity of enemies there can be in the game world. is
+     * increased over time, for a more difficult game.
      */
-    private float enemyCapacityInWorld = 0; 
+    private float enemyCapacityInWorld = 0;
 
     @Override
     public void process(GameData gameData, World world) {
@@ -44,6 +49,7 @@ public class DayNightController implements IGameProcessingService {
 
     /**
      * Resets the timer for a specified value
+     *
      * @return the specified value that the timer is reset to.
      */
     private float resetTimer() {
@@ -53,6 +59,7 @@ public class DayNightController implements IGameProcessingService {
 
     /**
      * Used for updating the timer every frame of the game
+     *
      * @param gameData used for retrieving delta time.
      */
     private void runTimer(GameData gameData) {
@@ -61,30 +68,28 @@ public class DayNightController implements IGameProcessingService {
 
     /**
      * Greedy Algorithm for spawning enemies in the game world. The algorithm
-     * allways tries to maximized the number of enemies, by the following 
-     * priority, based on the current capicity of enemies possible in the game: 
-     * 1. Big + Medium enemy
-     * 2. Big Enemy
-     * 3. Medium Enemy.
-     * 
-     * @param enemyCap the capacity available in the game world at the given 
+     * allways tries to maximized the number of enemies, by the following
+     * priority, based on the current capicity of enemies possible in the game:
+     * 1. Big + Medium enemy 2. Big Enemy 3. Medium Enemy.
+     *
+     * @param enemyCap the capacity available in the game world at the given
      * time frame, is increased every frame.
-     * @param spawner the interface responsible for creating the enemies in the 
+     * @param spawner the interface responsible for creating the enemies in the
      * game
      * @param world the world the enemies are added to.
      * @param gameData
      */
     private void greedyEnemySpawner(float enemyCap, IEnemyService spawner, World world, GameData gameData) {
         while (enemyCap >= MEDIUM_ENEMY_COST) {
-            
+
             if (enemyCap >= MEDIUM_ENEMY_COST + BIG_ENEMY_COST) {
                 spawnBigAndMediumEnemy(spawner, world, gameData);
                 enemyCap -= MEDIUM_ENEMY_COST + BIG_ENEMY_COST;
-                
+
             } else if (enemyCap >= BIG_ENEMY_COST) {
                 spawnBigEnemy(spawner, world, gameData);
                 enemyCap -= BIG_ENEMY_COST;
-                
+
             } else {
                 spawnMediumEnemy(spawner, world, gameData);
                 enemyCap -= MEDIUM_ENEMY_COST;
