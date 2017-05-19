@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sdu.group8.commonitem;
 
 import java.util.Collection;
@@ -13,10 +9,7 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonitem.data.Item;
 
-/**
- *
- * @author joach
- */
+
 public interface ItemSPI {
     /**
      * Creates a new Item and returns it to the caller
