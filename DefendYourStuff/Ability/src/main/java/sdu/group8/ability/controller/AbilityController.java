@@ -1,4 +1,3 @@
-
 package sdu.group8.ability.controller;
 
 import java.util.List;
@@ -55,15 +54,15 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
 
     @Override
     public void useAbility(Entity owner, AbilityData abilityData, World world) {
-        createAbility(owner, abilityData, 0, 0, world);
+        createAbility(owner, abilityData, world);
     }
 
     @Override
     public void useAbility(Entity owner, AbilityData abilityData, float aimX, float aimY, World world) {
-        createAbility(owner, abilityData, aimX, aimY, world);
+        createAbility(owner, abilityData, world);
     }
 
-    private void createAbility(Entity owner, AbilityData abilityData, float aimX, float aimY, World world) {
+    private void createAbility(Entity owner, AbilityData abilityData, World world) {
         float x = owner.getX();
         float y = owner.getY();
         boolean directionLeft = owner.getDirection().isLeft();
