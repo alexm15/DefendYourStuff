@@ -1,11 +1,5 @@
 package sdu.group8.test.weapon;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import org.junit.Before;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -21,17 +15,12 @@ import sdu.group8.common.data.World;
 import sdu.group8.commonweapon.data.Weapon;
 import sdu.group8.commonweapon.services.IWeaponService;
 
-/**
- *
- * @author joach
- */
-
 public class WeaponTest {
 
     private GameData gameData;
     private World world;
     private Lookup lookup;
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
@@ -57,18 +46,18 @@ public class WeaponTest {
         lookup = null;
         gameData = null;
         world = null;
-        
+
     }
-    
+
     @Test
     public void createRangedTest() {
         IWeaponService weaponProvider = lookup.lookup(IWeaponService.class);
         Weapon weapon = weaponProvider.createRanged();
-        
+
         assertNotNull(weapon);
         assertEquals(weapon.getClass(), Weapon.class);
     }
-    
+
     @Test
     public void createMeeleTest() {
         IWeaponService weaponProvider = lookup.lookup(IWeaponService.class);
@@ -76,6 +65,5 @@ public class WeaponTest {
         assertNotNull(weapon);
         assertEquals(weapon.getClass(), Weapon.class);
     }
-    
-    
+
 }

@@ -1,35 +1,20 @@
 package sdu.group8.test.player;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import org.junit.Before;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openide.util.Lookup;
 import sdu.group8.ability.controller.AbilityController;
 import sdu.group8.ability.controller.AbilityPlugin;
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.data.HealthSystem;
 import sdu.group8.common.data.World;
-import sdu.group8.common.entity.Entity;
 import sdu.group8.commonplayer.IPlayerService;
 import sdu.group8.player.PlayerController;
 import sdu.group8.player.Player;
 import sdu.group8.weapon.WeaponGenerator;
-
-/**
- *
- * @author joach
- */
 
 public class PlayerTest {
 
@@ -40,7 +25,7 @@ public class PlayerTest {
     private PlayerController playerController;
     private AbilityController abilityController;
     private WeaponGenerator weaponGenerator;
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
@@ -74,17 +59,16 @@ public class PlayerTest {
         abilityController = null;
         weaponGenerator = null;
     }
-    
+
     @Test
     public void testGetMovementSpeed() {
         IPlayerService playerService = lookup.lookup(IPlayerService.class);
-        
+
         assertEquals(1, world.getEntities().size());
-        
+
         float movementSpeed = playerService.getPlayerMoveSpeed(world);
-        
-        for (Entity entity : world.getEntities(Player.class)) {
-            Player player = (Player) entity;
+
+        for (Player player : world.getCastedEntities(Player.class)) {
             assertEquals(player.getMovespeed(), movementSpeed, 0);
         }
     }

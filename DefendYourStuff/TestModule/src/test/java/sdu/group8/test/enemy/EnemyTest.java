@@ -1,13 +1,5 @@
 package sdu.group8.test.enemy;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -27,11 +19,6 @@ import sdu.group8.enemy.BigMeleeEnemy;
 import sdu.group8.enemy.EnemyController;
 import sdu.group8.enemy.MediumEnemy;
 
-/**
- *
- * @author joach
- */
-
 public class EnemyTest {
 
     private GameData gameData;
@@ -40,7 +27,7 @@ public class EnemyTest {
     private AbilityPlugin abilityPlugin;
     private EnemyController enemyController;
     private AbilityController abilityController;
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
@@ -70,57 +57,57 @@ public class EnemyTest {
         enemyController = null;
         abilityPlugin = null;
         abilityController = null;
-        
+
     }
-    
+
     @Test
     public void testBigMeleeEnemy() {
         IEnemyService enemyProvider = lookup.lookup(IEnemyService.class);
         Enemy testEnemy = new BigMeleeEnemy(new Position(0, 0));
-        
+
         assertEquals(0, world.getEntities().size());
         enemyProvider.createBigEnemy(world, gameData, new Position(0, 0));
-        
+
         assertEquals(1, world.getEntities().size());
-        for (Entity enemy : world.getEntities(Enemy.class)) {
+        for (Enemy enemy : world.getCastedEntities(Enemy.class)) {
             assertEquals(enemy.getClass(), testEnemy.getClass());
         }
-        
+
         enemyProvider.removeAllEnemies(world);
         assertEquals(0, world.getEntities().size());
     }
-    
+
     @Test
     public void testMediumEnemy() {
         IEnemyService enemyProvider = lookup.lookup(IEnemyService.class);
         Enemy testEnemy = new MediumEnemy(new Position(0, 0));
-        
+
         assertEquals(0, world.getEntities().size());
         enemyProvider.createMediumEnemy(world, gameData, new Position(0, 0));
-        
+
         assertEquals(1, world.getEntities().size());
-        for (Entity enemy : world.getEntities(Enemy.class)) {
+        for (Enemy enemy : world.getCastedEntities(Enemy.class)) {
             assertEquals(enemy.getClass(), testEnemy.getClass());
         }
-        
+
         enemyProvider.removeAllEnemies(world);
         assertEquals(0, world.getEntities().size());
     }
-    
+
     @Test
     public void testRemoveEnemy() {
         IEnemyService enemyProvider = lookup.lookup(IEnemyService.class);
-        
+
         assertEquals(0, world.getEntities().size());
-        
+
         world.addEntity(new BigMeleeEnemy(new Position(0, 0)));
         world.addEntity(new BigMeleeEnemy(new Position(0, 0)));
         world.addEntity(new MediumEnemy(new Position(0, 0)));
         world.addEntity(new MediumEnemy(new Position(0, 0)));
-        
+
         assertEquals(4, world.getEntities().size());
         enemyProvider.createBigEnemy(world, gameData, new Position(0, 0));
-        
+
         enemyProvider.removeAllEnemies(world);
         assertEquals(0, world.getEntities().size());
     }
