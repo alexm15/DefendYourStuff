@@ -11,6 +11,7 @@ public interface AbilitySPI {
      * Creates a new Ability and adds it to world
      *
      * @param caller The entity who creates the ability
+     * @param abilityData
      * @param aimX  The target x position
      * @param aimY  The target y position
      * @param world The instance of world from GameEngine.
