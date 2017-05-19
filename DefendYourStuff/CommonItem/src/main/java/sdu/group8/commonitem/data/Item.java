@@ -5,14 +5,12 @@
  */
 package sdu.group8.commonitem.data;
 
-import sdu.group8.commonability.data.Ability;
 import sdu.group8.commonability.data.AbilityContainer;
 import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.common.entity.QualityType;
 
 /**
  *
@@ -20,13 +18,12 @@ import sdu.group8.common.entity.QualityType;
  */
 public class Item extends Entity{
     private float expirationTime;
-    private QualityType qualityType;
+
     private AbilityContainer abilities;
 
-    public Item(float expirationTime, QualityType qualityType, String imageURL, Dimension dimension, Position position, CollisionType collisionType, AbilityData... ab) {
+    public Item(float expirationTime, String imageURL, Dimension dimension, Position position, CollisionType collisionType, AbilityData... ab) {
         super(imageURL, dimension, position, collisionType);
         this.expirationTime = expirationTime;
-        this.qualityType = qualityType;
         this.abilities = new AbilityContainer(ab);
     }
 
@@ -49,13 +46,6 @@ public class Item extends Entity{
         }
     }
 
-    public QualityType getQualityType() {
-        return qualityType;
-    }
-
-    public void setQualityType(QualityType qualityType) {
-        this.qualityType = qualityType;
-    }
 
     @Override
     public void collision(Entity otherEntity) {
