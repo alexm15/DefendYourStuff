@@ -30,8 +30,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
 
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity entity : world.getEntities(Player.class)) {
-            Player player = (Player) entity;
+        for (Player player : world.getCastedEntities(Player.class)) {
             if (player.getCurrentHealth() <= 0) {
                 world.removeEntity(player);
             }
@@ -148,8 +147,8 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
     @Override
     public float getPlayerMoveSpeed(World world) {
         Player player = null;
-        for (Entity entity : world.getEntities(Player.class)) {
-            player = (Player) entity;
+        for (Player aPlayer : world.getCastedEntities(Player.class)) {
+            player = aPlayer;
         }
         return player.getMoveSpeed();
     }

@@ -35,11 +35,10 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     public void process(GameData gameData, World world) {
         aiService = Lookup.getDefault().lookup(AI_Service.class);
 
-        for (Entity enemyEntity : world.getEntities(Enemy.class)) {
-            Enemy enemy = (Enemy) enemyEntity;
+        for (Enemy enemy : world.getCastedEntities(Enemy.class)) {
             enemy.getAbilityContainer().updateCooldown(gameData.getDelta());
             deathProcess(enemy, gameData, world);
-            enemy.setEntityOnGround(enemyEntity, gameData);
+            enemy.setEntityOnGround(enemy, gameData);
 
             if (aiService != null) {
                 if (enemy instanceof MediumEnemy) {

@@ -24,13 +24,12 @@ public class AbilityCatalog {
     }
 
     private AbilityCatalog() {
-
     }
 
     private Collection<AbilityKey> getCatalogKeys() {
         return abilities.keySet();
     }
-    
+
     private AbilityData getAbilityData(AbilityKey key) {
         return abilityDataMap.get(key);
     }
