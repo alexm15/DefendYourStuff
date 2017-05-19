@@ -11,6 +11,8 @@ public interface IPlayerService {
 
     /**
      * gets the player movespeed.
+     * 
+     * NB: Returns null if there is no player.
      *
      * @return player movespeed.
      */
