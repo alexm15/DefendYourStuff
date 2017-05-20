@@ -32,8 +32,8 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity entity : world.getEntities(Building.class)) {
-            world.removeEntity(entity);
+        for (Entity building : world.getEntities(Building.class)) {
+            world.removeEntity(building);
         }
     }
 

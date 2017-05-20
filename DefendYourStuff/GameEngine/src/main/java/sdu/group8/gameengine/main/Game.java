@@ -16,7 +16,10 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.openide.util.Lookup;
+import org.openide.util.LookupEvent;
+import org.openide.util.LookupListener;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.GameState;
 import sdu.group8.common.data.HealthSystem;
@@ -62,9 +65,12 @@ public class Game implements ApplicationListener {
     private World world = new World();
     private Lookup lookup = Lookup.getDefault();
     private List<IGameProcessingService> gameProcesses = new ArrayList<>();
-    private List<IGamePluginService> gamePlugins = new ArrayList<>();
+    private List<IGamePluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private List<IGamePostProcessingService> postProcesses = new ArrayList<>();
+    private List<IPreStartPluginService> preStartPlugins = new CopyOnWriteArrayList<>();
     private static Game instance = null;
+    private Lookup.Result<IGamePluginService> result;
+    private Lookup.Result<IPreStartPluginService> resultPre;
 
     private final Image firstBackgroundImage = new Image("World/world_hills01_bg.png", false);
     private final Image secondBackgroundImage = new Image("World/world_mountains01_bg.png", false);
@@ -153,7 +159,14 @@ public class Game implements ApplicationListener {
         assetManager.load("Building/destroyedcastle.png", Texture.class);
         assetManager.load("Building/rubble.png", Texture.class);
         assetManager.load("Building/portal.png", Texture.class);
+        
+        resultPre = lookup.lookupResult(IPreStartPluginService.class);
+        resultPre.addLookupListener(lookupListenerPre);
+        resultPre.allItems();
 
+        result = lookup.lookupResult(IGamePluginService.class);
+        result.addLookupListener(lookupListener);
+        result.allItems();
     }
 
     @Override
@@ -186,6 +199,46 @@ public class Game implements ApplicationListener {
             }
         }
     }
+    
+    private final LookupListener lookupListenerPre = new LookupListener() {
+        @Override
+        public void resultChanged(LookupEvent le) {
+
+            Collection<? extends IPreStartPluginService> updated = resultPre.allInstances();
+
+            for (IPreStartPluginService us : updated) {
+                // Newly installed modules
+                if (!preStartPlugins.contains(us)) {
+                    us.preStart(gameData);
+                    preStartPlugins.add(us);
+                }
+            }
+        }
+    };
+    
+    private final LookupListener lookupListener = new LookupListener() {
+        @Override
+        public void resultChanged(LookupEvent le) {
+
+            Collection<? extends IGamePluginService> updated = result.allInstances();
+
+            for (IGamePluginService us : updated) {
+                // Newly installed modules
+                if (!gamePlugins.contains(us)) {
+                    us.start(gameData, world);
+                    gamePlugins.add(us);
+                }
+            }
+
+            // Stop and remove module
+            for (IGamePluginService gs : gamePlugins) {
+                if (!updated.contains(gs)) {
+                    gs.stop(gameData, world);
+                    gamePlugins.remove(gs);
+                }
+            }
+        }
+    };
 
     private void update() {
 

@@ -82,6 +82,7 @@
         <module>Weapon</module>
         <module>DayNight</module>
         <module>TestModule</module>
+        <module>SilentUpdate</module>
     </modules>
 
     <properties>

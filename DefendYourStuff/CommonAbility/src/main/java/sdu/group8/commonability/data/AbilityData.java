@@ -39,10 +39,11 @@ public class AbilityData {
 
     public AbilityKey getKey() {
         return key;
-    }   
-    
+    }
+
     /**
-     * Sets the max cooldown of the abilityData. It does not update the cooldown.
+     * Sets the max cooldown of the abilityData. It does not update the
+     * cooldown.
      *
      * @param cooldown
      */
@@ -55,8 +56,9 @@ public class AbilityData {
 
     /**
      * Reduces the current cooldown of the abilityData if the ability is active.
-     * (if a call to useAbility with this abilityData has been made)
-     * If the cooldown is less than equal 0, then reset the cooldown.
+     * (if a call to useAbility with this abilityData has been made) If the
+     * cooldown is less than equal 0, then reset the cooldown.
+     *
      * @param deltaTime
      */
     public void reduceCooldown(float deltaTime) {
@@ -78,6 +80,7 @@ public class AbilityData {
 
     /**
      * Returns true if on cooldown, false if not.
+     *
      * @return boolean true if on cooldown, false if not.
      */
     public boolean isOnCooldown() {
@@ -93,14 +96,20 @@ public class AbilityData {
      */
     public void useAbility(Entity owner, World world) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-        abilityProvider.useAbility(owner, this, world);
-        this.isActive = true;
+        if (abilityProvider != null) {
+            abilityProvider.useAbility(owner, this, world);
+            this.isActive = true;
+        }
+
     }
 
     public void useAbility(Entity owner, float aimX, float aimY, World world) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-        abilityProvider.useAbility(owner, this, aimX, aimY, world);
-        this.isActive = true;
+        if (abilityProvider != null) {
+            abilityProvider.useAbility(owner, this, aimX, aimY, world);
+            this.isActive = true;
+        }
+        
     }
 
 }
