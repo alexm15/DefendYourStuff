@@ -18,7 +18,7 @@ public class MediumEnemy
         implements IPlayerAction, IAbilityAction, IBuildingAction {
 
     public MediumEnemy(Position position, AbilityData... abilities) {
-        super(0, 100, 10, 100, "Enemy/EnemyBow.png", new Dimension(40, 40, 20),
+        super(100, 10, 100, "Enemy/EnemyBow.png", new Dimension(40, 40, 20),
                 new Direction(true), position, CollisionType.BOX, abilities);
     }
 
