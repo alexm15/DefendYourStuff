@@ -1,20 +1,13 @@
 package sdu.group8.gameengine.managers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.math.Vector3;
 import sdu.group8.common.data.GameData;
-import sdu.group8.common.data.GameKeys;
 import sdu.group8.common.data.Position;
-import sdu.group8.gameengine.main.Game;
 
 public class GameInputProcessor extends InputAdapter {
 
     private final GameData gameData;
-
-    private Vector3 tp = new Vector3();
 
     public GameInputProcessor(GameData gameData) {
         this.gameData = gameData;

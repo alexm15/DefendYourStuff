@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.daynight;
 
+import java.util.Random;
 import org.openide.util.Lookup;
 import sdu.group8.commonenemy.IEnemyService;
 import org.openide.util.lookup.ServiceProvider;
@@ -18,27 +14,130 @@ import sdu.group8.common.services.IGameProcessingService;
 public class DayNightController implements IGameProcessingService {
 
     private Lookup lookup = Lookup.getDefault();
-    private final float COUNTDOWNTIME = 10;
-    private float countdown = COUNTDOWNTIME;
+    private float countdown = 0;
+    
+    /** Enemy Cost value must be BIG_ENEMY_COST % MEDIUM_ENEMY_COST = 0 
+     for greedy algorithm to work correctly */
+    private final float BIG_ENEMY_COST = 10;
+    
+    /** Enemy Cost value must be BIG_ENEMY_COST % MEDIUM_ENEMY_COST = 0 
+     for greedy algorithm to work correctly */
+    private final float MEDIUM_ENEMY_COST = 5;
+
+    /** The total capacity of enemies there can be in the game world. 
+     * is increased over time, for a more difficult game.
+     */
+    private float enemyCapacityInWorld = 0; 
 
     @Override
     public void process(GameData gameData, World world) {
         IEnemyService enemyProvider = lookup.lookup(IEnemyService.class);
-        if (enemyProvider != null) {
-          if (countdown <= 0) {
-            enemyProvider.createMediumEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
-            enemyProvider.createMediumEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-            enemyProvider.createBigEnemy(world, gameData, new Position(1600, gameData.getTILE_SIZE()));
-            enemyProvider.createBigEnemy(world, gameData, new Position(-1600, gameData.getTILE_SIZE()));
-            countdown = COUNTDOWNTIME;
+
+        enemyCapacityInWorld += gameData.getDelta(); // to increase the capacity of enemies in world.  
+
+        if (countdown <= 0) {
+            greedyEnemySpawner(enemyCapacityInWorld, enemyProvider, world, gameData);
+            countdown = resetTimer();
         }
-        timer(gameData);   
-        }
-       
+        runTimer(gameData);
     }
 
-    private void timer(GameData gameData) {
+    /**
+     * Resets the timer for a specified value
+     * @return the specified value that the timer is reset to.
+     */
+    private float resetTimer() {
+        final float COUNTDOWNTIME = 10;
+        return COUNTDOWNTIME;
+    }
+
+    /**
+     * Used for updating the timer every frame of the game
+     * @param gameData used for retrieving delta time.
+     */
+    private void runTimer(GameData gameData) {
         countdown -= gameData.getDelta();
     }
 
+    /**
+     * Greedy Algorithm for spawning enemies in the game world. The algorithm
+     * allways tries to maximized the number of enemies, by the following 
+     * priority, based on the current capicity of enemies possible in the game: 
+     * 1. Big + Medium enemy
+     * 2. Big Enemy
+     * 3. Medium Enemy.
+     * 
+     * @param enemyCap the capacity available in the game world at the given 
+     * time frame, is increased every frame.
+     * @param spawner the interface responsible for creating the enemies in the 
+     * game
+     * @param world the world the enemies are added to.
+     * @param gameData
+     */
+    private void greedyEnemySpawner(float enemyCap, IEnemyService spawner, World world, GameData gameData) {
+        while (enemyCap >= MEDIUM_ENEMY_COST) {
+            
+            if (enemyCap >= MEDIUM_ENEMY_COST + BIG_ENEMY_COST) {
+                spawnBigAndMediumEnemy(spawner, world, gameData);
+                enemyCap -= MEDIUM_ENEMY_COST + BIG_ENEMY_COST;
+                
+            } else if (enemyCap >= BIG_ENEMY_COST) {
+                spawnBigEnemy(spawner, world, gameData);
+                enemyCap -= BIG_ENEMY_COST;
+                
+            } else {
+                spawnMediumEnemy(spawner, world, gameData);
+                enemyCap -= MEDIUM_ENEMY_COST;
+            }
+        }
+    }
+
+    private void spawnBigAndMediumEnemy(IEnemyService spawner, World world, GameData gameData) {
+        spawnBigEnemy(spawner, world, gameData);
+        spawnMediumEnemy(spawner, world, gameData);
+    }
+
+    /**
+     * Spawns 2 medium enemies one on each side of position 0.
+     *
+     * @param spawner Interface for spawning enemies.
+     * @param world the world where enemies will be added.
+     * @param gameData used to get the value for game's ground height.
+     */
+    private void spawnBigEnemy(IEnemyService spawner, World world, GameData gameData) {
+        if (spawner != null) {
+            spawner.createBigEnemy(world, gameData, new Position(randomIntRange(1600, 3200), gameData.getGroundHeight()));
+            spawner.createBigEnemy(world, gameData, new Position(randomIntRange(-600, -2000), gameData.getGroundHeight()));
+        }
+    }
+
+    /**
+     * Spawns 2 medium enemies one on each side of position 0.
+     *
+     * @param spawner Interface for spawning enemies.
+     * @param world the world where enemies will be added.
+     * @param gameData used to get the value for game's ground height.
+     */
+    private void spawnMediumEnemy(IEnemyService spawner, World world, GameData gameData) {
+        if (spawner != null) {
+            spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(1600, 3200), gameData.getGroundHeight()));
+            spawner.createMediumEnemy(world, gameData, new Position(randomIntRange(-600, -2000), gameData.getGroundHeight()));
+        }
+    }
+
+    /**
+     * Returns a random int in range and it retuns negativ numbers if input is
+     * negativ.
+     *
+     * @param min Minimun int.
+     * @param max Maximun int.
+     * @return an int between min and max.
+     */
+    private int randomIntRange(int min, int max) {
+        Random random = new Random();
+        if (min < 0 || max < 0) {
+            return (random.nextInt(Math.abs(max - min)) + Math.abs(min) + 1) * -1;
+        }
+        return random.nextInt(max - min) + min + 1;
+    }
 }
