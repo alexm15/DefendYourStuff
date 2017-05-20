@@ -38,8 +38,14 @@ public class WeaponGenerator implements IWeaponService {
     public Weapon createRanged() {
         AbilityData[] abilityList = new AbilityData[4];
         AbilitySPI abilityProvider = lookup.lookup(AbilitySPI.class);
-        AbilityData ab = abilityProvider.getRangedAbilities().get(0);
-        abilityList[0] = ab;
+        if (abilityProvider != null) {
+            try {
+                AbilityData ab = abilityProvider.getRangedAbilities().get(0);
+                abilityList[0] = ab;
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(e);
+            }
+        }
         Weapon rangedWep = new Weapon(randomMultiplier(80, 120), (randomMultiplier(80, 120)) * percentage, abilityList);
 
         return rangedWep;
@@ -55,8 +61,15 @@ public class WeaponGenerator implements IWeaponService {
     public Weapon createMelee() {
         AbilityData[] abilityList = new AbilityData[4];
         AbilitySPI abilityProvider = lookup.lookup(AbilitySPI.class);
-        AbilityData ab = abilityProvider.getMeleeAbilities().get(0);
-        abilityList[0] = ab;
+        if (abilityProvider != null) {
+            try {
+                AbilityData ab = abilityProvider.getMeleeAbilities().get(0);
+                abilityList[0] = ab;
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(e);
+            }
+        }
+        
         Weapon meleeWep = new Weapon(randomMultiplier(80, 120) * percentage, randomMultiplier(80, 120), abilityList);
         return meleeWep;
     }

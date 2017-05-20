@@ -74,18 +74,24 @@ public class EnemyController implements IGameProcessingService, IGamePluginServi
     @Override
     public void createMediumEnemy(World world, GameData gameData, Position position) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-        AbilityData fireballAbility = abilityProvider.getRangedAbilities().get(0);
-        Enemy mediumEnemy = new MediumEnemy(position, fireballAbility);
-        world.addEntity(mediumEnemy);
+        try {
+            AbilityData fireballAbility = abilityProvider.getRangedAbilities().get(0);
+            Enemy mediumEnemy = new MediumEnemy(position, fireballAbility);
+            world.addEntity(mediumEnemy);
+        } catch (Exception e) {
+        }
     }
 
     @Override
     public void createBigEnemy(World world, GameData gameData, Position position) {
         AbilitySPI abilityProvider = Lookup.getDefault().lookup(AbilitySPI.class);
-        AbilityData ab = abilityProvider.getMeleeAbilities().get(0); 
+        try {
+            AbilityData ab = abilityProvider.getMeleeAbilities().get(0); 
+            BigMeleeEnemy enemy = new BigMeleeEnemy(position, ab);
+            world.addEntity(enemy);
+        } catch (Exception e) {
         
-        BigMeleeEnemy enemy = new BigMeleeEnemy(position, ab);
-        world.addEntity(enemy);
+        }
     }
 
     @Override
