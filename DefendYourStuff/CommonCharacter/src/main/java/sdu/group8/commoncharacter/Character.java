@@ -17,8 +17,6 @@ public abstract class Character extends MovingEntity {
 
     protected HealthSystem health;
     protected AbilityContainer abilities;
-    protected float reactionTime;
-    protected float reactionTimer;
 
     public Character(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
         super(moveSpeed, weight, imageURL, dimension, direction, pos, collisionType);
@@ -62,17 +60,5 @@ public abstract class Character extends MovingEntity {
 
     public void increaseHealth(float health) {
         this.health.increaseHealth(health);
-    }
-
-    public float getReactionTimer() {
-        return reactionTimer;
-    }
-
-    public void reduceReactiontime(float i) {
-        this.reactionTimer = -i;
-    }
-
-    public void resetReactiontime() {
-        this.reactionTimer = reactionTime;
     }
 }
