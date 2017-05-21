@@ -260,21 +260,6 @@ public class Game implements ApplicationListener {
         batch.end();
     }
 
-    private void updateGameState() {
-        for (Entity entity : world.getEntities()) {
-            if (entity instanceof ICastle) {
-                if (((ICastle) entity).getHealthSystem().getHealth() <= 0) {
-                    currentGameState = GameState.GAMEOVER;
-                }
-            } else if (entity instanceof IPlayer) {
-                Character player = (Character) entity;
-                if (player.getCurrentHealth() <= 0) {
-                    currentGameState = GameState.GAMEOVER;
-                }
-            }
-        }
-    }
-
     private void drawGameOverScreen() {
         // placing the gameOverText in the middle of the screen.
         float posX = CAM.position.x - 500; //500 is half the width of the image.
