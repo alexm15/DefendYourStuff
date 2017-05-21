@@ -2,10 +2,6 @@ package sdu.group8.commonability.services;
 
 import sdu.group8.commonability.data.Ability;
 
-/**
- *
- * @author joach
- */
 public interface IAbilityAction {
     
     /**

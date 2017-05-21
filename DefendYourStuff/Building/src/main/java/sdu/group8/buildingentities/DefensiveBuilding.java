@@ -3,7 +3,6 @@ package sdu.group8.buildingentities;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
-import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.data.Ability;
@@ -24,8 +23,8 @@ import sdu.group8.commonplayer.IPlayerAction;
  */
 public class DefensiveBuilding extends Building implements IDefBuilding, IEnemyAction, IAbilityAction, IBuildingService, IPlayerAction {
 
-    public DefensiveBuilding(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType, boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
-        super(imageURL, dimension, pos, collisionType, buildingType, isAttackable, upgradeLevel, health, ab);
+    public DefensiveBuilding(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
+        super(imageURL, dimension, pos, collisionType, isAttackable, upgradeLevel, health, ab);
     }
      
     @Override

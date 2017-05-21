@@ -30,20 +30,20 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
 
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity entity : world.getEntities(Player.class)) {
-            Player player = (Player) entity;
+        for (Player player : world.getCastedEntities(Player.class)) {
             if (player.getCurrentHealth() <= 0) {
-            //TODO: remove player from world. Set isGameOver in gameData.
                 world.removeEntity(player);
             }
-            //Handle gravity for player
+            
+            //Handling gravity for player
             if (!player.isEntityOnGround(player, gameData)) {
-                //player.setPosition(player.getX(), player.getY() + verticalVelocity * gameData.getDelta());
                 verticalVelocity -= gameData.getGRAVITY() * player.getWeight();
+                
             } else {
                 player.setEntityOnGround(player, gameData);
                 verticalVelocity = 0;
             }
+            
             horizontalVelocity = 0;
 
             handleMouseInput(gameData, player);
@@ -53,13 +53,14 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
             player.setPosition(position);
             gameData.setPlayerPosition(position);
             
-            // Update cooldown for player's abilities.
+            // Updating cooldown for player's abilities.
             player.getAbilityContainer().updateCooldown(gameData.getDelta());
         }
 
     }
 
     private void handleKeyboardInput(GameData gameData, World world, Player player) {
+        
         if (gameData.getKeys().isKeyDown(gameData.getKeys().NUM_1)) {
             IWeaponService weaponProvider = Lookup.getDefault().lookup(IWeaponService.class);
             player.setWeapon(weaponProvider.createMelee());
@@ -127,7 +128,7 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
     public void start(GameData gameData, World world) {
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;
-        Position position = new Position(x, y); //TODO: Should be startposition.
+        Position position = new Position(x, y);
 
         Player player = new Player(position);
         gameData.setPlayerGold(0);
@@ -140,17 +141,14 @@ public class PlayerController implements IGameProcessingService, IGamePluginServ
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity player : world.getEntities(Player.class)) {
-            world.removeEntity(player);
-        }
-
+        world.removeEntities(Player.class);
     }
 
     @Override
     public float getPlayerMoveSpeed(World world) {
         Player player = null;
-        for (Entity entity : world.getEntities(Player.class)) {
-            player = (Player) entity;
+        for (Player aPlayer : world.getCastedEntities(Player.class)) {
+            player = aPlayer;
         }
         return player.getMoveSpeed();
     }

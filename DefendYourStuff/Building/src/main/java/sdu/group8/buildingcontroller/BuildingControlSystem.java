@@ -32,18 +32,16 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity building : world.getEntities(Building.class)) {
-            world.removeEntity(building);
-        }
+        world.removeEntities(Building.class);
     }
 
     @Override
     public void process(GameData gameData, World world) {
-        castleProcess(gameData, world);
-        wallProcess(gameData, world);
-        towerProcess(gameData, world);
-        portalProcess(gameData, world);
-        shopProcess(gameData, world);
+        castleProcess(world, gameData);
+        wallProcess(world);
+        towerProcess(world);
+        portalProcess(world);
+        shopProcess(world);
 
     }
 
@@ -91,12 +89,11 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
         world.addEntity(rubble);
     }
 
-    private void castleProcess(GameData gameData, World world) {
-        for (Entity entity : world.getEntities(Castle.class)) {
-            Building castle = (Building) entity;
+    private void castleProcess(World world, GameData gameData) {
+        for (Building castle : world.getCastedEntities(Castle.class)) {
             if (castle.getHealth() <= 0) {
-                //TODO: set gamestate to game over
                 System.out.println("Game Over End Gold: " + gameData.getPlayerGold());
+                
                 //Reduces y-position, since every entities y-position is calculated as y-position + half their height
                 Position position = new Position(castle.getPosition().getX(), castle.getPosition().getY() - castle.getHeight() / 2);
                 createDestroyedCastleBuilding(world, position);
@@ -105,7 +102,8 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
         }
     }
 
-    private void shopProcess(GameData gameData, World world) {
+    private void shopProcess(World world) {
+        //TODO: Implement shop
     }
 
     @Override
@@ -114,9 +112,8 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
         world.addEntity(destroyedCastle);
     }
 
-    private void wallProcess(GameData gameData, World world) {
-        for (Entity entity : world.getEntities(Wall.class)) {
-            Building wall = (Building) entity;
+    private void wallProcess(World world) {
+        for (Building wall : world.getCastedEntities(Wall.class)) {
             if (wall.getHealth() == 0) {
                 createRubbleBuilding(world, wall.getPosition());
                 world.removeEntity(wall);
@@ -124,9 +121,8 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
         }
     }
 
-    private void towerProcess(GameData gameData, World world) {
-        for (Entity entity : world.getEntities(Tower.class)) {
-            Building tower = (Building) entity;
+    private void towerProcess(World world) {
+        for (Building tower : world.getCastedEntities(Tower.class)) {
             if (tower.getHealth() == 0) {
                 createRubbleBuilding(world, tower.getPosition());
                 world.removeEntity(tower);
@@ -134,9 +130,8 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
         }
     }
 
-    private void portalProcess(GameData gameData, World world) {
-        for (Entity entity : world.getEntities(Portal.class)) {
-            Building portal = (Building) entity;
+    private void portalProcess(World world) {
+        for (Building portal : world.getCastedEntities(Portal.class)) {
             if (portal.getHealth() == 0) {
                 createRubbleBuilding(world, portal.getPosition());
                 world.removeEntity(portal);

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.ability.types;
 
 import sdu.group8.common.data.DamageRange;
@@ -20,10 +15,6 @@ import sdu.group8.commonenemy.IEnemyAction;
 import sdu.group8.commonplayer.IPlayer;
 import sdu.group8.commonplayer.IPlayerAction;
 
-/**
- *
- * @author Martin
- */
 public class RangedAbility extends Ability implements IEnemyAction, IPlayerAction, IBuildingAction {
 
     public RangedAbility(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer, Entity owner, boolean aimable) {
@@ -38,30 +29,23 @@ public class RangedAbility extends Ability implements IEnemyAction, IPlayerActio
 
     @Override
     public void enemyAction(Entity enemy) {
-        if (this.owner instanceof Enemy) {
-            
-        } else {
+        if (!(this.owner instanceof Enemy)) {
             this.setExpiration(0);
         }
     }
 
     @Override
     public void playerAction(Entity player) {
-        if ((this.owner instanceof IPlayer)||(this.owner instanceof Building)) {
-            
-        } else {
+        if (!(this.owner instanceof IPlayer) && !(this.owner instanceof Building)) {
             this.setExpiration(0);
         }
+
     }
 
     @Override
     public void buildingAction(Entity building) {
-        if ((this.owner instanceof Building)||(this.owner instanceof IPlayer)){
-            
-        } else {
+        if (!(this.owner instanceof Building) && !(this.owner instanceof IPlayer)) {
             this.setExpiration(0);
         }
     }
-
-    
 }

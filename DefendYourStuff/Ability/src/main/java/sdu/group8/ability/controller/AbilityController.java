@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.ability.controller;
 
 import java.util.List;
@@ -18,7 +13,8 @@ import sdu.group8.commonability.services.AbilitySPI;
 import sdu.group8.ability.types.*;
 
 @ServiceProviders(value = {
-    @ServiceProvider(service = IGameProcessingService.class),
+    @ServiceProvider(service = IGameProcessingService.class)
+    ,
     @ServiceProvider(service = AbilitySPI.class)}
 )
 public class AbilityController implements IGameProcessingService, AbilitySPI {
@@ -58,15 +54,15 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
 
     @Override
     public void useAbility(Entity owner, AbilityData abilityData, World world) {
-        createAbility(owner, abilityData, 0, 0, world);
+        createAbility(owner, abilityData, world);
     }
 
     @Override
     public void useAbility(Entity owner, AbilityData abilityData, float aimX, float aimY, World world) {
-        createAbility(owner, abilityData, aimX, aimY, world);
+        createAbility(owner, abilityData, world);
     }
 
-    private void createAbility(Entity owner, AbilityData abilityData, float aimX, float aimY, World world) {
+    private void createAbility(Entity owner, AbilityData abilityData, World world) {
         float x = owner.getX();
         float y = owner.getY();
         boolean directionLeft = owner.getDirection().isLeft();
@@ -79,9 +75,9 @@ public class AbilityController implements IGameProcessingService, AbilitySPI {
         } else {
             x += offset;
         }
-        
+
         ab.setX(x);
-        
+
         world.addEntity(ab);
 
     }

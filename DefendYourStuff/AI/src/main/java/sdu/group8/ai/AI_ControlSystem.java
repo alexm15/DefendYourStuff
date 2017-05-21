@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.ai;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -14,16 +9,13 @@ import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.commonai.AI_Service;
 import sdu.group8.commoncharacter.Character;
 
-/**
- *
- * @author Alexander
- */
 @ServiceProviders(value = {
-    @ServiceProvider(service = AI_Service.class),
+    @ServiceProvider(service = AI_Service.class)
+    ,
 @ServiceProvider(service = IGamePluginService.class)}
 )
 public class AI_ControlSystem implements AI_Service, IGamePluginService {
-    
+
     private Attack attack;
     private AcquireTarget acquireTarget;
     private MoveAway moveAway;
@@ -48,10 +40,9 @@ public class AI_ControlSystem implements AI_Service, IGamePluginService {
     @Override
     public void rangedAI(Character enemy, World world, GameData gameData, int minShootDistance, int maxShootDistance) {
         Entity closestTarget = acquireTarget.getClosesTarget(enemy, world);
-        boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
-        
-        //shoot
-        if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance)) { //TODO lav en range
+
+        //shooting
+        if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance)) {
 
             if (!enemy.getAbility(0).isOnCooldown()) {
                 try {
@@ -61,7 +52,7 @@ public class AI_ControlSystem implements AI_Service, IGamePluginService {
                 }
             }
         } else {
-            if (tooCloseToTarget) {
+            if (isTooCloseToTarget(enemy, closestTarget, minShootDistance)) {
                 moveAway.increaseDistance(enemy, closestTarget, gameData);
                 if (!enemy.getAbility(0).isOnCooldown()) {
                     try {
@@ -77,7 +68,10 @@ public class AI_ControlSystem implements AI_Service, IGamePluginService {
         }
     }
 
-
+    private boolean isTooCloseToTarget(Character enemy, Entity closestTarget, int minShootDistance) {
+        boolean tooCloseToTarget = distanceToEntity(enemy, closestTarget) < minShootDistance && !closestTarget.equals(enemy);
+        return tooCloseToTarget;
+    }
 
     private float distanceToEntity(Character enemy, Entity closestTarget) {
         return Math.abs(enemy.getX() - closestTarget.getX());

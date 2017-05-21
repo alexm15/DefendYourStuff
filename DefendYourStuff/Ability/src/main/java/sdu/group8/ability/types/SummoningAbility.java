@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sdu.group8.ability.types;
 
 import sdu.group8.common.data.DamageRange;
@@ -14,10 +10,6 @@ import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.data.Ability;
 import sdu.group8.commonability.data.EffectContainer;
 
-/**
- *
- * @author Martin
- */
 public class SummoningAbility extends Ability{
 
     public SummoningAbility(float expiration, float moveSpeed, float weight, DamageRange damageRange, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, EffectContainer effectContainer, Entity owner, boolean aimable) {

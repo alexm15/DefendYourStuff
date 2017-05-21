@@ -1,9 +1,7 @@
 package sdu.group8.common.data;
 
 /**
- *
  * Places the entity on a given position in the world map, y should be > 0.
- * @author Group 8
  */
 public class Position {
 

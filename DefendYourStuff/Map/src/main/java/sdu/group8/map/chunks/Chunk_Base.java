@@ -14,10 +14,6 @@ import sdu.group8.common.entity.Tile;
 import sdu.group8.commonbuilding.services.Buildable;
 import sdu.group8.map.tiles.*;
 
-/**
- *
- * @author Martin
- */
 public class Chunk_Base extends Chunk {
 
     private Lookup lookup = Lookup.getDefault();

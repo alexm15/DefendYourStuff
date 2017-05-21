@@ -15,10 +15,6 @@ import sdu.group8.commonbuilding.services.Buildable;
 import sdu.group8.map.tiles.Tile_Air;
 import sdu.group8.map.tiles.Tile_Dirt;
 
-/**
- *
- * @author Martin
- */
 public class Chunk_Portal01 extends Chunk {
 
     private Lookup lookup = Lookup.getDefault();

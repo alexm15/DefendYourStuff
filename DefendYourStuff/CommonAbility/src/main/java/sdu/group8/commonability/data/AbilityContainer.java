@@ -1,20 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sdu.group8.commonability.data;
 
 import java.util.ArrayList;
-import org.openide.util.Lookup;
 import sdu.group8.common.data.World;
 import sdu.group8.common.entity.Entity;
-import sdu.group8.commonability.services.AbilitySPI;
 
-/**
- *
- * @author Martin
- */
+
 public class AbilityContainer {
 
     private ArrayList<AbilityData> abilites;

@@ -5,19 +5,17 @@
  */
 package sdu.group8.collision;
 
-import java.util.Collection;
 import org.openide.util.lookup.ServiceProvider;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.GameData;
 import sdu.group8.common.data.Position;
 import sdu.group8.common.data.World;
 import static sdu.group8.common.entity.CollisionType.*;
-
-import sdu.group8.commoncharacter.Character;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.services.IGamePostProcessingService;
 
 @ServiceProvider(service = IGamePostProcessingService.class)
+
 public class CollisionProcess implements IGamePostProcessingService {
 
     GameData gameData;
@@ -121,7 +119,6 @@ public class CollisionProcess implements IGamePostProcessingService {
         return hyp <= circle.getDimension().getRadius() + otherCircle.getDimension().getRadius();
     }
 
-    // https://jsperf.com/math-clamp/9 - Best performance
     private float clamp(float min, float value, float max) {
         return Math.min(max, Math.max(min, value));
     }

@@ -4,7 +4,6 @@ import sdu.group8.commonability.data.AbilityData;
 import sdu.group8.common.data.Dimension;
 import sdu.group8.common.data.Position;
 import sdu.group8.commonbuilding.data.Building;
-import sdu.group8.common.entity.BuildingType;
 import sdu.group8.common.entity.CollisionType;
 
 /**
@@ -13,8 +12,8 @@ import sdu.group8.common.entity.CollisionType;
  */
 public class Wall extends DefensiveBuilding {
 
-    public Wall(String imageURL, Dimension dimension, Position pos, CollisionType collisionType, BuildingType buildingType,
+    public Wall(String imageURL, Dimension dimension, Position pos, CollisionType collisionType,
             boolean isAttackable, int upgradeLevel, float health, AbilityData... ab) {
-        super(imageURL, dimension, pos, collisionType, buildingType, isAttackable, upgradeLevel, health, ab);
+        super(imageURL, dimension, pos, collisionType, isAttackable, upgradeLevel, health, ab);
     }
 }

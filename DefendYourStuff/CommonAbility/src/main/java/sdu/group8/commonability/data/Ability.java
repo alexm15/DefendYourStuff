@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sdu.group8.commonability.data;
 
 import sdu.group8.commonability.services.IAbilityAction;
@@ -14,10 +9,6 @@ import sdu.group8.common.entity.CollisionType;
 import sdu.group8.common.entity.Entity;
 import sdu.group8.common.entity.MovingEntity;
 
-/**
- *
- * @author Martin
- */
 public abstract class Ability extends MovingEntity {
 
     protected DamageRange damageRange;
@@ -61,6 +52,19 @@ public abstract class Ability extends MovingEntity {
     }
 
     public abstract Ability getNewInstance(Entity owner, float x, float y, boolean directionLeft);
+
+    /**
+     * If the otherEntity implements IAbilityAction, call that action with a
+     * reference to this ability.
+     *
+     * @param otherEntity The other entity that this ability has collided with.
+     */
+    @Override
+    public void collision(Entity otherEntity) {
+        if (otherEntity instanceof IAbilityAction) {
+            ((IAbilityAction) otherEntity).abilityAction(this);
+        }
+    }
 
     public boolean isAimable() {
         return aimable;
@@ -132,19 +136,6 @@ public abstract class Ability extends MovingEntity {
 
     public void setRadians(float radians) {
         this.radians = radians;
-    }
-
-    /**
-     * If the otherEntity implements IAbilityAction, call that action with a
-     * reference to this ability.
-     *
-     * @param otherEntity The other entity that this ability has collided with.
-     */
-    @Override
-    public void collision(Entity otherEntity) {
-        if (otherEntity instanceof IAbilityAction) {
-            ((IAbilityAction) otherEntity).abilityAction(this);
-        }
     }
 
 }

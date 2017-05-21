@@ -1,4 +1,3 @@
-
 package sdu.group8.ability.controller;
 
 import sdu.group8.ability.data.SlashData;
@@ -15,7 +14,8 @@ import sdu.group8.commonability.data.Ability;
 import sdu.group8.commonability.data.AbilityKey;
 
 @ServiceProviders(value = {
-    @ServiceProvider(service = IPreStartPluginService.class),
+    @ServiceProvider(service = IPreStartPluginService.class)
+    ,
     @ServiceProvider(service = IGamePluginService.class)}
 )
 public class AbilityPlugin implements IGamePluginService, IPreStartPluginService {
@@ -34,15 +34,11 @@ public class AbilityPlugin implements IGamePluginService, IPreStartPluginService
 
     @Override
     public void start(GameData gameData, World world) {
-        
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity ability : world.getEntities(Ability.class)) {
-            world.removeEntity(ability);
-        }
-        
+        world.removeEntities(Ability.class);
     }
 
 }

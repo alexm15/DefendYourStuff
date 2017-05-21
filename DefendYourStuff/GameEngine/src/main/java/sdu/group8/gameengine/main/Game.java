@@ -45,16 +45,6 @@ import sdu.group8.gameengine.managers.GameInputProcessor;
  */
 public class Game implements ApplicationListener {
 
-    public static Game getInstance() {
-        if (instance == null) {
-            return new Game();
-        }
-        return instance;
-    }
-
-    private Game() {
-
-    }
     private static OrthographicCamera CAM;
     private ShapeRenderer sr;
     private SpriteBatch batch;
@@ -83,24 +73,15 @@ public class Game implements ApplicationListener {
 
     private GameState currentGameState;
 
-    public Collection<? extends IGameProcessingService> getGameProcesses() {
-        return lookup.lookupAll(IGameProcessingService.class);
+    public static Game getInstance() {
+        if (instance == null) {
+            return new Game();
+        }
+        return instance;
     }
 
-    public Collection<? extends IGamePluginService> getGamePlugins() {
-        return lookup.lookupAll(IGamePluginService.class);
-    }
+    private Game() {
 
-    public Collection<? extends IGamePostProcessingService> getPostProcesses() {
-        return lookup.lookupAll(IGamePostProcessingService.class);
-    }
-
-    public Collection<? extends IMapUpdate> getIMapUpdate() {
-        return lookup.lookupAll(IMapUpdate.class);
-    }
-
-    private Collection<? extends IPreStartPluginService> getPreGamePlugins() {
-        return lookup.lookupAll(IPreStartPluginService.class);
     }
 
     @Override
@@ -273,9 +254,25 @@ public class Game implements ApplicationListener {
 
         if (currentGameState.equals(GameState.GAMEOVER)) {
             drawGameOverScreen();
+
         }
 
         batch.end();
+    }
+
+    private void updateGameState() {
+        for (Entity entity : world.getEntities()) {
+            if (entity instanceof ICastle) {
+                if (((ICastle) entity).getHealthSystem().getHealth() <= 0) {
+                    currentGameState = GameState.GAMEOVER;
+                }
+            } else if (entity instanceof IPlayer) {
+                Character player = (Character) entity;
+                if (player.getCurrentHealth() <= 0) {
+                    currentGameState = GameState.GAMEOVER;
+                }
+            }
+        }
     }
 
     private void drawGameOverScreen() {
@@ -292,7 +289,7 @@ public class Game implements ApplicationListener {
      */
     private void checkMapBoundary() {
         float camPositionX = CAM.position.x;
-        
+
         try {
             // If the player is on the left side in the world.
             if (camPositionX < 0) {
@@ -437,22 +434,6 @@ public class Game implements ApplicationListener {
 
     }
 
-    @Override
-    public void resize(int width, int height) {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void dispose() {
-    }
-
     /**
      * Handles rendering of a single texture.
      *
@@ -503,7 +484,7 @@ public class Game implements ApplicationListener {
             drawPlayerGold(posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y * 2);
 
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            System.err.println("Castle not in map");
         }
     }
 
@@ -569,6 +550,42 @@ public class Game implements ApplicationListener {
     private void drawPlayerGold(float posX, float posY) {
         font.setColor(Color.BLACK);
         font.draw(batch, "Gold: " + gameData.getPlayerGold(), posX, posY);
+    }
+
+    public Collection<? extends IGameProcessingService> getGameProcesses() {
+        return lookup.lookupAll(IGameProcessingService.class);
+    }
+
+    public Collection<? extends IGamePluginService> getGamePlugins() {
+        return lookup.lookupAll(IGamePluginService.class);
+    }
+
+    public Collection<? extends IGamePostProcessingService> getPostProcesses() {
+        return lookup.lookupAll(IGamePostProcessingService.class);
+    }
+
+    public Collection<? extends IMapUpdate> getIMapUpdate() {
+        return lookup.lookupAll(IMapUpdate.class);
+    }
+
+    private Collection<? extends IPreStartPluginService> getPreGamePlugins() {
+        return lookup.lookupAll(IPreStartPluginService.class);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void dispose() {
     }
 
 }
