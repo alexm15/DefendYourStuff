@@ -11,8 +11,10 @@ import sdu.group8.commoncharacter.Character;
 
 public abstract class Enemy extends Character {
     
-    public Enemy(float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
+    public Enemy(float reactionTime,float moveSpeed, float weight, float health, String imageURL, Dimension dimension, Direction direction, Position pos, CollisionType collisionType, AbilityData... ab) {
         super(moveSpeed, weight, health, imageURL, dimension, direction, pos, collisionType, ab);
+        this.reactionTime = reactionTime;
+        this.reactionTimer = reactionTime;
     }
     
 }
