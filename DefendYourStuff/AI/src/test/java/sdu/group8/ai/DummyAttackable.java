@@ -27,12 +27,7 @@ public class DummyAttackable extends Character implements IEnemyAction
     public DummyAttackable(float moveSpeed, Dimension dimension, Direction direction, Position pos) {
         super(moveSpeed, 1f, 500, "", dimension, direction, pos, CollisionType.BOX, new AbilityData[0]);
     }
-
-
-
-
-
-
+    
     @Override
     public void collision(Entity otherEntity) {
     }

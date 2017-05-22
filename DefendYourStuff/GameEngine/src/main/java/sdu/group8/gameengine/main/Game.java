@@ -96,20 +96,12 @@ public class Game implements ApplicationListener {
         CAM.setToOrtho(false, 800, 600);
 
         Gdx.input.setInputProcessor(
-                new GameInputProcessor(gameData)
+            new GameInputProcessor(gameData)
         );
 
         sr = new ShapeRenderer();
         batch = new SpriteBatch();
         font = new BitmapFont();
-
-        for (IPreStartPluginService preGamePlugin : getPreGamePlugins()) {
-            preGamePlugin.preStart(gameData);
-        }
-
-        for (IGamePluginService gamePlugin : getGamePlugins()) {
-            gamePlugin.start(gameData, world);
-        }
 
         assetManager.load("Chunks/chunk_base_bg01.png", Texture.class);
         assetManager.load("Chunks/chunk_forest01_bg01.png", Texture.class);
@@ -148,6 +140,16 @@ public class Game implements ApplicationListener {
         result = lookup.lookupResult(IGamePluginService.class);
         result.addLookupListener(lookupListener);
         result.allItems();
+        
+        for (IPreStartPluginService preGamePlugin : resultPre.allInstances()) {
+            preGamePlugin.preStart(gameData);
+            preStartPlugins.add(preGamePlugin);
+        }
+
+        for (IGamePluginService gamePlugin : result.allInstances()) {
+            gamePlugin.start(gameData, world);
+            gamePlugins.add(gamePlugin);
+        }
     }
 
     @Override
@@ -404,16 +406,6 @@ public class Game implements ApplicationListener {
         Vector3 camPos = CAM.position.cpy();
         CAM.position.set(gameData.getPlayerPosition().getX(), camPos.y, camPos.z);
         CAM.update();
-//        float camPosX = camPos.x;
-//        float moveSpeed = 200;
-//
-//        if (gameData.getKeys().isKeyDown(gameData.getKeys().A)) {
-//            camPosX -= moveSpeed * gameData.getDelta();
-//        }
-//        if (gameData.getKeys().isKeyDown(gameData.getKeys().D)) {
-//            camPosX += moveSpeed * gameData.getDelta();
-//        }
-//        CAM.translate(camPosX - camPos.x, 0);
         firstBackgroundImageScrollX = (int) (camPos.x / 4);    // the first background image scrolls 1/4 the speed of the cam
         secondBackgroundImageScrollX = firstBackgroundImageScrollX / 4;   // the second background image scrolls 1/4 of the first background image.
 
@@ -460,16 +452,25 @@ public class Game implements ApplicationListener {
                 if (entity instanceof ICastle) {
                     healthSystem = ((ICastle) entity).getHealthSystem();
                 }
+            }
+            drawCastleHealth(healthSystem, posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y);
+
+        } catch (NullPointerException e) {
+            System.err.println("Castle not in map");
+        }
+        
+        try {
+            for (Entity entity : world.getEntities()) {
+                
                 if (entity instanceof Character) {
                     drawHealthbarAtCharacter((Character) entity);
                 }
             }
 
-            drawCastleHealth(healthSystem, posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y);
             drawPlayerGold(posX + HUD_POS_OFFSET_X, screenHeight - HUD_POS_OFFSET_Y * 2);
 
         } catch (NullPointerException e) {
-            System.err.println("Castle not in map");
+            System.err.println("Player not in map");
         }
     }
 
@@ -541,20 +542,12 @@ public class Game implements ApplicationListener {
         return lookup.lookupAll(IGameProcessingService.class);
     }
 
-    public Collection<? extends IGamePluginService> getGamePlugins() {
-        return lookup.lookupAll(IGamePluginService.class);
-    }
-
     public Collection<? extends IGamePostProcessingService> getPostProcesses() {
         return lookup.lookupAll(IGamePostProcessingService.class);
     }
 
     public Collection<? extends IMapUpdate> getIMapUpdate() {
         return lookup.lookupAll(IMapUpdate.class);
-    }
-
-    private Collection<? extends IPreStartPluginService> getPreGamePlugins() {
-        return lookup.lookupAll(IPreStartPluginService.class);
     }
 
     @Override

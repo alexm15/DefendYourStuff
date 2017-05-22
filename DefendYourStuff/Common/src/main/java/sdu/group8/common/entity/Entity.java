@@ -86,7 +86,6 @@ public abstract class Entity {
      */
     public void setEntityOnGround(Entity entity, GameData gameData) {
         entity.setPosition(entity.getPosition().getX(), (gameData.getGroundHeight() + entity.getHeight() / 2));
-
     }
 
     public UUID getID() {

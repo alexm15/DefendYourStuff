@@ -27,7 +27,6 @@ public class DestroyedCastle extends DefensiveBuilding {
             //A destroyed building should not lose health
             this.reduceHealth(0);
         }
-        
     }
     
     

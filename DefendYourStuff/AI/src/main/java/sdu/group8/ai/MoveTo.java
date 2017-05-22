@@ -7,6 +7,18 @@ import sdu.group8.common.entity.Entity;
 import sdu.group8.commoncharacter.Character;
 
 public class MoveTo {
+    
+    private static MoveTo instance;
+    
+    private MoveTo() {
+    }
+    
+    public static MoveTo getInstance() {
+        if (instance == null) {
+            return new MoveTo();
+        }
+        return instance;
+    }
 
     public void moveEnemyToTarget(Character character, Entity target, GameData gameData) {
         Random random = new Random();
@@ -28,5 +40,4 @@ public class MoveTo {
             character.reduceReactiontime(1);
         }
     }
-    
 }
