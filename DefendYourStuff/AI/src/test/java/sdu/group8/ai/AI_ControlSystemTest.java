@@ -58,7 +58,6 @@ public class AI_ControlSystemTest {
         enemy = new Character(0, 0, 0, "", new Dimension(0, 0, 0), new Direction(true), new Position(0, 0), CollisionType.CIRCLE, new AbilityData[0]) {
             @Override
             public void collision(Entity otherEntity) {
-
             }
         };
         enemy.setMoveSpeed(10);

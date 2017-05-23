@@ -42,7 +42,6 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
         towerProcess(world);
         portalProcess(world);
         shopProcess(world);
-
     }
 
     @Override
@@ -93,7 +92,6 @@ public class BuildingControlSystem implements IGamePluginService, IGameProcessin
         for (Building castle : world.getCastedEntities(Castle.class)) {
             if (castle.getHealth() <= 0) {
                 System.out.println("Game Over End Gold: " + gameData.getPlayerGold());
-                
                 //Reduces y-position, since every entities y-position is calculated as y-position + half their height
                 Position position = new Position(castle.getPosition().getX(), castle.getPosition().getY() - castle.getHeight() / 2);
                 createDestroyedCastleBuilding(world, position);

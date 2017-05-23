@@ -9,7 +9,6 @@ import sdu.group8.common.data.World;
 import sdu.group8.common.services.IGamePluginService;
 import sdu.group8.common.services.IPreStartPluginService;
 import sdu.group8.ability.spellbook.*;
-import sdu.group8.common.entity.Entity;
 import sdu.group8.commonability.data.Ability;
 import sdu.group8.commonability.data.AbilityKey;
 

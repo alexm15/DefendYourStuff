@@ -8,12 +8,23 @@ import sdu.group8.commoncharacter.Character;
 import sdu.group8.commonenemy.IEnemyAction;
 
 public class AcquireTarget {
+    
+    private static AcquireTarget instance;
+    
+    private AcquireTarget() {
+    }
+    
+    public static AcquireTarget getInstance() {
+        if (instance == null) {
+            return new AcquireTarget();
+        }
+        return instance;
+    }
 
     /**
      * Gets the closes Entity that implements IEnemyAction.
      *
      * NB: if there is no closes entity then it returns it self!
-     *
      * @param enemy
      * @param world
      * @return The closes enemy NB: if there is no closes entity then it returns
@@ -34,5 +45,4 @@ public class AcquireTarget {
         }
         return closestTarget;
     }
-    
 }

@@ -7,8 +7,7 @@ package sdu.group8.ability.controller;
 
 import org.openide.modules.ModuleInstall;
 
-public class Installer
-        extends ModuleInstall {
+public class Installer extends ModuleInstall {
 
     @Override
     public void restored() {

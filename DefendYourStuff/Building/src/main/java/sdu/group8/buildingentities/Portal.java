@@ -23,5 +23,4 @@ public class Portal extends Building {
             ((IBuildingAction) otherEntity).buildingAction((Entity) this);
         }
     }
-
 }

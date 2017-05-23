@@ -39,7 +39,6 @@ public class RangedAbility extends Ability implements IEnemyAction, IPlayerActio
         if (!(this.owner instanceof IPlayer) && !(this.owner instanceof Building)) {
             this.setExpiration(0);
         }
-
     }
 
     @Override

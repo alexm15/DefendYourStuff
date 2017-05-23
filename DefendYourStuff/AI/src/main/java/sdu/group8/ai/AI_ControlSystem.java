@@ -12,25 +12,20 @@ import sdu.group8.commoncharacter.Character;
 @ServiceProviders(value = {
     @ServiceProvider(service = AI_Service.class)
     ,
-@ServiceProvider(service = IGamePluginService.class)}
+    @ServiceProvider(service = IGamePluginService.class)}
 )
 public class AI_ControlSystem implements AI_Service, IGamePluginService {
-
-    private Attack attack;
-    private AcquireTarget acquireTarget;
-    private MoveAway moveAway;
-    private MoveTo moveTo;
 
     @Override
     public void assignAttackAndDodgeEnemyAI(Character enemy, World world, GameData gameData) {
 
-        Entity closestTarget = acquireTarget.getClosesTarget(enemy, world);
+        Entity closestTarget = AcquireTarget.getInstance().getClosesTarget(enemy, world);
 
         if (distanceToEntity(enemy, closestTarget) > closestTarget.getWidth() / 2) {
-            moveTo.moveEnemyToTarget(enemy, closestTarget, gameData);
+            MoveTo.getInstance().moveEnemyToTarget(enemy, closestTarget, gameData);
         } else if (!enemy.getAbility(0).isOnCooldown()) {
             try {
-                attack.useAbility(enemy, world, closestTarget, enemy.getAbility(0));
+                Attack.getInstance().useAbility(enemy, world, closestTarget, enemy.getAbility(0));
             } catch (IndexOutOfBoundsException e) {
                 System.err.println(e);
             }
@@ -39,31 +34,31 @@ public class AI_ControlSystem implements AI_Service, IGamePluginService {
 
     @Override
     public void rangedAI(Character enemy, World world, GameData gameData, int minShootDistance, int maxShootDistance) {
-        Entity closestTarget = acquireTarget.getClosesTarget(enemy, world);
+        Entity closestTarget = AcquireTarget.getInstance().getClosesTarget(enemy, world);
 
         //shooting
         if (withinShootingRange(enemy, closestTarget, minShootDistance, maxShootDistance)) {
 
             if (!enemy.getAbility(0).isOnCooldown()) {
                 try {
-                    attack.useAbility(enemy, world, closestTarget, enemy.getAbility(0));
+                    Attack.getInstance().useAbility(enemy, world, closestTarget, enemy.getAbility(0));
                 } catch (IndexOutOfBoundsException e) {
                     System.err.println(e);
                 }
             }
         } else {
             if (isTooCloseToTarget(enemy, closestTarget, minShootDistance)) {
-                moveAway.increaseDistance(enemy, closestTarget, gameData);
+                MoveAway.getInstance().increaseDistance(enemy, closestTarget, gameData);
                 if (!enemy.getAbility(0).isOnCooldown()) {
                     try {
-                        attack.useAbility(enemy, world, closestTarget, enemy.getAbility(0));
+                        Attack.getInstance().useAbility(enemy, world, closestTarget, enemy.getAbility(0));
                     } catch (IndexOutOfBoundsException e) {
                         System.err.println(e);
                     }
                 }
             }
             if (distanceToEntity(enemy, closestTarget) > maxShootDistance) {
-                moveTo.moveEnemyToTarget(enemy, closestTarget, gameData);
+                MoveTo.getInstance().moveEnemyToTarget(enemy, closestTarget, gameData);
             }
         }
     }
@@ -84,18 +79,10 @@ public class AI_ControlSystem implements AI_Service, IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        attack = new Attack();
-        acquireTarget = new AcquireTarget();
-        moveAway = new MoveAway();
-        moveTo = new MoveTo();
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        attack = null;
-        acquireTarget = null;
-        moveAway = null;
-        moveTo = null;
     }
 
 }

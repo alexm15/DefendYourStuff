@@ -21,6 +21,4 @@ public class SummoningAbility extends Ability{
         //TODO: implement this method
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-    
 }

@@ -44,5 +44,4 @@ public class Rubble
     public void playerAction(Entity player) {
         //TODO: Add interaction menu for player to perform actions on the building
     }
-
 }

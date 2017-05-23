@@ -85,6 +85,4 @@ public abstract class MovingEntity extends Entity {
     public void setWeight(float weight) {
         this.weight = weight;
     }
-    
-    
 }

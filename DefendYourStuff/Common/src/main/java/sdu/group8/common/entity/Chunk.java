@@ -59,5 +59,4 @@ public abstract class Chunk {
     public float getBackgroundScrollScale() {
         return this.backgroundScrollScale;
     }
-
 }

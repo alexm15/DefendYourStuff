@@ -7,8 +7,7 @@ package sdu.group8.common.entity;
 
 import sdu.group8.common.data.Image;
 
-public interface Tile{
+public interface Tile {
     
     Image getImage();
-    
 }

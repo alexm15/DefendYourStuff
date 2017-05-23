@@ -8,6 +8,18 @@ import sdu.group8.commoncharacter.Character;
 
 
 public class Attack {
+    
+    private static Attack instance;
+    
+    private Attack() {
+    }
+    
+    public static Attack getInstance() {
+        if (instance == null) {
+            return new Attack();
+        }
+        return instance;
+    }
 
     public void useAbility(Character character, World world, Entity closestTarget, AbilityData abilityData) {
         setDirection(character, closestTarget);
@@ -21,5 +33,4 @@ public class Attack {
             character.setDirection(true);
         }
     }
-    
 }
